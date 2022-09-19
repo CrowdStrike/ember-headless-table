@@ -1,0 +1,3 @@
+packages:
+  - 'ember-headless-table'
+  - 'test-app'
