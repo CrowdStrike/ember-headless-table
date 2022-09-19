@@ -1,0 +1,7 @@
+# these are copied during the build
+LICENSE.md
+README.md
+
+# deps and output
+dist/
+node_modules/
