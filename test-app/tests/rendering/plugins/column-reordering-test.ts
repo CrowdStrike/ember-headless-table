@@ -13,6 +13,7 @@ import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 import type { Column } from 'ember-headless-table';
+import { setOwner } from '@ember/application';
 
 module('Plugins | columnReordering', function (hooks) {
   setupRenderingTest(hooks);
@@ -175,11 +176,12 @@ module('Plugins | columnReordering', function (hooks) {
 
     hooks.beforeEach(function () {
       ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
     });
 
     test('basic re-ordering works', async function (assert) {
       await renderWithContext();
-      await this.pauseTest();
+      // await this.pauseTest();
     });
   });
 });

@@ -8,8 +8,11 @@ import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
 import type { Sort } from 'ember-headless-table/plugins/data-sorting';
+import { setupTest } from 'ember-qunit';
 
-module('Plugins | consumption', function () {
+module('Plugins | consumption', function (hooks) {
+  setupTest(hooks);
+
   module('When a plugin has required config', function () {
     test('supports explicit options', async function (assert) {
       let sorts: Sort[] = [];

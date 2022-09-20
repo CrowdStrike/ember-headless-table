@@ -4,6 +4,7 @@ import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { modifier } from 'ember-modifier';
 import { Resource } from 'ember-resources/core';
 import { map } from 'ember-resources/util/map';
 
@@ -72,14 +73,17 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
    * These are all no-use, no-cost utilities
    */
   modifiers = {
-    container: (element: HTMLElement): Destructor => {
-      let modifiers = this.plugins.map((plugin) => plugin.containerModifier);
-      let composed = composeFunctionModifiers([attachContainer, ...modifiers]);
+    container: modifier(
+      (element: HTMLElement): Destructor => {
+        let modifiers = this.plugins.map((plugin) => plugin.containerModifier);
+        let composed = composeFunctionModifiers([attachContainer, ...modifiers]);
 
-      // TS is chokeing on different versions of the `Table` type during compilation
-      // some sort of cache mismatch where the columns' map mismatches itself
-      return composed(element, this as any);
-    },
+        // TS is chokeing on different versions of the `Table` type during compilation
+        // some sort of cache mismatch where the columns' map mismatches itself
+        return composed(element, this as any);
+      },
+      { eager: false }
+    ),
 
     // resize: ResizeModifier,
     // TODO: switch to composing real modifiers once "curry" and "compose"
