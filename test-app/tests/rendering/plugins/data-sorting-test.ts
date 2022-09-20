@@ -7,12 +7,12 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
-import { meta } from '@crowdstrike/ember-headless-table/plugins';
-import { DataSorting, SortDirection } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import { headlessTable } from 'ember-headless-table';
+import { meta } from 'ember-headless-table/plugins';
+import { DataSorting, SortDirection } from 'ember-headless-table/plugins/data-sorting';
 
-import type { Column } from '@crowdstrike/ember-headless-table';
-import type { SortItem } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import type { Column } from 'ember-headless-table';
+import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
 
 module('Plugins | dataSorting', function (hooks) {
   setupRenderingTest(hooks);

@@ -5,9 +5,9 @@ import { module, test } from 'qunit';
 
 import sinon from 'sinon';
 
-import { TablePreferences } from '@crowdstrike/ember-headless-table';
+import { TablePreferences } from 'ember-headless-table';
 
-import type { PreferencesData } from '@crowdstrike/ember-headless-table';
+import type { PreferencesData } from 'ember-headless-table';
 
 module('Unit | -private | table-preferences', function (hooks) {
   setupTest(hooks);

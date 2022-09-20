@@ -1,11 +1,11 @@
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
-import { preferences } from '@crowdstrike/ember-headless-table/plugins';
-import { DataSorting } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import { headlessTable } from 'ember-headless-table';
+import { preferences } from 'ember-headless-table/plugins';
+import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
-import type { ColumnConfig, PreferencesData } from '@crowdstrike/ember-headless-table';
+import type { ColumnConfig, PreferencesData } from 'ember-headless-table';
 
 module('Plugins | Queries | preferences', function (hooks) {
   setupTest(hooks);

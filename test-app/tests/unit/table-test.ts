@@ -2,14 +2,14 @@ import { getOwner } from '@ember/application';
 import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
+import { headlessTable } from 'ember-headless-table';
 
 import type {
   Column,
   ColumnConfig,
   TableConfig,
   TableMeta,
-} from '@crowdstrike/ember-headless-table';
+} from 'ember-headless-table';
 
 type Args = Omit<TableConfig<unknown>, 'meta' | 'preferences'> &
   TableMeta & { preferencesKey?: string; title?: string };

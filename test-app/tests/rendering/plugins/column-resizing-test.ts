@@ -9,13 +9,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import * as QUnit from 'qunit';
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
+import { headlessTable } from 'ember-headless-table';
 import {
   ColumnResizing,
   resizeHandle,
-} from '@crowdstrike/ember-headless-table/plugins/column-resizing';
-import { ColumnVisibility } from '@crowdstrike/ember-headless-table/plugins/column-visibility';
-import { createHelpers } from '@crowdstrike/ember-headless-table/test-support';
+} from 'ember-headless-table/plugins/column-resizing';
+import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+import { createHelpers } from 'ember-headless-table/test-support';
 
 type Changes = Array<{ value: () => number; by: number; msg?: string }>;
 

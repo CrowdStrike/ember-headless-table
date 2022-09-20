@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 
-import { deserializeSorts, serializeSorts } from '@crowdstrike/ember-headless-table';
+import { deserializeSorts, serializeSorts } from 'ember-headless-table';
 
-import type { Sort } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import type { Sort } from 'ember-headless-table/plugins/data-sorting';
 
 module('Unit | Utils | sort utils', function () {
   module('deserializeSorts', function () {

@@ -7,11 +7,11 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
-import { meta } from '@crowdstrike/ember-headless-table/plugins';
-import { ColumnVisibility } from '@crowdstrike/ember-headless-table/plugins/column-visibility';
+import { headlessTable } from 'ember-headless-table';
+import { meta } from 'ember-headless-table/plugins';
+import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
-import type { Column } from '@crowdstrike/ember-headless-table';
+import type { Column } from 'ember-headless-table';
 
 module('Plugins | columnVisibility', function (hooks) {
   setupRenderingTest(hooks);

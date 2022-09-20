@@ -3,11 +3,11 @@ import { module, test } from 'qunit';
 
 import { expectTypeOf } from 'expect-type';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
-import { options } from '@crowdstrike/ember-headless-table/plugins';
-import { DataSorting } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import { headlessTable } from 'ember-headless-table';
+import { options } from 'ember-headless-table/plugins';
+import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
-import type { SortItem } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
 
 module('Plugins | Queries | options', function (hooks) {
   setupTest(hooks);

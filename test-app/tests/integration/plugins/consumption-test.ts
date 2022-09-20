@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 
-import { headlessTable } from '@crowdstrike/ember-headless-table';
-import { options } from '@crowdstrike/ember-headless-table/plugins';
-import { ColumnReordering } from '@crowdstrike/ember-headless-table/plugins/column-reordering';
-import { ColumnResizing } from '@crowdstrike/ember-headless-table/plugins/column-resizing';
-import { ColumnVisibility } from '@crowdstrike/ember-headless-table/plugins/column-visibility';
-import { DataSorting } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import { headlessTable } from 'ember-headless-table';
+import { options } from 'ember-headless-table/plugins';
+import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
+import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
+import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
-import type { Sort } from '@crowdstrike/ember-headless-table/plugins/data-sorting';
+import type { Sort } from 'ember-headless-table/plugins/data-sorting';
 
 module('Plugins | consumption', function () {
   module('When a plugin has required config', function () {
