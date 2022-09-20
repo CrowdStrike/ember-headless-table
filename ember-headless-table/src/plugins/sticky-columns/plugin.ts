@@ -1,5 +1,5 @@
-import { assert } from '@ember/debug';
 import { cached } from '@glimmer/tracking';
+import { assert } from '@ember/debug';
 
 import { BasePlugin, meta, options } from '../-private/base';
 
@@ -56,7 +56,7 @@ class ColumnMeta {
 
     assert(
       `Invalid sticky value, ${sticky}. Valid values: 'left', 'right', false`,
-      sticky === 'left' || sticky === 'right' || sticky === false,
+      sticky === 'left' || sticky === 'right' || sticky === false
     );
 
     return sticky || 'none';

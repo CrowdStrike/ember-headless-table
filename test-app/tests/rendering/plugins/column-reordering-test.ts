@@ -1,18 +1,18 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
 import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
+import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 import type { Column } from 'ember-headless-table';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 module('Plugins | columnReordering', function (hooks) {
   setupRenderingTest(hooks);
@@ -127,7 +127,7 @@ module('Plugins | columnReordering', function (hooks) {
         </table>
       </div>
     `,
-    TestComponentA,
+    TestComponentA
   );
 
   hooks.beforeEach(function () {
@@ -159,7 +159,7 @@ module('Plugins | columnReordering', function (hooks) {
           ctx.table.plugins;
         },
         /Configuration is missing requirement: columnVisibility, And is requested by ColumnReordering. Please add a plugin with the columnVisibility feature/,
-        'Error was thrown about missing a plugin that provides "column visibility features',
+        'Error was thrown about missing a plugin that provides "column visibility features'
       );
     });
   });

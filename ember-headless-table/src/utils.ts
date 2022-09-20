@@ -1,5 +1,5 @@
-import { camelize, underscore } from '@ember/string';
 import { assert } from '@ember/debug';
+import { camelize, underscore } from '@ember/string';
 
 import { SortDirection } from './plugins/data-sorting/types';
 
@@ -19,7 +19,7 @@ import type { Sort, SortsOptions } from './plugins/data-sorting/types';
 
 export const deserializeSorts = (
   sortString: string,
-  options: SortsOptions = { separator: '.', transform: 'camelize' },
+  options: SortsOptions = { separator: '.', transform: 'camelize' }
 ): Sort[] => {
   const { transform, separator } = options;
   let [key, direction] = sortString.split(separator);
@@ -53,7 +53,7 @@ export const deserializeSorts = (
  */
 export function serializeSorts(
   sorts: Sort[],
-  options: SortsOptions = { separator: '.', transform: 'underscore' },
+  options: SortsOptions = { separator: '.', transform: 'underscore' }
 ): string {
   const { transform, separator } = options;
 

@@ -52,7 +52,7 @@ module('Unit | Utils | sort utils', function () {
       assert.deepEqual(
         actual,
         output,
-        'custom underscore transform is used and separator is used ',
+        'custom underscore transform is used and separator is used '
       );
 
       output = [{ property: 'fooBar', direction: 'ascending' }] as Sort[];
@@ -120,7 +120,7 @@ module('Unit | Utils | sort utils', function () {
       assert.strictEqual(
         actual,
         output,
-        'custom underscore transform is used and separator is used ',
+        'custom underscore transform is used and separator is used '
       );
 
       input = [{ property: 'foo_bar', direction: 'ascending' }] as Sort[];

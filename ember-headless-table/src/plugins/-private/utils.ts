@@ -37,7 +37,7 @@ export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
 
   assert(
     `Every entry in the plugins config must be invokable`,
-    result.every((tuple) => typeof tuple[0] === 'function' && typeof tuple[1] === 'function'),
+    result.every((tuple) => typeof tuple[0] === 'function' && typeof tuple[1] === 'function')
   );
 
   return result;
@@ -88,7 +88,7 @@ export function verifyPlugins(plugins: PluginOption[]) {
     if (providingPlugins.length > 1) {
       errors.push(
         `More than one plugin is providing the feature: ${feature}. ` +
-          `Please remove one of ${providingPlugins.map((p) => p.name).join(', ')}`,
+          `Please remove one of ${providingPlugins.map((p) => p.name).join(', ')}`
       );
     }
   }
@@ -98,7 +98,7 @@ export function verifyPlugins(plugins: PluginOption[]) {
       errors.push(
         `Configuration is missing requirement: ${requirement}, ` +
           `And is requested by ${requestingPlugins.map((p) => p.name).join(', ')}. ` +
-          `Please add a plugin with the ${requirement} feature`,
+          `Please add a plugin with the ${requirement} feature`
       );
     }
   }

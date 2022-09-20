@@ -1,11 +1,11 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
@@ -67,6 +67,7 @@ module('Plugins | columnVisibility', function (hooks) {
 
     get columns() {
       console.log(meta.forTable(this.table, ColumnVisibility).visibleColumns);
+
       return meta.forTable(this.table, ColumnVisibility).visibleColumns;
     }
 
@@ -127,7 +128,7 @@ module('Plugins | columnVisibility', function (hooks) {
         </table>
       </div>
     `,
-    TestComponentA,
+    TestComponentA
   );
 
   hooks.beforeEach(function () {
@@ -158,7 +159,6 @@ module('Plugins | columnVisibility', function (hooks) {
     test('basic re-ordering works', async function (assert) {
       await renderWithContext();
       await this.pauseTest();
-
     });
   });
 });

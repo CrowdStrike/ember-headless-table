@@ -22,7 +22,7 @@ module('Plugins | consumption', function () {
 
       assert.ok(
         table.pluginOf(DataSorting) instanceof DataSorting,
-        'DataSorting plugin successfully instantiated',
+        'DataSorting plugin successfully instantiated'
       );
 
       assert.deepEqual(
@@ -31,7 +31,7 @@ module('Plugins | consumption', function () {
           sorts,
           onSort,
         },
-        'options used',
+        'options used'
       );
     });
   });
@@ -46,7 +46,7 @@ module('Plugins | consumption', function () {
 
       assert.ok(
         table.pluginOf(ColumnResizing) instanceof ColumnResizing,
-        'Resizing plugin successfully instantiating',
+        'Resizing plugin successfully instantiating'
       );
 
       assert.deepEqual(options.forTable(table, ColumnResizing), {}, 'default options used');
@@ -61,7 +61,7 @@ module('Plugins | consumption', function () {
 
       assert.ok(
         table.pluginOf(ColumnResizing) instanceof ColumnResizing,
-        'Resizing plugin successfully instantiating',
+        'Resizing plugin successfully instantiating'
       );
 
       assert.deepEqual(
@@ -69,7 +69,7 @@ module('Plugins | consumption', function () {
         {
           enabled: false,
         },
-        'options used',
+        'options used'
       );
     });
 
@@ -82,7 +82,7 @@ module('Plugins | consumption', function () {
 
       assert.ok(
         table.pluginOf(ColumnResizing) instanceof ColumnResizing,
-        'Resizing plugin successfully instantiating',
+        'Resizing plugin successfully instantiating'
       );
 
       assert.deepEqual(
@@ -90,7 +90,7 @@ module('Plugins | consumption', function () {
         {
           enabled: false,
         },
-        'options used',
+        'options used'
       );
     });
   });
@@ -105,7 +105,7 @@ module('Plugins | consumption', function () {
 
       assert.ok(
         table.pluginOf(ColumnReordering) instanceof ColumnReordering,
-        'DataSorting plugin successfully instantiated',
+        'DataSorting plugin successfully instantiated'
       );
     });
 

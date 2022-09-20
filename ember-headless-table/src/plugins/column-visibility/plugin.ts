@@ -1,6 +1,6 @@
+import { cached } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-import { cached } from '@glimmer/tracking';
 
 import { BasePlugin, meta, options, preferences } from '../-private/base';
 
@@ -126,7 +126,7 @@ class TableMeta {
 
     assert(
       `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0,
+      referenceIndex >= 0
     );
 
     /**
@@ -146,7 +146,7 @@ class TableMeta {
 
     assert(
       `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0,
+      referenceIndex >= 0
     );
 
     /**

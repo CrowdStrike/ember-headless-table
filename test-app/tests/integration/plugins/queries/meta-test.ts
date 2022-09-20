@@ -1,5 +1,5 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { BasePlugin, meta } from 'ember-headless-table/plugins';
@@ -58,7 +58,7 @@ module('Plugins | Queries | meta', function (hooks) {
       columns?: ColumnConfig[];
       data?: unknown[];
       extraPlugins?: Plugin[];
-    },
+    }
   ) {
     return headlessTable(ctx, {
       columns: () => columns || [],
@@ -89,7 +89,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forColumn(columnAt(table, 0), TestPlugin);
         },
         /\[TestPlugin\] cannot get plugin instance of unregistered plugin/,
-        'plugin is unregistered',
+        'plugin is unregistered'
       );
     });
 
@@ -120,7 +120,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forColumn(columnAt(table, 0), PluginNoMeta);
         },
         /<#queries-no-meta-test-plugin> plugin does not have meta specified/,
-        'plugin has no meta',
+        'plugin has no meta'
       );
     });
 
@@ -135,7 +135,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forColumn(columnAt(table, 0), PluginIncompleteMeta);
         },
         /<#queries-incomplete-meta-test-plugin> plugin does not specify column meta/,
-        'plugin has incomplete meta',
+        'plugin has incomplete meta'
       );
     });
 
@@ -176,7 +176,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forTable(table, TestPlugin);
         },
         /\[TestPlugin\] cannot get plugin instance of unregistered plugin/,
-        'plugin is unregistered',
+        'plugin is unregistered'
       );
     });
 
@@ -191,7 +191,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forTable(table, PluginNoMeta);
         },
         /<#queries-no-meta-test-plugin> plugin does not have meta specified/,
-        'plugin has no meta',
+        'plugin has no meta'
       );
     });
 
@@ -206,7 +206,7 @@ module('Plugins | Queries | meta', function (hooks) {
           meta.forTable(table, PluginIncompleteMeta);
         },
         /<#queries-incomplete-meta-test-plugin> plugin does not specify table meta/,
-        'plugin has incomplete meta',
+        'plugin has incomplete meta'
       );
     });
 
@@ -260,7 +260,7 @@ module('Plugins | Queries | meta', function (hooks) {
             meta.withFeature.forColumn(columnAt(table, 0), 'feature-a');
           },
           /Could not find plugin with feature: feature-a. Available features: \[none\]/,
-          'feature not found',
+          'feature not found'
         );
       });
 
@@ -275,7 +275,7 @@ module('Plugins | Queries | meta', function (hooks) {
             meta.withFeature.forColumn(columnAt(table, 0), 'feature-a');
           },
           /Could not find plugin with feature: feature-a. Available features: feature-b/,
-          'feature not found',
+          'feature not found'
         );
       });
 
@@ -313,7 +313,7 @@ module('Plugins | Queries | meta', function (hooks) {
             meta.withFeature.forTable(table, 'feature-a');
           },
           /Could not find plugin with feature: feature-a. Available features: \[none\]/,
-          'feature not found',
+          'feature not found'
         );
       });
 
@@ -327,7 +327,7 @@ module('Plugins | Queries | meta', function (hooks) {
             meta.withFeature.forTable(table, 'feature-a');
           },
           /Could not find plugin with feature: feature-a. Available features: feature-b/,
-          'feature not found',
+          'feature not found'
         );
       });
 

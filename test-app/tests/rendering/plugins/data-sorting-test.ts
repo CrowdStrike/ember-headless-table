@@ -1,11 +1,11 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
@@ -137,7 +137,7 @@ module('Plugins | dataSorting', function (hooks) {
         </table>
       </div>
     `,
-    TestComponentA,
+    TestComponentA
   );
 
   hooks.beforeEach(function () {
@@ -184,7 +184,8 @@ module('Plugins | dataSorting', function (hooks) {
 
   module('with basic sorting configured', function (hooks) {
     class Configured extends Context {
-      @tracked sorts: SortItem<unknown>[] = [
+      @tracked
+      sorts: SortItem<unknown>[] = [
         {
           direction: SortDirection.Ascending,
           property: 'A',

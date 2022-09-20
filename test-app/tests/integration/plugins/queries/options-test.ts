@@ -1,11 +1,10 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-
-import { expectTypeOf } from 'expect-type';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { options } from 'ember-headless-table/plugins';
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
+import { expectTypeOf } from 'expect-type';
 
 import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
 
@@ -46,7 +45,7 @@ module('Plugins | Queries | options', function (hooks) {
       expectTypeOf(columnOptions?.sortProperty).toEqualTypeOf<string | undefined>();
       expectTypeOf(columnOptions?.isSortable).toEqualTypeOf<boolean | undefined>();
 
-      assert.strictEqual(columnOptions?.isSortable, true, 'option matches: isSortable');
+      assert.true(columnOptions?.isSortable, 'option matches: isSortable');
       assert.strictEqual(columnOptions?.sortProperty, 'foo', 'option matches: sortProperty');
     });
 
@@ -65,7 +64,7 @@ module('Plugins | Queries | options', function (hooks) {
       assert.strictEqual(
         options.forColumn(columnAt(table, 0), DataSorting)?.sortProperty,
         undefined,
-        'no user-provided option',
+        'no user-provided option'
       );
     });
 
@@ -92,7 +91,7 @@ module('Plugins | Queries | options', function (hooks) {
       assert.strictEqual(
         options.forColumn(columnAt(table, 0), DataSorting)?.sortProperty,
         'foo',
-        'property exists',
+        'property exists'
       );
     });
   });
@@ -130,7 +129,7 @@ module('Plugins | Queries | options', function (hooks) {
       assert.strictEqual(
         options.forTable(table, DataSorting)?.sorts,
         undefined,
-        'no user-provided option',
+        'no user-provided option'
       );
     });
 
@@ -144,7 +143,7 @@ module('Plugins | Queries | options', function (hooks) {
       assert.strictEqual(
         options.forTable(table, DataSorting)?.sorts,
         undefined,
-        'no options to get',
+        'no options to get'
       );
     });
   });

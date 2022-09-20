@@ -75,7 +75,7 @@ export class TablePreferences {
   setColumnPreference<K extends keyof ColumnPreferences>(
     columnKey: string,
     key: K,
-    value: ColumnPreferences[K],
+    value: ColumnPreferences[K]
   ) {
     let preferences = this.getColumnPreferences(columnKey);
     let newValue = { ...preferences, [key]: value };

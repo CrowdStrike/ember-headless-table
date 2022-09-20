@@ -1,5 +1,5 @@
-import { settled } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
+import { settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import { headlessTable } from 'ember-headless-table';

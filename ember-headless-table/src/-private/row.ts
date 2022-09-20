@@ -44,7 +44,7 @@ export class Row<DataType = Record<string, unknown>> {
   handleClick(event: MouseEvent) {
     assert(
       `expected event.target to be an instance of HTMLElement`,
-      event.target instanceof HTMLElement || event.target instanceof SVGElement,
+      event.target instanceof HTMLElement || event.target instanceof SVGElement
     );
 
     let selection = document.getSelection();

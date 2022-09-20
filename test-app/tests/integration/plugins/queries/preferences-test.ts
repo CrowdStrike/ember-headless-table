@@ -1,5 +1,5 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { preferences } from 'ember-headless-table/plugins';
@@ -30,7 +30,7 @@ module('Plugins | Queries | preferences', function (hooks) {
       data?: PreferencesData;
       onPersist?: (key: string, data: unknown) => void;
       restoreFrom?: (key: string) => PreferencesData;
-    },
+    }
   ) {
     return headlessTable(ctx, {
       columns: () => columns || [],
@@ -70,10 +70,9 @@ module('Plugins | Queries | preferences', function (hooks) {
 
         let prefs = preferences.forTable(table, DataSorting);
 
-        assert.strictEqual(
+        assert.false(
           table.preferences.storage.isAtDefault,
-          false,
-          'preferences storage is not at default',
+          'preferences storage is not at default'
         );
 
         assert.strictEqual(prefs.get('some-key'), 2, `some-key's value restored`);
@@ -93,11 +92,7 @@ module('Plugins | Queries | preferences', function (hooks) {
 
         let prefs = preferences.forTable(table, DataSorting);
 
-        assert.strictEqual(
-          table.preferences.storage.isAtDefault,
-          true,
-          'preferences storage is at default',
-        );
+        assert.true(table.preferences.storage.isAtDefault, 'preferences storage is at default');
 
         assert.strictEqual(prefs.get('some-key'), undefined, 'some-key has no value');
 
@@ -157,13 +152,12 @@ module('Plugins | Queries | preferences', function (hooks) {
               },
             },
           },
-          'the persisted preferences structure is restored',
+          'the persisted preferences structure is restored'
         );
 
-        assert.strictEqual(
+        assert.false(
           table.preferences.storage.isAtDefault,
-          false,
-          'preferences storage is not at default',
+          'preferences storage is not at default'
         );
 
         let prefs = preferences.forColumn(columnAt(table, 1), DataSorting);
@@ -188,7 +182,7 @@ module('Plugins | Queries | preferences', function (hooks) {
               },
             },
           },
-          'persisted data matches with our updates',
+          'persisted data matches with our updates'
         );
 
         assert.verifySteps([
@@ -213,7 +207,7 @@ module('Plugins | Queries | preferences', function (hooks) {
               },
             },
           },
-          'persisted data matches with our deletion',
+          'persisted data matches with our deletion'
         );
 
         assert.verifySteps(['persist: test-preferences']);
@@ -235,28 +229,20 @@ module('Plugins | Queries | preferences', function (hooks) {
           },
         });
 
-        assert.strictEqual(
-          table.preferences.storage.isAtDefault,
-          true,
-          'empty preferences is "at default"',
-        );
+        assert.true(table.preferences.storage.isAtDefault, 'empty preferences is "at default"');
         assert.deepEqual(
           table.preferences.storage.serialize(),
           { plugins: {} },
-          'empty preferences are empty',
+          'empty preferences are empty'
         );
 
         let prefs = preferences.forColumn(columnAt(table, 1), DataSorting);
 
-        assert.strictEqual(
-          table.preferences.storage.isAtDefault,
-          true,
-          'preferences storage is at default',
-        );
+        assert.true(table.preferences.storage.isAtDefault, 'preferences storage is at default');
         assert.strictEqual(
           prefs.get('some-preference'),
           undefined,
-          'when at default, getting data should be undefined',
+          'when at default, getting data should be undefined'
         );
 
         prefs.set('some-key', 3);
@@ -277,7 +263,7 @@ module('Plugins | Queries | preferences', function (hooks) {
               },
             },
           },
-          'persisted structure contains the data we set earlier',
+          'persisted structure contains the data we set earlier'
         );
 
         assert.verifySteps([

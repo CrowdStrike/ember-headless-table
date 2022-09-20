@@ -1,8 +1,8 @@
+import { cached, tracked } from '@glimmer/tracking';
 import { getOwner, setOwner } from '@ember/application';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { cached, tracked } from '@glimmer/tracking';
 
 import { Resource } from 'ember-resources/core';
 import { map } from 'ember-resources/util/map';
@@ -229,7 +229,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
   getColumnPreference<K extends keyof ColumnPreferences>(
     columnKey: ColumnKey<DataType>,
-    key: K,
+    key: K
   ): ColumnPreferences[K] {
     return this.preferences.getColumnPreferences(columnKey)[key];
   }

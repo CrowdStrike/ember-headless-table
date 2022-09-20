@@ -1,11 +1,10 @@
 import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupRenderingTest, setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-
-import sinon from 'sinon';
+import { setupRenderingTest, setupTest } from 'ember-qunit';
 
 import { TablePreferences } from 'ember-headless-table';
+import sinon from 'sinon';
 
 import type { PreferencesData } from 'ember-headless-table';
 
@@ -64,7 +63,7 @@ module('Unit | -private | table-preferences', function (hooks) {
       assert.deepEqual(
         preferences.getColumnPreferences('foo'),
         { isVisible: true },
-        'existing preference updated succesfully',
+        'existing preference updated succesfully'
       );
 
       preferences.setColumnPreference('bar', 'isVisible', false);
@@ -72,7 +71,7 @@ module('Unit | -private | table-preferences', function (hooks) {
       assert.deepEqual(
         preferences.getColumnPreferences('bar'),
         { isVisible: false },
-        'preference for column without previous preferences set correctly',
+        'preference for column without previous preferences set correctly'
       );
     });
 
@@ -83,18 +82,17 @@ module('Unit | -private | table-preferences', function (hooks) {
 
       let result = preferences.deleteColumnPreference('foo', 'isVisible');
 
-      assert.strictEqual(result, true, 'returns true when preference is successfully deleted');
+      assert.true(result, 'returns true when preference is successfully deleted');
 
       assert.deepEqual(
         preferences.getColumnPreferences('foo'),
         {},
-        'preference was successfully deleted',
+        'preference was successfully deleted'
       );
 
-      assert.strictEqual(
+      assert.false(
         preferences.deleteColumnPreference('bar', 'isVisible'),
-        false,
-        'returns false when preference for column does not exist',
+        'returns false when preference for column does not exist'
       );
     });
 
@@ -259,7 +257,7 @@ module('Unit | -private | table-preferences', function (hooks) {
 
       preferences.deleteColumnPreference('baz', 'isVisible');
 
-      assert.strictEqual(persist.notCalled, true, 'persist was not called');
+      assert.true(persist.notCalled, 'persist was not called');
     });
 
     test('@adapter#persist(): is called when setColumnPreference', async function (assert) {
@@ -377,7 +375,7 @@ module('Unit | -private | table-preferences', function (hooks) {
       let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
 
       assert.strictEqual(foo, 2);
-      assert.strictEqual(woop, false);
+      assert.false(woop);
 
       preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
       preferences.storage.forPlugin('column-visibility').table.set('foo', 3);
@@ -386,7 +384,7 @@ module('Unit | -private | table-preferences', function (hooks) {
       woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
 
       assert.strictEqual(foo, 3);
-      assert.strictEqual(woop, true);
+      assert.true(woop);
 
       preferences.persist();
 

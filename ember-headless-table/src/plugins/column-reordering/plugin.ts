@@ -1,6 +1,6 @@
+import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-import { cached, tracked } from '@glimmer/tracking';
 
 import { TrackedMap } from 'tracked-built-ins';
 

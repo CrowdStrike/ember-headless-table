@@ -1,19 +1,16 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { htmlSafe } from '@ember/template';
 import { findAll, render } from '@ember/test-helpers';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupRenderingTest } from 'ember-qunit';
 import * as QUnit from 'qunit';
 import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
-import {
-  ColumnResizing,
-  resizeHandle,
-} from 'ember-headless-table/plugins/column-resizing';
+import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { createHelpers } from 'ember-headless-table/test-support';
 
@@ -164,7 +161,7 @@ module('Plugins | resizing', function (hooks) {
         </div>
       </div>
     `,
-    TestComponentA,
+    TestComponentA
   );
 
   class TestComponentB extends Component<{ ctx: Context }> {
@@ -238,7 +235,7 @@ module('Plugins | resizing', function (hooks) {
         </div>
       </div>
     `,
-    TestComponentB,
+    TestComponentB
   );
 
   hooks.beforeEach(function () {
@@ -291,7 +288,7 @@ module('Plugins | resizing', function (hooks) {
           { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
           { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
           { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-        ],
+        ]
       );
 
       await assertChanges(
@@ -301,7 +298,7 @@ module('Plugins | resizing', function (hooks) {
           { value: () => width(columnB), by: 10, msg: 'width of B increased by 10' },
           { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
           { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-        ],
+        ]
       );
     });
   });
@@ -321,7 +318,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
             { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
 
         await assertChanges(
@@ -331,7 +328,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: 10, msg: 'width of B increased by 10' },
             { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
       });
 
@@ -357,7 +354,7 @@ module('Plugins | resizing', function (hooks) {
             },
             { value: () => width(columnC), by: -50, msg: 'width of C decreased by remainder' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
       });
 
@@ -375,7 +372,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: 1000, msg: 'width of B increased by 1000' },
             { value: () => width(columnC), by: 1000, msg: 'width of C increased by 1000' },
             { value: () => width(columnD), by: 1000, msg: 'width of D increased by 1000' },
-          ],
+          ]
         );
 
         // When the container shrinks, columns shrink equally
@@ -386,7 +383,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: -500, msg: 'width of B decreased by 500' },
             { value: () => width(columnC), by: -500, msg: 'width of C decreased by 500' },
             { value: () => width(columnD), by: -500, msg: 'width of D decreased by 500' },
-          ],
+          ]
         );
       });
 
@@ -404,7 +401,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
             { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
 
         // When the container grows by 1000, each column grows by 250
@@ -415,7 +412,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: 250, msg: 'width of B increased by 250' },
             { value: () => width(columnC), by: 250, msg: 'width of C increased by 250' },
             { value: () => width(columnD), by: 250, msg: 'width of D increased by 250' },
-          ],
+          ]
         );
 
         // When the container shrinks by 1000, each column shrinks by 250
@@ -426,7 +423,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: -250, msg: 'width of B decreased by 250' },
             { value: () => width(columnC), by: -250, msg: 'width of C decreased by 250' },
             { value: () => width(columnD), by: -250, msg: 'width of D decreased by 250' },
-          ],
+          ]
         );
       });
     });
@@ -457,7 +454,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
             { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
 
         await assertChanges(
@@ -467,7 +464,7 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnB), by: 10, msg: 'width of B increased by 10' },
             { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-          ],
+          ]
         );
       });
     });

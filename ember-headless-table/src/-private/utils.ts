@@ -1,7 +1,7 @@
 import type { Destructor, FunctionModifier } from '#interfaces';
 
 export function composeFunctionModifiers<Args extends unknown[]>(
-  modifiers: Array<FunctionModifier<Args> | undefined>,
+  modifiers: Array<FunctionModifier<Args> | undefined>
 ) {
   let setup = modifiers.filter(Boolean) as FunctionModifier<Args>[];
 

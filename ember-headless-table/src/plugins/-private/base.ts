@@ -1,5 +1,5 @@
-import { assert } from '@ember/debug';
 import { cached } from '@glimmer/tracking';
+import { assert } from '@ember/debug';
 
 import { normalizePluginsConfig } from './utils';
 
@@ -77,7 +77,7 @@ export abstract class BasePlugin<
   ColumnMeta = unknown,
   TableMeta = unknown,
   Options = unknown,
-  ColumnOptions = unknown,
+  ColumnOptions = unknown
 > implements Plugin<ColumnMeta, TableMeta>
 {
   constructor(protected table: Table) {
@@ -89,7 +89,7 @@ export abstract class BasePlugin<
    */
   static with<T extends BasePlugin>(
     this: Constructor<T>,
-    configFn: () => OptionsFor<T>,
+    configFn: () => OptionsFor<T>
   ): [Constructor<T>, () => OptionsFor<T>] {
     return [this, configFn];
   }
@@ -100,7 +100,7 @@ export abstract class BasePlugin<
    */
   static forColumn<T extends BasePlugin>(
     this: Constructor<T>,
-    configFn: () => ColumnOptionsFor<T>,
+    configFn: () => ColumnOptionsFor<T>
   ): [Constructor<T>, () => ColumnOptionsFor<T>] {
     return [this, configFn];
   }
@@ -301,7 +301,7 @@ export const meta = {
      */
     forColumn<FeatureName extends string>(
       column: Column,
-      featureName: FeatureName,
+      featureName: FeatureName
     ): ColumnFeatures[FeatureName] {
       let { plugins } = column.table;
 
@@ -310,7 +310,7 @@ export const meta = {
       assert(
         `Could not find plugin with feature: ${featureName}. ` +
           `Available features: ${availableFeatures(plugins)}`,
-        provider,
+        provider
       );
 
       // TS doesn't believe in the constructor property?
@@ -328,7 +328,7 @@ export const meta = {
      */
     forTable<FeatureName extends string>(
       table: Table,
-      featureName: FeatureName,
+      featureName: FeatureName
     ): TableFeatures[FeatureName] {
       let { plugins } = table;
 
@@ -337,7 +337,7 @@ export const meta = {
       assert(
         `Could not find plugin with feature: ${featureName}. ` +
           `Available features: ${availableFeatures(plugins)}`,
-        provider,
+        provider
       );
 
       // TS doesn't believe in the constructor property?
@@ -402,7 +402,7 @@ export const options = {
 
   forColumn<P extends BasePlugin>(
     column: Column,
-    klass: Class<P>,
+    klass: Class<P>
   ): ColumnOptionsFor<P> | undefined {
     let tuple = column.config.pluginOptions?.find((option) => option[0] === klass);
     let t = tuple as [unknown, () => ColumnOptionsFor<P>];
@@ -423,7 +423,7 @@ function getPluginInstance<RootKey extends object, Instance>(
   map: WeakMap<RootKey, Map<Class<Instance>, Instance>>,
   rootKey: RootKey,
   mapKey: Class<Instance>,
-  factory: () => Instance,
+  factory: () => Instance
 ): Instance {
   let bucket = map.get(rootKey);
 

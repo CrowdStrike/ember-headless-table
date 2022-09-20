@@ -1,6 +1,6 @@
+import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
-import { cached, tracked } from '@glimmer/tracking';
 
 import { BasePlugin, meta, options } from '../-private/base';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
@@ -219,7 +219,7 @@ function distributeDelta(delta: number, visibleColumns: Column[]) {
   let metas = visibleColumns.map((column) => meta.forColumn(column, ColumnResizing));
 
   let resizableMetas = metas.filter(
-    (meta) => meta.isResizable && (delta < 0 ? meta.canShrink : true),
+    (meta) => meta.isResizable && (delta < 0 ? meta.canShrink : true)
   );
 
   let columnDelta = delta / resizableMetas.length;

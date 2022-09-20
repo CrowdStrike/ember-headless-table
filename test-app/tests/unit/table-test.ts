@@ -1,15 +1,10 @@
 import { getOwner } from '@ember/application';
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 
-import type {
-  Column,
-  ColumnConfig,
-  TableConfig,
-  TableMeta,
-} from 'ember-headless-table';
+import type { Column, ColumnConfig, TableConfig, TableMeta } from 'ember-headless-table';
 
 type Args = Omit<TableConfig<unknown>, 'meta' | 'preferences'> &
   TableMeta & { preferencesKey?: string; title?: string };

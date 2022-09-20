@@ -18,7 +18,7 @@ type ColumnPluginOption<P = Plugin> = P extends BasePlugin
   ? [Constructor<P>, () => ReturnType<P['getColumnOptions']>]
   : [P | Constructor<P>, () => unknown];
 
-export interface CellOptions extends Record<string, unknown> {}
+export type CellOptions = Record<string, unknown>;
 
 export interface ColumnConfig<T = unknown> {
   /**

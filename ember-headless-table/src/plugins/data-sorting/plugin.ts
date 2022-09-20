@@ -1,5 +1,5 @@
-import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 import { BasePlugin, meta, options } from '../-private/base';
 import { SortDirection } from './types';

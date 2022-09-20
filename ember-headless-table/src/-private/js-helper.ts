@@ -28,7 +28,7 @@ export function headlessTable<T = unknown>(
        -- until all the dynamically supported options become plugins or thunks
           -> this is probably the easiest first step (pre plugin conversion)
      */
-    | (() => TableConfig<T>),
+    | (() => TableConfig<T>)
 ): Table<T> {
   let thunk = typeof options === 'function' ? options : () => options;
 
