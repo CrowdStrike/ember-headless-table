@@ -144,6 +144,7 @@ class TrackedPreferences {
       key: name,
       storage: this.plugins,
       cache: this.#proxyCache,
+      readMethods: ['get', 'forColumn', 'serialize'],
       create: () => new TrackedPluginPrefs(),
     });
   }
@@ -182,14 +183,15 @@ class TrackedPluginPrefs {
     return this.table.size === 0 && [...this.columns.values()].every((x) => x.size === 0);
   }
 
-  forColumn(key: string): TrackedMap<string, unknown> {
+  forColumn = (key: string): TrackedMap<string, unknown> => {
     return deferredAccess({
       key,
       storage: this.columns,
       cache: this.#columnProxyCache,
+      readMethods: ['get'],
       create: () => new TrackedMap(),
     });
-  }
+  };
 
   serialize(): PluginPreferences {
     let columnsPrefs: PluginPreferences['columns'] = {};
@@ -237,11 +239,13 @@ function deferredAccess<Instance = object>({
   key,
   storage,
   cache: storageCache,
+  readMethods = [],
   create,
 }: {
   key: string;
   storage: Map<unknown, Instance>;
   cache: Map<unknown, Instance>;
+  readMethods?: Array<string | symbol>;
   create: () => Instance;
 }): Instance {
   let existing = storage.get(key);
@@ -294,12 +298,17 @@ function deferredAccess<Instance = object>({
         let value = Reflect.get(target, property, receiver);
 
         if (typeof value === 'function') {
+          if (readMethods.includes(property)) {
+            return value;
+          }
+
           let fnCache = fnCacheFor(target);
           let existing = fnCache.get(property);
 
           if (!existing) {
             let newFn = function (...args: unknown[]) {
               assert(`Cannot proxy 'inCache' when it is falesy`, inCache);
+              console.log('proxy', { property, storage, key, inCache });
 
               /**
                * Doing this means that next time `forPlugin` is called, we'll skip all of this

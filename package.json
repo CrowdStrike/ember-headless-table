@@ -11,6 +11,7 @@
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:tests": "pnpm --filter ember-headless-table start",
     "start:addon": "pnpm --filter ember-headless-table start --no-watch.clearScreen",
+    "ci:update": "npx ember-ci-update",
     "test": "pnpm --filter ember-headless-table test",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix"

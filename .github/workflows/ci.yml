@@ -18,17 +18,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci
+      - name: "Setup"
+        uses: ./.github/actions/setup
       - name: Lint
         run: npm run lint
       - name: Run Tests
-        run: npm run test
+        run: pnpm test
 
   floating:
     name: "Floating Dependencies"

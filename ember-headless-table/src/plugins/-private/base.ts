@@ -62,8 +62,6 @@ export interface ColumnFeatures extends Record<string, unknown | undefined> {
   columnOrder: InstanceOf<ColumnReordering['meta']['column']>;
 }
 
-const PLUGIN_INIT = Symbol('__PLUGIN_INIT__');
-
 /**
  * @public
  *
@@ -80,9 +78,7 @@ export abstract class BasePlugin<
   ColumnOptions = unknown
 > implements Plugin<ColumnMeta, TableMeta>
 {
-  constructor(protected table: Table) {
-    preferences[PLUGIN_INIT](table, (this as any).constructor);
-  }
+  constructor(protected table: Table) {}
 
   /**
    * Helper for specifying plugins on `headlessTable` with the plugin-level options
@@ -147,9 +143,6 @@ export abstract class BasePlugin<
 }
 
 export const preferences = {
-  [PLUGIN_INIT]<P extends Plugin>(table: Table, klass: Class<P>) {
-    table.preferences.storage.forPlugin(klass.name);
-  },
   /**
    * @public
    *
@@ -181,6 +174,8 @@ export const preferences = {
         let prefs = column.table.preferences;
         let existing = prefs.storage.forPlugin(klass.name);
         let columnPrefs = existing.forColumn(column.key);
+
+        console.log('forColumn.get', { existing, columnPrefs })
 
         return columnPrefs.get(key);
       },
