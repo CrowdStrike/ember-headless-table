@@ -24,6 +24,7 @@ module('Plugins | columnReordering', function (hooks) {
   setupRenderingTest(hooks);
 
   let ctx: Context;
+  let getColumnOrder = () => findAll('thead tr .name').map(x => x.innerText.trim()).join(' ');
 
   const DATA = [
     {
@@ -125,8 +126,9 @@ module('Plugins | columnReordering', function (hooks) {
                   <button class="right" {{on 'click' (fn this.moveRight column)}}>
                     Move Right
                   </button>
+                  <br>
 
-                  {{column.name}}
+                  <span class="name">{{column.name}}</span>
                 </th>
               {{else}}
                 <th>
@@ -180,18 +182,18 @@ module('Plugins | columnReordering', function (hooks) {
       });
     }
 
-    hooks.beforeEach(function () {
+    hooks.beforeEach(async function () {
       ctx = new DefaultOptions();
       setOwner(ctx, this.owner);
-    });
 
-    test('everything is visible and in the original order', async function (assert) {
       await render(
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
       );
+    });
 
+    test('everything is visible and in the original order', async function (assert) {
       assert.dom('th').exists({ count: 4 });
       assert.dom(`th.A`).exists();
       assert.dom(`th.B`).exists();
@@ -201,6 +203,59 @@ module('Plugins | columnReordering', function (hooks) {
       assert.dom('thead tr').containsText('B');
       assert.dom('thead tr').containsText('C');
       assert.dom('thead tr').containsText('D');
+      assert.strictEqual(
+        getColumnOrder(),
+        'A B C D',
+        'Initial order'
+      );
+    });
+
+    test('a column in the middle can be moved to the left', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
+
+      await click('th.B .left');
+
+      assert.strictEqual(getColumnOrder(), 'B A C D');
+    });
+
+    test('a column in the middle can be moved to the right', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
+
+      await click('th.B .right');
+
+      assert.strictEqual(getColumnOrder(), 'A C B D');
+    });
+
+    test('a column on the left can be moved to the right', async function (assert) {
+
+    });
+
+    test('a column on the right can be moved to the left', async function (assert) {
+
+    });
+
+    test('a column on the right, moved to the right, does not move', async function (assert) {
+
+    });
+
+    test('a column on the left, moved to the left, does not move', async function (assert) {
+
+    });
+
+    test('we can remove a column, and order is retained', async function (assert) {
+
+    });
+
+    test('we can add a column, and order is retained', async function (assert) {
+
+    });
+
+    test('hiding a column preserves order', async function (assert) {
+
+    });
+
+    test('showing a hidden column preserves order', async function (assert) {
+
     });
   });
 });
