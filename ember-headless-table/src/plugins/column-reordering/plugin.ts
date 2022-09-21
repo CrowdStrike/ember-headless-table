@@ -10,7 +10,6 @@ import type { Plugin } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 export interface ColumnOptions {}
-
 export interface TableOptions {}
 
 export class ColumnReordering
@@ -66,6 +65,10 @@ class ColumnMeta {
 class ColumnOrder {
   @tracked map = new TrackedMap<number, string>();
 
+  get isUnitialized() {
+    return this.map.size === 0;
+  }
+
   @action
   set(key: string, position: number) {
     this.map.set(position, key);
@@ -114,13 +117,9 @@ class TableMeta {
     let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
     let columns = visiblility.visibleColumns;
 
-    const sortedColumns =
-      this.columnOrder ?? columns.map((column, position) => ({ key: column.key, position }));
+    let result = getRepositionedColumns(columns, this.columnOrder);
 
-    // TODO: Make plugin-aware
-    let result = getRepositionedColumns(columns, sortedColumns) as any;
-
-    result.records = result;
+    console.log({ columns, result });
 
     return result;
   }
@@ -128,6 +127,10 @@ class TableMeta {
 
 function getRepositionedColumns(columns: Column[], orderedColumns: ColumnOrder | undefined) {
   if (orderedColumns === undefined) {
+    return columns;
+  }
+
+  if (orderedColumns?.isUnitialized) {
     return columns;
   }
 

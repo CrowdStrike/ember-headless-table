@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-// @ts-ignore
-import { setComponentTemplate } from '@ember/component';
+import { setOwner } from '@ember/application';
+// @ts-expect-error
+import { on } from '@ember/modifier';
+// @ts-expect-error
+import { fn } from '@ember/helper';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -14,12 +15,14 @@ import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 import type { Column } from 'ember-headless-table';
-import { setOwner } from '@ember/application';
 
+/**
+  * NOTE: these tests depend on the columnVisibility stuff working.
+  *       so if something has gone wrong everywhere, check there first.
+  */
 module('Plugins | columnReordering', function (hooks) {
   setupRenderingTest(hooks);
 
-  let renderWithContext: (comp?: unknown) => Promise<void>;
   let ctx: Context;
 
   const DATA = [
@@ -47,8 +50,6 @@ module('Plugins | columnReordering', function (hooks) {
   ];
 
   class Context {
-    @tracked containerWidth = 1000;
-
     columns = [
       { name: 'A', key: 'A' },
       { name: 'B', key: 'B' },
@@ -79,11 +80,16 @@ module('Plugins | columnReordering', function (hooks) {
     moveRight = (column: Column) => {
       return meta.forColumn(column, ColumnReordering).moveRight();
     };
-  }
 
-  setComponentTemplate(
-    hbs`
-      {{!-- template-lint-disable no-forbidden-elements --}}
+    hide = (column: Column) => {
+      return meta.forColumn(column, ColumnVisibility).hide();
+    };
+
+    show = (column: Column) => {
+      return meta.forColumn(column, ColumnVisibility).show();
+    };
+
+    <template>
       <style>
         [data-scroll-container] {
           height: 100%;
@@ -95,20 +101,32 @@ module('Plugins | columnReordering', function (hooks) {
           border: 1px solid #999;
         }
       </style>
-      {{!-- template-lint-disable no-inline-styles --}}
-      {{!-- template-lint-disable style-concatenation --}}
+      <div>
+        {{#each this.table.columns as |column|}}
+          {{column.name}}:
+          <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+            Hide
+          </button>
+          <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+            Show
+          </button>
+          <br>
+        {{/each}}
+      </div>
       <div class="theme-light" data-scroll-container {{this.table.modifiers.container}}>
         <table>
           <thead>
             <tr>
-              {{#each this.table.visibleColumns as |column|}}
-                <th {{this.table.modifiers.columnHeader column}}>
+              {{#each this.columns as |column|}}
+                <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
                   <button class="left" {{on 'click' (fn this.moveLeft column)}}>
                     Move Left
                   </button>
                   <button class="right" {{on 'click' (fn this.moveRight column)}}>
                     Move Right
                   </button>
+
+                  {{column.name}}
                 </th>
               {{else}}
                 <th>
@@ -120,7 +138,7 @@ module('Plugins | columnReordering', function (hooks) {
           <tbody>
             {{#each this.table.rows as |row|}}
               <tr>
-                {{#each this.table.visibleColumns as |column|}}
+                {{#each this.columns as |column|}}
                   <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
@@ -128,21 +146,8 @@ module('Plugins | columnReordering', function (hooks) {
           </tbody>
         </table>
       </div>
-    `,
-    TestComponentA
-  );
-
-  hooks.beforeEach(function () {
-    ctx = new Context();
-
-    renderWithContext = async (comp = TestComponentA) => {
-      this.setProperties({ comp, ctx });
-
-      await render(hbs`
-        <this.comp @ctx={{this.ctx}} />
-      `);
-    };
-  });
+    </template>
+  }
 
   module('with unmet requirements', function () {
     class DefaultOptions extends Context {
@@ -180,9 +185,22 @@ module('Plugins | columnReordering', function (hooks) {
       setOwner(ctx, this.owner);
     });
 
-    test('basic re-ordering works', async function (assert) {
-      await renderWithContext();
-      // await this.pauseTest();
+    test('everything is visible and in the original order', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').exists({ count: 4 });
+      assert.dom(`th.A`).exists();
+      assert.dom(`th.B`).exists();
+      assert.dom(`th.C`).exists();
+      assert.dom(`th.D`).exists();
+      assert.dom('thead tr').containsText('A');
+      assert.dom('thead tr').containsText('B');
+      assert.dom('thead tr').containsText('C');
+      assert.dom('thead tr').containsText('D');
     });
   });
 });

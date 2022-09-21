@@ -8,6 +8,13 @@ import type { Plugin } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 export interface ColumnOptions {
+  /**
+   * The default visibilty of the column, when rendered.
+   * The column can still be toggled on and off.
+   *
+   * When interacting with preferences, the value stored in preferenced
+   * will be the inverse of this value (to save space in storage).
+   */
   isVisible?: boolean;
 }
 

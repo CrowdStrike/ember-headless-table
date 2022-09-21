@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 // @ts-ignore
 import { on } from '@ember/modifier';
 // @ts-ignore
 import { fn } from '@ember/helper';
-import { click, findAll, render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -45,8 +44,6 @@ module('Plugins | columnVisibility', function (hooks) {
   ];
 
   class Context {
-    @tracked containerWidth = 1000;
-
     columns = [
       { name: 'A', key: 'A' },
       { name: 'B', key: 'B' },
