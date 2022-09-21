@@ -67,8 +67,6 @@ module('Plugins | columnVisibility', function (hooks) {
     }
 
     get columns() {
-      console.log(meta.forTable(this.table, ColumnVisibility).visibleColumns);
-
       return meta.forTable(this.table, ColumnVisibility).visibleColumns;
     }
 
@@ -94,12 +92,14 @@ module('Plugins | columnVisibility', function (hooks) {
       </style>
       <div>
         {{#each this.table.columns as |column|}}
+          {{column.name}}:
           <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
             Hide
           </button>
           <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
             Show
           </button>
+          <br>
         {{/each}}
       </div>
       <div class="theme-light" data-scroll-container {{this.table.modifiers.container}}>
@@ -108,6 +108,7 @@ module('Plugins | columnVisibility', function (hooks) {
             <tr>
               {{#each this.columns as |column|}}
                 <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
+                  {{column.name}}
                 </th>
               {{else}}
                 <th>
@@ -173,11 +174,11 @@ module('Plugins | columnVisibility', function (hooks) {
       for (let column of ctx.columns) {
         await click(`.hide.${column.key}`);
         assert.dom('th').exists({ count: 3 });
-        assert.dom('th').doesNotContainText(column.name);
+        assert.dom('thead tr').doesNotContainText(column.name);
 
         await click(`.show.${column.key}`);
         assert.dom('th').exists({ count: 4 });
-        assert.dom('th').containsText(column.name);
+        assert.dom('thead tr').containsText(column.name);
       }
     });
 
@@ -189,12 +190,13 @@ module('Plugins | columnVisibility', function (hooks) {
       );
 
       assert.dom('th').exists({ count: 4 });
+      assert.dom('thead').doesNotContainText('No columns are visible');
 
       for (let column of ctx.columns) {
         await click(`.hide.${column.key}`);
       }
 
-      assert.dom('th').doesNotExist()
+      assert.dom('thead').containsText('No columns are visible');
     });
 
     test('columns re-appear in the same order they were left in', async function (assert) {
@@ -204,20 +206,20 @@ module('Plugins | columnVisibility', function (hooks) {
         </template>
       );
 
-      assert.dom('th').hasText('ABCD');
+      assert.dom('thead tr').hasText('A B C D');
 
       for (let column of ctx.columns) {
         await click(`.hide.${column.key}`);
       }
 
-      assert.dom('th').doesNotExist()
+      assert.dom('thead tr').doesNotContainText('ABCD');
 
       await click(`.show.${ctx.columns[2]?.key}`)
       await click(`.show.${ctx.columns[0]?.key}`)
       await click(`.show.${ctx.columns[3]?.key}`)
       await click(`.show.${ctx.columns[1]?.key}`)
 
-      assert.dom('th').hasText('ABCD');
+      assert.dom('thead tr').hasText('A B C D');
     });
   });
 });

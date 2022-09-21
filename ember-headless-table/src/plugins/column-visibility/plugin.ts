@@ -49,7 +49,7 @@ class ColumnMeta {
     let columnPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let columnOptions = options.forColumn(this.column, ColumnVisibility);
 
-    return columnPreferences.get('isVisible') ?? columnOptions?.isVisible;
+    return columnPreferences.get('isVisible') ?? columnOptions?.isVisible ?? true;
   }
 
   hide = () => {
