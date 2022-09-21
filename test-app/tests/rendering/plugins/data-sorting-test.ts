@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+// DT has not defined this
+// @ts-ignore
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
@@ -13,6 +15,7 @@ import { DataSorting, SortDirection } from 'ember-headless-table/plugins/data-so
 
 import type { Column } from 'ember-headless-table';
 import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
+import { setOwner } from '@ember/application';
 
 module('Plugins | dataSorting', function (hooks) {
   setupRenderingTest(hooks);
@@ -142,6 +145,7 @@ module('Plugins | dataSorting', function (hooks) {
 
   hooks.beforeEach(function () {
     ctx = new Context();
+    setOwner(ctx, this.owner);
 
     renderWithContext = async (comp = TestComponentA) => {
       this.setProperties({ comp, ctx });
@@ -163,6 +167,7 @@ module('Plugins | dataSorting', function (hooks) {
 
     hooks.beforeEach(function () {
       ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
     });
 
     test('sorting does nothing', async function (assert) {
@@ -214,6 +219,7 @@ module('Plugins | dataSorting', function (hooks) {
 
     hooks.beforeEach(function () {
       ctx = new Configured();
+      setOwner(ctx, this.owner);
     });
 
     test('sorting works', async function (assert) {

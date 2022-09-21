@@ -1,12 +1,7 @@
 import type { BasePlugin, Plugin } from '../../plugins';
 import type { Column } from '../column';
 import type { Row } from '../row';
-// Pending
-//  https://github.com/emberjs/ember.js/pull/19953
-// eslint-disable-next-line
-// @ts-ignore
-import type { setComponentTemplate } from '@ember/component';
-import type Component from '@glimmer/component';
+import type { ComponentLike } from '@glint/template';
 import type { Constructor } from 'type-fest';
 
 export interface CellContext<T> {
@@ -43,7 +38,7 @@ export interface ColumnConfig<T = unknown> {
    * Out-of-the-box, this property isn't used, but the provided type may be
    * a convenience for consumers of the headless table
    */
-  Cell?: Component | ReturnType<typeof setComponentTemplate>;
+  Cell?: ComponentLike;
 
   /**
    * The name or title of the column, shown in the column heading / th

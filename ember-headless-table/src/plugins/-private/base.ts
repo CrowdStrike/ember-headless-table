@@ -175,8 +175,6 @@ export const preferences = {
         let existing = prefs.storage.forPlugin(klass.name);
         let columnPrefs = existing.forColumn(column.key);
 
-        console.log('forColumn.get', { existing, columnPrefs })
-
         return columnPrefs.get(key);
       },
       /**
