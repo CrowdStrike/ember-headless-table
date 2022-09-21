@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-// DT has not defined this
 // @ts-ignore
-import { setComponentTemplate } from '@ember/component';
+import { on } from '@ember/modifier';
+// @ts-ignore
+import { fn } from '@ember/helper';
 import { assert, assert as debugAssert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -20,7 +20,6 @@ import { setOwner } from '@ember/application';
 module('Plugins | dataSorting', function (hooks) {
   setupRenderingTest(hooks);
 
-  let renderWithContext: (comp?: unknown) => Promise<void>;
   let ctx: Context;
   let getColumns = () => findAll('th');
   let getColumn = (index: number) => findAll(`tr td:nth-child(${index + 1})`);
@@ -93,10 +92,8 @@ module('Plugins | dataSorting', function (hooks) {
     sort = (column: Column) => {
       meta.forTable(column.table, DataSorting).handleSort(column);
     };
-  }
 
-  setComponentTemplate(
-    hbs`
+    <template>
       {{!-- template-lint-disable no-forbidden-elements --}}
       <style>
         [data-scroll-container] {
@@ -115,7 +112,7 @@ module('Plugins | dataSorting', function (hooks) {
         <table>
           <thead>
             <tr>
-              {{#each this.table.visibleColumns as |column|}}
+              {{#each this.table.columns as |column|}}
                 <th {{this.table.modifiers.columnHeader column}}>
                   <span>({{this.sortDirection column}}) {{column.name}}</span>
                   <button class="asc" {{on 'click' (fn this.sort column)}}>
@@ -131,7 +128,7 @@ module('Plugins | dataSorting', function (hooks) {
           <tbody>
             {{#each this.table.rows as |row|}}
               <tr>
-                {{#each this.table.visibleColumns as |column|}}
+                {{#each this.table.columns as |column|}}
                   <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
@@ -139,21 +136,12 @@ module('Plugins | dataSorting', function (hooks) {
           </tbody>
         </table>
       </div>
-    `,
-    TestComponentA
-  );
+    </template>
+  }
 
   hooks.beforeEach(function () {
     ctx = new Context();
     setOwner(ctx, this.owner);
-
-    renderWithContext = async (comp = TestComponentA) => {
-      this.setProperties({ comp, ctx });
-
-      await render(hbs`
-        <this.comp @ctx={{this.ctx}} />
-      `);
-    };
   });
 
   module('with no options specified', function (hooks) {
@@ -171,7 +159,11 @@ module('Plugins | dataSorting', function (hooks) {
     });
 
     test('sorting does nothing', async function (assert) {
-      await renderWithContext();
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
 
       let [columnA] = getColumns();
 
@@ -225,7 +217,11 @@ module('Plugins | dataSorting', function (hooks) {
     });
 
     test('sorting works', async function (assert) {
-      await renderWithContext();
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
 
       let [columnA] = getColumns();
 
@@ -243,7 +239,11 @@ module('Plugins | dataSorting', function (hooks) {
     });
 
     test('The second column is not sortable', async function (assert) {
-      await renderWithContext();
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
 
       let [, columnB] = getColumns();
 
