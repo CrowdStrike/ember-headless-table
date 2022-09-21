@@ -9,6 +9,9 @@ module.exports = function (defaults) {
     },
   });
 
+  // TODO: remove this
+  return app.toTree();
+
   const { maybeEmbroider } = require('@embroider/test-setup');
 
   return maybeEmbroider(app);

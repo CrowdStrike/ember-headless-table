@@ -1,17 +1,17 @@
 import { cached } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 
+import { TABLE_KEY } from '../../-private/table';
 import { normalizePluginsConfig } from './utils';
 
-import type { Column, Table } from '[public-types]';
+import type { Table } from '../../-private/table';
+import type { Column } from '[public-types]';
 import type { Plugin } from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
 import type { ColumnVisibility } from 'plugins/column-visibility';
 import type { Class, Constructor } from 'type-fest';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const TABLE_META = new WeakMap<Table, Map<Class<unknown>, any>>();
-// eslint-disable-next-line @typescript-eslint/ban-types
+const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
 
 type InstanceOf<T> = T extends Class<infer Instance> ? Instance : T;
@@ -267,12 +267,17 @@ export const meta = {
    * plugin<->table instance pair.
    */
   forTable<P extends Plugin, T extends Table<any>>(table: T, klass: Class<P>): TableMetaFor<P> {
-    return getPluginInstance(TABLE_META, table, klass, () => {
+    return getPluginInstance(TABLE_META, table[TABLE_KEY], klass, () => {
       let plugin = table.pluginOf(klass);
 
       assert(`[${klass.name}] cannot get plugin instance of unregistered plugin class`, plugin);
       assert(`<#${plugin.name}> plugin does not have meta specified`, plugin.meta);
       assert(`<#${plugin.name}> plugin does not specify table meta`, plugin.meta.table);
+      assert(
+        `<#${plugin.name}> plugin already exists for the table. ` +
+          `A plugin may only be instantiated once per table.`,
+        ![...(TABLE_META.get(table[TABLE_KEY])?.keys() ?? [])].includes(klass)
+      );
 
       return new plugin.meta.table(table);
     });
@@ -411,18 +416,35 @@ export const options = {
 /**
  * @private
  */
-function getPluginInstance<RootKey extends Table | Column, Instance>(
-  map: WeakMap<RootKey, Map<Class<Instance>, Instance>>,
+function getPluginInstance<RootKey extends string | Column, Instance>(
+  map: RootKey extends string
+    ? Map<string, Map<Class<Instance>, Instance>>
+    : WeakMap<Column, Map<Class<Instance>, Instance>>,
   rootKey: RootKey,
   mapKey: Class<Instance>,
   factory: () => Instance
 ): Instance {
-  let bucket = map.get(rootKey);
+  let bucket: Map<Class<Instance>, Instance> | undefined;
 
-  if (!bucket) {
-    bucket = new Map();
+  if (map instanceof WeakMap) {
+    assert(`Cannot use string key with WeakMap`, typeof rootKey !== 'string');
 
-    map.set(rootKey, bucket);
+    bucket = map.get(rootKey);
+
+    if (!bucket) {
+      bucket = new Map();
+
+      map.set(rootKey, bucket);
+    }
+  } else {
+    assert(`Cannot use object key with Map`, typeof rootKey === 'string');
+    bucket = map.get(rootKey);
+
+    if (!bucket) {
+      bucket = new Map();
+
+      map.set(rootKey, bucket);
+    }
   }
 
   let instance = bucket.get(mapKey);

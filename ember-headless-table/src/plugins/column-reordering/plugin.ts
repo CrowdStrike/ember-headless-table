@@ -1,4 +1,4 @@
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
@@ -88,7 +88,6 @@ class TableMeta {
     //       do we also want to clear local state?
   }
 
-  @cached
   get columns() {
     return this.#columnOrder.orderedColumns;
   }
@@ -113,7 +112,20 @@ class ColumnOrder {
 
   @action
   set(key: string, position: number) {
-    console.log('set', key, position);
+    /**
+     * Cannot set a position lower than the min value (before the beginning?)
+     */
+    if (position < 0) {
+      return false;
+    }
+
+    /**
+     * Cannot set a position higher than the max value (after the end?)
+     */
+    if (position >= this.args.columns().length) {
+      return false;
+    }
+
     this.map.set(key, position);
   }
 
@@ -121,9 +133,11 @@ class ColumnOrder {
   get(key: string) {
     let result = this.orderedMap.get(key);
 
-    console.log(key, result, this.orderedMap);
-
-    assert(`No position found for ${key}. Is the column used within this table?`, result);
+    assert(
+      `No position found for ${key}. Is the column used within this table?`,
+      /* 0 is falsey, but it's a valid value for position */
+      undefined !== result
+    );
 
     return result;
   }
@@ -181,6 +195,9 @@ export function orderOf(
     [...currentOrder.entries()].map(([key, position]) => [position, key])
   );
 
+  /**
+    * O(n * log(n)) ?
+    */
   for (let i = 0; i < columns.length; i++) {
     let orderedKey = current.get(i);
 

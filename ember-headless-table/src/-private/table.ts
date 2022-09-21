@@ -27,6 +27,17 @@ interface Signature<DataType> {
   Named: TableConfig<DataType>;
 }
 
+/**
+  * Because the table is our entry-point object to all the table behaviors,
+  * we need a stable way to know which table we have.
+  * Normally, this could be done with referential integrity / identity.
+  * However, due to how resources are implemented, if the consumer opts to
+  * not use the `@use` decorator, then proxies get involved.
+  * The proxies don't maintain instanceof checks, which may be a bug in
+  * ember-resources.
+  */
+export const TABLE_KEY = Symbol('__TABLE_KEY__');
+
 const attachContainer = (element: Element, table: Table) => {
   assert('Must be installed on an HTMLElement', element instanceof HTMLElement);
 
@@ -34,6 +45,8 @@ const attachContainer = (element: Element, table: Table) => {
 };
 
 export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
+  [TABLE_KEY] = guidFor(this);
+
   @tracked scrollContainerHeight?: number;
   @tracked scrollContainerWidth?: number;
 
