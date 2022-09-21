@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+// @ts-ignore
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';

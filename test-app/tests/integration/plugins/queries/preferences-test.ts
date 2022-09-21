@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest, setupTest } from 'ember-qunit';
+import { assert } from '@ember/debug';
 
 import { headlessTable } from 'ember-headless-table';
 import { preferences } from 'ember-headless-table/plugins';
@@ -17,7 +18,11 @@ module('Plugins | Queries | preferences', function (hooks) {
    */
   function columnAt(table: ReturnType<typeof headlessTable>, index: number) {
     // return table.columns.values()[index];
-    return table.columns[index];
+    let column = table.columns[index];
+
+    assert(`Column not found at ${index}`, column);
+
+    return column;
   }
 
   function createTable(
@@ -30,7 +35,7 @@ module('Plugins | Queries | preferences', function (hooks) {
     }: {
       columns?: ColumnConfig[];
       data?: PreferencesData;
-      onPersist?: (key: string, data: unknown) => void;
+      onPersist?: <Data>(key: string, data: Data) => void;
       restoreFrom?: (key: string) => PreferencesData;
     }
   ) {
@@ -118,9 +123,9 @@ module('Plugins | Queries | preferences', function (hooks) {
 
         let table = createTable(this, {
           columns: [{ key: 'first!' }, { key: 'the-column-key' }, { key: 'third?' }],
-          onPersist: (key, data: PreferencesData) => {
+          onPersist: (key, data) => {
             assert.step(`persist: ${key}`);
-            preferencesData = data;
+            preferencesData = data as PreferencesData // hopefully;
           },
           restoreFrom: (key) => {
             assert.step(`restore: ${key}`);
@@ -220,9 +225,9 @@ module('Plugins | Queries | preferences', function (hooks) {
 
         let table = createTable(this, {
           columns: [{ key: 'first!' }, { key: 'the-column-key' }, { key: 'third?' }],
-          onPersist: (key, data: PreferencesData) => {
+          onPersist: (key, data) => {
             assert.step(`persist: ${key}`);
-            preferencesData = data;
+            preferencesData = data as PreferencesData; // hopefully
           },
           restoreFrom: (key) => {
             assert.step(`restore: ${key}`);

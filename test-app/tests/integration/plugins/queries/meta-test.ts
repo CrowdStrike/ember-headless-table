@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { assert } from '@ember/debug';
 
 import { headlessTable } from 'ember-headless-table';
 import { BasePlugin, meta } from 'ember-headless-table/plugins';
@@ -46,7 +47,11 @@ module('Plugins | Queries | meta', function (hooks) {
    */
   function columnAt(table: ReturnType<typeof headlessTable>, index: number) {
     // return table.columns.values()[index];
-    return table.columns[index];
+    let column = table.columns[index];
+
+    assert(`Column not found at ${index}`, column);
+
+    return column;
   }
 
   function createTable(

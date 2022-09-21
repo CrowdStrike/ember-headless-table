@@ -32,9 +32,9 @@ module('Unit | -private | table', function (hooks) {
       data: () => [],
     };
 
-    const table = headlessTable(getOwner(this), withTestDefaults(args, {}));
+    const table = headlessTable(this, withTestDefaults(args, {}));
 
-    assert.deepEqual(table.columns, []);
+    assert.deepEqual(table.columns.values(), []);
   });
 
   test('columns: is at default values', async function (assert) {
@@ -49,13 +49,13 @@ module('Unit | -private | table', function (hooks) {
       data: () => [],
     };
 
-    const table = headlessTable(getOwner(this), withTestDefaults(args, {}));
+    const table = headlessTable(this, withTestDefaults(args, {}));
 
     assert.expect(8);
 
     ['firstName', 'lastName', 'role', 'favouritePet'].forEach((key, position) => {
-      assert.strictEqual(table.columns[position].key, key);
-      assert.strictEqual(table.columns[position].position, position);
+      assert.strictEqual(table.columns[position]?.key, key);
+      assert.strictEqual(table.columns[position]?.position, position);
     });
   });
 
@@ -70,10 +70,10 @@ module('Unit | -private | table', function (hooks) {
       data: () => [],
     };
 
-    const table = headlessTable(getOwner(this), withTestDefaults(args, {}));
+    const table = headlessTable(this, withTestDefaults(args, {}));
 
-    assert.strictEqual(table.columns[0].key, 'firstName');
-    assert.strictEqual(table.columns[2].key, 'role');
+    assert.strictEqual(table.columns[0]?.key, 'firstName');
+    assert.strictEqual(table.columns[2]?.key, 'role');
 
     const updatedColumnOrder = [
       findColumnByKey(table, 'role'),
@@ -83,9 +83,9 @@ module('Unit | -private | table', function (hooks) {
 
     table.setColumnOrder(updatedColumnOrder);
 
-    assert.strictEqual(table.columns[0].key, 'role');
-    assert.strictEqual(table.columns[1].key, 'firstName');
-    assert.strictEqual(table.columns[2].key, 'lastName');
+    assert.strictEqual(table.columns[0]?.key, 'role');
+    assert.strictEqual(table.columns[1]?.key, 'firstName');
+    assert.strictEqual(table.columns[2]?.key, 'lastName');
   });
 
   test('columns: can update and reset to defaults', async function (assert) {
@@ -99,10 +99,10 @@ module('Unit | -private | table', function (hooks) {
       data: () => [],
     };
 
-    const table = headlessTable(getOwner(this), withTestDefaults(args, {}));
+    const table = headlessTable(this, withTestDefaults(args, {}));
 
-    assert.strictEqual(table.columns[0].key, 'firstName');
-    assert.strictEqual(table.columns[2].key, 'role');
+    assert.strictEqual(table.columns[0]?.key, 'firstName');
+    assert.strictEqual(table.columns[2]?.key, 'role');
 
     const updatedColumnOrder = [
       findColumnByKey(table, 'role'),
@@ -112,11 +112,11 @@ module('Unit | -private | table', function (hooks) {
 
     table.setColumnOrder(updatedColumnOrder);
 
-    assert.strictEqual(table.columns[0].key, 'role');
-    assert.strictEqual(table.columns[2].key, 'lastName');
+    assert.strictEqual(table.columns[0]?.key, 'role');
+    assert.strictEqual(table.columns[2]?.key, 'lastName');
 
     table.resetToDefaults();
 
-    assert.strictEqual(table.columns[0].key, 'firstName');
+    assert.strictEqual(table.columns[0]?.key, 'firstName');
   });
 });

@@ -17,7 +17,7 @@ module('Plugins | consumption', function (hooks) {
     test('supports explicit options', async function (assert) {
       let sorts: Sort[] = [];
       let onSort = (_sorts: Sort[]) => {};
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [[DataSorting, () => ({ sorts, onSort })]],
@@ -41,7 +41,7 @@ module('Plugins | consumption', function (hooks) {
 
   module('When a plugin has optional config', function () {
     test('supports shorthand', async function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [ColumnResizing],
@@ -56,7 +56,7 @@ module('Plugins | consumption', function (hooks) {
     });
 
     test('supports what people should use', async function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [ColumnResizing.with(() => ({ enabled: false }))],
@@ -77,7 +77,7 @@ module('Plugins | consumption', function (hooks) {
     });
 
     test('supports explicit options', async function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [[ColumnResizing, () => ({ enabled: false })]],

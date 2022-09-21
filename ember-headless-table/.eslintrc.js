@@ -2,5 +2,17 @@
 
 const { configs } = require('@nullvoxpopuli/eslint-configs');
 
-// accommodates: JS, TS, App, and Addon
-module.exports = configs.ember();
+let config = configs.ember();
+
+module.exports = {
+  ...config,
+  overrides: [
+    ...config.overrides,
+    {
+      files: ['**/*.ts'],
+      rules: {
+        '@typescript-eslint/ban-types': 'off',
+      },
+    },
+  ],
+};

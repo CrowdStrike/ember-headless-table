@@ -21,6 +21,12 @@
     "prettier": "^2.5.1"
   },
   "pnpm": {
+    "overrides": {
+      "@types/eslint": "^7.0.0"
+    },
+    "overrides-nodes": {
+      "@types/eslint": "webpack brings in v8, but we use v7"
+    },
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack",

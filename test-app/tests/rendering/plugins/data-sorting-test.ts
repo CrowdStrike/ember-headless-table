@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 // DT has not defined this
 // @ts-ignore
 import { setComponentTemplate } from '@ember/component';
-import { assert } from '@ember/debug';
+import { assert, assert as debugAssert } from '@ember/debug';
 import { click, findAll, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
@@ -72,10 +72,10 @@ module('Plugins | dataSorting', function (hooks) {
       { name: 'B', key: 'B' },
       { name: 'C', key: 'C' },
       { name: 'D', key: 'D' },
-    ];
+    ] as const;
 
     table = headlessTable(this, {
-      columns: () => this.columns,
+      columns: () => [...this.columns],
       data: () => DATA,
       plugins: [DataSorting],
     });
@@ -159,7 +159,7 @@ module('Plugins | dataSorting', function (hooks) {
   module('with no options specified', function (hooks) {
     class DefaultOptions extends Context {
       table = headlessTable(this, {
-        columns: () => this.columns,
+        columns: () => [...this.columns],
         data: () => DATA,
         plugins: [DataSorting],
       });
@@ -174,6 +174,8 @@ module('Plugins | dataSorting', function (hooks) {
       await renderWithContext();
 
       let [columnA] = getColumns();
+
+      debugAssert('columnA is missing', columnA);
 
       let valuesOfA = valuesOf(0);
 
@@ -227,6 +229,8 @@ module('Plugins | dataSorting', function (hooks) {
 
       let [columnA] = getColumns();
 
+      debugAssert(`columnA doesn't exist`, columnA);
+
       let valuesOfA = valuesOf(0);
 
       assert.deepEqual(valuesOfA, ['Apple', 'Avocado', 'A Squash']);
@@ -242,6 +246,8 @@ module('Plugins | dataSorting', function (hooks) {
       await renderWithContext();
 
       let [, columnB] = getColumns();
+
+      debugAssert(`columnB doesn't exist`, columnB);
 
       let valuesOfA = valuesOf(0);
       let valuesOfB = valuesOf(1);

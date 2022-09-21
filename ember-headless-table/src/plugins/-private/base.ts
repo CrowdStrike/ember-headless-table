@@ -266,7 +266,7 @@ export const meta = {
    * For a given table and plugin, return the meta / state bucket for the
    * plugin<->table instance pair.
    */
-  forTable<P extends Plugin>(table: Table, klass: Class<P>): TableMetaFor<P> {
+  forTable<P extends Plugin, T extends Table<any>>(table: T, klass: Class<P>): TableMetaFor<P> {
     return getPluginInstance(TABLE_META, table, klass, () => {
       let plugin = table.pluginOf(klass);
 
@@ -411,8 +411,7 @@ export const options = {
 /**
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-function getPluginInstance<RootKey extends object, Instance>(
+function getPluginInstance<RootKey extends Table | Column, Instance>(
   map: WeakMap<RootKey, Map<Class<Instance>, Instance>>,
   rootKey: RootKey,
   mapKey: Class<Instance>,

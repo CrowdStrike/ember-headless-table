@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+// @ts-ignore
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { htmlSafe } from '@ember/template';
@@ -33,8 +34,9 @@ module('Plugins | resizing', function (hooks) {
 
     for (let [key, change] of Object.entries(changes)) {
       let index = parseInt(key, 10);
+
       let actual = change.value();
-      let expected = initialValues[index] + change.by;
+      let expected = (initialValues[index] || 0) + change.by;
 
       // Uncomment this to debuge flaky resize behavior!
       // if (actual !== expected) {
@@ -279,7 +281,12 @@ module('Plugins | resizing', function (hooks) {
       ctx.setContainerWidth(1000);
       await renderWithoutScaling();
 
-      let [columnA, columnB, columnC, columnD] = getColumns();
+      const [columnA, columnB, columnC, columnD] = getColumns();
+
+      assert(`columnA doesn't exist`, columnA);
+      assert(`columnB doesn't exist`, columnB);
+      assert(`columnC doesn't exist`, columnC);
+      assert(`columnD doesn't exist`, columnD);
 
       await assertChanges(
         () => dragRight(columnB, 50),
@@ -309,7 +316,12 @@ module('Plugins | resizing', function (hooks) {
         ctx.setContainerWidth(1000);
         await renderWithoutScaling();
 
-        let [columnA, columnB, columnC, columnD] = getColumns();
+        const [columnA, columnB, columnC, columnD] = getColumns();
+
+        assert(`columnA doesn't exist`, columnA);
+        assert(`columnB doesn't exist`, columnB);
+        assert(`columnC doesn't exist`, columnC);
+        assert(`columnD doesn't exist`, columnD);
 
         await assertChanges(
           () => dragRight(columnB, 50),
@@ -336,7 +348,12 @@ module('Plugins | resizing', function (hooks) {
         ctx.setContainerWidth(1000);
         await renderWithoutScaling();
 
-        let [columnA, columnB, columnC, columnD] = getColumns();
+        const [columnA, columnB, columnC, columnD] = getColumns();
+
+        assert(`columnA doesn't exist`, columnA);
+        assert(`columnB doesn't exist`, columnB);
+        assert(`columnC doesn't exist`, columnC);
+        assert(`columnD doesn't exist`, columnD);
 
         // This will grow columnA by more than columnB can shrink, which should
         // cause columnB to shrink to it's minimum width and then shrink the next
@@ -362,7 +379,12 @@ module('Plugins | resizing', function (hooks) {
         ctx.setContainerWidth(1000);
         await renderWithoutScaling();
 
-        let [columnA, columnB, columnC, columnD] = getColumns();
+        const [columnA, columnB, columnC, columnD] = getColumns();
+
+        assert(`columnA doesn't exist`, columnA);
+        assert(`columnB doesn't exist`, columnB);
+        assert(`columnC doesn't exist`, columnC);
+        assert(`columnD doesn't exist`, columnD);
 
         // When the container grows, columns grow equally
         await assertChanges(
@@ -391,7 +413,12 @@ module('Plugins | resizing', function (hooks) {
         ctx.setContainerWidth(1000);
         await renderWithoutScaling();
 
-        let [columnA, columnB, columnC, columnD] = getColumns();
+        const [columnA, columnB, columnC, columnD] = getColumns();
+
+        assert(`columnA doesn't exist`, columnA);
+        assert(`columnB doesn't exist`, columnB);
+        assert(`columnC doesn't exist`, columnC);
+        assert(`columnD doesn't exist`, columnD);
 
         // Resize a column
         await assertChanges(
@@ -445,7 +472,12 @@ module('Plugins | resizing', function (hooks) {
         ctx.setContainerWidth(1000);
         await renderWithoutScaling(TestComponentB);
 
-        let [columnA, columnB, columnC, columnD] = getColumns();
+        const [columnA, columnB, columnC, columnD] = getColumns();
+
+        assert(`columnA doesn't exist`, columnA);
+        assert(`columnB doesn't exist`, columnB);
+        assert(`columnC doesn't exist`, columnC);
+        assert(`columnD doesn't exist`, columnD);
 
         await assertChanges(
           () => dragRight(columnB, 50),

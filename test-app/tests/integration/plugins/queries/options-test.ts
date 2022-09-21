@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
+import { assert } from '@ember/debug';
 
 import { headlessTable } from 'ember-headless-table';
 import { options } from 'ember-headless-table/plugins';
@@ -16,12 +17,16 @@ module('Plugins | Queries | options', function (hooks) {
    */
   function columnAt(table: ReturnType<typeof headlessTable>, index: number) {
     // return table.columns.values()[index];
-    return table.columns[index];
+    let column = table.columns[index];
+
+    assert(`Column not found at ${index}`, column);
+
+    return column;
   }
 
   module('forColumn', function () {
     test('options were provided', function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [
           {
             key: 'first!',
@@ -50,7 +55,7 @@ module('Plugins | Queries | options', function (hooks) {
     });
 
     test('options were not provided', function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [
           {
             key: 'first!',
@@ -69,7 +74,7 @@ module('Plugins | Queries | options', function (hooks) {
     });
 
     test('plugin is not used', function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [
           {
             key: 'first!',
@@ -102,7 +107,7 @@ module('Plugins | Queries | options', function (hooks) {
         onSort: () => {},
         sorts: [],
       };
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [[DataSorting, () => sortingOptions]],
@@ -120,7 +125,7 @@ module('Plugins | Queries | options', function (hooks) {
     });
 
     test('options were not provided', function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [DataSorting],
@@ -134,7 +139,7 @@ module('Plugins | Queries | options', function (hooks) {
     });
 
     test('plugin is not used', function (assert) {
-      let table = headlessTable(this, {
+      let table = headlessTable<unknown>(this, {
         columns: () => [],
         data: () => [],
         plugins: [],
