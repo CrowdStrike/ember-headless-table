@@ -1,6 +1,6 @@
+import { assert } from '@ember/debug';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { assert } from '@ember/debug';
 
 import { headlessTable } from 'ember-headless-table';
 import { BasePlugin, meta } from 'ember-headless-table/plugins';

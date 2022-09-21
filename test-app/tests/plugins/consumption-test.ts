@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { options } from 'ember-headless-table/plugins';
@@ -8,7 +9,6 @@ import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
 import type { Sort } from 'ember-headless-table/plugins/data-sorting';
-import { setupTest } from 'ember-qunit';
 
 module('Plugins | consumption', function (hooks) {
   setupTest(hooks);

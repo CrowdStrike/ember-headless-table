@@ -62,11 +62,11 @@ class TableMeta {
   constructor(private table: Table) {}
 
   /**
-    * We want to maintain the instance of this ColumnOrder class because
-    * we allow the consumer of the table to swap out columns at any time.
-    * When they do this, we want to maintain the order of the table, best we can.
-    * This is also why the order of the columns is maintained via column key
-    */
+   * We want to maintain the instance of this ColumnOrder class because
+   * we allow the consumer of the table to swap out columns at any time.
+   * When they do this, we want to maintain the order of the table, best we can.
+   * This is also why the order of the columns is maintained via column key
+   */
   #columnOrder = new ColumnOrder({ columns: () => this.#visibleColumns });
 
   @action
@@ -94,18 +94,19 @@ class TableMeta {
   }
 
   /**
-    * This isn't our data to expose, but it is useful to alias
-    */
+   * This isn't our data to expose, but it is useful to alias
+   */
   get #visibleColumns() {
     let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
+
     return visiblility.visibleColumns;
   }
 }
 
 class ColumnOrder {
   /**
-    * This map will be empty until we re-order something.
-    */
+   * This map will be empty until we re-order something.
+   */
   map = new TrackedMap<string, number>();
 
   constructor(private args: { columns: () => Column[] }) {}
@@ -120,7 +121,7 @@ class ColumnOrder {
   get(key: string) {
     let result = this.orderedMap.get(key);
 
-    console.log(key, result, this.orderedMap)
+    console.log(key, result, this.orderedMap);
 
     assert(`No position found for ${key}. Is the column used within this table?`, result);
 
@@ -128,8 +129,8 @@ class ColumnOrder {
   }
 
   /**
-    * The same as this.map, but with all the columns' information
-    */
+   * The same as this.map, but with all the columns' information
+   */
   @cached
   get orderedMap(): ReadonlyMap<string, number> {
     return orderOf(this.args.columns(), this.map);
@@ -149,14 +150,15 @@ class ColumnOrder {
 
     for (let [key, position] of mergedOrder.entries()) {
       let column = availableByKey[key];
+
       assert(`Could not find column for pair: ${key} @ @{position}`, column);
       result[position] = column;
     }
 
     assert(
-      `Generated orderedColumns' length (${result.filter(Boolean).length}) `
-        + `does not match the length of available columns (${availableColumns.length})`,
-        result.filter(Boolean).length === availableColumns.length
+      `Generated orderedColumns' length (${result.filter(Boolean).length}) ` +
+        `does not match the length of available columns (${availableColumns.length})`,
+      result.filter(Boolean).length === availableColumns.length
     );
 
     return result;
@@ -164,14 +166,17 @@ class ColumnOrder {
 }
 
 /**
-  * @private
-  *
-  * Utility for helping determine the percieved order of a set of columns
-  * given the original (default) ordering, and then user-configurations
-  */
-export function orderOf(columns: { key: string }[], currentOrder: Map<string, number>): Map<string, number> {
+ * @private
+ *
+ * Utility for helping determine the percieved order of a set of columns
+ * given the original (default) ordering, and then user-configurations
+ */
+export function orderOf(
+  columns: { key: string }[],
+  currentOrder: Map<string, number>
+): Map<string, number> {
   let result = new Map<string, number>();
-  let availableColumns = columns.map(column => column.key);
+  let availableColumns = columns.map((column) => column.key);
   let current = new Map<number, string>(
     [...currentOrder.entries()].map(([key, position]) => [position, key])
   );
@@ -185,17 +190,19 @@ export function orderOf(columns: { key: string }[], currentOrder: Map<string, nu
     }
 
     let availableKey: string | undefined;
-    while(availableKey = availableColumns.shift()) {
+
+    while ((availableKey = availableColumns.shift())) {
       if (result.has(availableKey) || currentOrder.has(availableKey)) {
         continue;
       }
+
       break;
     }
 
     if (!availableKey) {
       /**
-        * The rest of our columns likely have their order set
-        */
+       * The rest of our columns likely have their order set
+       */
       continue;
     }
 
@@ -204,4 +211,3 @@ export function orderOf(columns: { key: string }[], currentOrder: Map<string, nu
 
   return result;
 }
-

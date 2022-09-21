@@ -1,17 +1,17 @@
+import { assert } from '@ember/debug';
+import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest, setupTest } from 'ember-qunit';
-import { assert } from '@ember/debug';
 
 import { headlessTable } from 'ember-headless-table';
 import { preferences } from 'ember-headless-table/plugins';
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
 import type { ColumnConfig, PreferencesData } from 'ember-headless-table';
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 
 module('Plugins | Queries | preferences', function (hooks) {
-    setupTest(hooks);
+  setupTest(hooks);
 
   /**
    * exists to help abstract details of internal column access while refactoring happens
@@ -125,7 +125,7 @@ module('Plugins | Queries | preferences', function (hooks) {
           columns: [{ key: 'first!' }, { key: 'the-column-key' }, { key: 'third?' }],
           onPersist: (key, data) => {
             assert.step(`persist: ${key}`);
-            preferencesData = data as PreferencesData // hopefully;
+            preferencesData = data as PreferencesData; // hopefully;
           },
           restoreFrom: (key) => {
             assert.step(`restore: ${key}`);
@@ -281,5 +281,4 @@ module('Plugins | Queries | preferences', function (hooks) {
       });
     });
   });
-
 });
