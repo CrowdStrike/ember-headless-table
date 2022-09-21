@@ -12,7 +12,7 @@ import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
-import type { Column } from 'ember-headless-table';
+import type { ColumnConfig, Column } from 'ember-headless-table';
 import { setOwner } from '@ember/application';
 
 module('Plugins | columnVisibility', function (hooks) {
@@ -222,4 +222,92 @@ module('Plugins | columnVisibility', function (hooks) {
       assert.dom('thead tr').hasText('A B C D');
     });
   });
+
+
+  module('Columns can be hidden by default', function (hooks) {
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => [
+          {
+            name: 'A',
+            key: 'A',
+            pluginOptions: [
+              [ColumnVisibility, () => ({ isVisible: false }) ]
+            ]
+          },
+          { name: 'B', key: 'B' },
+          {
+            name: 'C',
+            key: 'C',
+            pluginOptions: [
+              [ColumnVisibility, () => ({ isVisible: false }) ]
+            ]
+          },
+          { name: 'D', key: 'D' },
+        ],
+        data: () => DATA,
+        plugins: [ColumnVisibility],
+      });
+    }
+
+    hooks.beforeEach(function () {
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+    });
+
+    test('half of the columns are visible', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').exists({ count: 2 });
+      assert.dom(`th.A`).doesNotExist();
+      assert.dom(`th.B`).exists();
+      assert.dom(`th.C`).doesNotExist();
+      assert.dom(`th.D`).exists();
+    });
+
+    test('each column can be toggled', async function (assert) {
+      assert.expect(21);
+
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').exists({ count: 2 });
+      assert.dom('thead tr').containsText('B D')
+      assert.dom('thead tr').doesNotContainText('A')
+      assert.dom('thead tr').doesNotContainText('C')
+
+      let initiallyHidden = ['A', 'C'];
+
+      for (let column of ctx.columns) {
+        if (initiallyHidden.includes(column.key)) {
+          await click(`.show.${column.key}`);
+          assert.dom('th').exists({ count: 3 });
+          assert.dom('thead tr').containsText(column.name);
+
+          await click(`.hide.${column.key}`);
+          assert.dom('th').exists({ count: 2 });
+          assert.dom('thead tr').doesNotContainText(column.name);
+
+          continue;
+        }
+        // for columns B and D
+        await click(`.hide.${column.key}`);
+        assert.dom('th').exists({ count: 1 });
+        assert.dom('thead tr').doesNotContainText(column.name);
+
+        await click(`.show.${column.key}`);
+        assert.dom('th').exists({ count: 2 });
+        assert.dom('thead tr').containsText(column.name);
+      }
+
+      assert.dom('th').exists({ count: 2 });
+    });
+  })
 });
