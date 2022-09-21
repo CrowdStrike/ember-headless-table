@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 // @ts-ignore
-import { setComponentTemplate } from '@ember/component';
-import { assert } from '@ember/debug';
+import { on } from '@ember/modifier';
+// @ts-ignore
+import { fn } from '@ember/helper';
 import { click, findAll, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -18,7 +18,6 @@ import { setOwner } from '@ember/application';
 module('Plugins | columnVisibility', function (hooks) {
   setupRenderingTest(hooks);
 
-  let renderWithContext: (comp?: unknown) => Promise<void>;
   let ctx: Context;
 
   const DATA = [
@@ -80,11 +79,8 @@ module('Plugins | columnVisibility', function (hooks) {
     show = (column: Column) => {
       return meta.forColumn(column, ColumnVisibility).show();
     };
-  }
 
-  setComponentTemplate(
-    hbs`
-      {{!-- template-lint-disable no-forbidden-elements --}}
+    <template>
       <style>
         [data-scroll-container] {
           height: 100%;
@@ -96,20 +92,22 @@ module('Plugins | columnVisibility', function (hooks) {
           border: 1px solid #999;
         }
       </style>
-      {{!-- template-lint-disable no-inline-styles --}}
-      {{!-- template-lint-disable style-concatenation --}}
+      <div>
+        {{#each this.table.columns as |column|}}
+          <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+            Hide
+          </button>
+          <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+            Show
+          </button>
+        {{/each}}
+      </div>
       <div class="theme-light" data-scroll-container {{this.table.modifiers.container}}>
         <table>
           <thead>
             <tr>
               {{#each this.columns as |column|}}
-                <th {{this.table.modifiers.columnHeader column}}>
-                  <button class="left" {{on 'click' (fn this.moveLeft column)}}>
-                    Move Left
-                  </button>
-                  <button class="right" {{on 'click' (fn this.moveRight column)}}>
-                    Move Right
-                  </button>
+                <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
                 </th>
               {{else}}
                 <th>
@@ -121,7 +119,7 @@ module('Plugins | columnVisibility', function (hooks) {
           <tbody>
             {{#each this.table.rows as |row|}}
               <tr>
-                {{#each this.table.visibleColumns as |column|}}
+                {{#each this.columns as |column|}}
                   <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
@@ -129,21 +127,8 @@ module('Plugins | columnVisibility', function (hooks) {
           </tbody>
         </table>
       </div>
-    `,
-    TestComponentA
-  );
-
-  hooks.beforeEach(function () {
-    ctx = new Context();
-
-    renderWithContext = async (comp = TestComponentA) => {
-      this.setProperties({ comp, ctx });
-
-      await render(hbs`
-        <this.comp @ctx={{this.ctx}} />
-      `);
-    };
-  });
+    </template>
+  }
 
   module('with no options specified', function (hooks) {
     class DefaultOptions extends Context {
@@ -159,9 +144,80 @@ module('Plugins | columnVisibility', function (hooks) {
       setOwner(ctx, this.owner);
     });
 
-    test('basic re-ordering works', async function (assert) {
-      await renderWithContext();
-      // await this.pauseTest();
+    test('everything is visible', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      // all columns are visible (because we configured it that way)
+      assert.dom('th').exists({ count: 4 });
+      assert.dom(`th.${ctx.columns[0]?.key}`).exists();
+      assert.dom(`th.${ctx.columns[1]?.key}`).exists();
+      assert.dom(`th.${ctx.columns[2]?.key}`).exists();
+      assert.dom(`th.${ctx.columns[3]?.key}`).exists();
+    });
+
+    test('each column can be toggled', async function (assert) {
+      assert.expect(17);
+
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').exists({ count: 4 });
+
+      for (let column of ctx.columns) {
+        await click(`.hide.${column.key}`);
+        assert.dom('th').exists({ count: 3 });
+        assert.dom('th').doesNotContainText(column.name);
+
+        await click(`.show.${column.key}`);
+        assert.dom('th').exists({ count: 4 });
+        assert.dom('th').containsText(column.name);
+      }
+    });
+
+    test('all columns can be hidden', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').exists({ count: 4 });
+
+      for (let column of ctx.columns) {
+        await click(`.hide.${column.key}`);
+      }
+
+      assert.dom('th').doesNotExist()
+    });
+
+    test('columns re-appear in the same order they were left in', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+
+      assert.dom('th').hasText('ABCD');
+
+      for (let column of ctx.columns) {
+        await click(`.hide.${column.key}`);
+      }
+
+      assert.dom('th').doesNotExist()
+
+      await click(`.show.${ctx.columns[2]?.key}`)
+      await click(`.show.${ctx.columns[0]?.key}`)
+      await click(`.show.${ctx.columns[3]?.key}`)
+      await click(`.show.${ctx.columns[1]?.key}`)
+
+      assert.dom('th').hasText('ABCD');
     });
   });
 });
