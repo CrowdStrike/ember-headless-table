@@ -49,8 +49,6 @@ class ColumnMeta {
     let columnPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let columnOptions = options.forColumn(this.column, ColumnVisibility);
 
-    console.log({ column: this.column.key, columnOptions: columnOptions?.isVisible, columnPreferences: columnPreferences.get('isVisible') })
-
     return columnPreferences.get('isVisible') ?? columnOptions?.isVisible ?? true;
   }
 
@@ -59,7 +57,8 @@ class ColumnMeta {
 
     let myPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let myOptions = options.forColumn(this.column, ColumnVisibility);
-    let willBeDefault = Boolean(myOptions?.isVisible);
+    let currentSaved = myPreferences.get('isVisible');
+    let willBeDefault = currentSaved === !myOptions?.isVisible;
 
     if (willBeDefault) {
       myPreferences.delete('isVisible');
@@ -75,7 +74,8 @@ class ColumnMeta {
 
     let myPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let myOptions = options.forColumn(this.column, ColumnVisibility);
-    let willBeDefault = false !== Boolean(myOptions?.isVisible);
+    let currentSaved = myPreferences.get('isVisible');
+    let willBeDefault = currentSaved === !myOptions?.isVisible;
 
     if (willBeDefault) {
       myPreferences.delete('isVisible');

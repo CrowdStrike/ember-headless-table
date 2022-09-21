@@ -235,7 +235,13 @@ module('Plugins | columnVisibility', function (hooks) {
               [ColumnVisibility, () => ({ isVisible: false }) ]
             ]
           },
-          { name: 'B', key: 'B' },
+          {
+            name: 'B',
+            key: 'B',
+            pluginOptions: [
+              [ColumnVisibility, () => ({ isVisible: true }) ]
+            ]
+          },
           {
             name: 'C',
             key: 'C',
@@ -250,12 +256,10 @@ module('Plugins | columnVisibility', function (hooks) {
       });
     }
 
-    hooks.beforeEach(function () {
+    hooks.beforeEach(async function (assert) {
       ctx = new DefaultOptions();
       setOwner(ctx, this.owner);
-    });
 
-    test('half of the columns are visible', async function (assert) {
       await render(
         <template>
           <TestComponentA @ctx={{ctx}} />
@@ -269,45 +273,34 @@ module('Plugins | columnVisibility', function (hooks) {
       assert.dom(`th.D`).exists();
     });
 
-    test('each column can be toggled', async function (assert) {
-      assert.expect(21);
+    test('a column configured to be hidden can be toggled', async function(assert) {
+      await click(`.show.A`);
+      assert.dom('th').exists({ count: 3 });
+      assert.dom('thead tr').containsText('A');
 
-      await render(
-        <template>
-          <TestComponentA @ctx={{ctx}} />
-        </template>
-      );
-
+      await click(`.hide.A`);
       assert.dom('th').exists({ count: 2 });
-      assert.dom('thead tr').containsText('B D')
-      assert.dom('thead tr').doesNotContainText('A')
-      assert.dom('thead tr').doesNotContainText('C')
+      assert.dom('thead tr').doesNotContainText('A');
+    });
 
-      let initiallyHidden = ['A', 'C'];
+    test('a column configured to be visible can be toggled', async function (assert) {
+      await click(`.hide.B`);
+      assert.dom('th').exists({ count: 1 });
+      assert.dom('thead tr').doesNotContainText('B');
 
-      for (let column of ctx.columns) {
-        if (initiallyHidden.includes(column.key)) {
-          await click(`.show.${column.key}`);
-          assert.dom('th').exists({ count: 3 });
-          assert.dom('thead tr').containsText(column.name);
-
-          await click(`.hide.${column.key}`);
-          assert.dom('th').exists({ count: 2 });
-          assert.dom('thead tr').doesNotContainText(column.name);
-
-          continue;
-        }
-        // for columns B and D
-        await click(`.hide.${column.key}`);
-        assert.dom('th').exists({ count: 1 });
-        assert.dom('thead tr').doesNotContainText(column.name);
-
-        await click(`.show.${column.key}`);
-        assert.dom('th').exists({ count: 2 });
-        assert.dom('thead tr').containsText(column.name);
-      }
-
+      await click(`.show.B`);
       assert.dom('th').exists({ count: 2 });
+      assert.dom('thead tr').containsText('B');
+    });
+
+    test('a column not configured at all has default behavior', async function (assert) {
+      await click(`.hide.D`);
+      assert.dom('th').exists({ count: 1 });
+      assert.dom('thead tr').doesNotContainText('D');
+
+      await click(`.show.D`);
+      assert.dom('th').exists({ count: 2 });
+      assert.dom('thead tr').containsText('D');
     });
   })
 });
