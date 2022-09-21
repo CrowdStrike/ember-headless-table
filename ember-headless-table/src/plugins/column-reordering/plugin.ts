@@ -1,8 +1,8 @@
-import { cached, tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
-import { TrackedArray, TrackedMap } from 'tracked-built-ins';
+import { TrackedMap } from 'tracked-built-ins';
 
 import { BasePlugin, meta } from '../-private/base';
 
@@ -56,6 +56,50 @@ class ColumnMeta {
    * Move the column one spot to the right
    */
   moveRight = () => this.position++;
+}
+
+class TableMeta {
+  constructor(private table: Table) {}
+
+  /**
+    * We want to maintain the instance of this ColumnOrder class because
+    * we allow the consumer of the table to swap out columns at any time.
+    * When they do this, we want to maintain the order of the table, best we can.
+    * This is also why the order of the columns is maintained via column key
+    */
+  #columnOrder = new ColumnOrder({ columns: () => this.#visibleColumns });
+
+  @action
+  getPosition(column: Column) {
+    return this.#columnOrder.get(column.key);
+  }
+
+  @action
+  setPosition(column: Column, newPosition: number) {
+    return this.#columnOrder.set(column.key, newPosition);
+  }
+
+  /**
+   * Revert to default config, ignoring preferences
+   */
+  @action
+  reset() {
+    // TODO: delete relevant preferences entries.
+    //       do we also want to clear local state?
+  }
+
+  @cached
+  get columns() {
+    return this.#columnOrder.orderedColumns;
+  }
+
+  /**
+    * This isn't our data to expose, but it is useful to alias
+    */
+  get #visibleColumns() {
+    let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
+    return visiblility.visibleColumns;
+  }
 }
 
 class ColumnOrder {
@@ -161,46 +205,3 @@ export function orderOf(columns: { key: string }[], currentOrder: Map<string, nu
   return result;
 }
 
-class TableMeta {
-  constructor(private table: Table) {}
-
-  /**
-    * We want to maintain the instance of this ColumnOrder class because
-    * we allow the consumer of the table to swap out columns at any time.
-    * When they do this, we want to maintain the order of the table, best we can.
-    * This is also why the order of the columns is maintained via column key
-    */
-  #columnOrder = new ColumnOrder({ columns: () => this.#visibleColumns });
-
-  @action
-  getPosition(column: Column) {
-    return this.#columnOrder.get(column.key);
-  }
-
-  @action
-  setPosition(column: Column, newPosition: number) {
-    return this.#columnOrder.set(column.key, newPosition);
-  }
-
-  /**
-   * Revert to default config, ignoring preferences
-   */
-  @action
-  reset() {
-    // TODO: delete relevant preferences entries.
-    //       do we also want to clear local state?
-  }
-
-  @cached
-  get columns() {
-    return this.#columnOrder.orderedColumns;
-  }
-
-  /**
-    * This isn't our data to expose, but it is useful to alias
-    */
-  get #visibleColumns() {
-    let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
-    return visiblility.visibleColumns;
-  }
-}
