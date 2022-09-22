@@ -1,4 +1,4 @@
-export { ColumnReordering, orderOf } from './plugin';
+export { ColumnOrder, ColumnReordering, orderOf } from './plugin';
 export { ColumnReordering as Plugin } from './plugin';
 
 // Types

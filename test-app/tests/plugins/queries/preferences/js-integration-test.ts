@@ -1,8 +1,6 @@
 import { assert } from '@ember/debug';
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
-import { setupRenderingTest, setupTest } from 'ember-qunit';
+import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { preferences } from 'ember-headless-table/plugins';

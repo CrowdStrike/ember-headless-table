@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { setOwner } from '@ember/application';
 // @ts-expect-error
 import { on } from '@ember/modifier';
 // @ts-expect-error
 import { fn } from '@ember/helper';
-import { assert } from '@ember/debug';
-import { click, findAll, render } from '@ember/test-helpers';
+import { assert, assert as debugAssert } from '@ember/debug';
+import { click, findAll, render, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -24,7 +25,11 @@ module('Plugins | columnReordering', function (hooks) {
   setupRenderingTest(hooks);
 
   let ctx: Context;
-  let getColumnOrder = () => findAll('thead tr .name').map(x => x.innerText.trim()).join(' ');
+  let getColumnOrder = () => findAll('thead tr .name').map(x => {
+    assert('expected element to exist and have innerText', x instanceof HTMLElement);
+
+    return x.innerText.trim()
+  }).join(' ').trim();
 
   const DATA = [
     {
@@ -51,7 +56,7 @@ module('Plugins | columnReordering', function (hooks) {
   ];
 
   class Context {
-    columns = [
+    @tracked columns = [
       { name: 'A', key: 'A' },
       { name: 'B', key: 'B' },
       { name: 'C', key: 'C' },
@@ -227,35 +232,104 @@ module('Plugins | columnReordering', function (hooks) {
     });
 
     test('a column on the left can be moved to the right', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
 
+      await click('th.A .right');
+
+      assert.strictEqual(getColumnOrder(), 'B A C D');
     });
 
     test('a column on the right can be moved to the left', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
 
+      await click('th.D .left');
+
+      assert.strictEqual(getColumnOrder(), 'A B D C');
     });
 
     test('a column on the right, moved to the right, does not move', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
 
+      await click('th.D .right');
+
+      assert.strictEqual(getColumnOrder(), 'A B C D');
     });
 
     test('a column on the left, moved to the left, does not move', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
 
+      await click('th.A .left');
+
+      assert.strictEqual(getColumnOrder(), 'A B C D');
     });
 
-    test('we can remove a column, and order is retained', async function (assert) {
+    test('without setting the order of anything, we cannot retain the order of the columns when they are added or removed', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'test scenario is set up');
 
+      let columnC = ctx.columns.find(column => column.key === 'C');
+      debugAssert('Column C is missing!', columnC);
+      ctx.columns = ctx.columns.filter(column => column !== columnC);
+      await settled();
+
+      assert.strictEqual(getColumnOrder(), 'A B D', 'column C is removed');
+
+      ctx.columns = [...ctx.columns, columnC];
+      await settled();
+
+      assert.strictEqual(getColumnOrder(), 'A B D C', 'column C is restored, but at the end');
     });
 
-    test('we can add a column, and order is retained', async function (assert) {
+    test('we can remove and add a column, and a previously set order is retained', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'pre-test setup');
 
+      await click('th.B .left');
+      await click('th.D .left');
+
+      assert.strictEqual(getColumnOrder(), 'B A D C', 'test scenario is set up');
+
+      let columnC = ctx.columns.find(column => column.key === 'C');
+      debugAssert('Column C is missing!', columnC);
+      ctx.columns = ctx.columns.filter(column => column !== columnC);
+      await settled();
+
+      assert.strictEqual(getColumnOrder(), 'B A D', 'column C is removed');
+
+      ctx.columns = [...ctx.columns, columnC];
+      await settled();
+
+      assert.strictEqual(getColumnOrder(), 'B A D C', 'column C is restored');
     });
 
-    test('hiding a column preserves order', async function (assert) {
+    test('hiding and showing a column preserves order', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'initially, columns exist as defined');
 
-    });
+      await click('th.A .right');
+      assert.strictEqual(getColumnOrder(), 'B A C D', 'column A was moved to the right');
 
-    test('showing a hidden column preserves order', async function (assert) {
+      await click('.B.hide')
+      assert.strictEqual(getColumnOrder(), 'A C D', 'column B is no longer shown, and the order of the remaining columns is retained');
 
+      await click('.B.show');
+      assert.strictEqual(getColumnOrder(), 'B A C D', 'column B is now shown');
+
+      await click('.B.hide');
+      await this.pauseTest();
+      assert.strictEqual(getColumnOrder(), 'A C D', 'column B is hidden again');
+
+      await click('.C.hide');
+      assert.strictEqual(getColumnOrder(), 'A D', 'column C and B are hidden');
+
+      await click('.D.hide');
+      assert.strictEqual(getColumnOrder(), 'A', 'only column A remains, both first and last');
+
+      await click('.B.show');
+      assert.strictEqual(getColumnOrder(), 'B A', 'column B has returned, and it is first');
+
+      await click('.C.show');
+      assert.strictEqual(getColumnOrder(), 'B A C', 'column C has returned');
+
+      await click('.D.show');
+      assert.strictEqual(getColumnOrder(), 'B A C D', 'all columns are visible in the correct order');
     });
   });
 });

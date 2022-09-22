@@ -77,4 +77,44 @@ module('Plugin | column-reordering | orderOf', function () {
       ]
     );
   });
+
+  test('columns specified in the customized map that do not exist are not used', function (assert) {
+    let customized = new Map<string, number>([
+      ['A', 1],
+      ['D', 2],
+    ]);
+
+    let result = orderOf([{ key: 'A' }, { key: 'B' }, { key: 'C' }], customized);
+
+    assert.strictEqual(result.size, 3);
+    assert.deepEqual(
+      [...result.entries()],
+      [
+        ['B', 0],
+        ['A', 1],
+        ['C', 2],
+      ]
+    );
+  });
+
+  test('the first column is missing from available columns', function (assert) {
+    let customized = new Map<string, number>([
+      ['A', 1],
+      ['B', 0],
+      ['C', 2],
+      ['D', 3],
+    ]);
+
+    let result = orderOf([{ key: 'A' }, { key: 'C' }, { key: 'D' }], customized);
+
+    assert.strictEqual(result.size, 3);
+    assert.deepEqual(
+      [...result.entries()],
+      [
+        ['A', 1],
+        ['C', 2],
+        ['D', 3],
+      ]
+    );
+  });
 });
