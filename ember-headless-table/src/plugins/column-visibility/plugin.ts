@@ -65,10 +65,12 @@ class ColumnMeta {
     let myPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let myOptions = options.forColumn(this.column, ColumnVisibility);
     let currentSaved = myPreferences.get('isVisible');
-    let willBeDefault = currentSaved === !myOptions?.isVisible;
+    let willBeDefault = Boolean(currentSaved) === !myOptions?.isVisible;
 
     if (willBeDefault) {
-      myPreferences.delete('isVisible');
+      myPreferences.set('isVisible', false);
+      // TODO: open an issue about tracked-built-ins' delete not being reactive
+      // myPreferences.delete('isVisible');
 
       return;
     }
@@ -85,7 +87,9 @@ class ColumnMeta {
     let willBeDefault = currentSaved === !myOptions?.isVisible;
 
     if (willBeDefault) {
-      myPreferences.delete('isVisible');
+      myPreferences.set('isVisible', true);
+      // TODO: open an issue about tracked-built-ins' delete not being reactive
+      // myPreferences.delete('isVisible');
 
       return;
     }

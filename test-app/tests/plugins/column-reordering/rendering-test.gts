@@ -313,7 +313,6 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'B A C D', 'column B is now shown');
 
       await click('.B.hide');
-      await this.pauseTest();
       assert.strictEqual(getColumnOrder(), 'A C D', 'column B is hidden again');
 
       await click('.C.hide');
