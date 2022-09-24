@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 
 import { TrackedMap } from 'tracked-built-ins';
 
+import { preferences } from '[public-plugin-types]';
+
 import { BasePlugin, meta } from '../-private/base';
 
 import type { Plugin } from '[public-plugin-types]';
@@ -67,35 +69,55 @@ class TableMeta {
    * When they do this, we want to maintain the order of the table, best we can.
    * This is also why the order of the columns is maintained via column key
    */
-  #columnOrder = new ColumnOrder({ columns: () => this.#visibleColumns });
+  @tracked
+  columnOrder = new ColumnOrder({
+    columns: () => this.visibleColumns,
+    save: this.save,
+  });
 
   @action
   getPosition(column: Column) {
-    return this.#columnOrder.get(column.key);
+    return this.columnOrder.get(column.key);
   }
 
   @action
   setPosition(column: Column, newPosition: number) {
-    return this.#columnOrder.set(column.key, newPosition);
+    return this.columnOrder.set(column.key, newPosition);
   }
 
   /**
-   * Revert to default config, ignoring preferences
+   * Revert to default config, delete preferences,
+   * and clear the columnOrder
    */
   @action
   reset() {
-    // TODO: delete relevant preferences entries.
-    //       do we also want to clear local state?
+    preferences.forTable(this.table, ColumnReordering).delete('order');
+    this.columnOrder = new ColumnOrder({
+      columns: () => this.visibleColumns,
+      save: this.save,
+    });
+  }
+
+  @action
+  save(map: Map<string, number>) {
+    let order: Record<string, number> = {};
+
+    for (let [key, position] of map.entries()) {
+      order[key] = position;
+    }
+
+    preferences.forTable(this.table, ColumnReordering).set('order', order);
   }
 
   get columns() {
-    return this.#columnOrder.orderedColumns;
+    return this.columnOrder.orderedColumns;
   }
 
   /**
+   * @private
    * This isn't our data to expose, but it is useful to alias
    */
-  get #visibleColumns() {
+  private get visibleColumns() {
     let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
 
     return visiblility.visibleColumns;
@@ -112,7 +134,12 @@ export class ColumnOrder {
    */
   map = new TrackedMap<string, number>();
 
-  constructor(private args: { columns: () => Column[] }) {}
+  constructor(
+    private args: {
+      columns: () => Column[];
+      save: (order: Map<string, number>) => void;
+    }
+  ) {}
 
   @action
   set(key: string, position: number) {
@@ -213,6 +240,8 @@ export class ColumnOrder {
 
       this.map.set(key, position);
     }
+
+    this.args.save(this.map);
   }
 
   @action
@@ -334,10 +363,6 @@ export function orderOf(
 
     result.set(availableKey, i);
   }
-
-  // for (let remainingColumn of availableColumns) {
-  //   result.set(remainingColumn, result.size);
-  // }
 
   return result;
 }

@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';

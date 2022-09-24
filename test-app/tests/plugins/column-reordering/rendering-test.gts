@@ -15,7 +15,7 @@ import { meta } from 'ember-headless-table/plugins';
 import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
-import type { Column } from 'ember-headless-table';
+import type { Column, PreferencesData } from 'ember-headless-table';
 
 /**
   * NOTE: these tests depend on the columnVisibility stuff working.
@@ -331,4 +331,91 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'B A C D', 'all columns are visible in the correct order');
     });
   });
+
+  module('with a preferences adapter', function (hooks) {
+    let preferences: PreferencesData = {};
+
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => DATA,
+        plugins: [ColumnReordering, ColumnVisibility],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => {
+              return {
+
+ "plugins": {
+    "ColumnReordering": {
+      "columns": {},
+      "table": {
+        "order": {
+          "A": 2,
+          "B": 0,
+          "C": 1,
+          "D": 3
+        }
+      }
+    },
+ }
+              };
+            }
+          }
+        }
+      });
+    }
+
+    hooks.beforeEach(async function () {
+      preferences = null;
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+    });
+
+    test('column order is restored from preferences', async function (assert) {
+
+    });
+
+    test('changing column order updates preferences', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
+
+      await click('th.A .left');
+      await click('th.C .left');
+
+      assert.deepEqual(preferences, {
+ "plugins": {
+    "ColumnReordering": {
+      "columns": {},
+      "table": {
+        "order": {
+          "A": 1,
+          "B": 2,
+          "C": 0,
+          "D": 3
+        }
+      }
+    },
+    "ColumnVisibility": {
+      "columns": {
+        "A": {},
+        "B": {},
+        "C": {},
+        "D": {}
+      },
+      "table": {}
+    }
+  }
+      })
+    });
+  });
+
 });

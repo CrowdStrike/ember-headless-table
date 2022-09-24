@@ -3,14 +3,13 @@ import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 
-import type { Column, ColumnConfig, TableConfig, TableMeta } from 'ember-headless-table';
+import type { Column, ColumnConfig, Table, TableConfig, TableMeta } from 'ember-headless-table';
 
 type Args = Omit<TableConfig<unknown>, 'meta' | 'preferences'> &
   TableMeta & { preferencesKey?: string; title?: string };
 
-// TODO: Change from any
-function findColumnByKey(table: any, key: string) {
-  return table.columns.find((column: Column) => column.key === key);
+function findColumnByKey(table: Table, key: string) {
+  return table.columns.values().find((column: Column) => column.key === key);
 }
 
 function withTestDefaults(args: Args, extra: Partial<TableConfig<unknown>> = {}) {
