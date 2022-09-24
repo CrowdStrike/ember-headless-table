@@ -333,7 +333,7 @@ module('Plugins | columnReordering', function (hooks) {
   });
 
   module('with a preferences adapter', function (hooks) {
-    let preferences: PreferencesData = {};
+    let preferences: null | PreferencesData = {};
 
     class DefaultOptions extends Context {
       table = headlessTable(this, {
@@ -348,20 +348,19 @@ module('Plugins | columnReordering', function (hooks) {
             },
             restore: (key: string) => {
               return {
-
- "plugins": {
-    "ColumnReordering": {
-      "columns": {},
-      "table": {
-        "order": {
-          "A": 2,
-          "B": 0,
-          "C": 1,
-          "D": 3
-        }
-      }
-    },
- }
+                "plugins": {
+                  "ColumnReordering": {
+                    "columns": {},
+                    "table": {
+                      "order": {
+                        "A": 2,
+                        "B": 0,
+                        "C": 1,
+                        "D": 3
+                      }
+                    }
+                  },
+                }
               };
             }
           }
@@ -382,39 +381,71 @@ module('Plugins | columnReordering', function (hooks) {
     });
 
     test('column order is restored from preferences', async function (assert) {
+      assert.strictEqual(
+        getColumnOrder(),
+        'B C A D',
+        'order declared in preferences is displayed'
+      );
+    });
 
+    test('resetting will clear preferences, and restore the original column order', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
+
+      ctx.table.resetToDefaults();
+      await settled();
+
+      assert.strictEqual(getColumnOrder(), 'A B C D');
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "ColumnReordering": {
+            columns: {},
+            table: {},
+          },
+          "ColumnVisibility": {
+            "columns": {
+              "A": {},
+              "B": {},
+              "C": {},
+              "D": {}
+            },
+            "table": {}
+          }
+        }
+      });
     });
 
     test('changing column order updates preferences', async function (assert) {
       assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
 
-      await click('th.A .left');
       await click('th.C .left');
+      await click('th.A .left');
+
+      assert.strictEqual(getColumnOrder(), 'C A B D', 'pre-test setup');
 
       assert.deepEqual(preferences, {
- "plugins": {
-    "ColumnReordering": {
-      "columns": {},
-      "table": {
-        "order": {
-          "A": 1,
-          "B": 2,
-          "C": 0,
-          "D": 3
+        "plugins": {
+          "ColumnReordering": {
+            "columns": {},
+            "table": {
+              "order": {
+                "A": 1,
+                "B": 2,
+                "C": 0,
+                "D": 3
+              }
+            }
+          },
+          "ColumnVisibility": {
+            "columns": {
+              "A": {},
+              "B": {},
+              "C": {},
+              "D": {}
+            },
+            "table": {}
+          }
         }
-      }
-    },
-    "ColumnVisibility": {
-      "columns": {
-        "A": {},
-        "B": {},
-        "C": {},
-        "D": {}
-      },
-      "table": {}
-    }
-  }
-      })
+      });
     });
   });
 

@@ -64,6 +64,8 @@ class TableMeta {
   constructor(private table: Table) {}
 
   /**
+   * @private
+   *
    * We want to maintain the instance of this ColumnOrder class because
    * we allow the consumer of the table to swap out columns at any time.
    * When they do this, we want to maintain the order of the table, best we can.
@@ -73,6 +75,7 @@ class TableMeta {
   columnOrder = new ColumnOrder({
     columns: () => this.visibleColumns,
     save: this.save,
+    existingOrder: this.read(),
   });
 
   @action
@@ -98,6 +101,9 @@ class TableMeta {
     });
   }
 
+  /**
+    * @private
+    */
   @action
   save(map: Map<string, number>) {
     let order: Record<string, number> = {};
@@ -107,6 +113,18 @@ class TableMeta {
     }
 
     preferences.forTable(this.table, ColumnReordering).set('order', order);
+  }
+
+  /**
+    * @private
+    */
+  @action
+  private read() {
+    let order = preferences.forTable(this.table, ColumnReordering).get('order');
+
+    if (!order) return;
+
+    return new Map(Object.entries(order));
   }
 
   get columns() {
@@ -138,8 +156,13 @@ export class ColumnOrder {
     private args: {
       columns: () => Column[];
       save: (order: Map<string, number>) => void;
+      existingOrder?: Map<string, number>;
     }
-  ) {}
+  ) {
+    if (args.existingOrder) {
+      this.map = new TrackedMap(args.existingOrder);
+    }
+  }
 
   @action
   set(key: string, position: number) {

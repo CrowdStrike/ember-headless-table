@@ -91,9 +91,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
         let modifiers = this.plugins.map((plugin) => plugin.containerModifier);
         let composed = composeFunctionModifiers([attachContainer, ...modifiers]);
 
-        // TS is chokeing on different versions of the `Table` type during compilation
-        // some sort of cache mismatch where the columns' map mismatches itself
-        return composed(element, this as any);
+        return composed(element, this);
       },
       { eager: false }
     ),

@@ -12,6 +12,7 @@ module('Plugin | column-reordering | ColumnOrder', function () {
 
     hooks.beforeEach(function (assert) {
       order = new ColumnOrder({
+        save: () => {},
         columns: () =>
           [
             { key: 'A' },
