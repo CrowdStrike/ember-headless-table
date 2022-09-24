@@ -15,6 +15,7 @@ import { headlessTable } from 'ember-headless-table';
 import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { createHelpers } from 'ember-headless-table/test-support';
+import { setOwner } from '@ember/application';
 
 type Changes = Array<{ value: () => number; by: number; msg?: string }>;
 
@@ -39,7 +40,7 @@ module('Plugins | resizing', function (hooks) {
       let actual = change.value();
       let expected = (initialValues[index] || 0) + change.by;
 
-      // Uncomment this to debuge flaky resize behavior!
+      // Uncomment this to debug flaky resize behavior!
       // if (actual !== expected) {
       //   console.log({ key, actual, expected, by: change.by, initially: initialValues[index] });
       //   await pauseTest();
@@ -111,7 +112,6 @@ module('Plugins | resizing', function (hooks) {
 
   setComponentTemplate(
     hbs`
-      {{!-- template-lint-disable no-forbidden-elements --}}
       <style>
         [data-handle] {
           cursor: ew-resize;
@@ -144,14 +144,12 @@ module('Plugins | resizing', function (hooks) {
           box-shadow: inset 1px 0px 0px rgb(0 0 0 / 50%);
         }
       </style>
-      {{!-- template-lint-disable no-inline-styles --}}
-      {{!-- template-lint-disable style-concatenation --}}
       <div data-container style={{this.testContainerStyle}}>
         <div data-scroll-container {{this.modifiers.container}}>
           <table>
             <thead>
               <tr>
-                {{#each this.table.visibleColumns as |column|}}
+                {{#each this.table.columns as |column|}}
                   <th {{this.modifiers.columnHeader column}}>
                     <span>{{column.name}}</span>
 
@@ -225,7 +223,7 @@ module('Plugins | resizing', function (hooks) {
           <table>
             <thead>
               <tr>
-                {{#each this.table.visibleColumns as |column|}}
+                {{#each this.table.columns as |column|}}
                   <th {{this.modifiers.columnHeader column}}>
                     <span>{{column.name}}</span>
 
@@ -243,6 +241,7 @@ module('Plugins | resizing', function (hooks) {
 
   hooks.beforeEach(function () {
     ctx = new Context();
+    setOwner(ctx, this.owner);
 
     renderWithoutScaling = async (comp = TestComponentA) => {
       this.setProperties({ comp, ctx });
@@ -255,7 +254,6 @@ module('Plugins | resizing', function (hooks) {
       //
       // See https://github.com/emberjs/ember-qunit/issues/521
       await render(hbs`
-        {{!-- template-lint-disable no-forbidden-elements --}}
         <style>
           #ember-testing { width: initial; height: initial; transform: initial; }
         </style>
@@ -276,6 +274,7 @@ module('Plugins | resizing', function (hooks) {
 
     hooks.beforeEach(function () {
       ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
     });
 
     test('it resizes each column', async function () {
@@ -467,6 +466,7 @@ module('Plugins | resizing', function (hooks) {
 
       hooks.beforeEach(function () {
         ctx = new HandlePositionRight();
+        setOwner(ctx, this.owner);
       });
 
       test('it works', async function () {

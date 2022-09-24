@@ -3,14 +3,10 @@ import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 
-import type { Column, ColumnConfig, Table, TableConfig, TableMeta } from 'ember-headless-table';
+import type { ColumnConfig, TableConfig, TableMeta } from 'ember-headless-table';
 
 type Args = Omit<TableConfig<unknown>, 'meta' | 'preferences'> &
   TableMeta & { preferencesKey?: string; title?: string };
-
-function findColumnByKey(table: Table, key: string) {
-  return table.columns.values().find((column: Column) => column.key === key);
-}
 
 function withTestDefaults(args: Args, extra: Partial<TableConfig<unknown>> = {}) {
   return {
@@ -35,7 +31,7 @@ module('Unit | -private | table', function (hooks) {
     assert.deepEqual(table.columns.values(), []);
   });
 
-  test('columns: is at default values', async function (assert) {
+  test('columns: each have a key', async function (assert) {
     const args: Args = {
       columns: () =>
         [
@@ -49,72 +45,10 @@ module('Unit | -private | table', function (hooks) {
 
     const table = headlessTable(this, withTestDefaults(args, {}));
 
-    assert.expect(8);
+    assert.expect(4);
 
     ['firstName', 'lastName', 'role', 'favouritePet'].forEach((key, position) => {
       assert.strictEqual(table.columns[position]?.key, key);
-      assert.strictEqual(table.columns[position]?.position, position);
     });
-  });
-
-  test('columns: can update sort order', async function (assert) {
-    const args: Args = {
-      columns: () =>
-        [
-          { key: 'firstName', name: 'First name' },
-          { key: 'lastName', name: 'Last name' },
-          { key: 'role', name: 'Role' },
-        ] as ColumnConfig[],
-      data: () => [],
-    };
-
-    const table = headlessTable(this, withTestDefaults(args, {}));
-
-    assert.strictEqual(table.columns[0]?.key, 'firstName');
-    assert.strictEqual(table.columns[2]?.key, 'role');
-
-    const updatedColumnOrder = [
-      findColumnByKey(table, 'role'),
-      findColumnByKey(table, 'firstName'),
-      findColumnByKey(table, 'lastName'),
-    ] as Column[];
-
-    table.setColumnOrder(updatedColumnOrder);
-
-    assert.strictEqual(table.columns[0]?.key, 'role');
-    assert.strictEqual(table.columns[1]?.key, 'firstName');
-    assert.strictEqual(table.columns[2]?.key, 'lastName');
-  });
-
-  test('columns: can update and reset to defaults', async function (assert) {
-    const args: Args = {
-      columns: () =>
-        [
-          { key: 'firstName', name: 'First name' },
-          { key: 'lastName', name: 'Last name' },
-          { key: 'role', name: 'Role' },
-        ] as ColumnConfig[],
-      data: () => [],
-    };
-
-    const table = headlessTable(this, withTestDefaults(args, {}));
-
-    assert.strictEqual(table.columns[0]?.key, 'firstName');
-    assert.strictEqual(table.columns[2]?.key, 'role');
-
-    const updatedColumnOrder = [
-      findColumnByKey(table, 'role'),
-      findColumnByKey(table, 'firstName'),
-      findColumnByKey(table, 'lastName'),
-    ] as Column[];
-
-    table.setColumnOrder(updatedColumnOrder);
-
-    assert.strictEqual(table.columns[0]?.key, 'role');
-    assert.strictEqual(table.columns[2]?.key, 'lastName');
-
-    table.resetToDefaults();
-
-    assert.strictEqual(table.columns[0]?.key, 'firstName');
   });
 });
