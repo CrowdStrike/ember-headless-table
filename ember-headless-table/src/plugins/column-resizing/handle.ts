@@ -1,5 +1,7 @@
 import { assert } from '@ember/debug';
 
+import { modifier } from 'ember-modifier';
+
 import { meta } from '../-private/base';
 import { ColumnResizing } from './plugin';
 
@@ -27,77 +29,80 @@ import type { Column } from '#/column';
  * @param element the attached element
  * @param column the passed column instance
  */
-export function resizeHandle(element: Element, column: Column) {
-  let lastX: number | undefined;
-  let raf: number | undefined;
-  let columnMeta = meta.forColumn(column, ColumnResizing);
-  /**
-   * Because we're using requestAnimationFrame, it's possible that a
-   * fast user/clicker (usually by accident) causes a second drag / mouse-move
-   * event to start before the previous has finished.
-   * to handle this, we want to cancel any animation frames lingering
-   * from (in the very short-term history) around.
-   *
-   * An alternative approach would be to bundle all the state and function-handlers
-   * into the handleDragStart function, so that all state was only maintained
-   * "per drag start event", and totally isolated -- however, this can mess with
-   * resize behavior, and cause glitchy ness due to separate, but parallel, resize
-   * actions getting called in quick succession
-   */
-
-  function handleDrag(event: MouseEvent) {
-    // return if (still) not left click
-    if (event.button === 0) return;
+export const resizeHandle = modifier(
+  (element: Element, [column]: [Column]) => {
+    let lastX: number | undefined;
+    let raf: number | undefined;
+    let columnMeta = meta.forColumn(column, ColumnResizing);
     /**
-     * Oofta, mousemove
+     * Because we're using requestAnimationFrame, it's possible that a
+     * fast user/clicker (usually by accident) causes a second drag / mouse-move
+     * event to start before the previous has finished.
+     * to handle this, we want to cancel any animation frames lingering
+     * from (in the very short-term history) around.
      *
-     * classic debounce, using request animation frame
+     * An alternative approach would be to bundle all the state and function-handlers
+     * into the handleDragStart function, so that all state was only maintained
+     * "per drag start event", and totally isolated -- however, this can mess with
+     * resize behavior, and cause glitchy ness due to separate, but parallel, resize
+     * actions getting called in quick succession
      */
-    if (raf) cancelAnimationFrame(raf);
 
-    raf = requestAnimationFrame(() => {
-      if (columnMeta.isResizing) {
-        assert('handleDrag must be called after handleDragStart', lastX);
+    function handleDrag(event: MouseEvent) {
+      // return if (still) not left click
+      if (event.button === 0) return;
+      /**
+       * Oofta, mousemove
+       *
+       * classic debounce, using request animation frame
+       */
+      if (raf) cancelAnimationFrame(raf);
 
-        columnMeta.resize(event.clientX - lastX);
-        lastX = event.clientX;
-      }
+      raf = requestAnimationFrame(() => {
+        if (columnMeta.isResizing) {
+          assert('handleDrag must be called after handleDragStart', lastX);
 
-      raf = undefined;
-    });
-  }
+          columnMeta.resize(event.clientX - lastX);
+          lastX = event.clientX;
+        }
 
-  function handleDragStop(_event: MouseEvent) {
-    columnMeta.isResizing = false;
-    lastX = undefined;
+        raf = undefined;
+      });
+    }
 
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', handleDragStop);
-    document.body.style.removeProperty('user-select');
-  }
+    function handleDragStop(_event: MouseEvent) {
+      columnMeta.isResizing = false;
+      lastX = undefined;
 
-  function handleDragStart(event: Event) {
-    assert('Wrong event binding. Expected MouseEvent', event instanceof MouseEvent);
+      document.removeEventListener('mousemove', handleDrag);
+      document.removeEventListener('mouseup', handleDragStop);
+      document.body.style.removeProperty('user-select');
+    }
 
-    // return if not left click
-    if (event.button !== 0) return;
+    function handleDragStart(event: Event) {
+      assert('Wrong event binding. Expected MouseEvent', event instanceof MouseEvent);
 
-    columnMeta.isResizing = true;
-    lastX = event.clientX;
+      // return if not left click
+      if (event.button !== 0) return;
 
-    document.addEventListener('mousemove', handleDrag);
-    document.addEventListener('mouseup', handleDragStop);
-    document.body.style.userSelect = 'none';
-  }
+      columnMeta.isResizing = true;
+      lastX = event.clientX;
 
-  element.addEventListener('mousedown', handleDragStart);
+      document.addEventListener('mousemove', handleDrag);
+      document.addEventListener('mouseup', handleDragStop);
+      document.body.style.userSelect = 'none';
+    }
 
-  return () => {
-    if (raf) cancelAnimationFrame(raf);
+    element.addEventListener('mousedown', handleDragStart);
 
-    columnMeta.isResizing = false;
-    document.removeEventListener('mousedown', handleDragStart);
-    document.removeEventListener('mousemove', handleDrag);
-    document.removeEventListener('mouseup', handleDragStop);
-  };
-}
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+
+      columnMeta.isResizing = false;
+      document.removeEventListener('mousedown', handleDragStart);
+      document.removeEventListener('mousemove', handleDrag);
+      document.removeEventListener('mouseup', handleDragStop);
+    };
+  },
+  { eager: false }
+);
