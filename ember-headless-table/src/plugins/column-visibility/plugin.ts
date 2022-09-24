@@ -4,8 +4,22 @@ import { action } from '@ember/object';
 
 import { BasePlugin, meta, options, preferences } from '../-private/base';
 
-import type { Plugin } from '[public-plugin-types]';
+import type { Plugin, PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
+
+interface ColumnVisibilityPreferences extends PluginPreferences {
+  columns: {
+    [columnKey: string]: {
+      isVisible?: boolean;
+    };
+  };
+}
+
+declare module 'ember-headless-table/plugins' {
+  interface Registry {
+    ColumnVisibility?: ColumnVisibilityPreferences;
+  }
+}
 
 export interface ColumnOptions {
   /**
@@ -49,14 +63,14 @@ export class ColumnVisibility
   }
 }
 
-class ColumnMeta {
-  constructor(private column: Column) {}
+class ColumnMeta<Data = unknown> {
+  constructor(private column: Column<Data>) {}
 
-  get isVisible() {
+  get isVisible(): boolean {
     let columnPreferences = preferences.forColumn(this.column, ColumnVisibility);
     let columnOptions = options.forColumn(this.column, ColumnVisibility);
 
-    return columnPreferences.get('isVisible') ?? columnOptions?.isVisible ?? true;
+    return Boolean(columnPreferences.get('isVisible') ?? columnOptions?.isVisible ?? true);
   }
 
   hide = () => {
@@ -108,11 +122,11 @@ class ColumnMeta {
   };
 }
 
-class TableMeta {
-  constructor(private table: Table) {}
+class TableMeta<Data = unknown> {
+  constructor(private table: Table<Data>) {}
 
   @cached
-  get visibleColumns(): Column[] {
+  get visibleColumns(): Column<Data>[] {
     let allColumns = this.table.columns.values();
 
     return allColumns.filter((column) => {
@@ -123,7 +137,7 @@ class TableMeta {
   }
 
   @action
-  toggleColumnVisibility(column: Column) {
+  toggleColumnVisibility(column: Column<Data>) {
     let columnMeta = meta.forColumn(column, ColumnVisibility);
 
     columnMeta.toggle();
@@ -133,7 +147,7 @@ class TableMeta {
   }
 
   @action
-  previousColumn(referenceColumn: Column) {
+  previousColumn(referenceColumn: Column<Data>) {
     let visible = this.visibleColumns;
     let referenceIndex = visible.indexOf(referenceColumn);
 
@@ -153,7 +167,7 @@ class TableMeta {
   }
 
   @action
-  nextColumn(referenceColumn: Column) {
+  nextColumn(referenceColumn: Column<Data>) {
     let visible = this.visibleColumns;
     let referenceIndex = visible.indexOf(referenceColumn);
 
@@ -173,7 +187,7 @@ class TableMeta {
   }
 
   @action
-  columnsAfter(referenceColumn: Column) {
+  columnsAfter(referenceColumn: Column<Data>) {
     let visible = this.visibleColumns;
     let referenceIndex = visible.indexOf(referenceColumn);
 
@@ -181,7 +195,7 @@ class TableMeta {
   }
 
   @action
-  columnsBefore(referenceColumn: Column) {
+  columnsBefore(referenceColumn: Column<Data>) {
     let visible = this.visibleColumns;
     let referenceIndex = visible.indexOf(referenceColumn);
 

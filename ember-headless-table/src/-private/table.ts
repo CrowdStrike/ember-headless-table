@@ -106,7 +106,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     //       With curried+composed modifiers, only the plugin's headerModifier
     //       that has tracked changes would run, leaving the other modifiers alone
     columnHeader: modifier(
-      (element: HTMLElement, [column]: [Column]): Destructor => {
+      (element: HTMLElement, [column]: [Column<DataType>]): Destructor => {
         let modifiers = this.plugins.map((plugin) => plugin.headerCellModifier);
         let composed = composeFunctionModifiers(modifiers);
 

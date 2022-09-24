@@ -89,10 +89,45 @@ module('Plugins | resizing', function (hooks) {
 
     table = headlessTable(this, {
       columns: () => this.columns,
-      data: () => [],
+      data: () => [] as unknown[],
       plugins: [ColumnResizing],
     });
   }
+
+  const TestStyles = <template>
+    <style>
+      [data-handle] {
+        cursor: ew-resize;
+        display: inline-block;
+        position: absolute;
+        left: -0.3rem;
+        width: 1rem;
+        text-align: center;
+      }
+
+      th:first-child [data-handle] {
+        display: none;
+      }
+
+      [data-scroll-container] {
+        height: 100%;
+        overflow: auto;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      th {
+        position: relative;
+        box-shadow: inset 1px 0px 0px rgb(0 0 0 / 50%);
+      }
+    </style>
+  </template>;
 
   class TestComponentA extends Component<{ ctx: Context }> {
     resizeHandle = resizeHandle;
@@ -108,42 +143,9 @@ module('Plugins | resizing', function (hooks) {
     get testContainerStyle() {
       return htmlSafe(`width: ${this.args.ctx.containerWidth}px`);
     }
-  }
 
-  setComponentTemplate(
-    hbs`
-      <style>
-        [data-handle] {
-          cursor: ew-resize;
-          display: inline-block;
-          position: absolute;
-          left: -0.3rem;
-          width: 1rem;
-          text-align: center;
-        }
-
-        th:first-child [data-handle] {
-          display: none;
-        }
-
-        [data-scroll-container] {
-          height: 100%;
-          overflow: auto;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        table {
-          border-collapse: collapse;
-        }
-
-        th {
-          position: relative;
-          box-shadow: inset 1px 0px 0px rgb(0 0 0 / 50%);
-        }
-      </style>
+    <template>
+      <TestStyles />
       <div data-container style={{this.testContainerStyle}}>
         <div data-scroll-container {{this.modifiers.container}}>
           <table>
@@ -161,9 +163,8 @@ module('Plugins | resizing', function (hooks) {
           </table>
         </div>
       </div>
-    `,
-    TestComponentA
-  );
+    </template>
+  }
 
   class TestComponentB extends Component<{ ctx: Context }> {
     resizeHandle = resizeHandle;
@@ -179,45 +180,9 @@ module('Plugins | resizing', function (hooks) {
     get testContainerStyle() {
       return htmlSafe(`width: ${this.args.ctx.containerWidth}px`);
     }
-  }
 
-  setComponentTemplate(
-    hbs`
-      {{!-- template-lint-disable no-forbidden-elements --}}
-      <style>
-        [data-handle] {
-          cursor: ew-resize;
-          display: inline-block;
-          position: absolute;
-          right: -0.3rem;
-          width: 1rem;
-          text-align: center;
-        }
-
-        th:last-child [data-handle] {
-          display: none;
-        }
-
-        [data-scroll-container] {
-          height: 100%;
-          overflow: auto;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        table {
-          border-collapse: collapse;
-        }
-
-        th {
-          position: relative;
-          box-shadow: inset 1px 0px 0px rgb(0 0 0 / 50%);
-        }
-      </style>
-      {{!-- template-lint-disable no-inline-styles --}}
-      {{!-- template-lint-disable style-concatenation --}}
+    <template>
+      <TestStyles />
       <div data-container style={{this.testContainerStyle}}>
         <div data-scroll-container {{this.modifiers.container}}>
           <table>
@@ -235,9 +200,8 @@ module('Plugins | resizing', function (hooks) {
           </table>
         </div>
       </div>
-    `,
-    TestComponentB
-  );
+    </template>
+  }
 
   hooks.beforeEach(function () {
     ctx = new Context();
@@ -253,13 +217,16 @@ module('Plugins | resizing', function (hooks) {
       // everything needs to be cut in half to account for it.
       //
       // See https://github.com/emberjs/ember-qunit/issues/521
-      await render(hbs`
-        <style>
-          #ember-testing { width: initial; height: initial; transform: initial; }
-        </style>
+      await render(
+        // @ts-ignore
+        <template>
+          <style>
+            #ember-testing { width: initial; height: initial; transform: initial; }
+          </style>
 
-        <this.comp @ctx={{this.ctx}} />
-      `);
+          <comp @ctx={{this.ctx}} />
+        </template>
+      );
     };
   });
 
@@ -267,7 +234,7 @@ module('Plugins | resizing', function (hooks) {
     class DefaultOptions extends Context {
       table = headlessTable(this, {
         columns: () => this.columns,
-        data: () => [],
+        data: () => [] as unknown[],
         plugins: [ColumnResizing, ColumnVisibility],
       });
     }
@@ -459,7 +426,7 @@ module('Plugins | resizing', function (hooks) {
       class HandlePositionRight extends Context {
         table = headlessTable(this, {
           columns: () => this.columns,
-          data: () => [],
+          data: () => [] as unknown[],
           plugins: [ColumnVisibility, ColumnResizing.with(() => ({ handlePosition: 'right' }))],
         });
       }

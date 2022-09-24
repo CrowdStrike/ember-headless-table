@@ -76,7 +76,12 @@ module('Plugins | columnReordering', function (hooks) {
     }
 
     get columns() {
-      return meta.forTable(this.table, ColumnReordering).columns;
+      /**
+        * TODO: this is a dirty cast, and should be removed.
+        *      we should be able to infer the specific Column type since the table
+      *      is specifically typed.
+        */
+      return meta.forTable(this.table, ColumnReordering).columns as Column<typeof DATA[number]>[];
     }
 
     moveLeft = (column: Column) => {
@@ -146,7 +151,9 @@ module('Plugins | columnReordering', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr>
                 {{#each this.columns as |column|}}
-                  <td>{{column.getValueForRow row}}</td>
+                  <td>
+                    {{! @glint-ignore }}
+                    {{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
             {{/each}}
@@ -192,6 +199,7 @@ module('Plugins | columnReordering', function (hooks) {
       setOwner(ctx, this.owner);
 
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -374,6 +382,7 @@ module('Plugins | columnReordering', function (hooks) {
       setOwner(ctx, this.owner);
 
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>

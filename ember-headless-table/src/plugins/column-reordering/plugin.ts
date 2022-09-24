@@ -8,11 +8,23 @@ import { preferences } from '[public-plugin-types]';
 
 import { BasePlugin, meta } from '../-private/base';
 
-import type { Plugin } from '[public-plugin-types]';
+import type { Plugin, PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 export interface ColumnOptions {}
 export interface TableOptions {}
+
+interface ColumnReorderingPreferences extends PluginPreferences {
+  table: {
+    order?: Record<string, number>;
+  };
+}
+
+declare module 'ember-headless-table/plugins' {
+  interface Registry {
+    ColumnReordering?: ColumnReorderingPreferences;
+  }
+}
 
 export class ColumnReordering
   extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
@@ -102,8 +114,8 @@ class TableMeta {
   }
 
   /**
-    * @private
-    */
+   * @private
+   */
   @action
   save(map: Map<string, number>) {
     let order: Record<string, number> = {};
@@ -116,15 +128,15 @@ class TableMeta {
   }
 
   /**
-    * @private
-    */
+   * @private
+   */
   @action
   private read() {
     let order = preferences.forTable(this.table, ColumnReordering).get('order');
 
     if (!order) return;
 
-    return new Map(Object.entries(order));
+    return new Map<string, number>(Object.entries(order));
   }
 
   get columns() {

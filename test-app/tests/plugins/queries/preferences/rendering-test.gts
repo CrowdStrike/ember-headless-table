@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest, setupTest } from 'ember-qunit';
+import { assert } from '@ember/debug';
+import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { preferences } from 'ember-headless-table/plugins';
@@ -7,7 +8,6 @@ import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
 import type { ColumnConfig, PreferencesData } from 'ember-headless-table';
 import { render, settled } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 
 module('Rendering | Plugins | Queries | preferences', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +17,11 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
    */
   function columnAt(table: ReturnType<typeof headlessTable>, index: number) {
     // return table.columns.values()[index];
-    return table.columns[index];
+    let column = table.columns[index];
+
+    assert(`Column not found at ${index}`, column);
+
+    return column;
   }
 
   function createTable(
@@ -30,7 +34,7 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
     }: {
       columns?: ColumnConfig[];
       data?: PreferencesData;
-      onPersist?: (key: string, data: unknown) => void;
+      onPersist?: (key: string, data: PreferencesData) => void;
       restoreFrom?: (key: string) => PreferencesData;
     }
   ) {
@@ -68,7 +72,13 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
 
         let prefs = preferences.forTable(table, DataSorting);
 
-        await render(<template>{{prefs.get 'some-key'}}</template>);
+        await render(
+          // @ts-ignore
+          <template>
+            {{! @glint-ignore }}
+            {{prefs.get 'some-key'}}
+          </template>
+        );
 
         assert.dom().hasText('2', `some-key's value is correct`)
       });
@@ -83,8 +93,13 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
 
         let prefs = preferences.forTable(table, DataSorting);
 
-
-        await render(<template>{{prefs.get 'some-key'}}</template>);
+        await render(
+          // @ts-ignore
+          <template>
+            {{! @glint-ignore }}
+            {{prefs.get 'some-key'}}
+          </template>
+        );
 
         assert.dom().hasNoText(`some-key has no value`)
 
@@ -125,9 +140,12 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
       let prefs = preferences.forColumn(columnAt(table, 1), DataSorting);
 
       await render(
-       <template>
-         <out id='a'>{{prefs.get 'some-preference'}}</out>
-         <out id='b'>{{prefs.get 'some-key'}}</out>
+        // @ts-ignore
+        <template>
+          {{! @glint-ignore }}
+          <out id='a'>{{prefs.get 'some-preference'}}</out>
+          {{! @glint-ignore }}
+          <out id='b'>{{prefs.get 'some-key'}}</out>
         </template>
       );
 
@@ -160,9 +178,12 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
       let prefs = preferences.forColumn(columnAt(table, 1), DataSorting);
 
       await render(
-       <template>
-         <out id='a'>{{prefs.get 'some-preference'}}</out>
-         <out id='b'>{{prefs.get 'some-key'}}</out>
+        // @ts-ignore
+        <template>
+          {{! @glint-ignore }}
+          <out id='a'>{{prefs.get 'some-preference'}}</out>
+          {{! @glint-ignore }}
+          <out id='b'>{{prefs.get 'some-key'}}</out>
         </template>
       );
 

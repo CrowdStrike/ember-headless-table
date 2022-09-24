@@ -4,9 +4,21 @@ import { action } from '@ember/object';
 import { BasePlugin, meta, options } from '../-private/base';
 import { SortDirection } from './types';
 
-import type { SortItem } from './types';
-import type { ColumnApi } from '[public-plugin-types]';
+import type { Sort, SortItem } from './types';
+import type { ColumnApi, PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
+
+interface SortingPreferences extends PluginPreferences {
+  table: {
+    sorts?: Sort[];
+  };
+}
+
+declare module 'ember-headless-table/plugins' {
+  interface Registry {
+    Sorting?: SortingPreferences;
+  }
+}
 
 /**
  * Utility to disambiguate ColumnMeta and TableMeta

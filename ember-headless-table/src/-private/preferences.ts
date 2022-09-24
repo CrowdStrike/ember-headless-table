@@ -2,8 +2,11 @@ import { TrackedMap } from 'tracked-built-ins';
 
 import type {
   ColumnPreferences,
+  PluginPreferenceFor,
   PluginPreferences,
   PreferencesAdapter as Adapter,
+  PreferencesTableValues,
+  Registry,
   TablePreferencesData,
 } from '#interfaces';
 
@@ -134,7 +137,7 @@ class TrackedPreferences {
     return [...this.plugins.values()].every((pluginPrefs) => pluginPrefs.isAtDefault);
   }
 
-  forPlugin(name: string): TrackedPluginPrefs {
+  forPlugin(name: string) {
     let existing = this.plugins.get(name);
 
     if (!existing) {
@@ -149,7 +152,13 @@ class TrackedPreferences {
     let plugins: TablePreferencesData['plugins'] = {};
 
     for (let [pluginName, preferences] of this.plugins.entries()) {
-      plugins[pluginName] = preferences.serialize();
+      /**
+       * This cast is dirty, and should be fixed eventually.
+       * We should be able to, knowing that pluginName
+       * will either be in the registry, or be a default PluginPreferences
+       * object, that we can assign the serialized structure to plugins.
+       */
+      (plugins as any)[pluginName] = preferences.serialize();
     }
 
     return {
@@ -170,7 +179,7 @@ class TrackedPreferences {
   }
 }
 
-class TrackedPluginPrefs {
+class TrackedPluginPrefs<PluginName = unknown> {
   table = new TrackedMap<string, unknown>();
   columns = new Map<string, TrackedMap<string, unknown>>();
 
@@ -189,7 +198,7 @@ class TrackedPluginPrefs {
     return existing;
   };
 
-  serialize(): PluginPreferences {
+  serialize(): PluginPreferenceFor<PluginName> {
     let columnsPrefs: PluginPreferences['columns'] = {};
     let tablePrefs: PluginPreferences['table'] = {};
 
@@ -210,7 +219,7 @@ class TrackedPluginPrefs {
     return {
       table: tablePrefs,
       columns: columnsPrefs,
-    };
+    } as PluginPreferenceFor<PluginName>;
   }
 
   restore(data: PluginPreferences): void {
@@ -222,6 +231,10 @@ class TrackedPluginPrefs {
       this.columns.set(key, trackedPluginPrefs);
     }
 
-    this.table = new TrackedMap(Object.entries(table));
+    /**
+      * TODO: fix the inference here...
+      *       each time there is a cast, there is a greater risk of runtime error.
+      */
+    this.table = new TrackedMap<string, PreferencesTableValues<PluginName>>(Object.entries(table) as [string, PreferencesTableValues<PluginName>][]);
   }
 }

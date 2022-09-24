@@ -548,9 +548,15 @@ module('Preferences | rendering', function (hooks) {
 
     this.setProperties({ ctx });
 
-    await render(hbs`
+    await render(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+    hbs`
+      {{! @glint-ignore }}
       <out id="deprecated">{{this.ctx.deprecatedInfo}}</out>
+      {{! @glint-ignore }}
       <out id="table">{{this.ctx.tableInfo}}</out>
+      {{! @glint-ignore }}
       <out id="column">{{this.ctx.columnInfo}}</out>
     `);
 

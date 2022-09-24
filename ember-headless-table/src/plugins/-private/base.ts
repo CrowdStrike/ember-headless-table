@@ -6,7 +6,7 @@ import { normalizePluginsConfig } from './utils';
 
 import type { Table } from '../../-private/table';
 import type { Column } from '[public-types]';
-import type { Plugin } from '#interfaces';
+import type { Plugin, PluginPreferenceFor, PreferencesTableKey, PreferencesTableValues, Registry } from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
 import type { ColumnVisibility } from 'plugins/column-visibility';
 import type { Class, Constructor } from 'type-fest';
@@ -153,7 +153,10 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forColumn<P extends Plugin>(column: Column, klass: Class<P>) {
+  forColumn<P extends Plugin, Data = unknown>(
+    column: Column<Data>,
+    klass: Class<P>
+  ) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -202,7 +205,13 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forTable<P extends Plugin>(table: Table, klass: Class<P>) {
+  forTable<
+    P extends Plugin,
+    Data = unknown
+  >(
+    table: Table<Data>,
+    klass: Class<P>
+  ) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -248,7 +257,7 @@ export const meta = {
    *
    * Note that this requires the column instance to exist on the table.
    */
-  forColumn<P extends Plugin>(column: Column, klass: Class<P>): ColumnMetaFor<P> {
+  forColumn<P extends Plugin, Data = unknown>(column: Column<Data>, klass: Class<P>): ColumnMetaFor<P> {
     return getPluginInstance(COLUMN_META, column, klass, () => {
       let plugin = column.table.pluginOf(klass);
 
@@ -266,7 +275,7 @@ export const meta = {
    * For a given table and plugin, return the meta / state bucket for the
    * plugin<->table instance pair.
    */
-  forTable<P extends Plugin, T extends Table<any>>(table: T, klass: Class<P>): TableMetaFor<P> {
+  forTable<P extends Plugin, Data = unknown>(table: Table<Data>, klass: Class<P>): TableMetaFor<P> {
     return getPluginInstance(TABLE_META, table[TABLE_KEY], klass, () => {
       let plugin = table.pluginOf(klass);
 
@@ -297,8 +306,8 @@ export const meta = {
      *
      * For example, multiple column-focused plugins may care about width or visibility
      */
-    forColumn<FeatureName extends string>(
-      column: Column,
+    forColumn<FeatureName extends string, Data = unknown>(
+      column: Column<Data>,
       featureName: FeatureName
     ): ColumnFeatures[FeatureName] {
       let { plugins } = column.table;
@@ -324,8 +333,8 @@ export const meta = {
      *
      * For example, multiple column-focused plugins may care about width or visibility.
      */
-    forTable<FeatureName extends string>(
-      table: Table,
+    forTable<FeatureName extends string, Data = unknown>(
+      table: Table<Data>,
       featureName: FeatureName
     ): TableFeatures[FeatureName] {
       let { plugins } = table;
@@ -386,7 +395,7 @@ export const options = {
    * For a given table and plugin, return the options, if any were given from the user
    * during construction of the table.
    */
-  forTable<P extends BasePlugin>(table: Table, klass: Class<P>): OptionsFor<P> | undefined {
+  forTable<P extends BasePlugin, Data = unknown>(table: Table<Data>, klass: Class<P>): OptionsFor<P> | undefined {
     let normalized = normalizePluginsConfig(table?.config?.plugins);
     let tuple = normalized?.find((option) => option[0] === klass);
 
@@ -398,8 +407,8 @@ export const options = {
     return fn();
   },
 
-  forColumn<P extends BasePlugin>(
-    column: Column,
+  forColumn<P extends BasePlugin, Data = unknown>(
+    column: Column<Data>,
     klass: Class<P>
   ): ColumnOptionsFor<P> | undefined {
     let tuple = column.config.pluginOptions?.find((option) => option[0] === klass);
@@ -416,7 +425,7 @@ export const options = {
 /**
  * @private
  */
-function getPluginInstance<RootKey extends string | Column, Instance>(
+function getPluginInstance<RootKey extends string | Column<any>, Instance>(
   map: RootKey extends string
     ? Map<string, Map<Class<Instance>, Instance>>
     : WeakMap<Column, Map<Class<Instance>, Instance>>,

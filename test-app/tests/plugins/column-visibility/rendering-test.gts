@@ -64,7 +64,12 @@ module('Plugins | columnVisibility', function (hooks) {
     }
 
     get columns() {
-      return meta.forTable(this.table, ColumnVisibility).visibleColumns;
+      let tableMeta = meta.forTable(this.table, ColumnVisibility)
+      /**
+       * TODO: this cast is a dirty one, and should be removed.
+       *       inference "should" be able to work here.
+       */
+      return tableMeta.visibleColumns as Column<typeof DATA[number]>[];
     }
 
     hide = (column: Column) => {
@@ -118,7 +123,9 @@ module('Plugins | columnVisibility', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr>
                 {{#each this.columns as |column|}}
-                  <td>{{column.getValueForRow row}}</td>
+                  <td>
+                    {{! @glint-ignore }}
+                    {{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
             {{/each}}
@@ -144,6 +151,7 @@ module('Plugins | columnVisibility', function (hooks) {
 
     test('everything is visible', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -161,6 +169,7 @@ module('Plugins | columnVisibility', function (hooks) {
       assert.expect(17);
 
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -181,6 +190,7 @@ module('Plugins | columnVisibility', function (hooks) {
 
     test('all columns can be hidden', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -198,6 +208,7 @@ module('Plugins | columnVisibility', function (hooks) {
 
     test('columns re-appear in the same order they were left in', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -258,6 +269,7 @@ module('Plugins | columnVisibility', function (hooks) {
       setOwner(ctx, this.owner);
 
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>

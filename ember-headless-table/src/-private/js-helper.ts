@@ -39,3 +39,8 @@ export function headlessTable<T = unknown>(
    */
   return Table.from<Table<T>>(destroyable, thunk);
 }
+
+// TODO: add a columns and rows property so that
+//       users don't need to figure out which plugins to interact with
+//       for basic table rendering. This will require that plugins declare
+//       what table-API they are providing

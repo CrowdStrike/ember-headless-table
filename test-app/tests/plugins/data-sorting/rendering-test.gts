@@ -85,7 +85,7 @@ module('Plugins | dataSorting', function (hooks) {
       return this.args.ctx.table;
     }
 
-    sortDirection = (column: Column) => {
+    sortDirection = (column: Column<any>) => {
       return meta.forColumn(column, DataSorting).sortDirection;
     };
 
@@ -129,7 +129,9 @@ module('Plugins | dataSorting', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr>
                 {{#each this.table.columns as |column|}}
-                  <td>{{column.getValueForRow row}}</td>
+                  <td>
+                  {{! @glint-ignore }}
+                  {{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
             {{/each}}
@@ -160,6 +162,7 @@ module('Plugins | dataSorting', function (hooks) {
 
     test('sorting does nothing', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -218,6 +221,7 @@ module('Plugins | dataSorting', function (hooks) {
 
     test('sorting works', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
@@ -240,6 +244,7 @@ module('Plugins | dataSorting', function (hooks) {
 
     test('The second column is not sortable', async function (assert) {
       await render(
+        // @ts-ignore
         <template>
           <TestComponentA @ctx={{ctx}} />
         </template>
