@@ -1,10 +1,11 @@
-import { assert } from '@ember/debug';
+import { registerDestructor } from '@ember/destroyable';
 
-import { modifier } from 'ember-modifier';
+import Modifier from 'ember-modifier';
 
 import { meta } from '../-private/base';
 import { ColumnResizing } from './plugin';
 
+import type { ColumnMeta } from './plugin';
 import type { Column } from '#/column';
 
 /**
@@ -21,6 +22,18 @@ import type { Column } from '#/column';
  */
 
 /**
+ * Modifier to attach to the column resize handles.
+ * This provides both keyboard and mouse support for resizing columns.
+ * (provided the resize handle element is focusable -- so consider using
+ * a button for the resize element)
+ *
+ * Width and isResizing state is maintained on the "meta"
+ * class so that the users may choose per-column stylings for
+ * isResizing and dragging behaviors.
+ *
+ * For example, while dragging, the user may add a class based on the
+ * isDragging property.
+ *
  * @example
  * ```hbs
  *   <div {{resizeHandle @column}}>
@@ -28,81 +41,155 @@ import type { Column } from '#/column';
  *
  * @param element the attached element
  * @param column the passed column instance
+ *
+ * The logic here is copied from the drag slider in
+ * https://limber.glimdown.com/
+ * See: "resize-handle" on Limber's GitHub
  */
-export const resizeHandle = modifier(
-  (element: Element, [column]: [Column]) => {
-    let lastX: number | undefined;
-    let raf: number | undefined;
-    let columnMeta = meta.forColumn(column, ColumnResizing);
+class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
+  declare dragHandle: HTMLElement;
+  declare column: Column;
+  declare meta: ColumnMeta;
+
+  // Pointer
+  pointerStartX = 0;
+  pointerStartY = 0;
+  pointerX = 0;
+  pointerY = 0;
+  declare dragFrame: number;
+
+  // Keyboard
+  keyDistance = 0;
+  declare keyFrame: number; // ha
+  declare lastKey: number;
+
+  isSetup = false;
+  modify(element: Element, [column]: [Column]) {
+    this.column = column;
+    this.meta = meta.forColumn(column, ColumnResizing);
+    this.dragHandle = element as HTMLElement;
+
+    if (!this.isSetup) {
+      this.isSetup = true;
+      this.setup();
+    }
+  }
+
+  setup = () => {
+    this.dragHandle.addEventListener('touchstart', this.dragStartHandler);
+    this.dragHandle.addEventListener('mousedown', this.dragStartHandler);
+    this.dragHandle.addEventListener('keydown', this.keyHandler);
+
+    registerDestructor(this, () => {
+      this.meta.isResizing = false;
+
+      this.dragHandle.removeEventListener('touchstart', this.dragStartHandler);
+      this.dragHandle.removeEventListener('mousedown', this.dragStartHandler);
+      window.removeEventListener('touchmove', this.dragMove);
+      window.removeEventListener('touchend', this.dragEndHandler);
+      window.removeEventListener('mousemove', this.dragMove);
+      window.removeEventListener('mouseup', this.dragEndHandler);
+      this.dragHandle.removeEventListener('keydown', this.keyHandler);
+    });
+  };
+
+  setPosition = (event: Event) => {
+    if (!(event instanceof PointerEvent || event instanceof MouseEvent)) return;
+
+    if ('TouchEvent' in window && event instanceof TouchEvent) {
+      let firstTouch = event.touches[0];
+
+      if (!firstTouch) return;
+
+      this.pointerX = firstTouch.clientX;
+      this.pointerY = firstTouch.clientY;
+    } else {
+      this.pointerX = event.clientX;
+      this.pointerY = event.clientY;
+    }
+  };
+
+  setStartPosition = (event: Event) => {
+    if (!(event instanceof PointerEvent || event instanceof MouseEvent)) return;
+
+    if ('TouchEvent' in window && event instanceof TouchEvent) {
+      let firstTouch = event.touches[0];
+
+      if (!firstTouch) return;
+
+      this.pointerStartX = firstTouch.clientX;
+      this.pointerStartY = firstTouch.clientY;
+    } else {
+      this.pointerStartX = event.clientX;
+      this.pointerStartY = event.clientY;
+    }
+  };
+
+  queueUpdate = () => {
+    cancelAnimationFrame(this.dragFrame);
+    this.dragFrame = requestAnimationFrame(() => {
+      this.meta.resize(this.pointerX - this.pointerStartX);
+      this.pointerStartX = this.pointerX;
+    });
+  };
+
+  dragEndHandler = () => {
+    this.meta.isResizing = false;
+    this.queueUpdate();
+
     /**
-     * Because we're using requestAnimationFrame, it's possible that a
-     * fast user/clicker (usually by accident) causes a second drag / mouse-move
-     * event to start before the previous has finished.
-     * to handle this, we want to cancel any animation frames lingering
-     * from (in the very short-term history) around.
-     *
-     * An alternative approach would be to bundle all the state and function-handlers
-     * into the handleDragStart function, so that all state was only maintained
-     * "per drag start event", and totally isolated -- however, this can mess with
-     * resize behavior, and cause glitchy ness due to separate, but parallel, resize
-     * actions getting called in quick succession
+     * No need to listen if we aren't dragging
      */
+    window.removeEventListener('touchmove', this.dragMove);
+    window.removeEventListener('touchend', this.dragEndHandler);
+    window.removeEventListener('mousemove', this.dragMove);
+    window.removeEventListener('mouseup', this.dragEndHandler);
+  };
 
-    function handleDrag(event: MouseEvent) {
-      // return if (still) not left click
-      if (event.button === 0) return;
-      /**
-       * Oofta, mousemove
-       *
-       * classic debounce, using request animation frame
-       */
-      if (raf) cancelAnimationFrame(raf);
+  dragMove = (event: Event) => {
+    if (!this.meta.isResizing) return;
+    this.setPosition(event);
+    this.queueUpdate();
+  };
 
-      raf = requestAnimationFrame(() => {
-        if (columnMeta.isResizing) {
-          assert('handleDrag must be called after handleDragStart', lastX);
+  dragStartHandler = (event: Event) => {
+    if (!(event instanceof PointerEvent || event instanceof MouseEvent)) return;
 
-          columnMeta.resize(event.clientX - lastX);
-          lastX = event.clientX;
-        }
+    this.meta.isResizing = true;
+    if (event.target !== this.dragHandle) return;
 
-        raf = undefined;
-      });
+    this.setPosition(event);
+    this.setStartPosition(event);
+
+    window.addEventListener('touchend', this.dragEndHandler);
+    window.addEventListener('touchmove', this.dragMove);
+    window.addEventListener('mousemove', this.dragMove);
+    window.addEventListener('mouseup', this.dragEndHandler);
+  };
+
+  keyHandler = (event: KeyboardEvent) => {
+    let deltaT = new Date().getTime() - this.lastKey;
+    let isRapid = deltaT < 50;
+
+    if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
+      this.keyDistance += isRapid ? 8 : 1;
+      this.lastKey = new Date().getTime();
     }
 
-    function handleDragStop(_event: MouseEvent) {
-      columnMeta.isResizing = false;
-      lastX = undefined;
-
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', handleDragStop);
-      document.body.style.removeProperty('user-select');
+    if (event.code === 'ArrowUp' || event.code === 'ArrowLeft') {
+      this.keyDistance -= isRapid ? 8 : 1;
+      this.lastKey = new Date().getTime();
     }
 
-    function handleDragStart(event: Event) {
-      assert('Wrong event binding. Expected MouseEvent', event instanceof MouseEvent);
+    cancelAnimationFrame(this.keyFrame);
+    this.keyFrame = requestAnimationFrame(() => {
+      this.meta.resize(this.keyDistance);
 
-      // return if not left click
-      if (event.button !== 0) return;
+      this.keyDistance = 0;
+    });
+  };
+}
 
-      columnMeta.isResizing = true;
-      lastX = event.clientX;
-
-      document.addEventListener('mousemove', handleDrag);
-      document.addEventListener('mouseup', handleDragStop);
-      document.body.style.userSelect = 'none';
-    }
-
-    element.addEventListener('mousedown', handleDragStart);
-
-    return () => {
-      if (raf) cancelAnimationFrame(raf);
-
-      columnMeta.isResizing = false;
-      document.removeEventListener('mousedown', handleDragStart);
-      document.removeEventListener('mousemove', handleDrag);
-      document.removeEventListener('mouseup', handleDragStop);
-    };
-  },
-  { eager: false }
-);
+/**
+ */
+export const resizeHandle = ResizeHandle;

@@ -24,9 +24,11 @@ export function createHelpers(selectors: Selectors) {
     await triggerEvent(element, 'mousemove', { clientX: targetX, button: 0 });
     await triggerEvent(element, 'mouseup', { clientX: targetX, button: 0 });
 
+    await new Promise((resolve) => setTimeout(resolve, 10));
     await new Promise(requestAnimationFrame);
     await settled();
     await new Promise(requestAnimationFrame);
+    await settled();
   }
 
   return {

@@ -1,12 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { setComponentTemplate } from '@ember/component';
 import { assert } from '@ember/debug';
 import { htmlSafe } from '@ember/template';
 import { findAll, render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
 import * as QUnit from 'qunit';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -50,7 +46,6 @@ module('Plugins | resizing', function (hooks) {
     }
   }
 
-  let renderWithoutScaling: (comp?: unknown) => Promise<void>;
   let ctx: Context;
   let getColumns = () => {
     let ths = findAll('th');
@@ -94,8 +89,18 @@ module('Plugins | resizing', function (hooks) {
     });
   }
 
+  // This removes some styling that is put on the testing container that
+  // interferes with the tests used in this module.  Mainly, the testing
+  // container has a transform: scale(0.5); by default that makes it
+  // difficult to write these tests in a way that makes sense because
+  // everything needs to be cut in half to account for it.
+  //
+  // See https://github.com/emberjs/ember-qunit/issues/521
   const TestStyles = <template>
     <style>
+      #ember-testing { width: initial; height: initial; transform: initial; }
+      #ember-testing-container { width: 1000px; }
+
       [data-handle] {
         cursor: ew-resize;
         display: inline-block;
@@ -203,33 +208,6 @@ module('Plugins | resizing', function (hooks) {
     </template>
   }
 
-  hooks.beforeEach(function () {
-    ctx = new Context();
-    setOwner(ctx, this.owner);
-
-    renderWithoutScaling = async (comp = TestComponentA) => {
-      this.setProperties({ comp, ctx });
-
-      // This removes some styling that is put on the testing container that
-      // interferes with the tests used in this module.  Mainly, the testing
-      // container has a transform: scale(0.5); by default that makes it
-      // difficult to write these tests in a way that makes sense because
-      // everything needs to be cut in half to account for it.
-      //
-      // See https://github.com/emberjs/ember-qunit/issues/521
-      await render(
-        // @ts-ignore
-        <template>
-          <style>
-            #ember-testing { width: initial; height: initial; transform: initial; }
-          </style>
-
-          <comp @ctx={{this.ctx}} />
-        </template>
-      );
-    };
-  });
-
   module('with no options specified', function (hooks) {
     class DefaultOptions extends Context {
       table = headlessTable(this, {
@@ -246,7 +224,12 @@ module('Plugins | resizing', function (hooks) {
 
     test('it resizes each column', async function () {
       ctx.setContainerWidth(1000);
-      await renderWithoutScaling();
+      await render(
+        // @ts-ignore
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      )
 
       const [columnA, columnB, columnC, columnD] = getColumns();
 
@@ -277,11 +260,29 @@ module('Plugins | resizing', function (hooks) {
     });
   });
 
-  module('with options that affect resize behavior', function () {
+  module('with options that affect resize behavior', function (hooks) {
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => [] as unknown[],
+        plugins: [ColumnResizing, ColumnVisibility],
+      });
+    }
+
+    hooks.beforeEach(function () {
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+    });
+
     module('handlePosition (default)', function () {
       test('it works', async function () {
         ctx.setContainerWidth(1000);
-        await renderWithoutScaling();
+        await render(
+          // @ts-ignore
+          <template>
+            <TestComponentA @ctx={{ctx}} />
+          </template>
+        )
 
         const [columnA, columnB, columnC, columnD] = getColumns();
 
@@ -313,7 +314,12 @@ module('Plugins | resizing', function (hooks) {
 
       test('column resizing respects column minWidth', async function () {
         ctx.setContainerWidth(1000);
-        await renderWithoutScaling();
+        await render(
+          // @ts-ignore
+          <template>
+            <TestComponentA @ctx={{ctx}} />
+          </template>
+        )
 
         const [columnA, columnB, columnC, columnD] = getColumns();
 
@@ -344,7 +350,13 @@ module('Plugins | resizing', function (hooks) {
 
       test('table & columns resize to fit containing element', async function () {
         ctx.setContainerWidth(1000);
-        await renderWithoutScaling();
+        await render(
+          // @ts-ignore
+          <template>
+            <TestComponentA @ctx={{ctx}} />
+          </template>
+        )
+
 
         const [columnA, columnB, columnC, columnD] = getColumns();
 
@@ -378,7 +390,12 @@ module('Plugins | resizing', function (hooks) {
 
       test('table resizing respects resized columns', async function () {
         ctx.setContainerWidth(1000);
-        await renderWithoutScaling();
+        await render(
+          // @ts-ignore
+          <template>
+            <TestComponentA @ctx={{ctx}} />
+          </template>
+        )
 
         const [columnA, columnB, columnC, columnD] = getColumns();
 
@@ -438,7 +455,12 @@ module('Plugins | resizing', function (hooks) {
 
       test('it works', async function () {
         ctx.setContainerWidth(1000);
-        await renderWithoutScaling(TestComponentB);
+        await render(
+          // @ts-ignore
+          <template>
+            <TestComponentB @ctx={{ctx}} />
+          </template>
+        )
 
         const [columnA, columnB, columnC, columnD] = getColumns();
 
