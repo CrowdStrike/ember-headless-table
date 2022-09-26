@@ -1,0 +1,19 @@
+{
+  "name": "docs-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "pnpm docs:watch",
+    "docs:collect": "typedoc --options ./typedoc.config.json",
+    "docs:watch": "typedoc --options ./typedoc.config.json --watch"
+  },
+  "devDependencies": {
+    "typedoc": "^0.23.0",
+    "typedoc-github-wiki-theme": "^1.0.0",
+    "typedoc-gitlab-wiki-theme": "^1.0.0",
+    "typedoc-plugin-markdown": "^3.11.11",
+    "typedoc-plugin-markdown-pages": "^0.3.0",
+    "typedoc-plugin-mdn-links": "^2.0.0",
+    "typescript": "^4.7.3"
+  }
+}

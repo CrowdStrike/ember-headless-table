@@ -8,9 +8,12 @@
   "scripts": {
     "prepare": "pnpm build",
     "build": "pnpm --filter ember-headless-table build",
+    "build:docs": "echo 'todo'",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:tests": "pnpm --filter ember-headless-table start",
     "start:addon": "pnpm --filter ember-headless-table start --no-watch.clearScreen",
+    "start:docs-api": "pnpm --filter 'docs-api' docs:watch --preserveWatchOutput",
+    "start:docs-app": "pnpm --filter 'docs-app' start",
     "ci:update": "npx ember-ci-update",
     "test": "pnpm --filter ember-headless-table test",
     "lint": "pnpm --filter '*' lint",

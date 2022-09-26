@@ -1,0 +1,19 @@
+{
+  "tsconfig": "../ember-headless-table/tsconfig.json",
+  "entryPoints": [
+    "../ember-headless-table/src/index.ts",
+    "../ember-headless-table/src/plugins/"
+  ],
+  "entryPointStrategy": "expand",
+  "readme": "../README.md",
+  "exclude": [],
+  "json": "./docs.json",
+  "out": "dist",
+  "pretty": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeExternals": true,
+  "disableSources": true,
+  "plugin": [
+  ]
+}
