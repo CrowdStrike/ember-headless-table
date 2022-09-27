@@ -25,12 +25,13 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
+    extraPublicTrees: [],
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     staticHelpers: true,
     staticModifiers: true,
     staticComponents: true,
-    splitAtRoutes: ['/'],
+    splitAtRoutes: ['/', '/docs'],
     skipBabel: [
       {
         package: 'qunit',
@@ -55,10 +56,10 @@ module.exports = function (defaults) {
         },
       },
       webpackConfig: {
-        devServer: {
-          static: './dist',
-          hot: true,
-        },
+        // devServer: {
+        //   static: './dist',
+        //   hot: true,
+        // },
         module: {
           rules: [
             {

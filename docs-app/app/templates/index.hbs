@@ -1,0 +1,77 @@
+{{!-- template-lint-disable no-inline-styles --}}
+<div class="px-4 py-12 overflow-hidden bg-surface-base md:text-center md:pt-32 md:pb-40 angled">
+  <div class="relative max-w-256 md:mx-auto">
+    <div class="absolute w-56 h-56 -bottom-32 -right-24 md:h-full md:-top-8 md:-left-8"></div>
+    <div class="absolute -top-16 right-6 md:-right-2 md:-top-16">
+      <div class="w-20 h-20"></div>
+      <div
+        class="absolute w-20 h-20"
+        style="top: 3.4rem; left: 3.4rem;"
+      >
+      </div>
+    </div>
+
+    <h2 class="mb-10 text-4xl md:mb-16 md:mx-auto md:text-5xl max-w-256">
+      <span class="text-titles-and-attributes">
+        ember-headless-table
+      </span>
+    </h2>
+    <p class="max-w-200 md:mx-auto text-titles-and-attributes">
+      A headless table implementation that supports all the major product-level features needed for feature-rich tables.
+      Bring your own markup and styles without the need to implement any of the table behaviors.
+    </p>
+
+    <LinkTo @route="docs"
+      class="inline-flex items-center px-6 py-3 mt-10 type-lg text-titles-and-attributes rounded"
+    >
+      Read the Docs
+
+      <svg class="w-4 ml-2" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.25647 0.256191C7.42056 0.0921521 7.64308 0 7.8751 0C8.10713 0 8.32965 0.0921521 8.49374 0.256191L13.7438 5.50626C13.9078 5.67035 14 5.89287 14 6.12489C14 6.35692 13.9078 6.57944 13.7438 6.74353L8.49374 11.9936C8.32871 12.153 8.10768 12.2412 7.87825 12.2392C7.64883 12.2372 7.42937 12.1452 7.26713 11.9829C7.1049 11.8207 7.01287 11.6012 7.01088 11.3718C7.00889 11.1424 7.09708 10.9214 7.25647 10.7563L11.0129 6.99991H0.875012C0.642944 6.99991 0.420381 6.90772 0.256285 6.74362C0.0921884 6.57952 0 6.35696 0 6.12489C0 5.89283 0.0921884 5.67026 0.256285 5.50617C0.420381 5.34207 0.642944 5.24988 0.875012 5.24988H11.0129L7.25647 1.49346C7.09243 1.32937 7.00028 1.10685 7.00028 0.874825C7.00028 0.642803 7.09243 0.42028 7.25647 0.256191Z" fill="black"/>
+      </svg>
+    </LinkTo>
+  </div>
+</div>
+
+<hr class="border bg-basement">
+
+<div class="px-4 py-16 overflow-hidden md:pb-24 md:pt-48 md:-mt-32 bg-surface-inner">
+  <div class="relative z-0 mx-auto max-w-screen-lg">
+    <div class="relative">
+      <h3 class="pb-6 type-3xl text-titles-and-attributes md:text-center">
+        Use any markup or styles
+      </h3>
+      <p class="pb-16 type-2xl text-body-and-labels md:text-center max-w-200 md:mx-auto">
+        The <em>headless</em> table is markup and style agostic, so you can use tailwind, bootstrap,
+        MaterialUI, etc
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
+        <FeatureCard @title="Plugin Architecture">
+          Pay for only what you use. With plugins, you only ship the bytes you import.
+          Create your own plugins for features that aren't provided, or use the battled-tested defaults.
+        </FeatureCard>
+        <FeatureCard @title="Native Preferences">
+          Every plugin has safe, namespaced, segmentation for persisting user-desires in
+          either a local or remote storage.
+        </FeatureCard>
+        <FeatureCard @title="Toggle column visibility">
+          Different users find different data important. Enable them to hide what they don't care about, and show what they do care about.
+        </FeatureCard>
+        <FeatureCard @title="Reordering columns">
+          Change the order of columns.
+        </FeatureCard>
+        <FeatureCard @title="Resizable columns">
+          Accessibly change the width of columns with the mouse or keyboard.
+        </FeatureCard>
+        <FeatureCard @title="Data Sorting">
+          Change the order of data. Integrate with your existing sorting APIs.
+        </FeatureCard>
+        <FeatureCard @title="Sticky columns">
+          Pin columns to the left or right side of the table so that they stick to that side.
+        </FeatureCard>
+      </div>
+    </div>
+  </div>
+</div>
+
