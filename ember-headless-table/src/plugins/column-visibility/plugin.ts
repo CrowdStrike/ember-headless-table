@@ -63,7 +63,7 @@ export class ColumnVisibility
   }
 }
 
-class ColumnMeta<Data = unknown> {
+export class ColumnMeta<Data = unknown> {
   constructor(private column: Column<Data>) {}
 
   get isVisible(): boolean {
@@ -122,7 +122,7 @@ class ColumnMeta<Data = unknown> {
   };
 }
 
-class TableMeta<Data = unknown> {
+export class TableMeta<Data = unknown> {
   constructor(private table: Table<Data>) {}
 
   @cached

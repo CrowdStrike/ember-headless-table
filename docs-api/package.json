@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "pnpm docs:watch",
-    "docs:collect": "typedoc --options ./typedoc.config.json",
+    "docs:build": "typedoc --options ./typedoc.config.json",
     "docs:watch": "typedoc --options ./typedoc.config.json --watch"
   },
   "devDependencies": {

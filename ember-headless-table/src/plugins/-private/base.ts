@@ -6,7 +6,7 @@ import { normalizePluginsConfig } from './utils';
 
 import type { Table } from '../../-private/table';
 import type { Column } from '[public-types]';
-import type { Plugin, PluginPreferenceFor, PreferencesTableKey, PreferencesTableValues, Registry } from '#interfaces';
+import type { Plugin } from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
 import type { ColumnVisibility } from 'plugins/column-visibility';
 import type { Class, Constructor } from 'type-fest';
@@ -153,10 +153,7 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forColumn<P extends Plugin, Data = unknown>(
-    column: Column<Data>,
-    klass: Class<P>
-  ) {
+  forColumn<P extends Plugin, Data = unknown>(column: Column<Data>, klass: Class<P>) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -205,13 +202,7 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forTable<
-    P extends Plugin,
-    Data = unknown
-  >(
-    table: Table<Data>,
-    klass: Class<P>
-  ) {
+  forTable<P extends Plugin, Data = unknown>(table: Table<Data>, klass: Class<P>) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -257,7 +248,10 @@ export const meta = {
    *
    * Note that this requires the column instance to exist on the table.
    */
-  forColumn<P extends Plugin, Data = unknown>(column: Column<Data>, klass: Class<P>): ColumnMetaFor<P> {
+  forColumn<P extends Plugin, Data = unknown>(
+    column: Column<Data>,
+    klass: Class<P>
+  ): ColumnMetaFor<P> {
     return getPluginInstance(COLUMN_META, column, klass, () => {
       let plugin = column.table.pluginOf(klass);
 
@@ -395,7 +389,10 @@ export const options = {
    * For a given table and plugin, return the options, if any were given from the user
    * during construction of the table.
    */
-  forTable<P extends BasePlugin, Data = unknown>(table: Table<Data>, klass: Class<P>): OptionsFor<P> | undefined {
+  forTable<P extends BasePlugin, Data = unknown>(
+    table: Table<Data>,
+    klass: Class<P>
+  ): OptionsFor<P> | undefined {
     let normalized = normalizePluginsConfig(table?.config?.plugins);
     let tuple = normalized?.find((option) => option[0] === klass);
 

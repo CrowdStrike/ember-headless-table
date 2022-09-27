@@ -6,7 +6,6 @@ import type {
   PluginPreferences,
   PreferencesAdapter as Adapter,
   PreferencesTableValues,
-  Registry,
   TablePreferencesData,
 } from '#interfaces';
 
@@ -110,6 +109,13 @@ export class TablePreferences {
     return data;
   }
 
+  /**
+   * Passes a JSON-compatible structure to `adapter.persist`
+   *
+   * This structure could be stored in a remote database or
+   * local storage. The `adpater.restore` method can be used to restore
+   * this structure back in to the {@link TrackedPreferences }
+   */
   persist() {
     return this.adapter?.persist?.(this.key, {
       ...this.toTablePreferencesData(),
@@ -117,6 +123,10 @@ export class TablePreferences {
     });
   }
 
+  /**
+   * Using the `adapter.restore` method, convert the JSON structure
+   * to {@link TrackedPreferences }
+   */
   restore(adapter: Adapter) {
     let data = adapter?.restore?.(this.key);
 
@@ -130,6 +140,11 @@ export class TablePreferences {
   }
 }
 
+/**
+ * @public
+ *
+ * The API for reactively interacting with preferences
+ */
 class TrackedPreferences {
   plugins = new Map<string, TrackedPluginPrefs>();
 
@@ -232,9 +247,11 @@ class TrackedPluginPrefs<PluginName = unknown> {
     }
 
     /**
-      * TODO: fix the inference here...
-      *       each time there is a cast, there is a greater risk of runtime error.
-      */
-    this.table = new TrackedMap<string, PreferencesTableValues<PluginName>>(Object.entries(table) as [string, PreferencesTableValues<PluginName>][]);
+     * TODO: fix the inference here...
+     *       each time there is a cast, there is a greater risk of runtime error.
+     */
+    this.table = new TrackedMap<string, PreferencesTableValues<PluginName>>(
+      Object.entries(table) as [string, PreferencesTableValues<PluginName>][]
+    );
   }
 }

@@ -2,18 +2,23 @@
   "tsconfig": "../ember-headless-table/tsconfig.json",
   "entryPoints": [
     "../ember-headless-table/src/index.ts",
-    "../ember-headless-table/src/plugins/"
+    "../ember-headless-table/src/plugins/",
+    "../ember-headless-table/src/test-support/index.ts"
   ],
   "entryPointStrategy": "expand",
-  "readme": "../README.md",
-  "exclude": [],
+  "exclude": [
+    "../ember-headless-table/src/plugins/-private/utils.ts",
+    "../ember-headless-table/src/plugins/column-reordering/utils.ts",
+    "../ember-headless-table/src/plugins/column-resizing/resize-observer.ts",
+    "../ember-headless-table/src/plugins/column-resizing/utils.ts"
+  ],
   "json": "./docs.json",
   "out": "dist",
   "pretty": true,
-  "excludePrivate": true,
+  "excludePrivate": false,
   "excludeProtected": false,
   "excludeExternals": true,
-  "disableSources": true,
+  "disableSources": false,
   "plugin": [
   ]
 }

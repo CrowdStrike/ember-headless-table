@@ -46,7 +46,7 @@ export class ColumnReordering
   }
 }
 
-class ColumnMeta {
+export class ColumnMeta {
   constructor(private column: Column) {}
 
   get #tableMeta() {
@@ -72,7 +72,7 @@ class ColumnMeta {
   moveRight = () => this.position++;
 }
 
-class TableMeta {
+export class TableMeta {
   constructor(private table: Table) {}
 
   /**

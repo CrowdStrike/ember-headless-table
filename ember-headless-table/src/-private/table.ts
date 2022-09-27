@@ -45,20 +45,52 @@ const attachContainer = (element: Element, table: Table) => {
 };
 
 export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
+  /**
+   * @private
+   */
   [TABLE_KEY] = guidFor(this);
 
+  /**
+   * @private
+   */
   @tracked scrollContainerHeight?: number;
+
+  /**
+   * @private
+   */
   @tracked scrollContainerWidth?: number;
 
+  /**
+   * @private
+   */
   @tracked declare args: { named: Signature<DataType>['Named'] };
 
+  /**
+   * @private
+   */
   defaultColumnConfig = DEFAULT_COLUMN_CONFIG;
+
+  /**
+   * @private
+   */
   scrollContainerElement?: HTMLElement;
 
+  /**
+   * @deprecated
+   *
+   * this should be moved to a "pagination" plugin
+   */
   #page?: number;
 
+  /**
+   * Interact with, save, modify, etc the preferences for the table,
+   * plugins, columns, etc
+   */
   declare preferences: TablePreferences;
 
+  /**
+   * @private
+   */
   modify(_: [] | undefined, named: Signature<DataType>['Named']) {
     this.args = { named };
 
@@ -150,46 +182,96 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     });
   }
 
+  /**
+   * Get the active plugin instance for the given plugin class
+   */
   pluginOf(klass: Class<Plugin>) {
     return this.plugins.find((plugin) => plugin instanceof klass);
   }
 
+  /**
+   * @private
+   */
   get config() {
     return this.args.named;
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get bulkSelection() {
     return this.args.named?.bulkSelection;
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get hasActiveRow() {
     return Boolean(this.args.named?.rowSelection?.());
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get hasCheckboxSelection() {
     return this.isCheckboxSelectable && this.bulkSelection?.currentState.state !== 'NONE';
   }
 
+  /**
+   * Will return true if the default is at its default state.
+   * false otherwise.
+   */
   get isAtDefaultSettings() {
     return this.preferences.getIsAtDefault();
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get isCheckboxSelectable() {
     return this.args.named?.isCheckboxSelectable ?? Boolean(this.args.named?.bulkSelection);
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get isRowSelectable() {
     return this.args.named?.isRowSelectable ?? Boolean(this.args.named?.onRowSelectionChange);
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get isPaginated() {
     return Boolean(this.args.named?.pagination);
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get pagination() {
     return this.args.named?.pagination;
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get rowSelection() {
     let rowSelection = this.args.named?.rowSelection;
 
@@ -220,14 +302,29 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     },
   });
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get totalRowCount() {
     return this.pagination?.totalItems ?? this.args.named?.meta?.totalRowCount ?? this.rows.length;
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   get totalRowsSelectedCount() {
     return this.args.named?.meta?.totalRowsSelectedCount ?? this.bulkSelection?.numSelected;
   }
 
+  /**
+   * @private
+   *
+   * TODO: what's this for?
+   */
   get value() {
     return this;
   }
@@ -245,6 +342,9 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     this.#page = this.pagination?.page;
   }
 
+  /**
+   * @deprecated
+   */
   getColumnPreference<K extends keyof ColumnPreferences>(
     columnKey: ColumnKey<DataType>,
     key: K
@@ -252,6 +352,9 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     return this.preferences.getColumnPreferences(columnKey)[key];
   }
 
+  /**
+   * @private
+   */
   @action
   resetScrollContainer() {
     if (!this.scrollContainerElement) return;
@@ -264,11 +367,21 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     this.plugins.forEach((plugin) => plugin.reset?.());
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   @action
   selectRow(row: Row<DataType>) {
     this.args.named?.onRowSelectionChange?.(row.data);
   }
 
+  /**
+   * @deprecated
+   *
+   * This will soon be extracted to a plugin
+   */
   @action
   unselectRow(_row: Row<DataType>) {
     this.args.named?.onRowSelectionChange?.(undefined);

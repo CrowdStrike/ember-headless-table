@@ -44,7 +44,7 @@ export class StickyColumns
  *
  * Contains state and behaviors for the sticiness
  */
-class ColumnMeta {
+export class ColumnMeta {
   constructor(private column: Column) {}
 
   get isSticky() {
@@ -116,6 +116,5 @@ function hasWidth(obj: any): obj is { width?: number } {
   return typeof obj === 'object' && obj && 'width' in obj;
 }
 
-class TableMeta {
-  /* This Plugin does not need table state */
-}
+/* This Plugin does not need table state */
+export class TableMeta {}

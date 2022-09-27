@@ -21,31 +21,6 @@ import type { Column } from '#/column';
  *
  */
 
-/**
- * Modifier to attach to the column resize handles.
- * This provides both keyboard and mouse support for resizing columns.
- * (provided the resize handle element is focusable -- so consider using
- * a button for the resize element)
- *
- * Width and isResizing state is maintained on the "meta"
- * class so that the users may choose per-column stylings for
- * isResizing and dragging behaviors.
- *
- * For example, while dragging, the user may add a class based on the
- * isDragging property.
- *
- * @example
- * ```hbs
- *   <div {{resizeHandle @column}}>
- * ```
- *
- * @param element the attached element
- * @param column the passed column instance
- *
- * The logic here is copied from the drag slider in
- * https://limber.glimdown.com/
- * See: "resize-handle" on Limber's GitHub
- */
 class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
   declare dragHandle: HTMLElement;
   declare column: Column;
@@ -191,5 +166,74 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
 }
 
 /**
+ * Modifier to attach to the column resize handles.
+ * This provides both keyboard and mouse support for resizing columns.
+ * (provided the resize handle element is focusable -- so consider using
+ * a button for the resize element)
+ *
+ * @example
+ * ```js
+ * import Component from '@glimmer/component';
+ * import { meta } from 'ember-headless-table/plugins';
+ * import { resizeHandle, ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
+ *
+ * export default class TableHead extends Component {
+ *   /* ✂️  *\/
+ *
+ *   <template>
+ *     <thead>
+ *       <tr>
+ *         {{#each this.columns as |column|}}
+ *           <th>
+ *             <span>{{column.name}}</span>
+ *             <button {{resizeHandle column}}></button>
+ *           </th>
+ *         {{/each}}
+ *       </tr>
+ *     </thead>
+ *   </template>
+ * }
+ * ```
+ *
+ * Width and isResizing state is maintained on the "meta"
+ * class so that the users may choose per-column stylings for
+ * isResizing and dragging behaviors.
+ *
+ * For example, while dragging, the user may add a class based on the
+ * isDragging property.
+ *
+ * @example
+ * ```js
+ * import Component from '@glimmer/component';
+ * import { meta } from 'ember-headless-table/plugins';
+ * import { resizeHandle, ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
+ *
+ * export default class TableHead extends Component {
+ *   /* ✂️  *\/
+ *
+ *   isDragging = (column) => {
+ *     return meta.forColumn(column, ColumnResizing).isDragging;
+ *   }
+ *
+ *   <template>
+ *     <thead>
+ *       <tr>
+ *         {{#each this.columns as |column|}}
+ *           <th class="header {{if (this.isDragging column) 'blue'}}">
+ *             <span>{{column.name}}</span>
+ *             <button {{resizeHandle column}}></button>
+ *           </th>
+ *         {{/each}}
+ *       </tr>
+ *     </thead>
+ *   </template>
+ * }
+ * ```
+ *
+ *
+ * @note
+ * The logic here is copied from the drag slider in
+ * https://limber.glimdown.com/
+ * See: "resize-handle" on Limber's GitHub
  */
 export const resizeHandle = ResizeHandle;
