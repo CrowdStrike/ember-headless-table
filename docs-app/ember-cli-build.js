@@ -2,6 +2,8 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+const isProduction = () => EmberApp.env() === 'production';
+
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
@@ -23,10 +25,65 @@ module.exports = function (defaults) {
   const { Webpack } = require('@embroider/webpack');
 
   return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticModifiers: true,
+    staticComponents: true,
+    splitAtRoutes: ['/'],
     skipBabel: [
       {
         package: 'qunit',
       },
     ],
+    /**
+     * Modern CSS config from: https://discuss.emberjs.com/t/ember-modern-css/19614
+     * - lazy loaded CSS
+     * - CSS Modules
+     */
+    packagerOptions: {
+      publicAssetURL: '/',
+      cssLoaderOptions: {
+        sourceMap: isProduction() === false,
+        // Native CSS Modules
+        modules: {
+          // global mode, can be either global or local
+          // we set to global mode to avoid hashing tailwind classes
+          mode: 'global',
+          // class naming template
+          localIdentName: isProduction() ? '[sha512:hash:base64:5]' : '[path][name]__[local]',
+        },
+      },
+      webpackConfig: {
+        devServer: {
+          static: './dist',
+          hot: true,
+        },
+        module: {
+          rules: [
+            {
+              // When webpack sees an import for a CSS files
+              test: /\.css$/i,
+              exclude: /node_modules/,
+              use: [
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: isProduction() === false,
+                    postcssOptions: {
+                      config: './postcss.config.js',
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+              type: 'asset/resource',
+            },
+          ],
+        },
+      },
+    },
   });
 };
