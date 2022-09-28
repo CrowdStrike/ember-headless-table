@@ -1,7 +1,11 @@
-<div class="px-4 mx-auto lg:px-6 max-w-screen-2xl">
+<div class="px-4 mx-auto lg:px-6 max-w-screen-2xl w-full">
   <DocfyOutput @fromCurrentURL={{true}} as |page|>
     {{page-title "Documentation"}}
-    {{page-title page.title}}
+
+    {{#unless page.frontmatter.hideTitle}}
+      {{page-title page.title}}
+    {{/unless}}
+
   </DocfyOutput>
 
   <div class="relative lg:flex">
@@ -14,8 +18,9 @@
     <div class="flex-1 w-full min-w-0 px-0 pt-12 lg:px-4">
       <DocfyOutput @fromCurrentURL={{true}} as |page|>
         <div
-          class="markdown"
+          class="markdown prose"
           {{intersect-headings this.setCurrentHeadingId headings=page.headings}}
+          {{highlight}}
         >
           {{outlet}}
         </div>

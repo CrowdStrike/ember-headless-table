@@ -11,7 +11,12 @@ const ThemeSwitcher: TOC<{
   Element: HTMLButtonElement;
 }> = <template>
   {{#let (service 'theme-manager') as |themeManager|}}
-    <button type="button" ...attributes {{on "click" themeManager.toggleTheme}}>
+    <button
+      type="button"
+      class="focusable duration-150 ease-out rounded-sm transition interactive-quiet px-3"
+      ...attributes
+      {{on "click" themeManager.toggleTheme}}
+    >
       {{#if (eq themeManager.currentTheme DARK)}}
         <span class="sr-only">
           Switch to Light Mode

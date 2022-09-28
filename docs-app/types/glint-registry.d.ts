@@ -1,7 +1,9 @@
 import "@glint/environment-ember-loose";
-import "@glint/environment-ember-loose/native-integration";
 import "@glint/environment-ember-template-imports";
+
+// Types from libraries
 import "ember-page-title/glint";
+import "@crowdstrike/ember-oss-docs/glint";
 
 import type { PageMetadata } from '@docfy/core/lib/types';
 
@@ -18,7 +20,7 @@ import PageHeadings from 'docs-app/components/page-headings';
 import FeatureCard from 'docs-app/components/feature-card';
 
 
-import type { ComponentLike, HelperLike, ModifierLike } from "@glint/template";
+import type { ComponentLike, ModifierLike } from "@glint/template";
 
 declare module "@glint/environment-ember-loose/registry" {
   export default interface Registry {
@@ -56,7 +58,7 @@ declare module "@glint/environment-ember-loose/registry" {
 
     'intersect-headings': ModifierLike<{
       Args: {
-        Positional: [string];
+        Positional: [(id: string | undefined) => void];
         Named: {
           headings: unknown[];
         }
@@ -65,3 +67,4 @@ declare module "@glint/environment-ember-loose/registry" {
 
   }
 }
+

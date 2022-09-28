@@ -30,7 +30,7 @@ module.exports = function (defaults) {
     staticAddonTrees: true,
     staticHelpers: true,
     staticModifiers: true,
-    staticComponents: true,
+    staticComponents: false,
     splitAtRoutes: ['/', '/docs'],
     skipBabel: [
       {

@@ -1,29 +1,12 @@
 'use strict';
 
 const path = require('path');
+const { tailwindConfig } = require('@crowdstrike/ember-oss-docs/tailwind');
 
-const appRoot = __dirname;
-const appEntry = path.join(appRoot, 'app');
-const relevantFilesGlob = '**/*.{html,js,ts,hbs,gjs,gts}';
-
-const packageJson = require(path.join(appRoot, 'package.json'));
-
-module.exports = {
+const config = tailwindConfig(__dirname, {
   content: [
-    path.join(appEntry, relevantFilesGlob),
-    /**
-     * Also check if addons/libraries contain any tailwind classes
-     * that we need to include
-     */
-    ...Object.keys(packageJson.dependencies).map((depName) => {
-      const packagePath = path.dirname(require.resolve(depName));
+    path.join(__dirname, '../docs/**/*.md'),
+  ]
+});
 
-      return `${packagePath}/${relevantFilesGlob}`;
-    }),
-  ],
-  theme: {
-    extend: {},
-  },
-  presets: [require('@crowdstrike/tailwind-toucan-base')],
-  safelist: ['theme-dark', 'theme-light', 'theme-mezzanine'],
-};
+module.exports = config;

@@ -8,7 +8,8 @@ module.exports = {
     {
       root: path.resolve(monorepoRoot, 'docs'),
       pattern: '**/*.md',
-      urlSchema: 'manual',
+      // if set to "manual", the URL will need to be specified in each markdown file
+      urlSchema: 'auto',
       urlPrefix: 'docs',
     },
   ],
