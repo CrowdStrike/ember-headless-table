@@ -111,6 +111,8 @@
     "@glint/template": "^0.9.4",
     "@nullvoxpopuli/eslint-configs": "^2.2.57",
     "@rollup/plugin-babel": "^5.3.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember__application": "^4.0.1",
     "@types/ember__debug": "^4.0.1",
@@ -133,6 +135,7 @@
     "prettier": "^2.5.1",
     "rollup": "^2.67.0",
     "rollup-plugin-copy": "^3.4.0",
+    "semantic-release": "^19.0.2",
     "type-fest": "^2.19.0",
     "typescript": "^4.8.3"
   },
@@ -147,6 +150,20 @@
     "type": "addon",
     "main": "addon-main.js",
     "app-js": {}
+  },
+  "release": {
+    "branches": [
+      "main",
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
   },
   "volta": {
     "extends": "../package.json"
