@@ -6,14 +6,7 @@ title: Usage
 
 # Usage
 
-In this example, the following plugins are in use
- - Column reordering
- - Column visibility
- - Column resizing
- - Data sorting
-
-See the individual plugin pages for more scoped-down examples.
-
+<!-- No content, because the demo is rendered next -->
 
 ## Compatibility
 

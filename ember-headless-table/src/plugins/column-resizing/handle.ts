@@ -1,4 +1,5 @@
 import { registerDestructor } from '@ember/destroyable';
+import { buildWaiter } from '@ember/test-waiters';
 
 import Modifier from 'ember-modifier';
 
@@ -7,6 +8,8 @@ import { ColumnResizing } from './plugin';
 
 import type { ColumnMeta } from './plugin';
 import type { Column } from '#/column';
+
+let waiter = buildWaiter('ColumnResizing#ResizeHandle');
 
 /**
  * - why are mouse events used instead of drag events?
@@ -38,6 +41,9 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
   declare keyFrame: number; // ha
   declare lastKey: number;
 
+  // waiter
+  token?: unknown;
+
   isSetup = false;
   modify(element: Element, [column]: [Column]) {
     this.column = column;
@@ -57,6 +63,11 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
 
     registerDestructor(this, () => {
       this.meta.isResizing = false;
+
+      if (this.token) {
+        waiter.endAsync(this.token);
+        this.token = undefined;
+      }
 
       this.dragHandle.removeEventListener('touchstart', this.dragStartHandler);
       this.dragHandle.removeEventListener('mousedown', this.dragStartHandler);
@@ -112,6 +123,11 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
     this.meta.isResizing = false;
     this.queueUpdate();
 
+    if (this.token) {
+      waiter.endAsync(this.token);
+      this.token = undefined;
+    }
+
     /**
      * No need to listen if we aren't dragging
      */
@@ -132,6 +148,12 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
 
     this.meta.isResizing = true;
     if (event.target !== this.dragHandle) return;
+
+    if (this.token) {
+      waiter.endAsync(this.token);
+    }
+
+    this.token = waiter.beginAsync();
 
     this.setPosition(event);
     this.setStartPosition(event);

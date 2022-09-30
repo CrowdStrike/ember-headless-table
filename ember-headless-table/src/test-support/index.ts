@@ -20,19 +20,26 @@ export function createHelpers(selectors: Selectors) {
 
     let targetX = startX + delta;
 
-    await triggerEvent(element, 'mousedown', { clientX: startX, button: 0 });
-    await triggerEvent(element, 'mousemove', { clientX: targetX, button: 0 });
-    await triggerEvent(element, 'mouseup', { clientX: targetX, button: 0 });
+    triggerEvent(element, 'mousedown', { clientX: startX, button: 0 });
+    triggerEvent(element, 'mousemove', { clientX: targetX, button: 0 });
+    triggerEvent(element, 'mouseup', { clientX: targetX, button: 0 });
 
-    await new Promise((resolve) => setTimeout(resolve, 10));
-    await new Promise(requestAnimationFrame);
     await settled();
-    await new Promise(requestAnimationFrame);
-    await settled();
+
+    /**
+     * This has been super finnicky... :(
+     */
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    await requestAnimationFrameSettled();
   }
 
   return {
     dragLeft: (column: Element, amount: number) => resize(column, -amount),
     dragRight: (column: Element, amount: number) => resize(column, amount),
   };
+}
+
+export async function requestAnimationFrameSettled() {
+  await new Promise(requestAnimationFrame);
+  await settled();
 }

@@ -1,3 +1,6 @@
+In this example, the column reordering, visibility, resizing, and data sorting plugins are in use.
+
+See the individual plugin pages for more scoped-down examples.
 
 ```hbs template
 <div class="flex gap-2">
