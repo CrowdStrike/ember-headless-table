@@ -18,7 +18,7 @@
     <thead>
       <tr>
         {{#each this.columns as |column|}}
-          <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
+          <th {{this.table.modifiers.columnHeader column}} class="relative group">
             <span class="name">{{column.name}}</span><br>
             <button class="left" {{on 'click' (fn this.moveLeft column)}}>
               ⇦
@@ -32,9 +32,15 @@
             <button {{on 'click' (fn this.sort column)}}>
               ⇩
             </button>
-            <button class="cursor-col-resize" {{this.resizeHandle column}}>
+            <button {{this.resizeHandle column}} class="reset-styles absolute -left-4 cursor-col-resize focusable group-first:hidden">
               ↔
             </button>
+
+            {{#if (this.isResizing column)}}
+              <div
+                class="absolute -left-3 -top-4 bg-focus w-0.5 transition duration-150"
+                style="height: {{this.resizeHeight}}"></div>
+            {{/if}}
           </th>
         {{else}}
           <th>
@@ -59,6 +65,7 @@
 ```js component
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { htmlSafe } from '@ember/template';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
@@ -71,6 +78,7 @@ import { DATA } from 'docs-app/sample-data';
 
 export default class extends Component {
   resizeHandle = resizeHandle;
+
   table = headlessTable(this, {
     columns: () => [
       { name: 'column A', key: 'A',
@@ -105,6 +113,10 @@ export default class extends Component {
     return sort(DATA, this.sorts);
   }
 
+  get resizeHeight() {
+    return htmlSafe(`${this.table.scrollContainerElement.clientHeight - 32}px`)
+  }
+
 
   /**
    * Plugin Integration
@@ -125,13 +137,17 @@ export default class extends Component {
     return meta.forColumn(column, ColumnVisibility).show();
   };
 
-  sortDirection = (column: Column<any>) => {
+  sortDirection = (column) => {
     return meta.forColumn(column, DataSorting).sortDirection;
   };
 
-  sort = (column: Column) => {
+  sort = (column) => {
     meta.forTable(column.table, DataSorting).handleSort(column);
   };
+
+  isResizing = (column) => {
+    return meta.forColumn(column, ColumnResizing).isResizing;
+  }
 }
 
 /**

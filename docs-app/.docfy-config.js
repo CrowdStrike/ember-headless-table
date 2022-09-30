@@ -1,9 +1,14 @@
 'use strict';
 
 const path = require('path');
+
 const monorepoRoot = path.resolve(__dirname, '..');
 
 module.exports = {
+  repository: {
+    url: 'https://github.com/CrowdStrike/ember-headless-table',
+    editBranch: 'main',
+  },
   sources: [
     {
       root: path.resolve(monorepoRoot, 'docs'),
