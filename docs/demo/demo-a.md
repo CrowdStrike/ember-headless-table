@@ -22,6 +22,15 @@ See the individual plugin pages for more scoped-down examples.
       <tr>
         {{#each this.columns as |column|}}
           <th {{this.table.modifiers.columnHeader column}} class="relative group">
+            <button {{this.resizeHandle column}} class="reset-styles absolute -left-4 cursor-col-resize focusable group-first:hidden">
+              ↔
+            </button>
+            {{#if (this.isResizing column)}}
+              <div
+                class="absolute -left-3 -top-4 bg-focus w-0.5 transition duration-150"
+                style="height: {{this.resizeHeight}}"></div>
+            {{/if}}
+
             <span class="name">{{column.name}}</span><br>
             <button class="left" {{on 'click' (fn this.moveLeft column)}}>
               ⇦
@@ -35,15 +44,6 @@ See the individual plugin pages for more scoped-down examples.
             <button {{on 'click' (fn this.sort column)}}>
               ⇩
             </button>
-            <button {{this.resizeHandle column}} class="reset-styles absolute -left-4 cursor-col-resize focusable group-first:hidden">
-              ↔
-            </button>
-
-            {{#if (this.isResizing column)}}
-              <div
-                class="absolute -left-3 -top-4 bg-focus w-0.5 transition duration-150"
-                style="height: {{this.resizeHeight}}"></div>
-            {{/if}}
           </th>
         {{else}}
           <th>
