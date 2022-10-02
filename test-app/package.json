@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "@ember/test-waiters": "^3.0.0",
-    "ember-headless-table": "^0.0.0"
+    "ember-headless-table": "^0.0.0",
+    "ember-resources": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -41,6 +42,7 @@
     "@glint/core": "^0.9.4",
     "@glint/environment-ember-loose": "^0.9.4",
     "@glint/environment-ember-template-imports": "^0.9.4",
+    "@glint/template": "^0.9.4",
     "@nullvoxpopuli/eslint-configs": "^2.2.57",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.1",

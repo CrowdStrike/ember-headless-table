@@ -350,6 +350,7 @@ importers:
       '@glint/core': ^0.9.4
       '@glint/environment-ember-loose': ^0.9.4
       '@glint/environment-ember-template-imports': ^0.9.4
+      '@glint/template': ^0.9.4
       '@nullvoxpopuli/eslint-configs': ^2.2.57
       '@tsconfig/ember': ^1.0.1
       '@types/ember': ^4.0.1
@@ -396,6 +397,7 @@ importers:
       ember-page-title: ^8.0.0-beta.0
       ember-qunit: ^5.1.5
       ember-resolver: ^8.0.3
+      ember-resources: ^5.4.0
       ember-source: ~4.7.0
       ember-source-channel-url: ^3.0.0
       ember-template-imports: ^3.1.1
@@ -418,6 +420,7 @@ importers:
     dependencies:
       '@ember/test-waiters': 3.0.2
       ember-headless-table: link:../ember-headless-table
+      ember-resources: 5.4.0_gv6j52yonbqt3c433e2sdxgmyu
     devDependencies:
       '@babel/core': 7.19.1
       '@ember/optional-features': 2.0.0
@@ -431,6 +434,7 @@ importers:
       '@glint/core': 0.9.4_typescript@4.8.3
       '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/environment-ember-template-imports': 0.9.4_iyj4dyv5mvlfaurk3za62xqgme
+      '@glint/template': 0.9.4_@glimmer+component@1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.57_typescript@4.8.3
       '@tsconfig/ember': 1.0.1
       '@types/ember': 4.0.1_@babel+core@7.19.1
@@ -2898,7 +2902,7 @@ packages:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -5147,6 +5151,7 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
+    dev: true
 
   /babel-loader/8.2.5_rhsdbzevgb5tizdhlla5jsbgyu:
     resolution: {integrity: sha512-OSiFfH89LrEMiWd4pLNqGz4CwJDtbs2ZVc+iGu2HrkRfPxId9F2anQj38IxWpmRfsUY0aBZYi1EFcd3mhtRMLQ==}
@@ -7673,6 +7678,7 @@ packages:
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
       semver: 7.3.7
+    dev: true
 
   /css-loader/5.2.7_webpack@5.74.0:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
@@ -8297,6 +8303,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - webpack
+    dev: true
 
   /ember-auto-import/2.4.2_webpack@5.74.0:
     resolution: {integrity: sha512-REh+1aJWpTkvN42a/ga41OuRpUsSW7UQfPr2wPtYx56o/xoSNhVBXejy7yV9ObrkN7gogz6fs2xZwih5cOwpYg==}
@@ -9074,7 +9081,7 @@ packages:
       '@glimmer/component': 1.1.2_@babel+core@7.19.1
       '@glimmer/tracking': 1.1.2
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
-      ember-source: 4.7.0_@babel+core@7.19.1
+      ember-source: 4.7.0_rhsdbzevgb5tizdhlla5jsbgyu
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -9164,6 +9171,7 @@ packages:
       - '@babel/core'
       - supports-color
       - webpack
+    dev: true
 
   /ember-source/4.7.0_rhsdbzevgb5tizdhlla5jsbgyu:
     resolution: {integrity: sha512-k4R5mH7LOTXXlhxpNH3bVLhqgTfLlC5uyqVMDZxMMXmttWpRq5cOh4fL+s3/gqV9YIAK8tSyfnUAjvNK+QglQQ==}
@@ -9595,7 +9603,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.38.0_3rubbgt5ekhqrcgx4uwls3neim
+      '@typescript-eslint/parser': 5.38.0_dyxdave6dwjbccc5dgiifcmuza
       debug: 3.2.7
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.6
@@ -9682,7 +9690,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.38.0_3rubbgt5ekhqrcgx4uwls3neim
+      '@typescript-eslint/parser': 5.38.0_dyxdave6dwjbccc5dgiifcmuza
       array-includes: 3.1.5
       array.prototype.flat: 1.3.0
       debug: 2.6.9
@@ -13138,6 +13146,7 @@ packages:
         optional: true
     dependencies:
       schema-utils: 4.0.0
+    dev: true
 
   /mini-css-extract-plugin/2.6.1_webpack@5.74.0:
     resolution: {integrity: sha512-wd+SD57/K6DiV7jIR34P+s3uckTRuQvx0tKPcvjFlrEylk6P4mQ2KSWk1hblj1Kxaqok7LogKOieygXqBczNlg==}
@@ -16341,6 +16350,7 @@ packages:
     dependencies:
       loader-utils: 2.0.2
       schema-utils: 3.1.1
+    dev: true
 
   /style-loader/2.0.0_webpack@5.74.0:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}

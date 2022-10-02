@@ -1,7 +1,9 @@
+import { setOwner } from '@ember/application';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
+import { use } from 'ember-resources';
 
 import type { ColumnConfig, TableConfig, TableMeta } from 'ember-headless-table';
 
@@ -19,6 +21,28 @@ function withTestDefaults(args: Args, extra: Partial<TableConfig<unknown>> = {})
 
 module('Unit | -private | table', function (hooks) {
   setupTest(hooks);
+
+  test('supports @use', async function (assert) {
+    class TestObject {
+      @use table = headlessTable({
+        columns: () => [
+          { key: 'firstName', name: 'First name' },
+          { key: 'lastName', name: 'Last name' },
+        ],
+        data: () => [],
+      });
+    }
+
+    let instance = new TestObject();
+
+    setOwner(instance, this.owner);
+
+    assert.expect(2);
+
+    ['firstName', 'lastName'].forEach((key, position) => {
+      assert.strictEqual(instance.table.columns[position]?.key, key);
+    });
+  });
 
   test('columns: is empty by default when no data is passed', async function (assert) {
     const args: Args = {

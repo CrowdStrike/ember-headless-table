@@ -2,6 +2,27 @@ import { Table } from './table';
 
 import type { TableConfig } from '#interfaces';
 
+type Args<T> = [destroyable: object, options: TableConfig<T>] | [options: TableConfig<T>];
+
+/**
+ * Represents a UI-less version of a table
+ *
+ * _For use for building tables in ui frameworks_.
+ *
+ * @example
+ * ```js
+ * import { use } from 'ember-resources';
+ * import { headlessTable } '@crowdstrike/ember-headless-table';
+ *
+ * class MyImplementation {
+ *   @use table = headlessTable({
+ *     // your config here
+ *   })
+ * }
+ * ```
+ */
+export function headlessTable<T = unknown>(options: TableConfig<T>): Table<T>;
+
 /**
  * Represents a UI-less version of a table
  *
@@ -19,28 +40,21 @@ import type { TableConfig } from '#interfaces';
  * ```
  *
  */
-export function headlessTable<T = unknown>(
-  destroyable: object, // eslint-disable-line @typescript-eslint/ban-types
-  options:
-    | TableConfig<T>
-    /* TODO: remove the function way of doing this
-       -- this is for backwards compatibility only
-       -- until all the dynamically supported options become plugins or thunks
-          -> this is probably the easiest first step (pre plugin conversion)
+export function headlessTable<T = unknown>(destroyable: object, options: TableConfig<T>): Table<T>;
+
+export function headlessTable<T = unknown>(...args: Args<T>): Table<T> {
+  if (args.length === 2) {
+    let [destroyable, options] = args;
+
+    /**
+     * If any "root level" config changes, we need to throw-away everything.
+     * otherwise individual-property reactivity can be managed on a per-property
+     * "thunk"-basis
      */
-    | (() => TableConfig<T>)
-): Table<T> {
-  let thunk = typeof options === 'function' ? options : () => options;
+    return Table.from<Table<T>>(destroyable, () => options);
+  }
 
-  /**
-   * If any "root level" config changes, we need to throw-away everything.
-   * otherwise individual-property reactivity can be managed on a per-property
-   * "thunk"-basis
-   */
-  return Table.from<Table<T>>(destroyable, thunk);
+  let [options] = args;
+
+  return Table.from<Table<T>>(() => options);
 }
-
-// TODO: add a columns and rows property so that
-//       users don't need to figure out which plugins to interact with
-//       for basic table rendering. This will require that plugins declare
-//       what table-API they are providing
