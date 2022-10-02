@@ -50,13 +50,13 @@ export default class extends Component {
   table = headlessTable(this, {
     columns: () => [
       { name: 'column A', key: 'A',
-        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 100 }))]
       },
       { name: 'column B', key: 'B',
-        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 100 }))]
       },
       { name: 'column C', key: 'C',
-        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 100 }))]
       },
     ],
     data: () => DATA,

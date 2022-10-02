@@ -31,4 +31,4 @@ None
 
 ### Preferences
 
-
+The order of columns will be represented in the preferences.
