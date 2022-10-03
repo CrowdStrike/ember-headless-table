@@ -3,6 +3,7 @@ import { isEmpty } from '@ember/utils';
 
 import type { Row } from './row';
 import type { Table } from './table';
+import type { ContentValue } from '@glint/template';
 import type { ColumnConfig } from '#interfaces';
 
 const DEFAULT_VALUE = '--';
@@ -27,7 +28,7 @@ export class Column<T = unknown> {
   constructor(public table: Table<T>, public config: ColumnConfig<T>) {}
 
   @action
-  getValueForRow(row: Row<T>) {
+  getValueForRow(row: Row<T>): ContentValue {
     if (this.config.value) {
       return this.config.value({ column: this, row });
     }
@@ -36,7 +37,15 @@ export class Column<T = unknown> {
     // even though the real implementation does
     let value = get(row.data, this.config.key as keyof typeof row.data);
 
-    return isEmpty(value) ? this.getDefaultValue(row) : value;
+    if (isEmpty(value)) {
+      return this.getDefaultValue(row);
+    }
+
+    /**
+     * UNSAFE: casting to ContentValue is incorrect, because we have not
+     *         properly constrained the type of value, (isEmpty doesn't narrow types either)
+     */
+    return value as ContentValue;
   }
 
   private getDefaultValue(row: Row<T>) {

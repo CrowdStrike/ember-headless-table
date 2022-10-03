@@ -7,16 +7,16 @@ See the individual plugin pages for more scoped-down examples.
   {{#each this.table.columns as |column|}}
     <span>
       {{column.name}}:
-      <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+      <button {{on 'click' (fn this.hide column)}} disabled={{this.isHidden column}}>
         Hide
       </button>
-      <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+      <button {{on 'click' (fn this.show column)}} disabled={{this.isVisible column}}>
         Show
       </button>
     </span>
   {{/each}}
 </div>
-<div class="theme-light h-full overflow-auto" {{this.table.modifiers.container}}>
+<div class="h-full overflow-auto" {{this.table.modifiers.container}}>
   <table>
     <thead>
       <tr>
@@ -32,17 +32,20 @@ See the individual plugin pages for more scoped-down examples.
             {{/if}}
 
             <span class="name">{{column.name}}</span><br>
-            <button class="left" {{on 'click' (fn this.moveLeft column)}}>
+            <button {{on 'click' (fn this.moveLeft column)}} disabled={{this.cannotMoveLeft column}}>
               ⇦
             </button>
-            <button {{on 'click' (fn this.moveRight column)}}>
+            <button {{on 'click' (fn this.moveRight column)}} disabled={{this.cannotMoveRight column}}>
               ⇨
             </button>
             <button {{on 'click' (fn this.sort column)}}>
-              ⇧
-            </button>
-            <button {{on 'click' (fn this.sort column)}}>
-              ⇩
+              {{#if (this.isAscending column)}}
+                × <span class="sr-only">remove sort</span>
+              {{else if (this.isDescending column)}}
+                ⇧ <span class="sr-only">switch to ascending sort</span>
+              {{else}}
+                ⇩ <span class="sr-only">switch to ascending sort</span>
+              {{/if}}
             </button>
           </th>
         {{else}}
@@ -72,10 +75,21 @@ import { htmlSafe } from '@ember/template';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
-import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
-import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
-import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
+import {
+  ColumnResizing,
+  isResizing, resizeHandle
+} from 'ember-headless-table/plugins/column-resizing';
+import {
+  ColumnReordering,
+  moveLeft, moveRight, cannotMoveLeft, cannotMoveRight
+} from 'ember-headless-table/plugins/column-reordering';
+import {
+  ColumnVisibility,
+  hide, show, isVisible, isHidden
+} from 'ember-headless-table/plugins/column-visibility';
+import {
+  DataSorting, sort, isAscending, isDescending
+} from 'ember-headless-table/plugins/data-sorting';
 
 import { DATA } from 'docs-app/sample-data';
 
@@ -113,7 +127,7 @@ export default class extends Component {
   }
 
   get data() {
-    return sort(DATA, this.sorts);
+    return localSort(DATA, this.sorts);
   }
 
   get resizeHeight() {
@@ -122,35 +136,26 @@ export default class extends Component {
 
 
   /**
-   * Plugin Integration
+   * Plugin Integration - all of this can be removed in strict mode, gjs/gts
+   *
+   * This syntax looks weird, but it's read as:
+   *   [property on this component] = [variable in scope]
    */
-  moveLeft = (column) => {
-    return meta.forColumn(column, ColumnReordering).moveLeft();
-  };
+  hide = hide;
+  show = show;
+  isVisible = isVisible;
+  isHidden = isHidden;
 
-  moveRight = (column) => {
-    return meta.forColumn(column, ColumnReordering).moveRight();
-  };
+  moveLeft = moveLeft;
+  moveRight = moveRight;
+  cannotMoveRight = cannotMoveRight;
+  cannotMoveLeft = cannotMoveLeft;
 
-  hide = (column) => {
-    return meta.forColumn(column, ColumnVisibility).hide();
-  };
+  sort = sort;
+  isAscending = isAscending;
+  isDescending = isDescending;
 
-  show = (column) => {
-    return meta.forColumn(column, ColumnVisibility).show();
-  };
-
-  sortDirection = (column) => {
-    return meta.forColumn(column, DataSorting).sortDirection;
-  };
-
-  sort = (column) => {
-    meta.forTable(column.table, DataSorting).handleSort(column);
-  };
-
-  isResizing = (column) => {
-    return meta.forColumn(column, ColumnResizing).isResizing;
-  }
+  isResizing = isResizing;
 }
 
 /**
@@ -168,7 +173,7 @@ function getValue<T>(obj, key) {
   if (hasOwnProperty(obj, key)) return obj[key];
 }
 
-export function sort(data, sorts) {
+export function localSort(data, sorts) {
   // you'll want to sort a duplicate of the array, because Array.prototype.sort mutates.
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
   //

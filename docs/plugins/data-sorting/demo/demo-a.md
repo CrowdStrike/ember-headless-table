@@ -6,10 +6,10 @@
         {{#each this.table.columns as |column|}}
           <th {{this.table.modifiers.columnHeader column}} class="relative group">
             <span class="name">{{column.name}}</span><br>
-            <button {{on 'click' (fn this.sort column)}}>
+            <button {{on 'click' (fn this.sortAscending column)}}>
               ⇧
             </button>
-            <button {{on 'click' (fn this.sort column)}}>
+            <button {{on 'click' (fn this.sortDescending column)}}>
               ⇩
             </button>
           </th>
@@ -36,7 +36,10 @@ import { tracked } from '@glimmer/tracking';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
-import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
+import {
+  DataSorting,
+  sortDescending, sortAscending, sortDirection
+} from 'ember-headless-table/plugins/data-sorting';
 
 import { DATA } from 'docs-app/sample-data';
 
@@ -66,14 +69,9 @@ export default class extends Component {
   /**
    * Plugin Integration
    */
-
-  sortDirection = (column) => {
-    return meta.forColumn(column, DataSorting).sortDirection;
-  };
-
-  sort = (column) => {
-    meta.forTable(column.table, DataSorting).handleSort(column);
-  };
+  sortDirection = sortDirection;
+  sortAscending = sortAscending;
+  sortDescending = sortDescending;
 }
 
 /**

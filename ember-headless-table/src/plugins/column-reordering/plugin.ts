@@ -61,6 +61,22 @@ export class ColumnMeta {
     this.#tableMeta.setPosition(this.column, value);
   }
 
+  get canMoveLeft() {
+    return this.#tableMeta.getPosition(this.column) !== 0;
+  }
+
+  get canMoveRight() {
+    return this.#tableMeta.getPosition(this.column) !== this.#tableMeta.columns.length - 1;
+  }
+
+  get cannotMoveLeft() {
+    return !this.canMoveLeft;
+  }
+
+  get cannotMoveRight() {
+    return !this.canMoveRight;
+  }
+
   /**
    * Move the column one spot to the left
    */

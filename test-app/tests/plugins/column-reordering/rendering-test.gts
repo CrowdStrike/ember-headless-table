@@ -152,8 +152,8 @@ module('Plugins | columnReordering', function (hooks) {
               <tr>
                 {{#each this.columns as |column|}}
                   <td>
-                    {{! @glint-ignore }}
-                    {{column.getValueForRow row}}</td>
+                    {{column.getValueForRow row}}
+                  </td>
                 {{/each}}
               </tr>
             {{/each}}

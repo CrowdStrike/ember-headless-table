@@ -1,7 +1,7 @@
 import type { BasePlugin, Plugin } from '../../plugins';
 import type { Column } from '../column';
 import type { Row } from '../row';
-import type { ComponentLike } from '@glint/template';
+import type { ComponentLike, ContentValue } from '@glint/template';
 import type { Constructor } from 'type-fest';
 
 export interface CellContext<T> {
@@ -31,7 +31,7 @@ export interface ColumnConfig<T = unknown> {
   /**
    * Optionally provide a function to determine the value of a row at this column
    */
-  value?: (context: CellContext<T>) => unknown;
+  value?: (context: CellContext<T>) => ContentValue;
 
   /**
    * Recommended property to use for custom components for each cell per column.

@@ -73,6 +73,10 @@ export class ColumnMeta<Data = unknown> {
     return Boolean(columnPreferences.get('isVisible') ?? columnOptions?.isVisible ?? true);
   }
 
+  get isHidden(): boolean {
+    return !this.isVisible;
+  }
+
   hide = () => {
     if (!this.isVisible) return;
 

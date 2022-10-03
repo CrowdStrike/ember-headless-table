@@ -68,3 +68,31 @@ See the API Documentation [here][api-docs] for the full list of options and desc
 ### Preferences
 
 Nothing is present in the preferences object at this time.
+
+
+### Helpers + StrictMode
+
+There are convenience helpers for aiding in more ergonomic template usage when using this plugin.
+
+```gjs
+import { isResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
+
+export const THead = <template>
+  <thead>
+    <tr>
+      {{#each @columns as |column|}}
+        <th {{@table.modifiers.columnHeader column}}>
+          <button {{resizeHandle column}} class="resize-handle-styles">
+            ↔
+          </button>
+          {{#if (isResizing column)}}
+            <div class="resize-indicator-styles"></div>
+          {{/if}}
+
+          <span>{{column.name}}</span><br>
+        </th>
+      {{/each}}
+    </tr>
+  </thead>
+</template>
+```

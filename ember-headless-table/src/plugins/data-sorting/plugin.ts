@@ -111,6 +111,18 @@ export class ColumnMeta {
     return sort?.direction ?? SortDirection.None;
   }
 
+  get isAscending() {
+    return this.sortDirection === SortDirection.Ascending;
+  }
+
+  get isDescending() {
+    return this.sortDirection === SortDirection.Descending;
+  }
+
+  get isUnsorted() {
+    return this.sortDirection === SortDirection.None;
+  }
+
   get sortProperty() {
     return this.options?.sortProperty ?? this.column.config.key;
   }
@@ -151,5 +163,35 @@ export class TableMeta {
     } else {
       this.onSort?.([{ direction: SortDirection.Descending, property: columnMeta.sortProperty }]);
     }
+  }
+
+  @action
+  toggleAscending(column: Column) {
+    let columnMeta = meta.forColumn(column, Sorting);
+
+    if (!columnMeta.sortProperty) {
+      return;
+    }
+
+    if (columnMeta.sortDirection === SortDirection.Ascending) {
+      return this.onSort?.([]);
+    }
+
+    this.onSort?.([{ direction: SortDirection.Ascending, property: columnMeta.sortProperty }]);
+  }
+
+  @action
+  toggleDescending(column: Column) {
+    let columnMeta = meta.forColumn(column, Sorting);
+
+    if (!columnMeta.sortProperty) {
+      return;
+    }
+
+    if (columnMeta.sortDirection === SortDirection.Descending) {
+      return this.onSort?.([]);
+    }
+
+    this.onSort?.([{ direction: SortDirection.Descending, property: columnMeta.sortProperty }]);
   }
 }

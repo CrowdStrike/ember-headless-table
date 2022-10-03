@@ -3,22 +3,22 @@
   {{#each this.table.columns as |column|}}
     <div>
       {{column.name}}:
-      <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+      <button {{on 'click' (fn this.hide column)}}>
         Hide
       </button>
-      <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+      <button {{on 'click' (fn this.show column)}}>
         Show
       </button>
     </div>
   {{/each}}
 </div>
-<div class="theme-light h-full overflow-auto" {{this.table.modifiers.container}}>
+<div class="h-full overflow-auto" {{this.table.modifiers.container}}>
   <table>
     <thead>
       <tr>
         {{#each this.columns as |column|}}
           <th {{this.table.modifiers.columnHeader column}} class="relative group">
-            <span class="name">{{column.name}}</span><br>
+            {{column.name}}
           </th>
         {{else}}
           <th>
