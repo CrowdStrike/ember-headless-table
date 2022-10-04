@@ -19,8 +19,15 @@
     "concurrently": "^7.2.1",
     "prettier": "^2.5.1"
   },
-  "workspaces": [
-    "ember-headless-table",
-    "test-app"
-  ]
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack",
+        "ember-cli-htmlbars"
+      ]
+    }
+  },
+  "volta": {
+    "node": "16.17.0"
+  }
 }

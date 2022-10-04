@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "compilerOptions": {
+    // Path resolution
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+
+    // This addon does not allow JavaScript
+    "allowJs": false,
+
+    // Strictness / Correctness
+    "strict": true,
+    "paths": {
+      // Shorthand for private stuff
+      "#*": ["./-private/*"],
+
+      // Shorthand for type-imports only, but to denote public API
+      // Type-imports are removed at build-time, so importing values from this
+      // import *will* error during build because rollup is not setup to re-write these.
+      // (maybe on purpose?)
+      "[public-types]": ["./"],
+      "[public-plugin-types]": ["./plugins/"],
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

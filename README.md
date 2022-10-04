@@ -1,37 +1,32 @@
-ember-headless-table
-==============================================================================
+# @crowdstrike/ember-headless-table
 
-[Short description of the addon.]
-
-
-Compatibility
-------------------------------------------------------------------------------
-
-* Ember.js v3.28 or above
-* Embroider or ember-auto-import v2
-
-
-Installation
-------------------------------------------------------------------------------
+## Install
 
 ```
-ember install ember-headless-table
+ember install @crowdstrike/ember-headless-table
+```
+
+### Compatibility
+
+* ember-auto-import >= v2
+* ember-source >= 3.25
+
+### Usage
+
+```js
+import { headlessTable } from '@crowdstrike/ember-headless-table';
+
+class Foo {
+  table = headlessTable(this, {
+    columns: [
+      /* ... */
+    ],
+    data: [
+      /* ... */
+    ],
+  });
+}
 ```
 
 
-Usage
-------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
-
-
-Contributing
-------------------------------------------------------------------------------
-
-See the [Contributing](CONTRIBUTING.md) guide for details.
-
-
-License
-------------------------------------------------------------------------------
-
-This project is licensed under the [MIT License](LICENSE.md).
