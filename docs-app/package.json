@@ -115,7 +115,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@crowdstrike/ember-oss-docs": "^1.0.16",
+    "@crowdstrike/ember-oss-docs": "^1.0.17",
     "@embroider/router": "^1.8.3",
     "dompurify": "^2.4.0",
     "ember-browser-services": "^4.0.3",
