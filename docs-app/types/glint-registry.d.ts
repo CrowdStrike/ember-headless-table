@@ -4,8 +4,6 @@ import "@glint/environment-ember-template-imports";
 // Types from libraries
 import "@crowdstrike/ember-oss-docs/glint";
 
-import './untyped';
-
 // Our own types
 import type ThemeSwitcher from 'docs-app/components/theme-switcher';
 import type FeatureCard from 'docs-app/components/feature-card';
