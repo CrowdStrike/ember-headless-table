@@ -216,4 +216,17 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
 
+  PostPreviewURLascommenttoPR:
+    name: Post Preview URL as comment to PR
+    runs-on: ubuntu-latest
+    needs: PublishDocstoCloudflarePages
+    steps:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |+
+            \#\# Preview URLs
+            docs: https://${{ github.sha }}.ember-headless-table.pages.dev
+            api docs: https://${{ github.sha }}.ember-headless-table.pages.dev/api/modules.html
+
+
 
