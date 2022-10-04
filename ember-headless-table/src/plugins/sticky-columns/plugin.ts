@@ -3,7 +3,7 @@ import { assert } from '@ember/debug';
 
 import { BasePlugin, meta, options } from '../-private/base';
 
-import type { Plugin } from '[public-plugin-types]';
+import type { ColumnApi, Plugin } from '[public-plugin-types]';
 import type { Column } from '[public-types]';
 
 interface ColumnOptions {
@@ -37,6 +37,40 @@ export class StickyColumns
     table: TableMeta,
     column: ColumnMeta,
   };
+
+  headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
+    let meta = this.getColumnMeta(column);
+
+
+    if (meta.isSticky) {
+      element.style.setProperty('position', 'sticky');
+      if (meta.offset) {
+        if (meta.position !== 'none') {
+          let otherDirection = meta.position === 'left' ? 'right' : 'left';
+
+          element.style.setProperty(meta.position, meta.offset);
+          element.style.removeProperty(otherDirection);
+        }
+      }
+      element.style.setProperty('z-index', '8');
+    } else {
+      if (element.style.getPropertyValue('position') === 'sticky') {
+        element.style.removeProperty('position');
+      }
+
+      if (element.style.getPropertyValue('left')) {
+        element.style.removeProperty('left');
+      }
+
+      if (element.style.getPropertyValue('right')) {
+        element.style.removeProperty('right');
+      }
+
+      if (element.style.getPropertyValue('z-index') === '8') {
+        element.style.removeProperty('z-index');
+      }
+    }
+  }
 }
 
 /**
@@ -56,7 +90,7 @@ export class ColumnMeta {
 
     assert(
       `Invalid sticky value, ${sticky}. Valid values: 'left', 'right', false`,
-      sticky === 'left' || sticky === 'right' || sticky === false
+      sticky === 'left' || sticky === 'right' || sticky === false || sticky === undefined
     );
 
     return sticky || 'none';

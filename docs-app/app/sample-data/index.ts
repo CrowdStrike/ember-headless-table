@@ -5,6 +5,9 @@ export const DATA = [
     B: 'Berry',
     C: 'Cranberry',
     D: 'Da Chile Pepper',
+    E: 'Pomegranate',
+    F: 'Cherry',
+    G: 'Watermelon',
   },
   {
     // Green stuff
@@ -12,6 +15,9 @@ export const DATA = [
     B: 'Plantain',
     C: 'Cucumber',
     D: 'Dill',
+    E: 'Kiwi',
+    F: 'Broccoli',
+    G: 'Spinach',
   },
   {
     // Yellow stuff
@@ -19,5 +25,8 @@ export const DATA = [
     B: 'Banana',
     C: 'Corn',
     D: 'Durian',
+    E: 'Pineapple',
+    F: 'Lemon',
+    G: 'Jackfruit',
   },
 ];

@@ -262,6 +262,7 @@ importers:
       '@types/ember__object': ^4.0.4
       '@types/ember__owner': ^4.0.0
       '@types/ember__string': ^3.0.9
+      '@types/ember__template': ^4.0.0
       '@types/ember__test-helpers': ^2.8.1
       '@types/ember__utils': ^4.0.1
       browserslist: ^4.21.4
@@ -319,6 +320,7 @@ importers:
       '@types/ember__object': 4.0.4_@babel+core@7.19.3
       '@types/ember__owner': 4.0.0
       '@types/ember__string': 3.0.9
+      '@types/ember__template': 4.0.0
       '@types/ember__test-helpers': 2.8.1_@babel+core@7.19.3
       '@types/ember__utils': 4.0.1_@babel+core@7.19.3
       browserslist: 4.21.4
@@ -2616,7 +2618,7 @@ packages:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -4475,7 +4477,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.19.3_supports-color@8.1.1
+      '@babel/core': 7.19.3
       find-cache-dir: 3.3.2
       loader-utils: 2.0.2
       make-dir: 3.1.0
