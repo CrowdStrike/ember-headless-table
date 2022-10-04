@@ -1,5 +1,5 @@
 {
-  "name": "ember-headless-table",
+  "name": "ember-headless-table-monorepo",
   "version": "0.0.0",
   "private": true,
   "repository": "",
@@ -8,9 +8,15 @@
   "scripts": {
     "prepare": "pnpm build",
     "build": "pnpm --filter ember-headless-table build",
+    "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
+    "build:docs-app": "pnpm --filter docs-app build",
+    "build:docs-api": "pnpm --filter docs-api docs:build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:tests": "pnpm --filter ember-headless-table start",
     "start:addon": "pnpm --filter ember-headless-table start --no-watch.clearScreen",
+    "start:docs-api": "pnpm --filter 'docs-api' docs:watch --preserveWatchOutput",
+    "start:docs-app": "pnpm --filter 'docs-app' start -p 4201",
+    "ci:update": "npx ember-ci-update",
     "test": "pnpm --filter ember-headless-table test",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix"
@@ -19,8 +25,21 @@
     "concurrently": "^7.2.1",
     "prettier": "^2.5.1"
   },
-  "workspaces": [
-    "ember-headless-table",
-    "test-app"
-  ]
+  "pnpm": {
+    "overrides": {
+      "@types/eslint": "^7.0.0"
+    },
+    "overrides-nodes": {
+      "@types/eslint": "webpack brings in v8, but we use v7"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack",
+        "ember-cli-htmlbars"
+      ]
+    }
+  },
+  "volta": {
+    "node": "16.17.0"
+  }
 }

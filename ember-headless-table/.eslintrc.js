@@ -1,46 +1,25 @@
 'use strict';
 
+const { configs } = require('@nullvoxpopuli/eslint-configs');
+
+let config = configs.ember();
+
 module.exports = {
-  root: true,
-  parser: '@babel/eslint-parser',
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    ecmaFeatures: {
-      legacyDecorators: true,
-    },
-    babelOptions: {
-      root: __dirname,
-    },
-  },
-  plugins: ['ember'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-  ],
-  env: {
-    browser: true,
-  },
-  rules: {},
+  ...config,
   overrides: [
-    // node files
+    ...config.overrides,
     {
-      files: [
-        './.eslintrc.js',
-        './.prettierrc.js',
-        './.template-lintrc.js',
-        './addon-main.js',
-      ],
-      parserOptions: {
-        sourceType: 'script',
+      files: ['**/*.ts'],
+      rules: {
+        // For library authors, focusing on inference, any has a legit use case
+        // (how do you then lint against abuse?)
+        '@typescript-eslint/no-explicit-any': 'off',
+        // For consistency, we always define ColumnOptions and TableOptions
+        // For plugin authors tho, that is not necessary.
+        '@typescript-eslint/no-empty-interface': 'off',
+        // We need deliberate use of object and any for proper inference
+        '@typescript-eslint/ban-types': 'off',
       },
-      env: {
-        browser: false,
-        node: true,
-      },
-      plugins: ['node'],
-      extends: ['plugin:node/recommended'],
     },
   ],
 };

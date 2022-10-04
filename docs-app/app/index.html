@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ember-headless-table</title>
+    <meta
+      name="description"
+      content="
+        A headless table implementation that supports all the major product-level features needed for feature-rich tables.
+        Bring your own markup and styles without the need to implement any of the table behaviors.
+      ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{content-for "head"}}
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/docs-app.css">
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/docs-app.js"></script>
+
+    {{content-for "body-footer"}}
+  </body>
+</html>

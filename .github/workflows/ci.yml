@@ -11,67 +11,177 @@ concurrency:
    group: ci-${{ github.head_ref || github.ref }}
    cancel-in-progress: true
 
+env:
+  CI: true
+  dist: ember-headless-table/dist
+
 jobs:
-  test:
-    name: "Tests"
+  install_dependencies:
+    name: Install
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci
+      - uses: ./.github/actions/pnpm
+
+  lint:
+    name: Lint JS + Templates
+    runs-on: ubuntu-latest
+    needs: [install_dependencies]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
       - name: Lint
-        run: npm run lint
-      - name: Run Tests
-        run: npm run test
+        run: pnpm lint
 
-  floating:
-    name: "Floating Dependencies"
+  commits:
+    name: Commit Messages
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm install --no-shrinkwrap
-      - name: Run Tests
-        run: npm run test
+          fetch-depth: 0
+      - uses: volta-cli/action@v1
+      - uses: wagoid/commitlint-github-action@v4.1.9
+        with:
+          configFile: 'commitlint.config.cjs'
 
-  try-scenarios:
-    name: ${{ matrix.try-scenario }}
+  build:
+    name: Build Tests
+    needs: [install_dependencies]
+    timeout-minutes: 5
     runs-on: ubuntu-latest
-    needs: 'test'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/assert-build
+
+  typecheck_docs:
+    name: 'Typecheck Docs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
+      - run: pnpm glint
+        working-directory: 'docs-app'
+
+  typecheck:
+    name: 'TypeScript compatibility'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    needs: [build]
+    continue-on-error: true
+    strategy:
+      fail-fast: true
+      matrix:
+        typescript-scenario:
+          - typescript@next
+          - typescript@4.8
+          - typescript@4.7
+          - typescript@4.6
+          - typescript@4.5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
+      - name: 'Change TS to ${{ matrix.typescript-scenario }}'
+        run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
+        working-directory: 'test-app'
+      - run: pnpm glint
+
+  default_tests:
+    name: Default Tests
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
+      - run: pnpm --filter test-app test:ember
+
+  foloating_tests:
+    name: Floating Deps Test
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - name: Install Dependencies (without lockfile)
+        run: rm pnpm-lock.yaml && pnpm install
+      - uses: ./.github/actions/download-build-package
+      - run: pnpm --filter test-app test:ember
+
+  try_scenarios:
+    name: ${{ matrix.try-scenario }}
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    needs: [default_tests]
 
     strategy:
       fail-fast: false
       matrix:
         try-scenario:
           - ember-lts-3.28
+          - ember-4.0.0
           - ember-lts-4.4
           - ember-release
           - ember-beta
           - ember-canary
-          - ember-classic
           - embroider-safe
           - embroider-optimized
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
       - name: Run Tests
-        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
-        working-directory: test-app
+        working-directory: ./test-app
+        run: >-
+          node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
+          --skip-cleanup
+
+
+  publish_docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish Docs to Cloudflare Pages
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
+      - run: pnpm build:docs
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.UX_OSS_CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ember-headless-table
+          directory: ./docs-app/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+  release:
+    name: Release
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [default_tests, typecheck, try_scenarios, foloating_tests]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: volta-cli/action@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-build-package
+      - name: Release
+        run: ./node_modules/.bin/semantic-release
+        working-directory: ./ember-resources
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>TestApp Tests</title>
+    <title>Test App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,6 +15,7 @@
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
+
   </head>
   <body>
     {{content-for "body"}}
@@ -29,11 +30,14 @@
 
     <script src="/testem.js" integrity="" data-embroider-ignore></script>
     <script src="{{rootURL}}assets/vendor.js"></script>
+
     <script src="{{rootURL}}assets/test-support.js"></script>
     <script src="{{rootURL}}assets/test-app.js"></script>
     <script src="{{rootURL}}assets/tests.js"></script>
 
+
     {{content-for "body-footer"}}
     {{content-for "test-body-footer"}}
+
   </body>
 </html>
