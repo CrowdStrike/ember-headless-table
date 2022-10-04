@@ -35,7 +35,10 @@ import Component from '@glimmer/component';
 
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
-import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
+import {
+  ColumnReordering,
+  moveLeft, moveRight
+} from 'ember-headless-table/plugins/column-reordering';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 import { DATA } from 'docs-app/sample-data';
@@ -60,13 +63,11 @@ export default class extends Component {
   }
 
   /**
-   * Plugin Integration
+   * Plugin Integration - all of this can be removed in strict mode, gjs/gts
+   *
+   * This syntax looks weird, but it's read as:
+   *   [property on this component] = [variable in scope]
    */
-  moveLeft = (column) => {
-    return meta.forColumn(column, ColumnReordering).moveLeft();
-  };
-
-  moveRight = (column) => {
-    return meta.forColumn(column, ColumnReordering).moveRight();
-  };
+  moveLeft = moveLeft;
+  moveRight = moveRight;
 }
