@@ -1,4 +1,3 @@
-// @ts-ignore
 import { on } from '@ember/modifier';
 import service from 'docs-app/helpers/service';
 import { DARK } from '@crowdstrike/ember-toucan-styles';

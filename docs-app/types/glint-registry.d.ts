@@ -13,11 +13,11 @@ import type { PageMetadata } from '@docfy/core/lib/types';
 // (since glint projects use the glint-language-server instead)
 //
 // @ts-ignore
-import ThemeSwitcher from 'docs-app/components/theme-switcher';
+import type ThemeSwitcher from 'docs-app/components/theme-switcher';
 // @ts-ignore
-import PageHeadings from 'docs-app/components/page-headings';
+import type PageHeadings from 'docs-app/components/page-headings';
 // @ts-ignore
-import FeatureCard from 'docs-app/components/feature-card';
+import type FeatureCard from 'docs-app/components/feature-card';
 
 
 import type { ComponentLike, ModifierLike } from "@glint/template";
