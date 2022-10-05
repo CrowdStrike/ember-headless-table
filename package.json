@@ -27,10 +27,12 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/eslint": "^7.0.0"
+      "@types/eslint": "^7.0.0",
+      "ember-auto-import": "^2.4.2"
     },
     "overrides-nodes": {
-      "@types/eslint": "webpack brings in v8, but we use v7"
+      "@types/eslint": "webpack brings in v8, but we use v7",
+      "ember-auto-import": "ember-qunit is bringing in an ancient version"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
