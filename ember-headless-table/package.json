@@ -79,7 +79,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.8",
-    "@ember/test-helpers": "^2.6.0",
     "@ember/string": "^3.0.0",
     "@embroider/addon-shim": "^1.0.0",
     "ember-cached-decorator-polyfill": "^0.1.4",
