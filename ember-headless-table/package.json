@@ -79,13 +79,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.8",
+    "@ember/test-helpers": "^2.6.0",
     "@ember/string": "^3.0.0",
     "@embroider/addon-shim": "^1.0.0",
     "ember-cached-decorator-polyfill": "^0.1.4",
     "ember-modifier": "^3.2.7",
     "ember-resources": "^5.4.0",
     "ember-tracked-storage-polyfill": "^1.0.0",
-    "rollup-plugin-ts": "^3.0.2",
     "tracked-built-ins": "^3.1.0"
   },
   "devDependencies": {
@@ -130,6 +130,7 @@
     "prettier": "^2.5.1",
     "rollup": "^2.67.0",
     "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-ts": "^3.0.2",
     "semantic-release": "^19.0.2",
     "type-fest": "^2.19.0",
     "typescript": "^4.8.3"
