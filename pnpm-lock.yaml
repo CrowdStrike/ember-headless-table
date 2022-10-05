@@ -284,6 +284,7 @@ importers:
       '@babel/runtime': 7.19.0
       '@ember/string': 3.0.0
       '@embroider/addon-shim': 1.8.3
+      ember-cached-decorator-polyfill: 0.1.4_@babel+core@7.19.3
       ember-modifier: 3.2.7_@babel+core@7.19.3
       ember-resources: 5.4.0_gv6j52yonbqt3c433e2sdxgmyu
       ember-tracked-storage-polyfill: 1.0.0
@@ -320,7 +321,6 @@ importers:
       browserslist: 4.21.4
       caniuse-lite: 1.0.30001416
       concurrently: 7.4.0
-      ember-cached-decorator-polyfill: 0.1.4_@babel+core@7.19.3
       ember-source: 4.7.0_@babel+core@7.19.3
       ember-template-lint: 4.14.0
       eslint: 7.32.0
@@ -8212,6 +8212,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   /ember-cached-decorator-polyfill/0.1.4_@babel+core@7.19.3:
     resolution: {integrity: sha512-JOK7kBCWsTVCzmCefK4nr9BACDJk0owt9oIUaVt6Q0UtQ4XeAHmoK5kQ/YtDcxQF1ZevHQFdGhsTR3JLaHNJgA==}
@@ -8224,6 +8225,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   /ember-cli-app-version/5.0.0:
     resolution: {integrity: sha512-afhx/CXDOMNXzoe4NDPy5WUfxWmYYHUzMCiTyvPBxCDBXYcMrtxNWxvgaSaeqcoHVEmqzeyBj8V82tzmT1dcyw==}
