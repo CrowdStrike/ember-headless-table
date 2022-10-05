@@ -1284,7 +1284,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.19.3
+      '@babel/core': 7.19.3_supports-color@8.1.1
       '@babel/helper-plugin-utils': 7.19.0
 
   /@babel/plugin-syntax-numeric-separator/7.10.4_@babel+core@7.19.3:
@@ -1316,7 +1316,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-      '@babel/core': 7.19.3
+      '@babel/core': 7.19.3_supports-color@8.1.1
       '@babel/helper-plugin-utils': 7.19.0
 
   /@babel/plugin-syntax-private-property-in-object/7.14.5_@babel+core@7.19.3:
@@ -2316,7 +2316,7 @@ packages:
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
       ember-destroyable-polyfill: 2.0.3_@babel+core@7.19.3
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -2615,7 +2615,7 @@ packages:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - supports-color
 
@@ -2928,7 +2928,7 @@ packages:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
+      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -3562,7 +3562,7 @@ packages:
     resolution: {integrity: sha512-d2eU8O5QtqDd/ZqMV3yzIbULh8wPx6UMvxwJ0ThnNgCIFcZLO98deM5w6m5aU6K48Xu1wWzjJBa0jktGSFWXJw==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3571,7 +3571,7 @@ packages:
     resolution: {integrity: sha512-ggF6EoKp7o0FKmZ9UKUzsLXHfcho+mKFnHQfUL1k/sUjkHxSd33fIATYuNIGZARRn2JzhYYfRqkgRIRBsoEiaQ==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
