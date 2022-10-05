@@ -25,6 +25,7 @@
     "embroider:start": "EMBROIDER_TEST_SETUP_FORCE=embroider EMBROIDER_TEST_SETUP_OPTIONS=optimized ember s"
   },
   "dependencies": {
+    "@ember/test-helpers": "^2.8.1",
     "@ember/test-waiters": "^3.0.0",
     "ember-cached-decorator-polyfill": "^0.1.4",
     "ember-functions-as-helper-polyfill": "^2.1.1",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
-    "@ember/test-helpers": "^2.8.1",
     "@embroider/compat": "^1.8.3",
     "@embroider/core": "^1.8.3",
     "@embroider/test-setup": "^1.7.1",

@@ -76,12 +76,6 @@
   "peerDependenciesMeta": {
     "@glimmer/component": {
       "optional": true
-    },
-    "@ember/test-waiters": {
-      "optional": true
-    },
-    "@ember/test-helpers": {
-      "optional": true
     }
   },
   "dependencies": {
