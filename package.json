@@ -6,7 +6,6 @@
   "license": "MIT",
   "author": "",
   "scripts": {
-    "prepare": "pnpm build",
     "build": "pnpm --filter ember-headless-table build",
     "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
     "build:docs-app": "pnpm --filter docs-app build",
