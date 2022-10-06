@@ -15,8 +15,8 @@ import { Row } from './row';
 import { composeFunctionModifiers } from './utils';
 
 import type { Plugin } from '../plugins';
+import type { Class } from '[private-types]';
 import type { ColumnKey, ColumnPreferences, Destructor, TableConfig } from '#interfaces';
-import type { Class } from 'type-fest';
 
 const DEFAULT_COLUMN_CONFIG = {
   isVisible: true,

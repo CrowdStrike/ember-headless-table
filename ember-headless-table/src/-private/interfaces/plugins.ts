@@ -1,6 +1,6 @@
+import type { Constructor } from '[private-types]';
 import type { Column, Table } from '[public-types]';
 import type { Destructor } from '#interfaces';
-import type { Constructor } from 'type-fest';
 
 type DataTypeOf<T> = T extends Table<infer DataType> ? DataType : T;
 

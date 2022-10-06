@@ -286,7 +286,6 @@ importers:
       rollup-plugin-ts: ^3.0.2
       semantic-release: ^19.0.2
       tracked-built-ins: ^3.1.0
-      type-fest: ^2.19.0
       typescript: ^4.8.3
     dependencies:
       '@babel/runtime': 7.19.0
@@ -340,7 +339,6 @@ importers:
       rollup-plugin-copy: 3.4.0
       rollup-plugin-ts: 3.0.2_kgf4xnezxfx2dfahxjd4ga56o4
       semantic-release: 19.0.5
-      type-fest: 2.19.0
       typescript: 4.8.4
 
   test-app:
@@ -2331,7 +2329,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: false
 
   /@ember/test-helpers/2.8.1_stkpchyss7keuhgemteo7qzure:
     resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
@@ -2649,7 +2646,6 @@ packages:
       ember-source: 3.28.9_@babel+core@7.19.3
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@embroider/util/1.8.3_ember-source@4.7.0:
     resolution: {integrity: sha512-FvsPzsb9rNeveSnIGnsfLkWWBdSM5QIA9lDVtckUktRnRnBWZHm5jDxU/ST//pWMhZ8F0DucRlFWE149MTLtuQ==}
@@ -2980,7 +2976,7 @@ packages:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -4823,7 +4819,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.19.3_supports-color@8.1.1
+      '@babel/core': 7.19.3
       find-cache-dir: 3.3.2
       loader-utils: 2.0.2
       make-dir: 3.1.0
@@ -8366,7 +8362,7 @@ packages:
       '@ember/test-helpers': ^2.4.0
       qunit: ^2.13.0
     dependencies:
-      '@ember/test-helpers': 2.8.1_stkpchyss7keuhgemteo7qzure
+      '@ember/test-helpers': 2.8.1_ptmptcjlczeu7fwi6i5ecogy5u
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
@@ -15855,11 +15851,6 @@ packages:
   /type-fest/1.4.0:
     resolution: {integrity: sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /type-fest/2.19.0:
-    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
-    engines: {node: '>=12.20'}
     dev: true
 
   /type-is/1.6.18:
