@@ -55,7 +55,8 @@
     }
   },
   "scripts": {
-    "build": "rollup --config ./rollup.config.js",
+    "fix-upstream": "cd node_modules/ember-cached-decorator-polyfill && (yarn; yarn build:node)",
+    "build": "pnpm fix-upstream && rollup --config ./rollup.config.js",
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
@@ -121,7 +122,7 @@
     "browserslist": "^4.21.4",
     "caniuse-lite": "^1.0.30001407",
     "concurrently": "^7.2.1",
-    "ember-cached-decorator-polyfill": "^0.1.4",
+    "ember-cached-decorator-polyfill": "github:ember-polyfills/ember-cached-decorator-polyfill#main",
     "ember-source": "~4.7.0",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",

@@ -262,7 +262,7 @@ importers:
       browserslist: ^4.21.4
       caniuse-lite: ^1.0.30001407
       concurrently: ^7.2.1
-      ember-cached-decorator-polyfill: ^0.1.4
+      ember-cached-decorator-polyfill: github:ember-polyfills/ember-cached-decorator-polyfill#main
       ember-modifier: ^3.2.7
       ember-resources: ^5.4.0
       ember-source: ~4.7.0
@@ -320,7 +320,7 @@ importers:
       browserslist: 4.21.4
       caniuse-lite: 1.0.30001416
       concurrently: 7.4.0
-      ember-cached-decorator-polyfill: 0.1.4_@babel+core@7.19.3
+      ember-cached-decorator-polyfill: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure
       ember-source: 4.7.0_@babel+core@7.19.3
       ember-template-lint: 4.14.0
       eslint: 7.32.0
@@ -7602,6 +7602,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   /ember-cli-app-version/5.0.0:
     resolution: {integrity: sha512-afhx/CXDOMNXzoe4NDPy5WUfxWmYYHUzMCiTyvPBxCDBXYcMrtxNWxvgaSaeqcoHVEmqzeyBj8V82tzmT1dcyw==}
@@ -16547,3 +16548,26 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
+
+  github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure:
+    resolution: {tarball: https://codeload.github.com/ember-polyfills/ember-cached-decorator-polyfill/tar.gz/caf0ef69a66ec91f25ac204644cf55467729ec81}
+    id: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81
+    name: ember-cached-decorator-polyfill
+    version: 0.1.4
+    engines: {node: 14.* || >= 16}
+    prepare: true
+    requiresBuild: true
+    peerDependencies:
+      ember-source: ^3.13.0 || ^4.0.0
+    dependencies:
+      '@embroider/macros': 1.8.3
+      '@glimmer/tracking': 1.1.2
+      babel-import-util: 1.2.2
+      ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
+      ember-cli-babel: 7.26.11
+      ember-cli-babel-plugin-helpers: 1.1.1
+      ember-source: 4.7.0_@babel+core@7.19.3
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+    dev: true
