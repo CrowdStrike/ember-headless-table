@@ -85,14 +85,14 @@ jobs:
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
         working-directory: ./test-app
       - name: 'Type checking'
-      
+
         run: |
           pnpm --filter test-app exec tsc -v;
           pnpm --filter test-app exec glint --version;
           pnpm --filter test-app exec glint;
-      
 
-  
+
+
 
 
   default_tests:
@@ -190,6 +190,29 @@ jobs:
       - uses: ./.github/actions/download-built-package
       - run: pnpm glint
         working-directory: docs-app
-      
 
 
+
+  PublishDocstoCloudflarePages:
+    name: Publish Docs to Cloudflare Pages
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: volta-cli/action@v3
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-built-package
+      - run: pnpm build:docs
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.UX_OSS_CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ember-headless-table
+          directory: ./docs-app/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
