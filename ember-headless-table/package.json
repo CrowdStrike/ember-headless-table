@@ -71,7 +71,7 @@
     "@ember/test-waiters": "^2.4.5 || ^3.0.0",
     "@glint/template": ">= 0.8.3",
     "ember-cached-decorator-polyfill": "^1.0.1",
-    "ember-source": "^3.28.0 || ^4.0.0"
+    "ember-source": ">=3.28.0 <4.0.0 || >=4.0.0 <5.0.0"
   },
   "peerDependenciesMeta": {
     "@glimmer/component": {
@@ -122,7 +122,6 @@
     "caniuse-lite": "^1.0.30001407",
     "concurrently": "^7.2.1",
     "ember-cached-decorator-polyfill": "^1.0.1",
-    "ember-source": "~4.7.0",
     "ember-template-lint": "^4.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
