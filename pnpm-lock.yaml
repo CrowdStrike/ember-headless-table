@@ -88,7 +88,7 @@ importers:
       dompurify: ^2.4.0
       ember-auto-import: ^2.4.2
       ember-browser-services: ^4.0.3
-      ember-cached-decorator-polyfill: github:ember-polyfills/ember-cached-decorator-polyfill#main
+      ember-cached-decorator-polyfill: ^1.0.1
       ember-cli: ~4.7.0
       ember-cli-app-version: ^5.0.0
       ember-cli-babel: ^7.26.11
@@ -135,7 +135,7 @@ importers:
       '@embroider/router': 1.8.3_3usgj72s77yfgme4zgisir4ujq
       dompurify: 2.4.0
       ember-browser-services: 4.0.3
-      ember-cached-decorator-polyfill: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure
+      ember-cached-decorator-polyfill: 1.0.1_stkpchyss7keuhgemteo7qzure
       ember-headless-table: link:../ember-headless-table
       ember-modifier: 3.2.7_@babel+core@7.19.3
       ember-resources: 5.4.0_wwyzebdhinabrrbaotf4h6m5du
@@ -264,7 +264,7 @@ importers:
       browserslist: ^4.21.4
       caniuse-lite: ^1.0.30001407
       concurrently: ^7.2.1
-      ember-cached-decorator-polyfill: github:ember-polyfills/ember-cached-decorator-polyfill#main
+      ember-cached-decorator-polyfill: ^1.0.1
       ember-modifier: ^3.2.7
       ember-resources: ^5.4.0
       ember-source: ~4.7.0
@@ -322,7 +322,7 @@ importers:
       browserslist: 4.21.4
       caniuse-lite: 1.0.30001416
       concurrently: 7.4.0
-      ember-cached-decorator-polyfill: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure
+      ember-cached-decorator-polyfill: 1.0.1_stkpchyss7keuhgemteo7qzure
       ember-source: 4.7.0_@babel+core@7.19.3
       ember-template-lint: 4.14.0
       eslint: 7.32.0
@@ -379,7 +379,7 @@ importers:
       broccoli-asset-rev: ^3.0.0
       concurrently: ^7.2.1
       ember-auto-import: ^2.4.2
-      ember-cached-decorator-polyfill: github:ember-polyfills/ember-cached-decorator-polyfill#main
+      ember-cached-decorator-polyfill: ^1.0.1
       ember-cli: ~4.7.0
       ember-cli-app-version: ^5.0.0
       ember-cli-babel: ^7.26.11
@@ -422,7 +422,7 @@ importers:
       '@ember/test-helpers': 2.8.1_stkpchyss7keuhgemteo7qzure
       '@ember/test-waiters': 3.0.2
       ember-auto-import: 2.4.2_webpack@5.74.0
-      ember-cached-decorator-polyfill: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure
+      ember-cached-decorator-polyfill: 1.0.1_stkpchyss7keuhgemteo7qzure
       ember-functions-as-helper-polyfill: 2.1.1_ember-source@4.7.0
       ember-headless-table: link:../ember-headless-table
       ember-resources: 5.4.0_gv6j52yonbqt3c433e2sdxgmyu
@@ -4754,7 +4754,6 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
-    dev: true
 
   /babel-loader/8.2.5_wfdvla2jorjoj23kkavho2upde:
     resolution: {integrity: sha512-OSiFfH89LrEMiWd4pLNqGz4CwJDtbs2ZVc+iGu2HrkRfPxId9F2anQj38IxWpmRfsUY0aBZYi1EFcd3mhtRMLQ==}
@@ -7005,7 +7004,6 @@ packages:
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
       semver: 7.3.8
-    dev: true
 
   /css-loader/5.2.7_webpack@5.74.0:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
@@ -7534,7 +7532,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - webpack
-    dev: true
 
   /ember-auto-import/2.4.2_webpack@5.74.0:
     resolution: {integrity: sha512-REh+1aJWpTkvN42a/ga41OuRpUsSW7UQfPr2wPtYx56o/xoSNhVBXejy7yV9ObrkN7gogz6fs2xZwih5cOwpYg==}
@@ -7591,6 +7588,23 @@ packages:
       ember-cli-version-checker: 5.1.2
       ember-compatibility-helpers: 1.2.6_@babel+core@7.19.3
       silent-error: 1.1.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  /ember-cached-decorator-polyfill/1.0.1_stkpchyss7keuhgemteo7qzure:
+    resolution: {integrity: sha512-VDgrpIJ6rDDHIfkYrsFR1BM3fpcC0+zFWIOsX0qY44zPrIXjhQWVXs2iVXLIPHprSgf+tFQ3ESxwDscpeRe/0A==}
+    engines: {node: 14.* || >= 16}
+    peerDependencies:
+      ember-source: ^3.13.0 || ^4.0.0
+    dependencies:
+      '@embroider/macros': 1.8.3
+      '@glimmer/tracking': 1.1.2
+      babel-import-util: 1.2.2
+      ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
+      ember-cli-babel: 7.26.11
+      ember-cli-babel-plugin-helpers: 1.1.1
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -8331,7 +8345,7 @@ packages:
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
-      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
+      ember-source: 4.7.0_@babel+core@7.19.3
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8421,7 +8435,6 @@ packages:
       - '@babel/core'
       - supports-color
       - webpack
-    dev: true
 
   /ember-source/4.7.0_wfdvla2jorjoj23kkavho2upde:
     resolution: {integrity: sha512-k4R5mH7LOTXXlhxpNH3bVLhqgTfLlC5uyqVMDZxMMXmttWpRq5cOh4fL+s3/gqV9YIAK8tSyfnUAjvNK+QglQQ==}
@@ -12163,7 +12176,6 @@ packages:
         optional: true
     dependencies:
       schema-utils: 4.0.0
-    dev: true
 
   /mini-css-extract-plugin/2.6.1_webpack@5.74.0:
     resolution: {integrity: sha512-wd+SD57/K6DiV7jIR34P+s3uckTRuQvx0tKPcvjFlrEylk6P4mQ2KSWk1hblj1Kxaqok7LogKOieygXqBczNlg==}
@@ -15003,7 +15015,6 @@ packages:
     dependencies:
       loader-utils: 2.0.2
       schema-utils: 3.1.1
-    dev: true
 
   /style-loader/2.0.0_webpack@5.74.0:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}
@@ -16542,25 +16553,3 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
-
-  github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure:
-    resolution: {tarball: https://codeload.github.com/ember-polyfills/ember-cached-decorator-polyfill/tar.gz/caf0ef69a66ec91f25ac204644cf55467729ec81}
-    id: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81
-    name: ember-cached-decorator-polyfill
-    version: 0.1.4
-    engines: {node: 14.* || >= 16}
-    prepare: true
-    requiresBuild: true
-    peerDependencies:
-      ember-source: ^3.13.0 || ^4.0.0
-    dependencies:
-      '@embroider/macros': 1.8.3
-      '@glimmer/tracking': 1.1.2
-      babel-import-util: 1.2.2
-      ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
-      ember-cli-babel: 7.26.11
-      ember-cli-babel-plugin-helpers: 1.1.1
-      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
