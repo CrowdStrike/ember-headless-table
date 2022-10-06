@@ -76,6 +76,9 @@
   "peerDependenciesMeta": {
     "@glimmer/component": {
       "optional": true
+    },
+    "ember-cached-decorator-polyfill": {
+      "optional": true
     }
   },
   "dependencies": {

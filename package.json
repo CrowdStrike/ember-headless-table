@@ -37,13 +37,11 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack",
-        "ember-cli-htmlbars",
-        "ember-source"
+        "ember-cli-htmlbars"
       ],
       "ignore-notes": {
         "webpack": "required by anything that depends on ember-auto-import: solution: convert ember-source & co to v2 addons",
-        "ember-cli-htmlbars": "required by ember-tracked-storage-polyfill and tracked-built-ins: solution convert to babel plugin?",
-        "ember-source": "required @ember/test-helpers -- solution: convert to v2 addon"
+        "ember-cli-htmlbars": "required by ember-tracked-storage-polyfill and tracked-built-ins: solution convert to babel plugin?"
       }
     }
   },

@@ -116,11 +116,12 @@
   },
   "dependencies": {
     "@crowdstrike/ember-oss-docs": "^1.0.17",
+    "@ember/test-waiters": "^3.0.0",
     "@embroider/router": "^1.8.3",
     "dompurify": "^2.4.0",
     "ember-browser-services": "^4.0.3",
     "ember-cached-decorator-polyfill": "^1.0.1",
-    "ember-headless-table": "link:../ember-headless-table",
+    "ember-headless-table": "workspace:*",
     "ember-modifier": "^3.2.7",
     "ember-resources": "^5.4.0",
     "highlight.js": "^11.6.0",

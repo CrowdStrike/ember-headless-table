@@ -30,7 +30,7 @@
     "ember-auto-import": "^2.4.2",
     "ember-cached-decorator-polyfill": "^1.0.1",
     "ember-functions-as-helper-polyfill": "^2.1.1",
-    "ember-headless-table": "link:../ember-headless-table",
+    "ember-headless-table": "workspace:*",
     "ember-resources": "^5.4.0"
   },
   "dependenciesMeta": {
