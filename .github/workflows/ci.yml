@@ -138,6 +138,7 @@ jobs:
           - ember-canary
           - embroider-safe
           - embroider-optimized
+          - ember-lts-3.28 + embroider-optimized
 
     steps:
       - uses: actions/checkout@v3
@@ -204,7 +205,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: volta-cli/action@v3
       - uses: ./.github/actions/pnpm
       - uses: ./.github/actions/download-built-package
       - run: pnpm build:docs
@@ -216,3 +216,6 @@ jobs:
           projectName: ember-headless-table
           directory: ./docs-app/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+
+

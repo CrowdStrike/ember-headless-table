@@ -57,6 +57,14 @@ module.exports = async function () {
       },
       embroiderSafe(),
       embroiderOptimized(),
+      embroiderOptimized({
+        name: 'ember-lts-3.28 + embroider-optimized',
+        npm: {
+          devDependencies: {
+            'ember-source': '~3.28.0',
+          },
+        },
+      }),
     ],
   };
 };
