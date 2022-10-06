@@ -59,12 +59,13 @@ extra:
           directory: ./docs-app/dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-  # - name: 'Post Preview URL as comment to PR'
-  #   needs: ['PublishDocstoCloudflarePages']
-  #   steps:
-  #     - uses: marocchino/sticky-pull-request-comment@v2
-  #       with:
-  #         message: |+
-  #           \#\# Preview URLs
-  #           docs: https://${{ github.sha }}.ember-headless-table.pages.dev
-  #           api docs: https://${{ github.sha }}.ember-headless-table.pages.dev/api/modules.html
+  - name: 'Post Preview URL as comment to PR'
+    needs: ['PublishDocstoCloudflarePages']
+    steps:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |+
+            ## Preview URLs
+            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.environment }}
+            docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}
+            api docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}/api/modules.html
