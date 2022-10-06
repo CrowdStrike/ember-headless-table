@@ -14,7 +14,6 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  external: ['ember-cached-decorator-polyfill'],
   output: {
     ...addon.output(),
     sourcemap: true,
