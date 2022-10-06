@@ -2187,6 +2187,9 @@ packages:
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.24.0 || >= 4.0.0
       tailwindcss: ^2.2.15 || ^3.0.0
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@crowdstrike/tailwind-toucan-base': 3.3.1_5zjlt5w4ir2cay3te66iu3k3ji
       '@embroider/addon-shim': 1.8.3
@@ -2299,6 +2302,9 @@ packages:
     engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
     peerDependencies:
       ember-source: '>=3.8.0'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@ember/test-waiters': 3.0.2
       '@embroider/macros': 1.8.3
@@ -2318,6 +2324,9 @@ packages:
     engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
     peerDependencies:
       ember-source: '>=3.8.0'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@ember/test-waiters': 3.0.2
       '@embroider/macros': 1.8.3
@@ -2621,6 +2630,9 @@ packages:
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       ember-source: '*'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
@@ -2634,6 +2646,9 @@ packages:
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       ember-source: '*'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
@@ -7552,6 +7567,9 @@ packages:
     engines: {node: 14.* || >= 16}
     peerDependencies:
       ember-source: ^3.13.0 || ^4.0.0
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@embroider/macros': 1.8.3
       '@glimmer/tracking': 1.1.2
@@ -7569,6 +7587,9 @@ packages:
     engines: {node: 14.* || >= 16}
     peerDependencies:
       ember-source: ^3.13.0 || ^4.0.0
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       '@embroider/macros': 1.8.3
       '@glimmer/tracking': 1.1.2
@@ -8207,6 +8228,9 @@ packages:
     engines: {node: '>= 14.0.0'}
     peerDependencies:
       ember-source: ^3.25.0 || ^4.0.0
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
       ember-cli-babel: 7.26.11
       ember-cli-typescript: 5.1.1
@@ -8310,6 +8334,8 @@ packages:
         optional: true
       ember-concurrency:
         optional: true
+      ember-source:
+        optional: true
     dependencies:
       '@babel/runtime': 7.19.0
       '@ember/test-waiters': 3.0.2
@@ -8337,6 +8363,8 @@ packages:
       '@glimmer/component':
         optional: true
       ember-concurrency:
+        optional: true
+      ember-source:
         optional: true
     dependencies:
       '@babel/runtime': 7.19.0
@@ -8366,6 +8394,8 @@ packages:
       '@glimmer/component':
         optional: true
       ember-concurrency:
+        optional: true
+      ember-source:
         optional: true
     dependencies:
       '@babel/runtime': 7.19.0

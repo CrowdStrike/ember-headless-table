@@ -37,7 +37,8 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack",
-        "ember-cli-htmlbars"
+        "ember-cli-htmlbars",
+        "ember-source"
       ]
     }
   },
