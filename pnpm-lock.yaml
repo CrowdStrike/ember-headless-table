@@ -377,7 +377,7 @@ importers:
       broccoli-asset-rev: ^3.0.0
       concurrently: ^7.2.1
       ember-auto-import: ^2.4.2
-      ember-cached-decorator-polyfill: ^0.1.4
+      ember-cached-decorator-polyfill: github:ember-polyfills/ember-cached-decorator-polyfill#main
       ember-cli: ~4.7.0
       ember-cli-app-version: ^5.0.0
       ember-cli-babel: ^7.26.11
@@ -420,7 +420,7 @@ importers:
       '@ember/test-helpers': 2.8.1_stkpchyss7keuhgemteo7qzure
       '@ember/test-waiters': 3.0.2
       ember-auto-import: 2.4.2_webpack@5.74.0
-      ember-cached-decorator-polyfill: 0.1.4_@babel+core@7.19.3
+      ember-cached-decorator-polyfill: github.com/ember-polyfills/ember-cached-decorator-polyfill/caf0ef69a66ec91f25ac204644cf55467729ec81_stkpchyss7keuhgemteo7qzure
       ember-functions-as-helper-polyfill: 2.1.1_ember-source@4.7.0
       ember-headless-table: link:../ember-headless-table
       ember-resources: 5.4.0_gv6j52yonbqt3c433e2sdxgmyu
@@ -7590,19 +7590,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-
-  /ember-cached-decorator-polyfill/0.1.4_@babel+core@7.19.3:
-    resolution: {integrity: sha512-JOK7kBCWsTVCzmCefK4nr9BACDJk0owt9oIUaVt6Q0UtQ4XeAHmoK5kQ/YtDcxQF1ZevHQFdGhsTR3JLaHNJgA==}
-    engines: {node: 10.* || >= 12}
-    dependencies:
-      '@glimmer/tracking': 1.1.2
-      ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
-      ember-cli-babel: 7.26.11
-      ember-cli-babel-plugin-helpers: 1.1.1
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-    dev: false
 
   /ember-cli-app-version/5.0.0:
     resolution: {integrity: sha512-afhx/CXDOMNXzoe4NDPy5WUfxWmYYHUzMCiTyvPBxCDBXYcMrtxNWxvgaSaeqcoHVEmqzeyBj8V82tzmT1dcyw==}
@@ -16570,4 +16557,3 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: true
