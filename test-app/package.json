@@ -67,7 +67,6 @@
     "@types/ember__utils": "^4.0.1",
     "@types/qunit": "^2.19.2",
     "@types/rsvp": "^4.0.4",
-    "@types/sinon": "^10.0.13",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^7.2.1",
@@ -103,7 +102,6 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
-    "sinon": "^14.0.0",
     "typescript": "^4.8.3",
     "util": "^0.12.4",
     "webpack": "^5.74.0"
