@@ -79,6 +79,9 @@
     },
     "ember-cached-decorator-polyfill": {
       "optional": true
+    },
+    "ember-source": {
+      "optional": true
     }
   },
   "dependencies": {
