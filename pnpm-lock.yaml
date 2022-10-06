@@ -2329,6 +2329,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   /@ember/test-helpers/2.8.1_stkpchyss7keuhgemteo7qzure:
     resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
@@ -2646,6 +2647,7 @@ packages:
       ember-source: 3.28.9_@babel+core@7.19.3
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@embroider/util/1.8.3_ember-source@4.7.0:
     resolution: {integrity: sha512-FvsPzsb9rNeveSnIGnsfLkWWBdSM5QIA9lDVtckUktRnRnBWZHm5jDxU/ST//pWMhZ8F0DucRlFWE149MTLtuQ==}
@@ -2976,7 +2978,7 @@ packages:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
+      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -4819,7 +4821,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.19.3
+      '@babel/core': 7.19.3_supports-color@8.1.1
       find-cache-dir: 3.3.2
       loader-utils: 2.0.2
       make-dir: 3.1.0
@@ -8362,7 +8364,7 @@ packages:
       '@ember/test-helpers': ^2.4.0
       qunit: ^2.13.0
     dependencies:
-      '@ember/test-helpers': 2.8.1_ptmptcjlczeu7fwi6i5ecogy5u
+      '@ember/test-helpers': 2.8.1_stkpchyss7keuhgemteo7qzure
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
