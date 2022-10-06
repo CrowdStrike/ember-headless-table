@@ -33,6 +33,11 @@
     "ember-headless-table": "link:../ember-headless-table",
     "ember-resources": "^5.4.0"
   },
+  "dependenciesMeta": {
+    "ember-headless-table": {
+      "injected": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
@@ -86,7 +91,7 @@
     "ember-page-title": "^8.0.0-beta.0",
     "ember-qunit": "^5.1.5",
     "ember-resolver": "^8.0.3",
-    "ember-source": "~4.7.0",
+    "ember-source": "~3.28.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-imports": "^3.1.1",
     "ember-template-lint": "^4.10.1",
