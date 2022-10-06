@@ -27,6 +27,7 @@
   "dependencies": {
     "@ember/test-helpers": "^2.8.1",
     "@ember/test-waiters": "^3.0.0",
+    "ember-auto-import": "^2.4.2",
     "ember-cached-decorator-polyfill": "^0.1.4",
     "ember-functions-as-helper-polyfill": "^2.1.1",
     "ember-headless-table": "^0.0.0",
@@ -73,7 +74,6 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^7.2.1",
-    "ember-auto-import": "^2.4.2",
     "ember-cli": "~4.7.0",
     "ember-cli-app-version": "^5.0.0",
     "ember-cli-babel": "^7.26.11",
@@ -108,6 +108,7 @@
     "qunit-dom": "^2.0.0",
     "sinon": "^14.0.0",
     "typescript": "^4.8.3",
+    "util": "^0.12.4",
     "webpack": "^5.74.0"
   },
   "engines": {
