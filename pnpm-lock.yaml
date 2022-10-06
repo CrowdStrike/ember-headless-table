@@ -342,10 +342,7 @@ importers:
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.8.1
       '@ember/test-waiters': ^3.0.0
-      '@embroider/compat': ^1.8.3
-      '@embroider/core': ^1.8.3
       '@embroider/test-setup': ^1.7.1
-      '@embroider/webpack': ^1.8.3
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/core': ^0.9.4
@@ -395,7 +392,7 @@ importers:
       ember-disable-prototype-extensions: ^1.1.3
       ember-fetch: ^8.1.1
       ember-functions-as-helper-polyfill: ^2.1.1
-      ember-headless-table: ^0.0.0
+      ember-headless-table: link:../ember-headless-table
       ember-load-initializers: ^2.1.2
       ember-page-title: ^8.0.0-beta.0
       ember-qunit: ^5.1.5
@@ -432,10 +429,7 @@ importers:
     devDependencies:
       '@babel/core': 7.19.3
       '@ember/optional-features': 2.0.0
-      '@embroider/compat': 1.8.3_@embroider+core@1.8.3
-      '@embroider/core': 1.8.3
       '@embroider/test-setup': 1.8.3
-      '@embroider/webpack': 1.8.3_6ieuvvsbaka5ylmi63qvoovikm
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
       '@glint/core': 0.9.4_typescript@4.8.4

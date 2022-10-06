@@ -30,16 +30,13 @@
     "ember-auto-import": "^2.4.2",
     "ember-cached-decorator-polyfill": "^0.1.4",
     "ember-functions-as-helper-polyfill": "^2.1.1",
-    "ember-headless-table": "^0.0.0",
+    "ember-headless-table": "link:../ember-headless-table",
     "ember-resources": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
-    "@embroider/compat": "^1.8.3",
-    "@embroider/core": "^1.8.3",
     "@embroider/test-setup": "^1.7.1",
-    "@embroider/webpack": "^1.8.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "^0.9.4",
