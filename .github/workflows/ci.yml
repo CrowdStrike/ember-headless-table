@@ -202,6 +202,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    outputs:
+      url: ${{ steps.publishStep.outputs.url }}
+      env: ${{ steps.publishStep.outputs.environment }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -210,6 +213,7 @@ jobs:
       - uses: ./.github/actions/download-built-package
       - run: pnpm build:docs
       - name: Publish to Cloudflare Pages
+        id: publishStep
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
@@ -234,7 +238,7 @@ jobs:
         with:
           message: |+
             ## Preview URLs
-            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.environment }}
+            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.env }}
             docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}
             api docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}/api/modules.html
 
