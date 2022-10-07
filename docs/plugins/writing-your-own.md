@@ -10,6 +10,11 @@
 
 ## Overriding behavior of an existing plugin
 
+## Changing the styles of elements
+
+In your plugin, never set the `style` attribute.
+Instead, set a specific property so that other plugins may alter styles as well.
+
 ## Supporting preferences
 
 ## Recommended plugin file / project Layout

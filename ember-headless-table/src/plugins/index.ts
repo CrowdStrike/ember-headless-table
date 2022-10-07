@@ -1,5 +1,6 @@
 // Public API
 export { BasePlugin, meta, options, preferences } from './-private/base';
+export { applyStyles, removeStyles } from './-private/utils';
 
 // Public Types
 export type { ColumnFeatures, TableFeatures } from './-private/base';

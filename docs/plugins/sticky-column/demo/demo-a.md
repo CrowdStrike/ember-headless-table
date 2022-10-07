@@ -6,8 +6,7 @@
         {{#each this.table.columns as |column|}}
           <th
             {{this.table.modifiers.columnHeader column}}
-            class="{{if (this.isSticky column) 'border-r border-l'}}"
-            style={{this.styleFor column}}
+            class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
           >
             <span class="name">{{column.name}}</span><br>
           </th>
@@ -19,8 +18,8 @@
         <tr class="relative">
           {{#each this.table.columns as |column|}}
             <td
-              class="{{if (this.isSticky column) 'border-r border-l'}}"
-              style={{this.styleFor column}}
+              {{this.table.modifiers.columnHeader column}}
+              class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
             >
               {{column.getValueForRow row}}
             </td>
