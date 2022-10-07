@@ -40,7 +40,7 @@ import { htmlSafe } from '@ember/template';
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
-import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
+import { ColumnResizing, resizeHandle, isResizing } from 'ember-headless-table/plugins/column-resizing';
 
 import { DATA } from 'docs-app/sample-data';
 
@@ -71,9 +71,10 @@ export default class extends Component {
   }
 
   /**
-   * Plugin Integration
+   * Plugin Integration - all of this can be removed in strict mode, gjs/gts
+   *
+   * This syntax looks weird, but it's read as:
+   *   [property on this component] = [variable in scope]
    */
-  isResizing = (column) => {
-    return meta.forColumn(column, ColumnResizing).isResizing;
-  }
+  isResizing = isResizing;
 }
