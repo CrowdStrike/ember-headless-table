@@ -22,10 +22,12 @@
       // import *will* error during build because rollup is not setup to re-write these.
       // (maybe on purpose?)
       "[public-types]": ["./"],
-      "[public-plugin-types]": ["./plugins/"]
+      "[public-plugin-types]": ["./plugins/"],
+      "[private-types]": ["./-private/private-types.ts"]
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "types/**/*"
   ]
 }

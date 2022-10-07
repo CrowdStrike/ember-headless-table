@@ -6,7 +6,6 @@
   "license": "MIT",
   "author": "",
   "scripts": {
-    "prepare": "pnpm build",
     "build": "pnpm --filter ember-headless-table build",
     "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
     "build:docs-app": "pnpm --filter docs-app build",
@@ -27,16 +26,22 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/eslint": "^7.0.0"
+      "@types/eslint": "^7.0.0",
+      "ember-auto-import": "^2.4.2"
     },
-    "overrides-nodes": {
-      "@types/eslint": "webpack brings in v8, but we use v7"
+    "overrides-notes": {
+      "@types/eslint": "webpack brings in v8, but we use v7",
+      "ember-auto-import": "ember-qunit is bringing in an ancient version"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack",
         "ember-cli-htmlbars"
-      ]
+      ],
+      "ignore-notes": {
+        "webpack": "required by anything that depends on ember-auto-import: solution: convert ember-source & co to v2 addons",
+        "ember-cli-htmlbars": "required by ember-tracked-storage-polyfill and tracked-built-ins: solution convert to babel plugin?"
+      }
     }
   },
   "volta": {

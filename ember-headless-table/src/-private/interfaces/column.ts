@@ -1,8 +1,8 @@
 import type { BasePlugin, Plugin } from '../../plugins';
 import type { Column } from '../column';
 import type { Row } from '../row';
+import type { Constructor } from '[private-types]';
 import type { ComponentLike, ContentValue } from '@glint/template';
-import type { Constructor } from 'type-fest';
 
 export interface CellContext<T> {
   column: Column<T>;

@@ -16,6 +16,5 @@ declare module '@ember/helper';
 declare module '@ember/modifier';
 
 // Types for these do not exist
-declare module 'highlightjs-glimmer';
 declare module 'highlightjs-glimmer/vendor/highlight.js';
 declare module 'highlightjs-glimmer/vendor/javascript.min';

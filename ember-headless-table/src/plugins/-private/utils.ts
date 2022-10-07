@@ -1,8 +1,8 @@
 import { assert } from '@ember/debug';
 
 import type { BasePlugin } from './base';
+import type { Constructor } from '[private-types]';
 import type { Plugin } from '#interfaces';
-import type { Constructor } from 'type-fest';
 
 export type PluginOption<P = Plugin> = P extends BasePlugin<any, any, infer Options, any>
   ? readonly [Constructor<P>, () => Options]

@@ -23,8 +23,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
 
+
+
+
   lint:
-    name: Lint JS + Templates
+    name: Lint
     runs-on: ubuntu-latest
     needs: [install_dependencies]
     steps:
@@ -33,6 +36,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+
+
   commits:
     name: Commit Messages
     runs-on: ubuntu-latest
@@ -40,10 +45,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: volta-cli/action@v1
+      - uses: ./.github/actions/pnpm
       - uses: wagoid/commitlint-github-action@v4.1.9
         with:
           configFile: 'commitlint.config.cjs'
+
 
   build:
     name: Build Tests
@@ -55,20 +61,9 @@ jobs:
       - uses: ./.github/actions/pnpm
       - uses: ./.github/actions/assert-build
 
-  typecheck_docs:
-    name: 'Typecheck Docs'
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
-      - run: pnpm glint
-        working-directory: 'docs-app'
 
   typecheck:
-    name: 'TypeScript compatibility'
+    name: '${{ matrix.typescript-scenario }}'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     needs: [build]
@@ -77,19 +72,28 @@ jobs:
       fail-fast: true
       matrix:
         typescript-scenario:
-          - typescript@next
-          - typescript@4.8
-          - typescript@4.7
-          - typescript@4.6
           - typescript@4.5
+          - typescript@4.6
+          - typescript@4.7
+          - typescript@4.8
+
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
+      - uses: ./.github/actions/download-built-package
       - name: 'Change TS to ${{ matrix.typescript-scenario }}'
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
-        working-directory: 'test-app'
-      - run: pnpm glint
+        working-directory: ./test-app
+      - name: 'Type checking'
+
+        run: |
+          pnpm --filter test-app exec tsc -v;
+          pnpm --filter test-app exec glint --version;
+          pnpm --filter test-app exec glint;
+
+
+
+
 
   default_tests:
     name: Default Tests
@@ -99,10 +103,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
+      - uses: ./.github/actions/download-built-package
       - run: pnpm --filter test-app test:ember
 
-  foloating_tests:
+  floating_tests:
     name: Floating Deps Test
     timeout-minutes: 5
     runs-on: ubuntu-latest
@@ -112,8 +116,9 @@ jobs:
       - uses: ./.github/actions/pnpm
       - name: Install Dependencies (without lockfile)
         run: rm pnpm-lock.yaml && pnpm install
-      - uses: ./.github/actions/download-build-package
+      - uses: ./.github/actions/download-built-package
       - run: pnpm --filter test-app test:ember
+
 
   try_scenarios:
     name: ${{ matrix.try-scenario }}
@@ -126,18 +131,20 @@ jobs:
       matrix:
         try-scenario:
           - ember-lts-3.28
-          - ember-4.0.0
+          - ember-4.0
           - ember-lts-4.4
           - ember-release
           - ember-beta
           - ember-canary
-          - embroider-safe
-          - embroider-optimized
+          - "'ember-release + embroider-safe'"
+          - "'ember-release + embroider-optimized'"
+          - "'ember-lts-3.28 + embroider-optimized'"
+          - "'ember-lts-4.4 + embroider-optimized'"
 
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
+      - uses: ./.github/actions/download-built-package
       - name: Run Tests
         working-directory: ./test-app
         run: >-
@@ -145,18 +152,68 @@ jobs:
           --skip-cleanup
 
 
-  publish_docs:
+
+
+  release:
+    name: Release
+    timeout-minutes: 5
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - default_tests
+      - floating_tests
+      - typecheck
+      - try_scenarios
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-built-package
+      - name: Release
+        run: ./node_modules/.bin/semantic-release
+        working-directory: ./ember-resources
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+  TypecheckDocs:
+    name: Typecheck Docs
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/pnpm
+      - uses: ./.github/actions/download-built-package
+      - run: pnpm glint
+        working-directory: docs-app
+
+
+
+  PublishDocstoCloudflarePages:
+    name: Publish Docs to Cloudflare Pages
+    runs-on: ubuntu-latest
+    needs: build
     permissions:
       contents: read
       deployments: write
-    name: Publish Docs to Cloudflare Pages
+    outputs:
+      url: ${{ steps.publishStep.outputs.url }}
+      env: ${{ steps.publishStep.outputs.environment }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
+      - uses: ./.github/actions/download-built-package
       - run: pnpm build:docs
       - name: Publish to Cloudflare Pages
+        id: publishStep
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
@@ -166,22 +223,24 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
 
-  release:
-    name: Release
-    timeout-minutes: 5
+
+  PostPreviewURLascommenttoPR:
+    name: Post Preview URL as comment to PR
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    needs: [default_tests, typecheck, try_scenarios, foloating_tests]
+    needs: PublishDocstoCloudflarePages
     steps:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
-      - uses: volta-cli/action@v3
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-build-package
-      - name: Release
-        run: ./node_modules/.bin/semantic-release
-        working-directory: ./ember-resources
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: ./.github/actions/download-built-package
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |+
+            ## Preview URLs
+            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.env }}
+            docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}
+            api docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}/api/modules.html
+
+
+

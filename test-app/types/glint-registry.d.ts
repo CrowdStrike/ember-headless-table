@@ -1,7 +1,5 @@
 import "@glint/environment-ember-loose";
-import "@glint/environment-ember-loose/native-integration";
 import "@glint/environment-ember-template-imports";
-import "ember-page-title/glint";
 
 // import type { ComponentLike, HelperLike, ModifierLike } from "@glint/template";
 

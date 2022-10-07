@@ -4,22 +4,25 @@ runs:
   using: "composite"
   steps:
   - name: Build and Assert Output
+    shell: bash
     run: |-
-      echo 'target: ember-headless-table/dist
-      setup:
-        run: pnpm run build:js
-        cwd: ./ember-headless-table
-      expect: |
-        index.js
-        index.js.map
-        index.d.ts
-        plugins/index.js
-        plugins/data-sorting/index.js
-        plugins/column-reordering/index.js
-        plugins/column-resizing/index.js
-        plugins/column-visibility/index.js
-        plugins/sticky-columns/index.js
-        test-support/index.js
+      echo '
+        target: ${{ env.dist }}
+        setup:
+          run: pnpm build
+          cwd: ./ember-headless-table
+        expect: |
+          index.js
+          index.js.map
+          index.d.ts
+          plugins/index.js
+          plugins/data-sorting/index.js
+          plugins/column-reordering/index.js
+          plugins/column-resizing/index.js
+          plugins/column-visibility/index.js
+          plugins/sticky-columns/index.js
+          test-support/index.js
+          
       ' >> assert-contents.config.yml
       npx assert-folder-contents
 

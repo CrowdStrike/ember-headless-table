@@ -5,11 +5,11 @@ import { TABLE_KEY } from '../../-private/table';
 import { normalizePluginsConfig } from './utils';
 
 import type { Table } from '../../-private/table';
+import type { Class, Constructor } from '[private-types]';
 import type { Column } from '[public-types]';
 import type { Plugin } from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
 import type { ColumnVisibility } from 'plugins/column-visibility';
-import type { Class, Constructor } from 'type-fest';
 
 const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();

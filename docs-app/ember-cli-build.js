@@ -6,7 +6,9 @@ const isProduction = () => EmberApp.env() === 'production';
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true,
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -30,6 +32,9 @@ module.exports = function (defaults) {
     staticAddonTrees: true,
     staticHelpers: true,
     staticModifiers: true,
+    /**
+     * Docfy does not allow us to use staticComponents
+     */
     staticComponents: false,
     splitAtRoutes: ['/', '/docs'],
     skipBabel: [

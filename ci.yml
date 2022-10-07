@@ -1,0 +1,71 @@
+provider: github
+template: "v2-addon"
+
+# ---------------------
+
+addon: './ember-headless-table'
+testApp: './test-app'
+
+lint:
+  commits: true
+  cmd: 'pnpm lint'
+
+build:
+  run: 'pnpm build'
+  expect: |
+    index.js
+    index.js.map
+    index.d.ts
+    plugins/index.js
+    plugins/data-sorting/index.js
+    plugins/column-reordering/index.js
+    plugins/column-resizing/index.js
+    plugins/column-visibility/index.js
+    plugins/sticky-columns/index.js
+    test-support/index.js
+
+support:
+  ember-try: true
+  glint: true
+  typescript:
+   - typescript@4.5
+   - typescript@4.6
+   - typescript@4.7
+   - typescript@4.8
+
+release:
+  semantic: true
+
+extra:
+  - name: 'Typecheck Docs'
+    needs: ['build']
+    steps:
+      - run: pnpm glint
+        working-directory: 'docs-app'
+
+  - name: 'Publish Docs to Cloudflare Pages'
+    needs: ['build']
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - run: pnpm build:docs
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.UX_OSS_CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ember-headless-table
+          directory: ./docs-app/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  - name: 'Post Preview URL as comment to PR'
+    needs: ['PublishDocstoCloudflarePages']
+    steps:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |+
+            ## Preview URLs
+            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.environment }}
+            docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}
+            api docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}/api/modules.html

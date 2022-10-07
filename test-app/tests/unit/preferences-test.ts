@@ -1,11 +1,12 @@
+/* eslint-disable qunit/no-commented-tests */
 import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest, setupTest } from 'ember-qunit';
 
 import { TablePreferences } from 'ember-headless-table';
-import sinon from 'sinon';
 
+// import sinon from 'sinon';
 import type { PreferencesData } from 'ember-headless-table';
 
 module('Unit | -private | table-preferences', function (hooks) {
@@ -150,357 +151,312 @@ module('Unit | -private | table-preferences', function (hooks) {
   });
 
   module('#restore and #persist are inverses', function () {
-    test('mixed top-level keys along with plugin data', async function (assert) {
-      let persist = sinon.fake();
-      let data: PreferencesData = {
-        columns: {
-          foo: { isVisible: true },
-          bar: { isVisible: false },
-        },
-        plugins: {
-          'column-visibility': {
-            table: {
-              foo: 2,
-            },
-            columns: {
-              foo: { isVilable: true },
-              bar: { isVilable: true },
-            },
-          },
-        },
-      };
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => data,
-        persist,
-      });
-
-      preferences.persist();
-
-      assert.deepEqual(persist.getCall(0).args[1], data);
-    });
-
-    test('unexpected keys are omitted from persist', async function (assert) {
-      let persist = sinon.fake();
-      let data = {
-        foo: 1,
-        bar: 2,
-      };
-      let preferences = new TablePreferences('preferences-key', {
-        // Deliberately testing incorrect type
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        restore: () => data,
-        persist,
-      });
-
-      preferences.persist();
-
-      assert.deepEqual(persist.getCall(0).args[1], { plugins: {} });
-    });
+    // test('mixed top-level keys along with plugin data', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let data: PreferencesData = {
+    //     columns: {
+    //       foo: { isVisible: true },
+    //       bar: { isVisible: false },
+    //     },
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: {
+    //           foo: 2,
+    //         },
+    //         columns: {
+    //           foo: { isVilable: true },
+    //           bar: { isVilable: true },
+    //         },
+    //       },
+    //     },
+    //   };
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => data,
+    //     persist,
+    //   });
+    //   preferences.persist();
+    //   assert.deepEqual(persist.getCall(0).args[1], data);
+    // });
+    // test('unexpected keys are omitted from persist', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let data = {
+    //     foo: 1,
+    //     bar: 2,
+    //   };
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     // Deliberately testing incorrect type
+    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //     // @ts-ignore
+    //     restore: () => data,
+    //     persist,
+    //   });
+    //   preferences.persist();
+    //   assert.deepEqual(persist.getCall(0).args[1], { plugins: {} });
+    // });
   });
 
   module('#persist', function () {
-    test('@adapter#persist(): is called when deleteColumnPreference', async function (assert) {
-      let persist = sinon.fake();
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => ({
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-            baz: { isVisible: true },
-          },
-        }),
-        persist,
-      });
-
-      preferences.deleteColumnPreference('foo', 'isVisible');
-      preferences.deleteColumnPreference('bar', 'isVisible');
-      preferences.deleteColumnPreference('baz', 'isVisible');
-
-      assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
-
-      assert.deepEqual(persist.getCall(0).args, [
-        'preferences-key',
-        {
-          columns: {
-            bar: { isVisible: false },
-            baz: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(1).args, [
-        'preferences-key',
-        {
-          columns: {
-            baz: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(2).args, ['preferences-key', { plugins: {} }]);
-    });
-
-    test('@adapter#persist(): is not called when deleteColumnPreference for non-existant preference', async function (assert) {
-      let persist = sinon.fake();
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => ({
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-          },
-        }),
-        persist,
-      });
-
-      preferences.deleteColumnPreference('baz', 'isVisible');
-
-      assert.true(persist.notCalled, 'persist was not called');
-    });
-
-    test('@adapter#persist(): is called when setColumnPreference', async function (assert) {
-      let persist = sinon.fake();
-      let preferences = new TablePreferences('preferences-key', { persist });
-
-      preferences.setColumnPreference('foo', 'isVisible', true);
-      preferences.setColumnPreference('bar', 'isVisible', false);
-      preferences.setColumnPreference('baz', 'isVisible', true);
-
-      assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
-
-      assert.deepEqual(persist.getCall(0).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(1).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(2).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-            baz: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-    });
-
-    test('@adapter#persist(): is called when setColumnPreferences', async function (assert) {
-      let persist = sinon.fake();
-      let preferences = new TablePreferences('preferences-key', { persist });
-
-      preferences.setColumnPreferences('foo', { isVisible: true });
-      preferences.setColumnPreferences('bar', { isVisible: false });
-      preferences.setColumnPreferences('baz', { isVisible: true });
-
-      assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
-
-      assert.deepEqual(persist.getCall(0).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(1).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-          },
-          plugins: {},
-        },
-      ]);
-
-      assert.deepEqual(persist.getCall(2).args, [
-        'preferences-key',
-        {
-          columns: {
-            foo: { isVisible: true },
-            bar: { isVisible: false },
-            baz: { isVisible: true },
-          },
-          plugins: {},
-        },
-      ]);
-    });
+    // test('@adapter#persist(): is called when deleteColumnPreference', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => ({
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //         baz: { isVisible: true },
+    //       },
+    //     }),
+    //     persist,
+    //   });
+    //   preferences.deleteColumnPreference('foo', 'isVisible');
+    //   preferences.deleteColumnPreference('bar', 'isVisible');
+    //   preferences.deleteColumnPreference('baz', 'isVisible');
+    //   assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
+    //   assert.deepEqual(persist.getCall(0).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         bar: { isVisible: false },
+    //         baz: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(1).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         baz: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(2).args, ['preferences-key', { plugins: {} }]);
+    // });
+    // test('@adapter#persist(): is not called when deleteColumnPreference for non-existant preference', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => ({
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //       },
+    //     }),
+    //     persist,
+    //   });
+    //   preferences.deleteColumnPreference('baz', 'isVisible');
+    //   assert.true(persist.notCalled, 'persist was not called');
+    // });
+    // test('@adapter#persist(): is called when setColumnPreference', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let preferences = new TablePreferences('preferences-key', { persist });
+    //   preferences.setColumnPreference('foo', 'isVisible', true);
+    //   preferences.setColumnPreference('bar', 'isVisible', false);
+    //   preferences.setColumnPreference('baz', 'isVisible', true);
+    //   assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
+    //   assert.deepEqual(persist.getCall(0).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(1).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(2).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //         baz: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    // });
+    // test('@adapter#persist(): is called when setColumnPreferences', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let preferences = new TablePreferences('preferences-key', { persist });
+    //   preferences.setColumnPreferences('foo', { isVisible: true });
+    //   preferences.setColumnPreferences('bar', { isVisible: false });
+    //   preferences.setColumnPreferences('baz', { isVisible: true });
+    //   assert.strictEqual(persist.callCount, 3, 'persist was called 3 times');
+    //   assert.deepEqual(persist.getCall(0).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(1).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    //   assert.deepEqual(persist.getCall(2).args, [
+    //     'preferences-key',
+    //     {
+    //       columns: {
+    //         foo: { isVisible: true },
+    //         bar: { isVisible: false },
+    //         baz: { isVisible: true },
+    //       },
+    //       plugins: {},
+    //     },
+    //   ]);
+    // });
   });
 
   module('plugins', function () {
-    test('can interact with the TrackedMaps (get and set)', async function (assert) {
-      let persist = sinon.fake();
-      let data: PreferencesData = {
-        plugins: {
-          'column-visibility': {
-            table: {
-              foo: 2,
-            },
-            columns: {
-              foo: { woop: false },
-              bar: { woop: true },
-            },
-          },
-        },
-      };
-
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => data,
-        persist,
-      });
-
-      let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
-
-      assert.strictEqual(foo, 2);
-      assert.false(woop);
-
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
-      preferences.storage.forPlugin('column-visibility').table.set('foo', 3);
-
-      foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
-
-      assert.strictEqual(foo, 3);
-      assert.true(woop);
-
-      preferences.persist();
-
-      assert.deepEqual(persist.getCall(0).args[1], {
-        plugins: {
-          'column-visibility': {
-            table: { foo: 3 },
-            columns: {
-              bar: { woop: true },
-              foo: { woop: true },
-            },
-          },
-        },
-      });
-    });
-
-    test('can be deleted', async function (assert) {
-      let persist = sinon.fake();
-      let data: PreferencesData = {
-        plugins: {
-          'column-visibility': {
-            table: {
-              foo: 2,
-            },
-            columns: {
-              foo: { woop: false },
-              bar: { woop: true },
-            },
-          },
-        },
-      };
-
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => data,
-        persist,
-      });
-
-      preferences.storage.forPlugin('column-visibility').table.delete('foo');
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').delete('woop');
-
-      let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
-
-      assert.strictEqual(foo, undefined);
-      assert.strictEqual(woop, undefined);
-
-      preferences.persist();
-
-      assert.deepEqual(persist.getCall(0).args[1], {
-        plugins: {
-          'column-visibility': {
-            table: {},
-            columns: {
-              foo: {},
-              bar: { woop: true },
-            },
-          },
-        },
-      });
-    });
-
-    test(`do not interfere with other plugin's data`, async function (assert) {
-      let persist = sinon.fake();
-      let data: PreferencesData = {
-        plugins: {
-          'column-visibility': {
-            table: {
-              foo: 2,
-            },
-            columns: {
-              foo: { woop: false },
-              bar: { woop: true },
-            },
-          },
-        },
-      };
-
-      let preferences = new TablePreferences('preferences-key', {
-        restore: () => data,
-        persist,
-      });
-
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
-      preferences.storage.forPlugin('test-plugin').forColumn('foo').set('woop', '1');
-      preferences.storage.forPlugin('old-plugin').forColumn('foo').set('woop', 2);
-
-      preferences.persist();
-
-      assert.deepEqual(persist.getCall(0).args[1], {
-        plugins: {
-          'column-visibility': {
-            table: { foo: 2 },
-            columns: {
-              bar: { woop: true },
-              foo: { woop: true },
-            },
-          },
-          'old-plugin': {
-            table: {},
-            columns: {
-              foo: {
-                woop: 2,
-              },
-            },
-          },
-          'test-plugin': {
-            table: {},
-            columns: {
-              foo: {
-                woop: '1',
-              },
-            },
-          },
-        },
-      });
-    });
+    // test('can interact with the TrackedMaps (get and set)', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let data: PreferencesData = {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: {
+    //           foo: 2,
+    //         },
+    //         columns: {
+    //           foo: { woop: false },
+    //           bar: { woop: true },
+    //         },
+    //       },
+    //     },
+    //   };
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => data,
+    //     persist,
+    //   });
+    //   let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
+    //   let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+    //   assert.strictEqual(foo, 2);
+    //   assert.false(woop);
+    //   preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
+    //   preferences.storage.forPlugin('column-visibility').table.set('foo', 3);
+    //   foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
+    //   woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+    //   assert.strictEqual(foo, 3);
+    //   assert.true(woop);
+    //   preferences.persist();
+    //   assert.deepEqual(persist.getCall(0).args[1], {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: { foo: 3 },
+    //         columns: {
+    //           bar: { woop: true },
+    //           foo: { woop: true },
+    //         },
+    //       },
+    //     },
+    //   });
+    // });
+    // test('can be deleted', async function (assert) {
+    //   let persist = sinon.fake();
+    //   let data: PreferencesData = {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: {
+    //           foo: 2,
+    //         },
+    //         columns: {
+    //           foo: { woop: false },
+    //           bar: { woop: true },
+    //         },
+    //       },
+    //     },
+    //   };
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => data,
+    //     persist,
+    //   });
+    //   preferences.storage.forPlugin('column-visibility').table.delete('foo');
+    //   preferences.storage.forPlugin('column-visibility').forColumn('foo').delete('woop');
+    //   let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
+    //   let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+    //   assert.strictEqual(foo, undefined);
+    //   assert.strictEqual(woop, undefined);
+    //   preferences.persist();
+    //   assert.deepEqual(persist.getCall(0).args[1], {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: {},
+    //         columns: {
+    //           foo: {},
+    //           bar: { woop: true },
+    //         },
+    //       },
+    //     },
+    //   });
+    // });
+    // test(`do not interfere with other plugin's data`, async function (assert) {
+    //   let persist = sinon.fake();
+    //   let data: PreferencesData = {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: {
+    //           foo: 2,
+    //         },
+    //         columns: {
+    //           foo: { woop: false },
+    //           bar: { woop: true },
+    //         },
+    //       },
+    //     },
+    //   };
+    //   let preferences = new TablePreferences('preferences-key', {
+    //     restore: () => data,
+    //     persist,
+    //   });
+    //   preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
+    //   preferences.storage.forPlugin('test-plugin').forColumn('foo').set('woop', '1');
+    //   preferences.storage.forPlugin('old-plugin').forColumn('foo').set('woop', 2);
+    //   preferences.persist();
+    //   assert.deepEqual(persist.getCall(0).args[1], {
+    //     plugins: {
+    //       'column-visibility': {
+    //         table: { foo: 2 },
+    //         columns: {
+    //           bar: { woop: true },
+    //           foo: { woop: true },
+    //         },
+    //       },
+    //       'old-plugin': {
+    //         table: {},
+    //         columns: {
+    //           foo: {
+    //             woop: 2,
+    //           },
+    //         },
+    //       },
+    //       'test-plugin': {
+    //         table: {},
+    //         columns: {
+    //           foo: {
+    //             woop: '1',
+    //           },
+    //         },
+    //       },
+    //     },
+    //   });
+    // });
   });
 });
 

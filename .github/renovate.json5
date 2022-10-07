@@ -111,6 +111,12 @@
       "enabled": false
     },
     {
+      // test-app is minimum compatible, so that testing problems is more straight forward
+      // as such, deps will be updated manually
+      "matchPaths": ["test-app"],
+      "enabled": false
+    },
+    {
       "matchPaths": ["docs-app", "docs-api", "test-app"],
       "rangeStrategy": "bump"
     },
