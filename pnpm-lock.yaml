@@ -108,7 +108,7 @@ importers:
       ember-resolver: ^8.0.3
       ember-resources: ^5.4.0
       ember-source: ~4.7.0
-      ember-template-imports: ^3.1.1
+      ember-template-imports: ^3.1.2
       ember-template-lint: ^4.14.0
       eslint: ^7.32.0
       eslint-config-prettier: ^8.5.0
@@ -157,7 +157,7 @@ importers:
       '@glimmer/tracking': 1.1.2
       '@glint/core': 0.9.4_typescript@4.8.4
       '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
-      '@glint/environment-ember-template-imports': 0.9.4_iyj4dyv5mvlfaurk3za62xqgme
+      '@glint/environment-ember-template-imports': 0.9.4_6rdv3jsfbhdmdytwv4dlce6dfy
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.59_typescript@4.8.4
       '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
@@ -208,7 +208,7 @@ importers:
       ember-qunit: 5.1.5_q2umwxufvnpx3vgxqbnuszsnxm
       ember-resolver: 8.0.3_@babel+core@7.19.3
       ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
-      ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
+      ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
       ember-template-lint: 4.14.0_ember-cli-htmlbars@6.1.1
       eslint: 7.32.0
       eslint-config-prettier: 8.5.0_eslint@7.32.0
@@ -2578,13 +2578,26 @@ packages:
       - supports-color
     dev: true
 
-  /@glint/environment-ember-template-imports/0.9.4_iyj4dyv5mvlfaurk3za62xqgme:
+  /@glint/environment-ember-template-imports/0.9.4_6rdv3jsfbhdmdytwv4dlce6dfy:
     resolution: {integrity: sha512-LRkBgzyT8VThfM9vJqauSKJIyHeNavfsWoiIIl6/cbzuThACQGQWSp5sOyCifTJiMMMs34Z9p8LKaAFSX0MQ+Q==}
     peerDependencies:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
       '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/template': 0.9.4_@glimmer+component@1.1.2
+      ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
+    transitivePeerDependencies:
+      - '@glimmer/component'
+    dev: true
+
+  /@glint/environment-ember-template-imports/0.9.4_iyj4dyv5mvlfaurk3za62xqgme:
+    resolution: {integrity: sha512-LRkBgzyT8VThfM9vJqauSKJIyHeNavfsWoiIIl6/cbzuThACQGQWSp5sOyCifTJiMMMs34Z9p8LKaAFSX0MQ+Q==}
+    peerDependencies:
+      '@glint/environment-ember-loose': ^0.9.4
+      ember-template-imports: ^3.0.0
+    dependencies:
+      '@glint/environment-ember-loose': 0.9.4_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
       ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
@@ -7942,6 +7955,29 @@ packages:
 
   /ember-template-imports/3.1.1_ember-cli-htmlbars@6.1.1:
     resolution: {integrity: sha512-ZsujuOwaF6lWDDeKC0NleCUAC8f06CfxWQPmejNnxg5gUdqHFTfW9L++X9RLLV/pJZ6eCtax7L94XkXQJ1LfBA==}
+    engines: {node: 12.* || >= 14}
+    peerDependencies:
+      ember-cli-htmlbars: ^6.0.0
+    peerDependenciesMeta:
+      ember-cli-htmlbars:
+        optional: true
+    dependencies:
+      babel-import-util: 0.2.0
+      broccoli-stew: 3.0.0
+      ember-cli-babel-plugin-helpers: 1.1.1
+      ember-cli-htmlbars: 6.1.1
+      ember-cli-version-checker: 5.1.2
+      line-column: 1.0.2
+      magic-string: 0.25.9
+      parse-static-imports: 1.1.0
+      string.prototype.matchall: 4.0.7
+      validate-peer-dependencies: 1.2.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /ember-template-imports/3.1.2_ember-cli-htmlbars@6.1.1:
+    resolution: {integrity: sha512-8ocUuIxXeY7S5FQQf9hcLBCyGKNvSxXz9cV/dkUUMvGcnfh8NblrglqPggXmCbBcv4eDAoEzDmOfiGccD5kEJQ==}
     engines: {node: 12.* || >= 14}
     peerDependencies:
       ember-cli-htmlbars: ^6.0.0
