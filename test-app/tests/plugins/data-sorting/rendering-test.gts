@@ -16,6 +16,7 @@ import { DataSorting, SortDirection } from 'ember-headless-table/plugins/data-so
 import type { Column } from 'ember-headless-table';
 import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
 import { setOwner } from '@ember/application';
+import { DATA } from 'test-app/data';
 
 module('Plugins | dataSorting', function (hooks) {
   setupRenderingTest(hooks);
@@ -38,30 +39,6 @@ module('Plugins | dataSorting', function (hooks) {
 
     await click(button);
   };
-
-  const DATA = [
-    {
-      // Red stuff
-      A: 'Apple',
-      B: 'Berry',
-      C: 'Cranberry',
-      D: 'Da Chile Pepper',
-    },
-    {
-      // Green stuff
-      A: 'Avocado',
-      B: 'Plantain',
-      C: 'Cucumber',
-      D: 'Dill',
-    },
-    {
-      // Yellow stuff
-      A: 'A Squash',
-      B: 'Banana',
-      C: 'Corn',
-      D: 'Durian',
-    },
-  ];
 
   class Context {
     @tracked containerWidth = 1000;

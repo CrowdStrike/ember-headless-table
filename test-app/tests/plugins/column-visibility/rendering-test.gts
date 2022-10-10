@@ -11,6 +11,7 @@ import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
+import { DATA } from 'test-app/data';
 import type { ColumnConfig, Column } from 'ember-headless-table';
 import { setOwner } from '@ember/application';
 
@@ -18,30 +19,6 @@ module('Plugins | columnVisibility', function (hooks) {
   setupRenderingTest(hooks);
 
   let ctx: Context;
-
-  const DATA = [
-    {
-      // Red stuff
-      A: 'Apple',
-      B: 'Berry',
-      C: 'Cranberry',
-      D: 'Da Chile Pepper',
-    },
-    {
-      // Green stuff
-      A: 'Avocado',
-      B: 'Plantain',
-      C: 'Cucumber',
-      D: 'Dill',
-    },
-    {
-      // Yellow stuff
-      A: 'A Squash',
-      B: 'Banana',
-      C: 'Corn',
-      D: 'Durian',
-    },
-  ];
 
   class Context {
     columns = [
