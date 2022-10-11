@@ -1,54 +1,29 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { setOwner } from '@ember/application';
 import { assert, assert as debugAssert } from '@ember/debug';
-// @ts-ignore
-import { fn } from '@ember/helper';
-// @ts-ignore
-import { on } from '@ember/modifier';
-import { click, findAll, render, find } from '@ember/test-helpers';
+import { render, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
-import { DataSorting, SortDirection } from 'ember-headless-table/plugins/data-sorting';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { StickyColumns } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
-import { requestAnimationFrameSettled } from 'ember-headless-table/test-support';
+import { createHelpers } from 'ember-headless-table/test-support';
 import { DATA } from 'test-app/data';
 
 const minWidth = () => ColumnResizing.forColumn(() => ({ minWidth: 200 }));
 const leftSticky = () => StickyColumns.forColumn(() => ({ sticky: 'left' }));
 const rightSticky = () => StickyColumns.forColumn(() => ({ sticky: 'right' }));
 
-import type { Column } from 'ember-headless-table';
-import type { SortItem } from 'ember-headless-table/plugins/data-sorting';
-
 module('Plugins | StickyColumns', function (hooks) {
   setupRenderingTest(hooks);
 
   let ctx: Context;
-  /**
-    * note: scroll direction is the inverse of swipe direction
-    */
-  let scrollLeft = async (distance: number) => {
-    let element = find('[data-container]');
+  let helpers = createHelpers({
+    scrollContainer: '[data-container]',
+  });
 
-    assert(`[data-container] not found`, element instanceof HTMLElement);
-
-    element.scrollLeft -= distance;
-    await requestAnimationFrameSettled();
-  }
-  let scrollRight = async (distance: number) => {
-    let element = find('[data-container]');
-
-    assert(`[data-container] not found`, element instanceof HTMLElement);
-
-    element.scrollLeft += distance;
-    await requestAnimationFrameSettled();
-  }
   let isAbout = (testNumber: number, num: number, slop: number = 2) => {
     return (testNumber <= num + slop) &&  (testNumber >= num - slop);
   }
@@ -66,6 +41,22 @@ module('Plugins | StickyColumns', function (hooks) {
     let columnRect = column.getBoundingClientRect();
 
     let delta = columnRect.left - containerRect.left;
+
+    return delta;
+  }
+
+  let rightPositionOf = (key: string) => {
+    let container = find('[data-container]');
+
+    assert(`[data-container] not found`, container instanceof HTMLElement);
+
+    let column = find(`[data-key=${key}]`);
+
+    assert(`[data-key=${key}] not found`, column instanceof HTMLElement);
+
+    let containerRect = container.getBoundingClientRect();
+    let columnRect = column.getBoundingClientRect();
+    let delta = columnRect.right - containerRect.right;
 
     return delta;
   }
@@ -97,8 +88,15 @@ module('Plugins | StickyColumns', function (hooks) {
       #ember-testing { width: initial; height: initial; transform: initial; }
       #ember-testing-container { width: 1000px; }
 
+      /*
+        * both of these are needed to get rid of browser-specific spacing
+        * so that we can do math easier
+        **/
       table {
         border-collapse: collapse;
+      }
+      table, table * {
+        box-sizing: border-box;
       }
     </style>
   </template>;
@@ -156,7 +154,7 @@ module('Plugins | StickyColumns', function (hooks) {
       let left = leftPositionOf('A');
       assert.ok(isAbout(left, 1), `A's left edge (@ ${left}) matches the left edge of the container`);
 
-      await scrollRight(200);
+      await helpers.scrollRight(200);
 
       /**
         * Because we only scrolled the distance of one column for this test,
@@ -201,7 +199,7 @@ module('Plugins | StickyColumns', function (hooks) {
       let leftB = leftPositionOf('B');
       assert.ok(isAbout(leftB, 201), `B's left edge (@ ${leftB}) is one column's width right of A`);
 
-      await scrollRight(200);
+      await helpers.scrollRight(200);
 
       leftA = leftPositionOf('A');
       assert.ok(isAbout(leftA, 0), `A's left edge (@ ${leftA}) is stuck to the left`);
@@ -211,9 +209,60 @@ module('Plugins | StickyColumns', function (hooks) {
 
   });
 
-  module('the right column can be sticky', function () {
-    test('the right column does not change position during scrolling', async function (assert) {
+  module('the right column can be sticky', function (hooks) {
+    class RightColumn extends Context {
+      columns = [
+        { name: 'column A', key: 'A', pluginOptions: [minWidth()] },
+        { name: 'column B', key: 'B', pluginOptions: [minWidth()] },
+        { name: 'column C', key: 'C', pluginOptions: [minWidth()] },
+        { name: 'column D', key: 'D', pluginOptions: [minWidth()] },
+        { name: 'column E', key: 'E', pluginOptions: [minWidth()] },
+        { name: 'column F', key: 'F', pluginOptions: [minWidth()] },
+        { name: 'column G', key: 'G', pluginOptions: [minWidth(), rightSticky()] },
+      ]
+    }
 
+    hooks.beforeEach(function() {
+      ctx = new RightColumn();
+      setOwner(ctx, this.owner);
+    });
+
+    test('the right column does not change position during scrolling', async function (assert) {
+      await render(<template>
+        <TestStyles />
+        <TestComponent @ctx={{ctx}} />
+      </template>);
+
+      /**
+        * If we haven't scrolled, the right column should share a right boundary at most within 1 pixel of
+        * its container
+        */
+      let rightG = rightPositionOf('G');
+      assert.ok(isAbout(rightG, 0), `G's right edge (@ ${rightG}) matches the right edge of the container`);
+
+      let rightD = rightPositionOf('D');
+      assert.ok(isAbout(rightD, 0), `D's right edge (@ ${rightD}) matches the right edge of the container`);
+
+      let rightF = rightPositionOf('F');
+      assert.ok(
+        isAbout(rightF, 400),
+        `F's right edge (@ ${rightF}) is beyond the boundary of the container, as only 4 columns are visible at a time`
+      );
+
+      await helpers.swipeLeft(200);
+
+      rightG = rightPositionOf('G');
+      assert.ok(isAbout(rightG, 0), `G's right edge (@ ${rightG}) is stuck to the right`);
+
+      rightD = rightPositionOf('D');
+      assert.ok(isAbout(rightD, -200), `D's right edge (@ ${rightD}) now shares an edge with G, due to scrolling`);
+
+      await helpers.swipeLeft(2000);
+      rightG = rightPositionOf('G');
+      assert.ok(isAbout(rightG, 0), `G's right edge (@ ${rightG}) hasn't moved`);
+
+      rightF = rightPositionOf('F');
+      assert.ok(isAbout(rightF, -200), `F's right edge (@ ${rightF}) now shares an edge with G, due to scrolling`);
     });
   });
 
@@ -257,7 +306,7 @@ module('Plugins | StickyColumns', function (hooks) {
       let leftD = leftPositionOf('D');
       assert.ok(isAbout(leftD, 605), `D's left edge (@ ${leftD}) is three column's width right of A`);
 
-      await scrollRight(200);
+      await helpers.scrollRight(200);
 
       leftA = leftPositionOf('A');
       assert.ok(isAbout(leftA, 0), `A's left edge (@ ${leftA}) is stuck to the left`);
@@ -270,7 +319,7 @@ module('Plugins | StickyColumns', function (hooks) {
       leftD = leftPositionOf('D');
       assert.ok(isAbout(leftD, 405), `D's left edge (@ ${leftD}) is now where C's left edge used to be`);
 
-      await scrollRight(200);
+      await helpers.swipeLeft(200);
 
       leftA = leftPositionOf('A');
       assert.ok(isAbout(leftA, 0), `A's left edge (@ ${leftA}) has not moved.`);

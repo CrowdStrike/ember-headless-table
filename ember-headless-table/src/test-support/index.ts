@@ -1,12 +1,18 @@
 import { assert } from '@ember/debug';
-import { settled, triggerEvent } from '@ember/test-helpers';
+import { find, settled, triggerEvent } from '@ember/test-helpers';
 
 interface Selectors {
-  resizeHandle: string;
+  resizeHandle?: string;
+  scrollContainer?: string;
 }
 
 export function createHelpers(selectors: Selectors) {
   async function resize(parent: Element, delta: number) {
+    assert(
+      `Can't use the dragLeft/dragRight/resize helpers without a \`resizeHandle\` selector`,
+      selectors.resizeHandle
+    );
+
     let element = parent.querySelector(selectors.resizeHandle);
 
     assert(`Can't resize without a handle`, element);
@@ -33,9 +39,40 @@ export function createHelpers(selectors: Selectors) {
     await requestAnimationFrameSettled();
   }
 
+  function horizontalScrollElement() {
+    assert(
+      `Can't use scrollRight/swipeLeft helpers without a \`scrollContainer\` selector`,
+      selectors.scrollContainer
+    );
+
+    let element = find(selectors.scrollContainer);
+
+    assert(`scroll container not found`, element instanceof HTMLElement);
+
+    return element;
+  }
+
+  async function scrollRight(distance: number) {
+    let element = horizontalScrollElement();
+
+    element.scrollLeft += distance;
+    await requestAnimationFrameSettled();
+  }
+
+  async function scrollLeft(distance: number) {
+    let element = horizontalScrollElement();
+
+    element.scrollLeft -= distance;
+    await requestAnimationFrameSettled();
+  }
+
   return {
     dragLeft: (column: Element, amount: number) => resize(column, -amount),
     dragRight: (column: Element, amount: number) => resize(column, amount),
+    scrollLeft,
+    scrollRight,
+    swipeLeft: scrollRight,
+    swipeRight: scrollLeft,
   };
 }
 
