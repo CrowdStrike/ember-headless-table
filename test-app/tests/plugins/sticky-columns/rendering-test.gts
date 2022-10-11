@@ -5,7 +5,7 @@ import { render, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
-import { headlessTable } from 'ember-headless-table';
+import { headlessTable, type ColumnConfig } from 'ember-headless-table';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { StickyColumns, isSticky } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
@@ -19,7 +19,7 @@ const rightSticky = () => StickyColumns.forColumn(() => ({ sticky: 'right' }));
 module('Plugins | StickyColumns', function (hooks) {
   setupRenderingTest(hooks);
 
-  let ctx: Context;
+  let ctx: TestSetup;
   let helpers = createHelpers({
     scrollContainer: '[data-container]',
   });
@@ -64,12 +64,12 @@ module('Plugins | StickyColumns', function (hooks) {
     return delta;
   }
 
-  class Context {
+  class TestSetup {
     /**
       * All columns set to min-width of 200 for easier math
       * 7 columns @ 200px min is 1400px
       */
-    columns = [
+    columns: ColumnConfig<typeof DATA[number]>[] = [
       { name: 'A', key: 'A', pluginOptions: [minWidth()] },
       { name: 'B', key: 'B', pluginOptions: [minWidth()] },
       { name: 'C', key: 'C', pluginOptions: [minWidth()] },
@@ -109,7 +109,7 @@ module('Plugins | StickyColumns', function (hooks) {
     </style>
   </template>;
 
-  class TestComponent extends Component<{ Args: { ctx: Context } }> {
+  class TestComponent extends Component<{ Args: { ctx: TestSetup } }> {
     get table() {
       return this.args.ctx.table;
     }
@@ -145,7 +145,7 @@ module('Plugins | StickyColumns', function (hooks) {
 
   module('with default options', function (hooks) {
     hooks.beforeEach(function() {
-      ctx = new Context();
+      ctx = new TestSetup();
       setOwner(ctx, this.owner);
     });
 
@@ -174,7 +174,7 @@ module('Plugins | StickyColumns', function (hooks) {
   });
 
   module('the left column can be sticky', function (hooks) {
-    class LeftColumn extends Context {
+    class LeftColumn extends TestSetup {
       columns = [
         { name: 'column A', key: 'A', pluginOptions: [leftSticky(), minWidth()] },
         { name: 'column B', key: 'B', pluginOptions: [minWidth()] },
@@ -218,7 +218,7 @@ module('Plugins | StickyColumns', function (hooks) {
   });
 
   module('the right column can be sticky', function (hooks) {
-    class RightColumn extends Context {
+    class RightColumn extends TestSetup {
       columns = [
         { name: 'column A', key: 'A', pluginOptions: [minWidth()] },
         { name: 'column B', key: 'B', pluginOptions: [minWidth()] },
@@ -275,7 +275,7 @@ module('Plugins | StickyColumns', function (hooks) {
   });
 
   module('2 left columns can be sticky', function (hooks) {
-    class LeftColumn extends Context {
+    class LeftColumn extends TestSetup {
       columns = [
         { name: 'column A', key: 'A', pluginOptions: [leftSticky(), minWidth()] },
         { name: 'column B', key: 'B', pluginOptions: [leftSticky(), minWidth()] },
@@ -343,7 +343,7 @@ module('Plugins | StickyColumns', function (hooks) {
   });
 
   module('2 right columns can be sticky', function (hooks) {
-    class RightColumn extends Context {
+    class RightColumn extends TestSetup {
       columns = [
         { name: 'column A', key: 'A', pluginOptions: [minWidth()] },
         { name: 'column B', key: 'B', pluginOptions: [minWidth()] },
@@ -423,7 +423,7 @@ module('Plugins | StickyColumns', function (hooks) {
   });
 
   module('columns on both ends can be sticky', function (hooks) {
-    class EndColumns extends Context {
+    class EndColumns extends TestSetup {
       columns = [
         { name: 'column A', key: 'A', pluginOptions: [minWidth(), leftSticky()] },
         { name: 'column B', key: 'B', pluginOptions: [minWidth()] },

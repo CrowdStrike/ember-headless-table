@@ -31,7 +31,8 @@ support:
    - typescript@4.5
    - typescript@4.6
    - typescript@4.7
-   - typescript@4.8
+   # https://github.com/typed-ember/glint/issues/406
+   # - typescript@4.8
 
 release:
   semantic: true
