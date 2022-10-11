@@ -76,13 +76,6 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
   scrollContainerElement?: HTMLElement;
 
   /**
-   * @deprecated
-   *
-   * this should be moved to a "pagination" plugin
-   */
-  #page?: number;
-
-  /**
    * Interact with, save, modify, etc the preferences for the table,
    * plugins, columns, etc
    */
@@ -104,7 +97,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
       this.preferences = new TablePreferences(key, adapter);
     } else {
       // subsequent updates to args
-      this.#maybeResetScrollContainer();
+      this.resetScrollContainer();
     }
   }
 
@@ -196,88 +189,6 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     return this.args.named;
   }
 
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get bulkSelection() {
-    return this.args.named?.bulkSelection;
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get hasActiveRow() {
-    return Boolean(this.args.named?.rowSelection?.());
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get hasCheckboxSelection() {
-    return this.isCheckboxSelectable && this.bulkSelection?.currentState.state !== 'NONE';
-  }
-
-  /**
-   * Will return true if the default is at its default state.
-   * false otherwise.
-   */
-  get isAtDefaultSettings() {
-    return this.preferences.getIsAtDefault();
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get isCheckboxSelectable() {
-    return this.args.named?.isCheckboxSelectable ?? Boolean(this.args.named?.bulkSelection);
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get isRowSelectable() {
-    return this.args.named?.isRowSelectable ?? Boolean(this.args.named?.onRowSelectionChange);
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get isPaginated() {
-    return Boolean(this.args.named?.pagination);
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get pagination() {
-    return this.args.named?.pagination;
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get rowSelection() {
-    let rowSelection = this.args.named?.rowSelection;
-
-    return rowSelection ? new Set([rowSelection()]) : new Set();
-  }
-
   rows = map(this, {
     data: () => {
       let dataFn = this.args.named?.data;
@@ -303,43 +214,12 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
   });
 
   /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get totalRowCount() {
-    return this.pagination?.totalItems ?? this.args.named?.meta?.totalRowCount ?? this.rows.length;
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  get totalRowsSelectedCount() {
-    return this.args.named?.meta?.totalRowsSelectedCount ?? this.bulkSelection?.numSelected;
-  }
-
-  /**
    * @private
    *
    * TODO: what's this for?
    */
   get value() {
     return this;
-  }
-
-  /**
-   * Resets the scroll position of the scroll container if the page has
-   * changed.
-   * @internal
-   */
-  #maybeResetScrollContainer() {
-    if (this.pagination?.page !== this.#page) {
-      this.resetScrollContainer();
-    }
-
-    this.#page = this.pagination?.page;
   }
 
   /**
@@ -355,25 +235,5 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
   @action
   resetToDefaults() {
     this.plugins.forEach((plugin) => plugin.reset?.());
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  @action
-  selectRow(row: Row<DataType>) {
-    this.args.named?.onRowSelectionChange?.(row.data);
-  }
-
-  /**
-   * @deprecated
-   *
-   * This will soon be extracted to a plugin
-   */
-  @action
-  unselectRow(_row: Row<DataType>) {
-    this.args.named?.onRowSelectionChange?.(undefined);
   }
 }
