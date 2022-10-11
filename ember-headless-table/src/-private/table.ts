@@ -16,7 +16,7 @@ import { composeFunctionModifiers } from './utils';
 
 import type { Plugin } from '../plugins';
 import type { Class } from '[private-types]';
-import type { ColumnKey, ColumnPreferences, Destructor, TableConfig } from '#interfaces';
+import type { Destructor, TableConfig } from '#interfaces';
 
 const DEFAULT_COLUMN_CONFIG = {
   isVisible: true,
@@ -340,16 +340,6 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     }
 
     this.#page = this.pagination?.page;
-  }
-
-  /**
-   * @deprecated
-   */
-  getColumnPreference<K extends keyof ColumnPreferences>(
-    columnKey: ColumnKey<DataType>,
-    key: K
-  ): ColumnPreferences[K] {
-    return this.preferences.getColumnPreferences(columnKey)[key];
   }
 
   /**
