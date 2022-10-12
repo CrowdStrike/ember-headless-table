@@ -1,7 +1,6 @@
 import { TrackedMap } from 'tracked-built-ins';
 
 import type {
-  ColumnPreferences,
   PluginPreferenceFor,
   PluginPreferences,
   PreferencesAdapter as Adapter,
@@ -11,11 +10,6 @@ import type {
 
 export class TablePreferences {
   storage = new TrackedPreferences();
-
-  /**
-   * @deprecated - preferences must be plugin-based
-   */
-  columnPreferences = new TrackedMap<string, ColumnPreferences>();
 
   constructor(private key: string, private adapter?: Adapter) {
     if (this.adapter) {
@@ -27,86 +21,8 @@ export class TablePreferences {
     return this.adapter !== undefined;
   }
 
-  /**
-   * @deprecated - preferences must be plugin-based
-   */
-  deleteColumnPreference<K extends keyof ColumnPreferences>(columnKey: string, key: K) {
-    let preferences = this.getColumnPreferences(columnKey);
-
-    if (!(key in preferences)) {
-      return false;
-    }
-
-    let newPreferences = { ...this.getColumnPreferences(columnKey) };
-
-    delete newPreferences[key];
-
-    if (Object.keys(newPreferences).length === 0) {
-      this.columnPreferences.delete(columnKey);
-    } else {
-      this.columnPreferences.set(columnKey, newPreferences);
-    }
-
-    this.persist();
-
-    return true;
-  }
-
-  /**
-   * @deprecated - preferences must be plugin-based
-   */
-  getColumnPreferences(columnKey: string): ColumnPreferences {
-    return this.columnPreferences.get(columnKey) ?? {};
-  }
-
   getIsAtDefault() {
     return this.storage.isAtDefault;
-  }
-
-  /**
-   * @deprecated - preferences must be plugin-based
-   */
-  setColumnPreferences(columnKey: string, value: ColumnPreferences) {
-    this.columnPreferences.set(columnKey, value);
-    this.persist();
-  }
-
-  /**
-   * @deprecated - preferences must be plugin-based
-   */
-  setColumnPreference<K extends keyof ColumnPreferences>(
-    columnKey: string,
-    key: K,
-    value: ColumnPreferences[K]
-  ) {
-    let preferences = this.getColumnPreferences(columnKey);
-    let newValue = { ...preferences, [key]: value };
-
-    this.columnPreferences.set(columnKey, newValue);
-
-    this.persist();
-  }
-
-  /**
-   * @deprecated - preferences must be plugin-based
-   *                use storage.serialize() instead
-   */
-  toTablePreferencesData() {
-    let data: TablePreferencesData = {};
-
-    let columns: Record<string, ColumnPreferences> = {};
-
-    for (let [key, preferences] of this.columnPreferences) {
-      if (Object.keys(preferences).length > 0) {
-        columns[key] = preferences;
-      }
-    }
-
-    if (Object.keys(columns).length > 0) {
-      data.columns = columns;
-    }
-
-    return data;
   }
 
   /**
@@ -118,7 +34,6 @@ export class TablePreferences {
    */
   persist() {
     return this.adapter?.persist?.(this.key, {
-      ...this.toTablePreferencesData(),
       ...this.storage.serialize(),
     });
   }
@@ -131,10 +46,6 @@ export class TablePreferences {
     let data = adapter?.restore?.(this.key);
 
     if (!data) return;
-
-    for (let [key, preferences] of Object.entries(data.columns ?? {})) {
-      this.columnPreferences.set(key, preferences);
-    }
 
     return this.storage.restore(data);
   }

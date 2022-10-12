@@ -11,10 +11,6 @@ export interface PreferencesAdapter {
  */
 export interface TablePreferencesData {
   /**
-   * @deprecated columns have no configuration outside of what is provided by plugins
-   */
-  columns?: Record<string, ColumnPreferences>;
-  /**
    * Every plugin has its own namespace for preferences storage.
    *
    * This is so that plugins can not worry about colliding with other plugins'
@@ -82,22 +78,4 @@ export interface PluginPreferences {
      */
     [columnKey: string]: Record<string, unknown>;
   };
-}
-
-/**
- * @deprecated columns have no configuration outside of what is provided by plugins
- */
-export interface ColumnPreferences {
-  /**
-   * @deprecated columns have no configuration outside of what is provided by plugins
-   */
-  isVisible?: boolean;
-  /**
-   * @deprecated columns have no configuration outside of what is provided by plugins
-   */
-  width?: number;
-  /**
-   * @deprecated columns have no configuration outside of what is provided by plugins
-   */
-  position?: number;
 }
