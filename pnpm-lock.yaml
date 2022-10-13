@@ -262,6 +262,7 @@ importers:
       '@types/ember__object': ^4.0.4
       '@types/ember__owner': ^4.0.0
       '@types/ember__string': ^3.0.9
+      '@types/ember__template': ^4.0.0
       '@types/ember__test-helpers': ^2.8.1
       '@types/ember__utils': ^4.0.1
       browserslist: ^4.21.4
@@ -319,6 +320,7 @@ importers:
       '@types/ember__object': 4.0.4_@babel+core@7.19.3
       '@types/ember__owner': 4.0.0
       '@types/ember__string': 3.0.9
+      '@types/ember__template': 4.0.0
       '@types/ember__test-helpers': 2.8.1_@babel+core@7.19.3
       '@types/ember__utils': 4.0.1_@babel+core@7.19.3
       browserslist: 4.21.4
@@ -400,7 +402,7 @@ importers:
       ember-resources: ^5.4.0
       ember-source: ~3.28.0
       ember-source-channel-url: ^3.0.0
-      ember-template-imports: ^3.1.1
+      ember-template-imports: ^3.1.2
       ember-template-lint: ^4.10.1
       ember-try: ^2.0.0
       eslint: ^7.32.0
@@ -433,7 +435,7 @@ importers:
       '@glimmer/tracking': 1.1.2
       '@glint/core': 0.9.5_typescript@4.8.4
       '@glint/environment-ember-loose': 0.9.5_t5ycb63yys2yccfcq5mlxlwezm
-      '@glint/environment-ember-template-imports': 0.9.5_lnwxnliv3x7lc2w3tdyyvqhmga
+      '@glint/environment-ember-template-imports': 0.9.5_jd7jb23ytpoefgzx6pbm5wrwzy
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.59_typescript@4.8.4
       '@tsconfig/ember': 1.0.1
@@ -478,7 +480,7 @@ importers:
       ember-resolver: 8.0.3_@babel+core@7.19.3
       ember-source: 3.28.9_@babel+core@7.19.3
       ember-source-channel-url: 3.0.0
-      ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
+      ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
       ember-template-lint: 4.14.0_ember-cli-htmlbars@6.1.1
       ember-try: 2.0.0
       eslint: 7.32.0
@@ -2623,7 +2625,7 @@ packages:
       - '@glimmer/component'
     dev: true
 
-  /@glint/environment-ember-template-imports/0.9.5_lnwxnliv3x7lc2w3tdyyvqhmga:
+  /@glint/environment-ember-template-imports/0.9.5_jd7jb23ytpoefgzx6pbm5wrwzy:
     resolution: {integrity: sha512-QBcNlfMaVTg+rGTCWPDroVFOhtcNVfEhQikeH1izP9kUYfakSRF/vJVIpRjgINyvlQc0z1r9kdiqIVKPaWL8rQ==}
     peerDependencies:
       '@glint/environment-ember-loose': ^0.9.5
@@ -2631,7 +2633,7 @@ packages:
     dependencies:
       '@glint/environment-ember-loose': 0.9.5_t5ycb63yys2yccfcq5mlxlwezm
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
-      ember-template-imports: 3.1.1_ember-cli-htmlbars@6.1.1
+      ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
       - '@glimmer/component'
     dev: true

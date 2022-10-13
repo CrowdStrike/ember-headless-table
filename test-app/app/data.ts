@@ -1,3 +1,7 @@
+/**
+ * Small dataset, only 3 records.
+ * 7 available fields, A-G
+ */
 export const DATA = [
   {
     // Red stuff

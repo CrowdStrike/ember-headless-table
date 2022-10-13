@@ -107,3 +107,53 @@ export function verifyPlugins(plugins: PluginOption[]) {
     throw new Error(errors.join('\n'));
   }
 }
+
+type AssignableStyles = Omit<CSSStyleDeclaration, 'length' | 'parentRule'>;
+
+/**
+ * @public
+ *
+ * Utility that helps safely apply styles to an element
+ */
+export function applyStyles(element: HTMLElement | SVGElement, styles: Partial<AssignableStyles>) {
+  for (let [name, value] of Object.entries(styles)) {
+    if (name in element.style) {
+      assignStyle(
+        element,
+        name as keyof CSSStyleDeclaration,
+        value as CSSStyleDeclaration[keyof CSSStyleDeclaration]
+      );
+    }
+  }
+}
+
+type StyleDeclarationFor<MaybeStyle> = MaybeStyle extends keyof CSSStyleDeclaration
+  ? MaybeStyle
+  : never;
+
+function assignStyle<StyleName>(
+  element: HTMLElement | SVGElement,
+  styleName: StyleDeclarationFor<StyleName>,
+  value: CSSStyleDeclaration[StyleDeclarationFor<StyleName>]
+) {
+  element.style[styleName] = value;
+}
+
+function removeStyle(element: HTMLElement | SVGElement, styleName: string) {
+  element.style.removeProperty(styleName);
+}
+
+/**
+ * @public
+ *
+ * Utility that helps safely remove styles from an element
+ */
+export function removeStyles(
+  element: HTMLElement | SVGElement,
+  styles: Array<keyof AssignableStyles>
+) {
+  for (let name of styles) {
+    if (typeof name !== 'string') continue;
+    removeStyle(element, name);
+  }
+}

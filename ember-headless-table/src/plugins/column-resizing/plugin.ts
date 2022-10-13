@@ -3,6 +3,7 @@ import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
 import { BasePlugin, meta, options } from '../-private/base';
+import { applyStyles } from '../-private/utils';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
 
 import type { ColumnApi, Plugin } from '[public-plugin-types]';
@@ -67,7 +68,8 @@ export class ColumnResizing
     let meta = this.getColumnMeta(column);
 
     element.setAttribute('data-test-is-resizable', `${meta.isResizable}`);
-    element.setAttribute('style', `${meta.style}`);
+
+    applyStyles(element, meta.style);
   };
 
   /**
@@ -188,12 +190,12 @@ export class ColumnMeta {
   }
 
   get style() {
-    let styles = [];
+    let styles: Partial<Pick<CSSStyleDeclaration, 'width' | 'minWidth'>> = {};
 
-    if (this.width) styles.push(`width: ${this.width}px;`);
-    if (this.minWidth) styles.push(`min-width: ${this.minWidth}px;`);
+    if (this.width) styles.width = `${this.width}px`;
+    if (this.minWidth) styles.minWidth = `${this.minWidth}px`;
 
-    return styles.join(' ');
+    return styles;
   }
 
   @action

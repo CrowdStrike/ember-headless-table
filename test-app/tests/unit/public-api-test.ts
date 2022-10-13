@@ -38,6 +38,8 @@ module('Public API', function () {
         'meta',
         'options',
         'preferences',
+        'applyStyles',
+        'removeStyles',
       ].sort()
     );
   });
