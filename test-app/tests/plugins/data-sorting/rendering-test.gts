@@ -106,9 +106,7 @@ module('Plugins | dataSorting', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr>
                 {{#each this.table.columns as |column|}}
-                  <td>
-                  {{! @glint-ignore }}
-                  {{column.getValueForRow row}}</td>
+                  <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
             {{/each}}

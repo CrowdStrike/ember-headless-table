@@ -100,9 +100,7 @@ module('Plugins | columnVisibility', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr>
                 {{#each this.columns as |column|}}
-                  <td>
-                    {{! @glint-ignore }}
-                    {{column.getValueForRow row}}</td>
+                  <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>
             {{/each}}
