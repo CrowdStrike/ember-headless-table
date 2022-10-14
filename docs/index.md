@@ -13,9 +13,9 @@ title: Usage
 * ember-auto-import >= v2
 * ember-source >= 3.28
 * embroider safe + optimized
-* typescript >= 4.5<br>
-  Note that types changes will be considered bugfixes until Glint support is added to ember-headless-table
-* Glint -- not yet<br>
+* typescript >= 4.5
+* Glint >= 0.9
+
   All Glint changes will be considered bugfixes until Glint 1.0 is released.
 
 ## Installation
