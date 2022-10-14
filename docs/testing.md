@@ -3,6 +3,10 @@
 Testing a table's data can be done entirely however you want to for for you app.
 But some behaviors are a non-trivial to simulate in a test environment -- for those, there are some provided helpers, dependency-free.
 
+API Documentation available [here][api-docs]
+
+[api-docs]: /api/modules/test_support
+
 
 ## Helpers
 

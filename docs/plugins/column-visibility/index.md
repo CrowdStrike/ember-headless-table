@@ -2,15 +2,39 @@
 
 API Documentation available [here][api-docs]
 
-[api-docs]: link://tbd
+[api-docs]: /api/modules/plugins_column_visibility
 
 ## Usage
 
 ### ColumnOptions
 
+Columns can be individually configured
+
+```js
+table = headlessTable(this, {
+  columns: () => [
+    {
+      name: 'column A',
+      key: 'A',
+      pluginOptions: [
+        ColumnVisibility.forColumn(() => ({ isVisible: false }))
+      ]
+    },
+    /* ... */
+  ],
+  /* ... */
+})
+```
+
+See the API Documentation [here][api-docs] for the full list of options and descriptions.
+
 ### TableOptions
 
+None
+
 ### Preferences
+
+The visibility state will be stored in preferences, per column.
 
 ### Helpers + StrictMode
 

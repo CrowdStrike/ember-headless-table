@@ -2,15 +2,21 @@
 
 API Documentation available [here][api-docs]
 
-[api-docs]: link://tbd
+[api-docs]: /api/modules/plugins_data_sorting
 
 ## Usage
 
 ### ColumnOptions
 
+None
+
 ### TableOptions
 
+None
+
 ### Preferences
+
+None
 
 ### Helpers + StrictMode
 
