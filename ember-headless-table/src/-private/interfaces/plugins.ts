@@ -107,12 +107,4 @@ export interface Plugin<ColumnMeta = unknown, TableMeta = unknown> {
    * If the plugin has state, this should be used to reset that state
    */
   reset?: () => void;
-
-  /**
-   * @public
-   * @kind Table Hook
-   *
-   * Called when a column's visibility is toggled
-   */
-  onColumnsChange?: <T extends Table<any>>(table: T) => void;
 }
