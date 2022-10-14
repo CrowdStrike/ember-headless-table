@@ -63,6 +63,43 @@ export interface ColumnFeatures extends Record<string, unknown | undefined> {
 }
 
 /**
+ * Describes the shape of all the dynamic parts of a Plugin.
+ *
+ * There are no row options, because rows are not statically configurable.
+ */
+interface DefaultPluginSignature {
+  Meta: {
+    /**
+     * If a plugin has Table meta/state,
+     * the shape of that state can be described here
+     */
+    Table: unknown;
+    /**
+     * If a plugin has Column meta/state,
+     * the shape of that state can be described here
+     */
+    Column: unknown;
+    /**
+     * If a plugin has Row meta/state,
+     * the shape of that state can be described here
+     */
+    Row: unknown;
+  };
+  Options: {
+    /**
+     * If a plugin has options configurable for the whole table,
+     * those can be specified here
+     */
+    Table: unknown;
+    /**
+     * If a plugin has options configurable per column,
+     * those can be specified here
+     */
+    Column: unknown;
+  };
+}
+
+/**
  * @public
  *
  * If your table plugin is a class, you may extend from BasePlugin, which provides
@@ -71,12 +108,7 @@ export interface ColumnFeatures extends Record<string, unknown | undefined> {
  *
  * One instance of a plugin exists per table
  */
-export abstract class BasePlugin<
-  ColumnMeta = unknown,
-  TableMeta = unknown,
-  Options = unknown,
-  ColumnOptions = unknown
-> implements Plugin<ColumnMeta, TableMeta>
+export abstract class BasePlugin<Signature = DefaultPluginSignature> implements Plugin<Signature>
 {
   constructor(protected table: Table) {}
 
