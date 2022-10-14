@@ -1,5 +1,5 @@
 ```hbs template
-<div class="flex gap-2">
+<div class="flex gap-2 flex-wrap">
   {{#each this.table.columns as |column|}}
     <span>
       {{column.name}}:
@@ -13,11 +13,14 @@
   {{/each}}
 </div>
 <div class="h-full overflow-auto" {{this.table.modifiers.container}}>
-  <table>
+  <table class="w-[150%]">
     <thead>
       <tr>
         {{#each this.columns as |column|}}
-          <th {{this.table.modifiers.columnHeader column}} class="relative group">
+          <th
+            {{this.table.modifiers.columnHeader column}}
+            class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}} relative group"
+          >
             <button {{this.resizeHandle column}} class="reset-styles absolute -left-4 cursor-col-resize focusable group-first:hidden">
               ↔
             </button>
@@ -55,7 +58,10 @@
       {{#each this.table.rows as |row|}}
         <tr>
           {{#each this.columns as |column|}}
-            <td>
+            <td
+              {{this.table.modifiers.columnHeader column}}
+              class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
+            >
               {{column.getValueForRow row}}</td>
           {{/each}}
         </tr>
@@ -87,6 +93,9 @@ import {
 import {
   DataSorting, sort, isAscending, isDescending
 } from 'ember-headless-table/plugins/data-sorting';
+import {
+  StickyColumns, isSticky
+} from 'ember-headless-table/plugins/sticky-columns';
 
 import { DATA } from 'docs-app/sample-data';
 
@@ -96,12 +105,21 @@ export default class extends Component {
   table = headlessTable(this, {
     columns: () => [
       { name: 'column A', key: 'A',
-        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+        pluginOptions: [
+          ColumnResizing.forColumn(() => ({ minWidth: 200 })),
+          StickyColumns.forColumn(() => ({ sticky: 'left' })),
+        ]
       },
       { name: 'column B', key: 'B',
         pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
       },
       { name: 'column C', key: 'C',
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+      },
+      { name: 'column D', key: 'D',
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+      },
+      { name: 'column E', key: 'E',
         pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
       },
     ],
@@ -110,6 +128,7 @@ export default class extends Component {
       ColumnReordering,
       ColumnVisibility,
       ColumnResizing,
+      StickyColumns,
       DataSorting.with(() => ({
         sorts: this.sorts,
         onSort: (sorts) => this.sorts = sorts,
@@ -153,6 +172,8 @@ export default class extends Component {
   isDescending = isDescending;
 
   isResizing = isResizing;
+
+  isSticky = isSticky;
 }
 
 /**
