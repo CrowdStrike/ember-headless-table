@@ -7,7 +7,16 @@ import { normalizePluginsConfig } from './utils';
 import type { Table } from '../../-private/table';
 import type { Class, Constructor } from '[private-types]';
 import type { Column } from '[public-types]';
-import type { Plugin } from '#interfaces';
+import type {
+  ColumnMetaFor,
+  ColumnOptionsFor,
+  DefaultPluginSignature,
+  EmptyObject,
+  OptionsFor,
+  Plugin,
+  RowMetaFor,
+  TableMetaFor,
+} from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
 import type { ColumnVisibility } from 'plugins/column-visibility';
 
@@ -15,10 +24,6 @@ const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
 
 type InstanceOf<T> = T extends Class<infer Instance> ? Instance : T;
-type TableMetaFor<P extends Plugin> = InstanceOf<NonNullable<NonNullable<P['meta']>['table']>>;
-type ColumnMetaFor<P extends Plugin> = InstanceOf<NonNullable<NonNullable<P['meta']>['column']>>;
-type OptionsFor<P extends BasePlugin> = InstanceOf<P>['options'];
-type ColumnOptionsFor<P extends BasePlugin> = ReturnType<InstanceOf<P>['getColumnOptions']>;
 
 /**
  * @public
@@ -63,41 +68,13 @@ export interface ColumnFeatures extends Record<string, unknown | undefined> {
 }
 
 /**
- * Describes the shape of all the dynamic parts of a Plugin.
- *
- * There are no row options, because rows are not statically configurable.
+ * @private utility type
  */
-interface DefaultPluginSignature {
-  Meta: {
-    /**
-     * If a plugin has Table meta/state,
-     * the shape of that state can be described here
-     */
-    Table: unknown;
-    /**
-     * If a plugin has Column meta/state,
-     * the shape of that state can be described here
-     */
-    Column: unknown;
-    /**
-     * If a plugin has Row meta/state,
-     * the shape of that state can be described here
-     */
-    Row: unknown;
-  };
-  Options: {
-    /**
-     * If a plugin has options configurable for the whole table,
-     * those can be specified here
-     */
-    Table: unknown;
-    /**
-     * If a plugin has options configurable per column,
-     * those can be specified here
-     */
-    Column: unknown;
-  };
-}
+export type SignatureFrom<Klass extends BasePlugin<any>> = Klass extends BasePlugin<infer Signature>
+  ? Signature
+  : never;
+
+declare const __Signature__: unique symbol;
 
 /**
  * @public
@@ -108,17 +85,27 @@ interface DefaultPluginSignature {
  *
  * One instance of a plugin exists per table
  */
-export abstract class BasePlugin<Signature = DefaultPluginSignature> implements Plugin<Signature>
-{
+export abstract class BasePlugin<Signature = DefaultPluginSignature> {
   constructor(protected table: Table) {}
+
+  /**
+   * @private (secret)
+   *
+   * Because classes are kind of like interfaces,
+   * we need "something" to help TS know what a Resource is.
+   *
+   * This isn't a real API, but does help with type inference
+   * with the SignatureFrom utility above
+   */
+  declare [__Signature__]: Signature;
 
   /**
    * Helper for specifying plugins on `headlessTable` with the plugin-level options
    */
   static with<T extends BasePlugin>(
     this: Constructor<T>,
-    configFn: () => OptionsFor<T>
-  ): [Constructor<T>, () => OptionsFor<T>] {
+    configFn: () => OptionsFor<SignatureFrom<T>>
+  ): [Constructor<T>, () => OptionsFor<SignatureFrom<T>>] {
     return [this, configFn];
   }
 
@@ -128,16 +115,14 @@ export abstract class BasePlugin<Signature = DefaultPluginSignature> implements 
    */
   static forColumn<T extends BasePlugin>(
     this: Constructor<T>,
-    configFn: () => ColumnOptionsFor<T>
-  ): [Constructor<T>, () => ColumnOptionsFor<T>] {
+    configFn: () => ColumnOptionsFor<SignatureFrom<T>>
+  ): [Constructor<T>, () => ColumnOptionsFor<SignatureFrom<T>>] {
     return [this, configFn];
   }
 
   abstract name: string;
   static features?: string[];
   static requires?: string[];
-
-  declare abstract meta: { column: Constructor<ColumnMeta>; table: Constructor<TableMeta> };
 
   /**
    * TS does not allow access to the constructor property on class instances
@@ -151,11 +136,11 @@ export abstract class BasePlugin<Signature = DefaultPluginSignature> implements 
    * table creation for this specific plugin.
    */
   @cached
-  get options(): Options | undefined {
+  get options(): OptionsFor<Signature> | undefined {
     return options.forTable(this.table, this.#self);
   }
 
-  getColumnOptions = (column: Column): ColumnOptions | undefined => {
+  getColumnOptions = (column: Column): ColumnOptionsFor<this> | undefined => {
     return options.forColumn(column, this.#self);
   };
 
@@ -283,7 +268,7 @@ export const meta = {
   forColumn<P extends Plugin, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
-  ): ColumnMetaFor<P> {
+  ): ColumnMetaFor<SignatureFrom<P>> {
     return getPluginInstance(COLUMN_META, column, klass, () => {
       let plugin = column.table.pluginOf(klass);
 
@@ -301,7 +286,10 @@ export const meta = {
    * For a given table and plugin, return the meta / state bucket for the
    * plugin<->table instance pair.
    */
-  forTable<P extends Plugin, Data = unknown>(table: Table<Data>, klass: Class<P>): TableMetaFor<P> {
+  forTable<P extends Plugin, Data = unknown>(
+    table: Table<Data>,
+    klass: Class<P>
+  ): TableMetaFor<SignatureFrom<P>> {
     return getPluginInstance(TABLE_META, table[TABLE_KEY], klass, () => {
       let plugin = table.pluginOf(klass);
 
@@ -424,7 +412,7 @@ export const options = {
   forTable<P extends BasePlugin, Data = unknown>(
     table: Table<Data>,
     klass: Class<P>
-  ): OptionsFor<P> | undefined {
+  ): OptionsFor<SignatureFrom<P>> | undefined {
     let normalized = normalizePluginsConfig(table?.config?.plugins);
     let tuple = normalized?.find((option) => option[0] === klass);
 
@@ -439,7 +427,7 @@ export const options = {
   forColumn<P extends BasePlugin, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
-  ): ColumnOptionsFor<P> | undefined {
+  ): EmptyObject | ColumnOptionsFor<SignatureFrom<P>> | undefined {
     let tuple = column.config.pluginOptions?.find((option) => option[0] === klass);
     let t = tuple as [unknown, () => ColumnOptionsFor<P>];
 

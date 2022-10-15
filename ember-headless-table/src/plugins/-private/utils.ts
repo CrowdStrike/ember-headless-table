@@ -2,17 +2,11 @@ import { assert } from '@ember/debug';
 
 import type { BasePlugin } from './base';
 import type { Constructor } from '[private-types]';
-import type { Plugin } from '#interfaces';
+import type { OptionsFor, Plugin, SignatureFrom } from '#interfaces';
 
-export type PluginOption<P = Plugin> = P extends BasePlugin<any, any, infer Options, any>
-  ? readonly [Constructor<P>, () => Options]
-  : readonly [P | Constructor<P>, () => unknown];
+export type PluginOption = readonly [Constructor<Plugin>, () => unknown];
 
-type WithTableOptions<P = BasePlugin> = P extends BasePlugin<any, any, infer Options, any>
-  ? [Constructor<P>, () => Options]
-  : never;
-
-export type Plugins = (Plugin | BasePlugin | Constructor<Plugin | BasePlugin> | WithTableOptions)[];
+export type Plugins = (Constructor<Plugin> | [Constructor<Plugin>, () => unknown])[];
 
 export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
   if (!plugins) return [];
@@ -51,7 +45,7 @@ function collectFeatures(plugins: PluginOption[]) {
 
   for (let [plugin] of plugins) {
     if ('features' in plugin) {
-      for (let feature of plugin.features || []) {
+      for (let feature of (plugin as unknown as typeof BasePlugin).features || []) {
         result[feature] = [...(result[feature] || []), plugin];
       }
     }
@@ -68,7 +62,7 @@ function collectRequirements(plugins: PluginOption[]) {
 
   for (let [plugin] of plugins) {
     if ('requires' in plugin) {
-      for (let requirement of plugin.requires || []) {
+      for (let requirement of (plugin as unknown as typeof BasePlugin).requires || []) {
         result[requirement] = [...(result[requirement] || []), plugin];
       }
     }

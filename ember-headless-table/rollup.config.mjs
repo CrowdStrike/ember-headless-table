@@ -14,6 +14,7 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  external: ['expect-type'],
   output: addon.output(),
   plugins: [
     // These are the modules that users should be able to import from your

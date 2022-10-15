@@ -11,9 +11,6 @@ import { BasePlugin, meta } from '../-private/base';
 import type { Plugin, PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
-export interface ColumnOptions {}
-export interface TableOptions {}
-
 interface ColumnReorderingPreferences extends PluginPreferences {
   table: {
     order?: Record<string, number>;
@@ -26,10 +23,14 @@ declare module 'ember-headless-table/plugins' {
   }
 }
 
-export class ColumnReordering
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+interface Signature {
+  Meta: {
+    Column: ColumnMeta;
+    Table: TableMeta;
+  };
+}
+
+export class ColumnReordering extends BasePlugin<Signature> implements Plugin<Signature> {
   name = 'column-reordering';
   static features = ['columnOrder'];
   static requires = ['columnVisibility'];

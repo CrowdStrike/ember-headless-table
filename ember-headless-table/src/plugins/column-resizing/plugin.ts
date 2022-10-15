@@ -48,14 +48,22 @@ export interface TableOptions {
   handlePosition?: string;
 }
 
+interface Signature {
+  Meta: {
+    Column: ColumnMeta;
+    Table: TableMeta;
+  };
+  Options: {
+    Plugin: TableOptions;
+    Column: ColumnOptions;
+  };
+}
+
 /**
  * One instance of a plugin exists per table
  * but a plugin can have a "Meta" for each column
  */
-export class ColumnResizing
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+export class ColumnResizing extends BasePlugin<Signature> implements Plugin<Signature> {
   name = 'column-resizing';
   static features = ['columnWidth'];
 
