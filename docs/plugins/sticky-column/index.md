@@ -2,7 +2,7 @@
 
 API Documentation available [here][api-docs]
 
-[api-docs]: link://tbd
+[api-docs]: /api/modules/plugins_sticky_columns
 
 ## Usage
 

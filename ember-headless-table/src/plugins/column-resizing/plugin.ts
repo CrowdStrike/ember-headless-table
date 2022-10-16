@@ -82,25 +82,6 @@ export class ColumnResizing
    */
   containerModifier = resizeObserver;
 
-  /**
-   * Columns can change for a variety of reasons,
-   * - visibility change
-   * - re-order
-   * - removed
-   * - added
-   *
-   * When this happens, we need to iterate through all columns and re-calculate the widths.
-   */
-  onColumnsChange() {
-    let meta = this.getTableMeta();
-
-    if (!meta.scrollContainerWidth) return;
-
-    for (let column of this.table.columns) {
-      this.getColumnMeta(column)._width = undefined;
-    }
-  }
-
   reset() {
     let meta = this.getTableMeta();
 

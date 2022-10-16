@@ -34,7 +34,7 @@
 import Component from '@glimmer/component';
 
 import { headlessTable } from 'ember-headless-table';
-import { StickyColumns, isSticky, styleFor } from 'ember-headless-table/plugins/sticky-columns';
+import { StickyColumns, isSticky } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
@@ -70,7 +70,6 @@ export default class extends Component {
    *   [property on this component] = [variable in scope]
    */
   isSticky = isSticky;
-  styleFor = styleFor;
 }
 ```
 
