@@ -49,7 +49,7 @@ importers:
       '@embroider/webpack': ^1.9.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
-      '@glint/core': ^0.9.4
+      '@glint/core': ^0.9.5
       '@glint/environment-ember-loose': ^0.9.4
       '@glint/environment-ember-template-imports': ^0.9.4
       '@glint/template': ^0.9.4
@@ -156,7 +156,7 @@ importers:
       '@embroider/webpack': 1.9.0_4mpovkaptyark33dbwnkp36cwi
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
-      '@glint/core': 0.9.4_typescript@4.8.4
+      '@glint/core': 0.9.5_typescript@4.8.4
       '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/environment-ember-template-imports': 0.9.4_6rdv3jsfbhdmdytwv4dlce6dfy
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
@@ -1960,7 +1960,7 @@ packages:
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
       ember-destroyable-polyfill: 2.0.3_@babel+core@7.19.3
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -2270,7 +2270,7 @@ packages:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - supports-color
 
@@ -2534,25 +2534,6 @@ packages:
       - supports-color
     dev: true
 
-  /@glint/core/0.9.4_typescript@4.8.4:
-    resolution: {integrity: sha512-7n7nUV/kbRQ6y5AhWyO2NO1J79/h3zaBn2BJ1NXaguUvQY70/YvM15CeA4JfsrFjR8Yr2Y175QfP0Ug4MSD89Q==}
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.7.0
-    dependencies:
-      '@glint/config': 0.9.4
-      '@glint/transform': 0.9.4
-      resolve: 1.22.1
-      typescript: 4.8.4
-      uuid: 8.3.2
-      vscode-languageserver: 8.0.2
-      vscode-languageserver-textdocument: 1.0.7
-      vscode-uri: 3.0.6
-      yargs: 17.6.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@glint/core/0.9.5_typescript@4.8.4:
     resolution: {integrity: sha512-U7Fgkc2wtEXxmL6o6SgxlhUB9daFAGko7of2GisvkqKYxfPw3ximFu12ZK9aEaWEpn23p2Wrc5AAgvW1zBxUfA==}
     hasBin: true
@@ -2651,15 +2632,6 @@ packages:
       '@glimmer/component': ^1.1.2
     dependencies:
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
-
-  /@glint/transform/0.9.4:
-    resolution: {integrity: sha512-RgK+Rm2fs+djH5jur5KGTcOTWMoPMJx1GB/6ksIXBDq8jA4l4V0ZKZR/GQ5B2NBlfzf7UqWPRb0LNff7grAVHg==}
-    dependencies:
-      '@glimmer/syntax': 0.84.2
-      '@glint/config': 0.9.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@glint/transform/0.9.5:
     resolution: {integrity: sha512-AHtXqQE16zV6VDDcC0ntYptitRVKe3hZveUqsKGGli+uOLIc0Ni/AhahaWgig/GwNXzGZy0qj3GU+hKvXSU8ng==}
@@ -3282,7 +3254,7 @@ packages:
     resolution: {integrity: sha512-d2eU8O5QtqDd/ZqMV3yzIbULh8wPx6UMvxwJ0ThnNgCIFcZLO98deM5w6m5aU6K48Xu1wWzjJBa0jktGSFWXJw==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3291,7 +3263,7 @@ packages:
     resolution: {integrity: sha512-ggF6EoKp7o0FKmZ9UKUzsLXHfcho+mKFnHQfUL1k/sUjkHxSd33fIATYuNIGZARRn2JzhYYfRqkgRIRBsoEiaQ==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -4466,6 +4438,7 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
+    dev: true
 
   /babel-loader/8.2.5_wfdvla2jorjoj23kkavho2upde:
     resolution: {integrity: sha512-OSiFfH89LrEMiWd4pLNqGz4CwJDtbs2ZVc+iGu2HrkRfPxId9F2anQj38IxWpmRfsUY0aBZYi1EFcd3mhtRMLQ==}
@@ -6570,6 +6543,7 @@ packages:
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
       semver: 7.3.8
+    dev: true
 
   /css-loader/5.2.7_webpack@5.74.0:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
@@ -7098,6 +7072,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - webpack
+    dev: true
 
   /ember-auto-import/2.4.2_webpack@5.74.0:
     resolution: {integrity: sha512-REh+1aJWpTkvN42a/ga41OuRpUsSW7UQfPr2wPtYx56o/xoSNhVBXejy7yV9ObrkN7gogz6fs2xZwih5cOwpYg==}
@@ -7188,7 +7163,7 @@ packages:
       ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
       ember-cli-babel: 7.26.11
       ember-cli-babel-plugin-helpers: 1.1.1
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -7875,7 +7850,7 @@ packages:
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
       '@glint/template': 0.9.4_@glimmer+component@1.1.2
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8000,6 +7975,7 @@ packages:
       - '@babel/core'
       - supports-color
       - webpack
+    dev: true
 
   /ember-source/4.7.0_wfdvla2jorjoj23kkavho2upde:
     resolution: {integrity: sha512-k4R5mH7LOTXXlhxpNH3bVLhqgTfLlC5uyqVMDZxMMXmttWpRq5cOh4fL+s3/gqV9YIAK8tSyfnUAjvNK+QglQQ==}
@@ -11666,6 +11642,7 @@ packages:
         optional: true
     dependencies:
       schema-utils: 4.0.0
+    dev: true
 
   /mini-css-extract-plugin/2.6.1_webpack@5.74.0:
     resolution: {integrity: sha512-wd+SD57/K6DiV7jIR34P+s3uckTRuQvx0tKPcvjFlrEylk6P4mQ2KSWk1hblj1Kxaqok7LogKOieygXqBczNlg==}
@@ -14497,6 +14474,7 @@ packages:
     dependencies:
       loader-utils: 2.0.2
       schema-utils: 3.1.1
+    dev: true
 
   /style-loader/2.0.0_webpack@5.74.0:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}
