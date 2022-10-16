@@ -35,6 +35,7 @@ export class TailwindDemo extends Component {
   });
 
   <template>
+    {{! This wrapper div is required, along with applying of table.modifiers.container }}
     <div class="h-full overflow-auto" {{this.table.modifiers.container}}>
       <table>
         <thead>
