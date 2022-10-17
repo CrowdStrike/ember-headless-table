@@ -16,7 +16,7 @@ importers:
 
   docs-api:
     specifiers:
-      typedoc: ^0.23.15
+      typedoc: ^0.23.16
       typedoc-github-wiki-theme: ^1.0.0
       typedoc-gitlab-wiki-theme: ^1.0.0
       typedoc-plugin-markdown: ^3.11.11
@@ -24,12 +24,12 @@ importers:
       typedoc-plugin-mdn-links: ^2.0.0
       typescript: ^4.7.3
     devDependencies:
-      typedoc: 0.23.15_typescript@4.8.4
-      typedoc-github-wiki-theme: 1.0.1_7zab47scz53et6rw2zwvyhhfd4
-      typedoc-gitlab-wiki-theme: 1.0.0_7zab47scz53et6rw2zwvyhhfd4
-      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.15
+      typedoc: 0.23.16_typescript@4.8.4
+      typedoc-github-wiki-theme: 1.0.1_v2e3gxkukk3kjuzoshpzmdw3iy
+      typedoc-gitlab-wiki-theme: 1.0.0_v2e3gxkukk3kjuzoshpzmdw3iy
+      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.16
       typedoc-plugin-markdown-pages: 0.3.0
-      typedoc-plugin-mdn-links: 2.0.0_typedoc@0.23.15
+      typedoc-plugin-mdn-links: 2.0.0_typedoc@0.23.16
       typescript: 4.8.4
 
   docs-app:
@@ -2008,7 +2008,7 @@ packages:
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
       ember-destroyable-polyfill: 2.0.3_@babel+core@7.19.3
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -2276,7 +2276,7 @@ packages:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - supports-color
 
@@ -3239,7 +3239,7 @@ packages:
     resolution: {integrity: sha512-d2eU8O5QtqDd/ZqMV3yzIbULh8wPx6UMvxwJ0ThnNgCIFcZLO98deM5w6m5aU6K48Xu1wWzjJBa0jktGSFWXJw==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3248,7 +3248,7 @@ packages:
     resolution: {integrity: sha512-ggF6EoKp7o0FKmZ9UKUzsLXHfcho+mKFnHQfUL1k/sUjkHxSd33fIATYuNIGZARRn2JzhYYfRqkgRIRBsoEiaQ==}
     dependencies:
       '@types/ember': 4.0.1_@babel+core@7.19.3
-      '@types/ember__object': 4.0.4
+      '@types/ember__object': 4.0.4_@babel+core@7.19.3
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -7145,7 +7145,7 @@ packages:
       ember-cache-primitive-polyfill: 1.0.1_@babel+core@7.19.3
       ember-cli-babel: 7.26.11
       ember-cli-babel-plugin-helpers: 1.1.1
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_wfdvla2jorjoj23kkavho2upde
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -15231,49 +15231,49 @@ packages:
       is-typedarray: 1.0.0
     dev: true
 
-  /typedoc-github-wiki-theme/1.0.1_7zab47scz53et6rw2zwvyhhfd4:
+  /typedoc-github-wiki-theme/1.0.1_v2e3gxkukk3kjuzoshpzmdw3iy:
     resolution: {integrity: sha512-FaO7fENGK6IJLpkddbNXxJfNbooF9KBC7xfk7Lj4uqG5SCC7YQFPTLDyNmbpJKO93QEenRYgqBwI5E5d/bKrHw==}
     peerDependencies:
       typedoc: '>=0.22.9'
       typedoc-plugin-markdown: '>=3.11.10'
     dependencies:
-      typedoc: 0.23.15_typescript@4.8.4
-      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.15
+      typedoc: 0.23.16_typescript@4.8.4
+      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.16
     dev: true
 
-  /typedoc-gitlab-wiki-theme/1.0.0_7zab47scz53et6rw2zwvyhhfd4:
+  /typedoc-gitlab-wiki-theme/1.0.0_v2e3gxkukk3kjuzoshpzmdw3iy:
     resolution: {integrity: sha512-R9qWKh2EUcMr5ySweSqEIYzBZE9Pw3t3sLN8NzyrSo5SNNmcbt/oKMOyTKdoOpn3DzMqMRRxzujtx+xJ+Mt4Qg==}
     peerDependencies:
       typedoc: '>=0.22.9'
       typedoc-plugin-markdown: '>=3.11.10'
     dependencies:
-      typedoc: 0.23.15_typescript@4.8.4
-      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.15
+      typedoc: 0.23.16_typescript@4.8.4
+      typedoc-plugin-markdown: 3.13.6_typedoc@0.23.16
     dev: true
 
   /typedoc-plugin-markdown-pages/0.3.0:
     resolution: {integrity: sha512-QVWs6eL0BEOiRgJm6wRRgE8kESFv85HlefLv14ZbMM2VQ1HqErVeT9ukbhkYMznsD/juAsX3Xc5M+Ju7/ZDq4Q==}
     dev: true
 
-  /typedoc-plugin-markdown/3.13.6_typedoc@0.23.15:
+  /typedoc-plugin-markdown/3.13.6_typedoc@0.23.16:
     resolution: {integrity: sha512-ISSc9v3BK7HkokxSBuJPttXox4tJ6hP0N9wfSIk0fmLN67+eqtAxbk97gs2nDiuha+RTO5eW9gdeAb+RPP0mgg==}
     peerDependencies:
       typedoc: '>=0.23.0'
     dependencies:
       handlebars: 4.7.7
-      typedoc: 0.23.15_typescript@4.8.4
+      typedoc: 0.23.16_typescript@4.8.4
     dev: true
 
-  /typedoc-plugin-mdn-links/2.0.0_typedoc@0.23.15:
+  /typedoc-plugin-mdn-links/2.0.0_typedoc@0.23.16:
     resolution: {integrity: sha512-IGLuelXPOenGdmklr5DHgPPf/MfZj7aEYCxCMtPN8C1D0lA7w0YLahd0jhDDcOMU7zL1EPcM5pPnhZHltDhqGQ==}
     peerDependencies:
       typedoc: 0.22.x || 0.23.x
     dependencies:
-      typedoc: 0.23.15_typescript@4.8.4
+      typedoc: 0.23.16_typescript@4.8.4
     dev: true
 
-  /typedoc/0.23.15_typescript@4.8.4:
-    resolution: {integrity: sha512-x9Zu+tTnwxb9YdVr+zvX7LYzyBl1nieOr6lrSHbHsA22/RJK2m4Y525WIg5Mj4jWCmfL47v6f4hUzY7EIuwS5w==}
+  /typedoc/0.23.16_typescript@4.8.4:
+    resolution: {integrity: sha512-rumYsCeNRXlyuZVzefD7050n7ptL2uudsCJg50dY0v/stKniqIlRpvx/F/6expC0/Q6Dbab+g/JpZuB7Sw90FA==}
     engines: {node: '>= 14.14'}
     hasBin: true
     peerDependencies:
