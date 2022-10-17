@@ -1,4 +1,3 @@
-import { cached } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 
 import { TABLE_KEY } from '../../-private/table';
@@ -10,13 +9,8 @@ import type { Column } from '[public-types]';
 import type {
   ColumnMetaFor,
   ColumnOptionsFor,
-  DefaultPluginSignature,
-  EmptyObject,
   OptionsFor,
   Plugin,
-  PluginClass,
-  PluginSubclassInstance,
-  RowMetaFor,
   TableMetaFor,
 } from '#interfaces';
 import type { ColumnReordering } from 'plugins/column-reordering';
@@ -378,8 +372,7 @@ export const options = {
    * For a given table and plugin, return the options, if any were given from the user
    * during construction of the table.
    */
-  forTable<P extends BasePlugin<any>, Data = unknown
->(
+  forTable<P extends BasePlugin<any>, Data = unknown>(
     table: Table<Data>,
     klass: Class<P>
   ): Partial<OptionsFor<SignatureFrom<P>>> {

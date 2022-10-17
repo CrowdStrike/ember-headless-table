@@ -62,12 +62,20 @@ expectTypeOf(preferences.forColumn(y, SimplePlugin)).toEqualTypeOf<MapLite>();
 //////////////////////////////////////////////
 // A Real plugin
 //////////////////////////////////////////////
-import { DataSorting, Signature as DataSortingSignature } from 'plugins/data-sorting';
+import { DataSorting } from 'plugins/data-sorting';
+
+import type { Signature as DataSortingSignature } from 'plugins/data-sorting';
 
 // Options
-expectTypeOf(options.forTable(x, DataSorting)).toEqualTypeOf<DataSortingSignature['Options']['Plugin']>();
-expectTypeOf(options.forColumn(y, DataSorting)).toEqualTypeOf<DataSortingSignature['Options']['Column']>();
+expectTypeOf(options.forTable(x, DataSorting)).toEqualTypeOf<
+  DataSortingSignature['Options']['Plugin']
+>();
+expectTypeOf(options.forColumn(y, DataSorting)).toEqualTypeOf<
+  DataSortingSignature['Options']['Column']
+>();
 
 // Meta
 expectTypeOf(meta.forTable(x, DataSorting)).toEqualTypeOf<DataSortingSignature['Meta']['Table']>();
-expectTypeOf(meta.forColumn(y, DataSorting)).toEqualTypeOf<DataSortingSignature['Meta']['Column']>();
+expectTypeOf(meta.forColumn(y, DataSorting)).toEqualTypeOf<
+  DataSortingSignature['Meta']['Column']
+>();
