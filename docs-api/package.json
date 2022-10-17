@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "typedoc": "^0.23.16",
-    "typedoc-github-wiki-theme": "^1.0.0",
+    "typedoc-github-wiki-theme": "^1.0.1",
     "typedoc-gitlab-wiki-theme": "^1.0.0",
     "typedoc-plugin-markdown": "^3.11.11",
     "typedoc-plugin-markdown-pages": "^0.3.0",
