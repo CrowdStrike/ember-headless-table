@@ -36,7 +36,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@glint/core": "^0.9.5",
     "@glint/environment-ember-loose": "^0.9.5",
-    "@glint/environment-ember-template-imports": "^0.9.4",
+    "@glint/environment-ember-template-imports": "^0.9.5",
     "@glint/template": "^0.9.5",
     "@html-next/vertical-collection": "^4.0.0",
     "@nullvoxpopuli/eslint-configs": "^2.2.59",
