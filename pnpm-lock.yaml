@@ -50,7 +50,7 @@ importers:
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/core': ^0.9.5
-      '@glint/environment-ember-loose': ^0.9.4
+      '@glint/environment-ember-loose': ^0.9.5
       '@glint/environment-ember-template-imports': ^0.9.4
       '@glint/template': ^0.9.5
       '@html-next/vertical-collection': ^4.0.0
@@ -131,7 +131,7 @@ importers:
       typescript: ^4.8.4
       webpack: ^5.74.0
     dependencies:
-      '@crowdstrike/ember-oss-docs': 1.0.29_bfw2obruojskdbggu5ftdmlfga
+      '@crowdstrike/ember-oss-docs': 1.0.29_hpalvyvcejamio52o4jbu7fabm
       '@ember/test-waiters': 3.0.2
       '@embroider/router': 1.9.0_6nap4nrlhytgwxhnrgcj56wvwu
       dompurify: 2.4.0
@@ -157,8 +157,8 @@ importers:
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
       '@glint/core': 0.9.5_typescript@4.8.4
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
-      '@glint/environment-ember-template-imports': 0.9.4_6rdv3jsfbhdmdytwv4dlce6dfy
+      '@glint/environment-ember-loose': 0.9.5_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-template-imports': 0.9.4_jd7jb23ytpoefgzx6pbm5wrwzy
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
       '@html-next/vertical-collection': 4.0.0
       '@nullvoxpopuli/eslint-configs': 2.2.59_typescript@4.8.4
@@ -1781,7 +1781,7 @@ packages:
     dev: true
     optional: true
 
-  /@crowdstrike/ember-oss-docs/1.0.29_bfw2obruojskdbggu5ftdmlfga:
+  /@crowdstrike/ember-oss-docs/1.0.29_hpalvyvcejamio52o4jbu7fabm:
     resolution: {integrity: sha512-AkDRolLBwn9JEa6IaI0AEW0qC22Yvxqwtjh6Ba1wUwqLWOrNe9a5wSei+bG9MJmcFuY/cM63XAFI5SFWSCHiCA==}
     peerDependencies:
       '@crowdstrike/tailwind-toucan-base': ^3.3.1
@@ -1800,7 +1800,7 @@ packages:
       '@docfy/ember': 0.5.0
       '@embroider/addon-shim': 1.8.3
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-loose': 0.9.5_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
       '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
       dompurify: 2.4.0
@@ -2513,16 +2513,6 @@ packages:
       '@glimmer/interfaces': 0.42.2
       '@glimmer/util': 0.42.2
 
-  /@glint/config/0.9.4:
-    resolution: {integrity: sha512-ip8lVWvdQYoxKQWessol9Lw8xwqp8y3DjKurXQqC9P9Hi2lnPQC2IoOAI565wRj8SnWrxBA1FCLVxtAWRGgADQ==}
-    dependencies:
-      escape-string-regexp: 4.0.0
-      minimatch: 3.1.2
-      resolve: 1.22.1
-      silent-error: 1.1.1
-    transitivePeerDependencies:
-      - supports-color
-
   /@glint/config/0.9.5:
     resolution: {integrity: sha512-n57V4EgEG2SGqd71CBh4NMjgWuiyM1zzM7sDmXsZ9mAvP38RRBOKjRNBfyWh8/FHX5AAPE7QD2o5GdprafRXFw==}
     dependencies:
@@ -2532,7 +2522,6 @@ packages:
       silent-error: 1.1.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@glint/core/0.9.5_typescript@4.8.4:
     resolution: {integrity: sha512-U7Fgkc2wtEXxmL6o6SgxlhUB9daFAGko7of2GisvkqKYxfPw3ximFu12ZK9aEaWEpn23p2Wrc5AAgvW1zBxUfA==}
@@ -2553,8 +2542,8 @@ packages:
       - supports-color
     dev: true
 
-  /@glint/environment-ember-loose/0.9.4_q3dyqagzoarn5fdnpc2fuow56q:
-    resolution: {integrity: sha512-70S8BwpfoOuoGRUvmsIF1be5vmYhzVzSnXRraa0UG6ZJm4WyrP1OqJEdl5sXTsKLsF/Gp8Fb5hc3dibP4GluNw==}
+  /@glint/environment-ember-loose/0.9.5_q3dyqagzoarn5fdnpc2fuow56q:
+    resolution: {integrity: sha512-dQX8nmDNVCAfYMSRzCaXEXFaJL4Woib1cCeziX0dPvacG4ASC2VoUR32kh4/km7UokGsHQylb40vQzWNir6NSQ==}
     peerDependencies:
       '@glimmer/component': ^1.1.2
       ember-cli-htmlbars: ^6.0.1
@@ -2566,7 +2555,7 @@ packages:
         optional: true
     dependencies:
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
-      '@glint/config': 0.9.4
+      '@glint/config': 0.9.5
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
       ember-cli-htmlbars: 6.1.1
       ember-modifier: 3.2.7_@babel+core@7.19.3
@@ -2593,13 +2582,13 @@ packages:
       - supports-color
     dev: true
 
-  /@glint/environment-ember-template-imports/0.9.4_6rdv3jsfbhdmdytwv4dlce6dfy:
+  /@glint/environment-ember-template-imports/0.9.4_jd7jb23ytpoefgzx6pbm5wrwzy:
     resolution: {integrity: sha512-LRkBgzyT8VThfM9vJqauSKJIyHeNavfsWoiIIl6/cbzuThACQGQWSp5sOyCifTJiMMMs34Z9p8LKaAFSX0MQ+Q==}
     peerDependencies:
       '@glint/environment-ember-loose': ^0.9.4
       ember-template-imports: ^3.0.0
     dependencies:
-      '@glint/environment-ember-loose': 0.9.4_q3dyqagzoarn5fdnpc2fuow56q
+      '@glint/environment-ember-loose': 0.9.5_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.5_@glimmer+component@1.1.2
       ember-template-imports: 3.1.2_ember-cli-htmlbars@6.1.1
     transitivePeerDependencies:
