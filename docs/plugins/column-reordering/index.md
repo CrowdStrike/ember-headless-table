@@ -33,6 +33,16 @@ None
 
 The order of columns will be represented in the preferences.
 
+### Accessibility
+
+It's recommended to use `<button>`s for changing the order of columns.
+These buttons could be in a menu for the overall table settings,
+but the important things to make sure exist are:
+
+- buttons are focusable
+- buttons can be navigated to and pressed via keyboard
+- buttons can be navigated to and pressed via screen reader tool
+
 ### Helpers + StrictMode
 
 There are convenience helpers for aiding in more ergonomic template usage when using this plugin.

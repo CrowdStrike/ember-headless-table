@@ -48,6 +48,11 @@ None
 
 None
 
+### Accessibility
+
+If making sticky-columns a user-configurable feature,
+it's recommended to use `<button>`s or radio inputs for configuring if a column sticks at all, or to the left or right side.
+
 ### Helpers + StrictMode
 
 There are convenience helpers for aiding in more ergonomic template usage when using this plugin.

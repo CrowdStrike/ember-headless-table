@@ -67,6 +67,17 @@ See the API Documentation [here][api-docs] for the full list of options and desc
 
 Nothing is present in the preferences object at this time.
 
+### Accessibility
+
+It's recommended to use `<button>`s for changing the width of columns.
+These buttons can be positioned anywhere in column headings,
+but it'll be most important to ensure that tab-order makes sense.
+
+- buttons are focusable
+- buttons can be navigated to and pressed via keyboard
+
+This will ensure that keyboard users, as well as mouse users can resize their columns.
+
 
 ### Helpers + StrictMode
 

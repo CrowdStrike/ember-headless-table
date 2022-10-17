@@ -18,6 +18,17 @@ None
 
 None
 
+### Accessibility
+
+It's recommended to use `<button>`s for sorting columns.
+
+- buttons are focusable
+- buttons can be navigated to and pressed via keyboard
+- buttons can be navigated to and pressed via screen reader tool
+
+[aria-sort](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-sort)
+will be added and updated for you, via the `columnHeader` modifiers.
+
 ### Helpers + StrictMode
 
 There are convenience helpers for aiding in more ergonomic template usage when using this plugin.
