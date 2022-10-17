@@ -23,7 +23,7 @@ declare module 'ember-headless-table/plugins' {
   }
 }
 
-interface Signature {
+export interface Signature {
   Meta: {
     Column: ColumnMeta;
     Table: TableMeta;
@@ -41,9 +41,9 @@ export class ColumnReordering extends BasePlugin<Signature> implements Plugin<Si
   } as const;
 
   reset() {
-    let meta = this.getTableMeta();
+    let tableMeta = meta.forTable(this.table, ColumnReordering);
 
-    meta.reset();
+    tableMeta.reset();
   }
 }
 

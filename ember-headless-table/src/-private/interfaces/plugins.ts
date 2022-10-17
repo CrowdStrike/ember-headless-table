@@ -10,6 +10,22 @@ import type { Destructor } from '#interfaces';
 type DataTypeOf<T> = T extends Table<infer DataType> ? DataType : T;
 
 /**
+ * @private utility class
+ *
+ * This class exists because there isn't a way to, in TS,
+ * get access to static properties from an instance type
+ */
+export type PluginClass<PluginType> = PluginType & {
+  new: (...args: unknown[]) => PluginType;
+  features?: string[];
+  requires?: string[];
+};
+
+export type PluginSubclassInstance<PluginType> = PluginType & {
+  constructor: PluginClass<PluginType>;
+};
+
+/**
  * @public
  *
  * The data passed to a plugin's column APIs
@@ -30,12 +46,24 @@ export interface RowApi<T extends Table = Table> {
 }
 
 /**
+ * @private utility type
+ *
+ * Note that this exists here, and the Plugin interface exists in general
+ * because we need to derive types in a static context on BasePlugin,
+ * and the source of types need to exist somewhere other than BasePlugin,
+ * so that:
+ * - inference will work
+ *   - we avoid infinite recursive type definitions
+ */
+export type SignatureFrom<Klass extends Plugin<any>> = Klass extends Plugin<infer Signature>
+  ? Signature
+  : never;
+
+/**
  * @public
  *
  * Table plugins are stateless objects that optionally provide hooks based on what
  * the plugin wishes to modify.
- *
- * A Plugin may either be a class or plain object
  *
  * If state is desired, Metadata classes may be provided to manage that state.
  * As a convenience, when the meta classes are instantiated, they'll be given the same

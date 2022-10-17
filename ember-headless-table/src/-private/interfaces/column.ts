@@ -1,6 +1,7 @@
 import type { BasePlugin, Plugin } from '../../plugins';
 import type { Column } from '../column';
 import type { Row } from '../row';
+import type { ColumnOptionsFor, SignatureFrom } from './plugins';
 import type { Constructor } from '[private-types]';
 import type { ComponentLike, ContentValue } from '@glint/template';
 
@@ -10,7 +11,7 @@ export interface CellContext<T> {
 }
 
 type ColumnPluginOption<P = Plugin> = P extends BasePlugin
-  ? [Constructor<P>, () => ReturnType<P['getColumnOptions']>]
+  ? [Constructor<P>, () => ColumnOptionsFor<SignatureFrom<P>>]
   : [P | Constructor<P>, () => unknown];
 
 export type CellOptions = Record<string, unknown>;

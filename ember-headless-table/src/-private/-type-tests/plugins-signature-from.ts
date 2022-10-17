@@ -35,11 +35,20 @@ class PluginA<Signature = SignatureA> extends BasePlugin<Signature> {
   name = 'my-test-plugin';
 }
 
+// Test the tests
+expectTypeOf<SignatureA>().toEqualTypeOf<SignatureA>();
+
 // Tests that we can pluck the generic off of BasePlugin
 expectTypeOf<SignatureFrom<BasePlugin<SignatureA>>>().toEqualTypeOf<SignatureA>();
 
 // Tests that we can get the generic type off of a sub-type of BasePlugin
 expectTypeOf<SignatureFrom<PluginA>>().toEqualTypeOf<SignatureA>();
+
+// Tests that we can get the generic off of a sub-type passed to BasePlugin
+class PluginC extends BasePlugin<SignatureA> {
+  name = 'plugin-c';
+}
+expectTypeOf<SignatureFrom<PluginC>>().toEqualTypeOf<SignatureA>();
 
 ///////////////////////////////////////////
 

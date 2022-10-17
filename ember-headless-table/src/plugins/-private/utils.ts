@@ -2,11 +2,10 @@ import { assert } from '@ember/debug';
 
 import type { BasePlugin } from './base';
 import type { Constructor } from '[private-types]';
-import type { OptionsFor, Plugin, SignatureFrom } from '#interfaces';
 
-export type PluginOption = readonly [Constructor<Plugin>, () => unknown];
+export type PluginOption = [Constructor<BasePlugin>, () => unknown];
 
-export type Plugins = (Constructor<Plugin> | [Constructor<Plugin>, () => unknown])[];
+export type Plugins = (Constructor<BasePlugin> | [Constructor<BasePlugin>, () => unknown])[];
 
 export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
   if (!plugins) return [];

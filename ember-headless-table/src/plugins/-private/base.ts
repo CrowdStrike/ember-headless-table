@@ -14,6 +14,8 @@ import type {
   EmptyObject,
   OptionsFor,
   Plugin,
+  PluginClass,
+  PluginSubclassInstance,
   RowMetaFor,
   TableMetaFor,
 } from '#interfaces';
@@ -69,6 +71,7 @@ export interface ColumnFeatures extends Record<string, unknown | undefined> {
 
 /**
  * @private utility type
+ *
  */
 export type SignatureFrom<Klass extends BasePlugin<any>> = Klass extends BasePlugin<infer Signature>
   ? Signature
@@ -85,7 +88,7 @@ declare const __Signature__: unique symbol;
  *
  * One instance of a plugin exists per table
  */
-export abstract class BasePlugin<Signature = DefaultPluginSignature> {
+export abstract class BasePlugin<Signature = unknown> implements Plugin<Signature> {
   constructor(protected table: Table) {}
 
   /**
@@ -102,7 +105,7 @@ export abstract class BasePlugin<Signature = DefaultPluginSignature> {
   /**
    * Helper for specifying plugins on `headlessTable` with the plugin-level options
    */
-  static with<T extends BasePlugin>(
+  static with<T extends BasePlugin<any>>(
     this: Constructor<T>,
     configFn: () => OptionsFor<SignatureFrom<T>>
   ): [Constructor<T>, () => OptionsFor<SignatureFrom<T>>] {
@@ -113,7 +116,7 @@ export abstract class BasePlugin<Signature = DefaultPluginSignature> {
    * Helper for specifying column-level configurations for a plugin on `headlessTable`'s
    * columns option
    */
-  static forColumn<T extends BasePlugin>(
+  static forColumn<T extends BasePlugin<any>>(
     this: Constructor<T>,
     configFn: () => ColumnOptionsFor<SignatureFrom<T>>
   ): [Constructor<T>, () => ColumnOptionsFor<SignatureFrom<T>>] {
@@ -123,40 +126,6 @@ export abstract class BasePlugin<Signature = DefaultPluginSignature> {
   abstract name: string;
   static features?: string[];
   static requires?: string[];
-
-  /**
-   * TS does not allow access to the constructor property on class instances
-   */
-  get #self(): Class<this> {
-    return (this as any).constructor;
-  }
-
-  /**
-   * Utility property that returns the resulting options passed during
-   * table creation for this specific plugin.
-   */
-  @cached
-  get options(): OptionsFor<Signature> | undefined {
-    return options.forTable(this.table, this.#self);
-  }
-
-  getColumnOptions = (column: Column): ColumnOptionsFor<this> | undefined => {
-    return options.forColumn(column, this.#self);
-  };
-
-  /**
-   * Utility to get the meta / state for this plugin for a given column
-   */
-  getColumnMeta = (column: Column): ColumnMetaFor<this> => {
-    return meta.forColumn(column, this.#self);
-  };
-
-  /**
-   * Utility to get the meta / state for this plugin for *the table*
-   */
-  getTableMeta = (): TableMetaFor<this> => {
-    return meta.forTable(this.table, this.#self);
-  };
 }
 
 export const preferences = {
@@ -170,7 +139,7 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forColumn<P extends Plugin, Data = unknown>(column: Column<Data>, klass: Class<P>) {
+  forColumn<P extends BasePlugin<any>, Data = unknown>(column: Column<Data>, klass: Class<P>) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -219,7 +188,7 @@ export const preferences = {
    * (though, if other plugins can guess how the underlying plugin access
    * works, they can access this data, too. No security guaranteed)
    */
-  forTable<P extends Plugin, Data = unknown>(table: Table<Data>, klass: Class<P>) {
+  forTable<P extends BasePlugin<any>, Data = unknown>(table: Table<Data>, klass: Class<P>) {
     return {
       /**
        * delete an entry on the underlying `Map` used for this column-plugin pair
@@ -265,7 +234,7 @@ export const meta = {
    *
    * Note that this requires the column instance to exist on the table.
    */
-  forColumn<P extends Plugin, Data = unknown>(
+  forColumn<P extends BasePlugin<any>, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
   ): ColumnMetaFor<SignatureFrom<P>> {
@@ -286,7 +255,7 @@ export const meta = {
    * For a given table and plugin, return the meta / state bucket for the
    * plugin<->table instance pair.
    */
-  forTable<P extends Plugin, Data = unknown>(
+  forTable<P extends BasePlugin<any>, Data = unknown>(
     table: Table<Data>,
     klass: Class<P>
   ): TableMetaFor<SignatureFrom<P>> {
@@ -402,6 +371,11 @@ function availableFeatures(plugins: Plugin[]): string {
   return allFeatures.length > 0 ? allFeatures.join(', ') : '[none]';
 }
 
+type PluginPair<P extends BasePlugin = BasePlugin> = [
+  PluginClass<P>,
+  () => OptionsFor<SignatureFrom<P>>
+];
+
 export const options = {
   /**
    * @public
@@ -409,11 +383,16 @@ export const options = {
    * For a given table and plugin, return the options, if any were given from the user
    * during construction of the table.
    */
-  forTable<P extends BasePlugin, Data = unknown>(
+  forTable<P extends BasePlugin<any>, Data = unknown>(
     table: Table<Data>,
-    klass: Class<P>
-  ): OptionsFor<SignatureFrom<P>> | undefined {
-    let normalized = normalizePluginsConfig(table?.config?.plugins);
+    klass: PluginClass<P>
+  ): EmptyObject | OptionsFor<SignatureFrom<P>> | undefined {
+    /**
+     * This cast is needed because normalizedPluginsConfig loses the
+     * types and the table type doesn't track the config passed to it.
+     * (though, this might be able to happen in the futuer)
+     */
+    let normalized = normalizePluginsConfig(table?.config?.plugins) as unknown as PluginPair<P>[];
     let tuple = normalized?.find((option) => option[0] === klass);
 
     // Plugin not provided, likely
@@ -424,7 +403,7 @@ export const options = {
     return fn();
   },
 
-  forColumn<P extends BasePlugin, Data = unknown>(
+  forColumn<P extends BasePlugin<any>, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
   ): EmptyObject | ColumnOptionsFor<SignatureFrom<P>> | undefined {
