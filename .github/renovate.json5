@@ -30,6 +30,11 @@
       "schedule": ["after 9pm on sunday"]
     },
     {
+      "groupName": "Typedoc",
+      "packagePatterns": ["^typedoc*"],
+      "packageNames": ["typedoc"]
+    },
+    {
       "groupName": "Lint Dependencies",
       "schedule": ["after 9pm on sunday"],
       "packageNames": [
