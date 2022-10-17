@@ -14,15 +14,11 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  output: {
-    ...addon.output(),
-    sourcemap: true,
-    hoistTransitiveImports: false,
-  },
+  output: addon.output(),
   plugins: [
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
-    addon.publicEntrypoints(['**/*.ts']),
+    addon.publicEntrypoints(['**/*.js']),
 
     // This babel config should *not* apply presets or compile away ES modules.
     // It exists only to provide development niceties for you, like automatic
