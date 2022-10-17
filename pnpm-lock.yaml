@@ -42,7 +42,7 @@ importers:
       '@docfy/ember': ^0.5.0
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.8.1
-      '@ember/test-waiters': ^3.0.0
+      '@ember/test-waiters': ^3.0.2
       '@embroider/compat': ^1.9.0
       '@embroider/core': ^1.9.0
       '@embroider/router': ^1.9.0
