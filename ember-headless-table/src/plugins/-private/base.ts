@@ -371,11 +371,6 @@ function availableFeatures(plugins: Plugin[]): string {
   return allFeatures.length > 0 ? allFeatures.join(', ') : '[none]';
 }
 
-type PluginPair<P extends BasePlugin = BasePlugin> = [
-  PluginClass<P>,
-  () => OptionsFor<SignatureFrom<P>>
-];
-
 export const options = {
   /**
    * @public
@@ -383,38 +378,35 @@ export const options = {
    * For a given table and plugin, return the options, if any were given from the user
    * during construction of the table.
    */
-  forTable<P extends BasePlugin<any>, Data = unknown>(
+  forTable<P extends BasePlugin<any>, Data = unknown
+>(
     table: Table<Data>,
-    klass: PluginClass<P>
-  ): Partial<OptionsFor<SignatureFrom<P>>> | undefined {
-    /**
-     * This cast is needed because normalizedPluginsConfig loses the
-     * types and the table type doesn't track the config passed to it.
-     * (though, this might be able to happen in the futuer)
-     */
-    let normalized = normalizePluginsConfig(table?.config?.plugins) as unknown as PluginPair<P>[];
+    klass: Class<P>
+  ): Partial<OptionsFor<SignatureFrom<P>>> {
+    let normalized = normalizePluginsConfig(table?.config?.plugins);
     let tuple = normalized?.find((option) => option[0] === klass);
+    let t = tuple as [Class<P>, () => OptionsFor<SignatureFrom<P>>];
 
     // Plugin not provided, likely
-    if (!tuple) return {};
+    if (!t) return {};
 
-    let fn = tuple[1];
+    let fn = t[1];
 
-    return fn();
+    return fn() ?? {};
   },
 
   forColumn<P extends BasePlugin<any>, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
-  ):  Partial<ColumnOptionsFor<SignatureFrom<P>>> | undefined {
+  ): Partial<ColumnOptionsFor<SignatureFrom<P>>> {
     let tuple = column.config.pluginOptions?.find((option) => option[0] === klass);
-    let t = tuple as [unknown, () => ColumnOptionsFor<P>];
+    let t = tuple as [unknown, () => ColumnOptionsFor<SignatureFrom<P>>];
 
     let fn = t?.[1];
 
-    if (!fn) return;
+    if (!fn) return {};
 
-    return fn();
+    return fn() ?? {};
   },
 };
 

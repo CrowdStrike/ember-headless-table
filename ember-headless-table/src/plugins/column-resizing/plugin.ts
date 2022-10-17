@@ -6,7 +6,7 @@ import { BasePlugin, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
 
-import type { ColumnApi, Plugin } from '[public-plugin-types]';
+import type { ColumnApi } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 export interface ColumnOptions {
@@ -63,7 +63,7 @@ interface Signature {
  * One instance of a plugin exists per table
  * but a plugin can have a "Meta" for each column
  */
-export class ColumnResizing extends BasePlugin<Signature> implements Plugin<Signature> {
+export class ColumnResizing extends BasePlugin<Signature> {
   name = 'column-resizing';
   static features = ['columnWidth'];
 

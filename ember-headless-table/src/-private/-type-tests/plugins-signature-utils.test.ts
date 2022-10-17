@@ -19,11 +19,11 @@ class AColumnMeta {
 class ARowMeta {
   ar = 1;
 }
-class AOptions {
-  ao = 1;
+interface AOptions {
+  ao: number;
 }
-class AColumnOptions {
-  aco = 1;
+interface AColumnOptions {
+  aco: number;
 }
 
 interface FullExtendedSignature extends PluginSignature {
