@@ -73,11 +73,11 @@ export class ColumnResizing extends BasePlugin<Signature> implements Plugin<Sign
   };
 
   headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
-    let meta = this.getColumnMeta(column);
+    let columnMeta = meta.forColumn(column, ColumnResizing);
 
-    element.setAttribute('data-test-is-resizable', `${meta.isResizable}`);
+    element.setAttribute('data-test-is-resizable', `${columnMeta.isResizable}`);
 
-    applyStyles(element, meta.style);
+    applyStyles(element, columnMeta.style);
   };
 
   /**
@@ -91,9 +91,9 @@ export class ColumnResizing extends BasePlugin<Signature> implements Plugin<Sign
   containerModifier = resizeObserver;
 
   reset() {
-    let meta = this.getTableMeta();
+    let tableMeta = meta.forTable(this.table, ColumnResizing);
 
-    meta.reset();
+    tableMeta.reset();
   }
 }
 

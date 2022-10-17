@@ -386,7 +386,7 @@ export const options = {
   forTable<P extends BasePlugin<any>, Data = unknown>(
     table: Table<Data>,
     klass: PluginClass<P>
-  ): EmptyObject | OptionsFor<SignatureFrom<P>> | undefined {
+  ): Partial<OptionsFor<SignatureFrom<P>>> | undefined {
     /**
      * This cast is needed because normalizedPluginsConfig loses the
      * types and the table type doesn't track the config passed to it.
@@ -406,7 +406,7 @@ export const options = {
   forColumn<P extends BasePlugin<any>, Data = unknown>(
     column: Column<Data>,
     klass: Class<P>
-  ): EmptyObject | ColumnOptionsFor<SignatureFrom<P>> | undefined {
+  ):  Partial<ColumnOptionsFor<SignatureFrom<P>>> | undefined {
     let tuple = column.config.pluginOptions?.find((option) => option[0] === klass);
     let t = tuple as [unknown, () => ColumnOptionsFor<P>];
 

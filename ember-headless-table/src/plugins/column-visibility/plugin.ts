@@ -21,40 +21,44 @@ declare module 'ember-headless-table/plugins' {
   }
 }
 
-export interface ColumnOptions {
-  /**
-   * The default visibilty of the column, when rendered.
-   * The column can still be toggled on and off.
-   *
-   * When interacting with preferences, the value stored in preferenced
-   * will be the inverse of this value (to save space in storage).
-   */
-  isVisible?: boolean;
+export interface Signature {
+  Meta: {
+    Table: TableMeta;
+    Column: ColumnMeta;
+  };
+  Options: {
+    Plugin: {
+      enabled?: boolean;
+    };
+    Column: {
+      /**
+       * The default visibilty of the column, when rendered.
+       * The column can still be toggled on and off.
+       *
+       * When interacting with preferences, the value stored in preferenced
+       * will be the inverse of this value (to save space in storage).
+       */
+      isVisible?: boolean;
+    };
+  };
 }
 
-export interface TableOptions {
-  enabled?: boolean;
-}
-
-export class ColumnVisibility
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+export class ColumnVisibility extends BasePlugin<Signature> implements Plugin<Signature> {
   name = 'column-visibility';
   static features = ['columnVisibility'];
 
   meta = {
     column: ColumnMeta,
     table: TableMeta,
-  } as const;
+  };
 
   reset() {
     /**
      * Global preference, not scoped to plugin
      */
     for (let column of this.table.columns) {
-      let defaultValue = this.getColumnOptions(column)?.isVisible;
-      let current = this.getColumnMeta(column).isVisible;
+      let defaultValue = options.forColumn(column, ColumnVisibility)?.isVisible;
+      let current = meta.forColumn(column, ColumnVisibility).isVisible;
 
       if (defaultValue !== current) {
         preferences.forColumn(column, ColumnVisibility).delete('isVisible');
