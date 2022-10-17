@@ -1,7 +1,8 @@
 import { expectTypeOf } from 'expect-type';
-import { BasePlugin } from 'plugins/-private/base';
 
-import type { SignatureFrom } from 'plugins/-private/base';
+import { BasePlugin } from '../../plugins';
+
+import type { SignatureFrom } from '../../plugins/-private/base';
 
 class ATableMeta {
   a = 1;

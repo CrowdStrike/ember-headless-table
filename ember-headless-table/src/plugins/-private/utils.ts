@@ -2,15 +2,18 @@ import { assert } from '@ember/debug';
 
 import type { BasePlugin } from './base';
 import type { Constructor } from '[private-types]';
+import type { Plugin } from '[public-plugin-types]';
 
-export type PluginOption = [Constructor<BasePlugin>, () => unknown];
+type PluginOption = Constructor<Plugin<any>> | [Constructor<Plugin<any>>, () => any];
 
-export type Plugins = (Constructor<BasePlugin> | [Constructor<BasePlugin>, () => unknown])[];
+type ExpandedPluginOption = [Constructor<Plugin<any>>, () => any];
 
-export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
+export type Plugins = PluginOption[];
+
+export function normalizePluginsConfig(plugins?: Plugins): ExpandedPluginOption[] {
   if (!plugins) return [];
 
-  let result: PluginOption[] = [];
+  let result: ExpandedPluginOption[] = [];
 
   for (let plugin of plugins) {
     if (!Array.isArray(plugin)) {
@@ -39,7 +42,7 @@ export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
 /**
  * Creates a map of featureName => [plugins providing said feature name]
  */
-function collectFeatures(plugins: PluginOption[]) {
+function collectFeatures(plugins: ExpandedPluginOption[]) {
   let result: Record<string, { name: string }[]> = {};
 
   for (let [plugin] of plugins) {
@@ -56,7 +59,7 @@ function collectFeatures(plugins: PluginOption[]) {
 /**
  * Creates a map of requirement => [plugins requesting the feature / requirement]
  */
-function collectRequirements(plugins: PluginOption[]) {
+function collectRequirements(plugins: ExpandedPluginOption[]) {
   let result: Record<string, { name: string }[]> = {};
 
   for (let [plugin] of plugins) {
@@ -70,7 +73,7 @@ function collectRequirements(plugins: PluginOption[]) {
   return result;
 }
 
-export function verifyPlugins(plugins: PluginOption[]) {
+export function verifyPlugins(plugins: ExpandedPluginOption[]) {
   let features = collectFeatures(plugins);
   let requirements = collectRequirements(plugins);
   let allFeatures = Object.keys(features);

@@ -14,8 +14,8 @@ import { TablePreferences } from './preferences';
 import { Row } from './row';
 import { composeFunctionModifiers } from './utils';
 
-import type { Plugin } from '../plugins';
-import type { Class } from '[private-types]';
+import type { BasePlugin, Plugin } from '../plugins';
+import type { Class, Constructor } from '[private-types]';
 import type { Destructor, TableConfig } from '#interfaces';
 
 const DEFAULT_COLUMN_CONFIG = {
@@ -178,8 +178,14 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
   /**
    * Get the active plugin instance for the given plugin class
    */
-  pluginOf(klass: Class<Plugin>) {
-    return this.plugins.find((plugin) => plugin instanceof klass);
+  pluginOf<Instance extends BasePlugin>(klass: Class<Instance>): Instance | undefined {
+    let result = this.plugins.find((plugin) => plugin instanceof klass);
+
+    /**
+     * This is an unsafe cast, because Instance could be unrelated to any of the types
+     * that matches Plugin[]
+     */
+    return result as unknown as Instance | undefined;
   }
 
   /**

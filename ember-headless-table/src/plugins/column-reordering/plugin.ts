@@ -8,7 +8,7 @@ import { preferences } from '[public-plugin-types]';
 
 import { BasePlugin, meta } from '../-private/base';
 
-import type { Plugin, PluginPreferences } from '[public-plugin-types]';
+import type { PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 interface ColumnReorderingPreferences extends PluginPreferences {
@@ -30,7 +30,7 @@ export interface Signature {
   };
 }
 
-export class ColumnReordering extends BasePlugin<Signature> implements Plugin<Signature> {
+export class ColumnReordering extends BasePlugin<Signature> {
   name = 'column-reordering';
   static features = ['columnOrder'];
   static requires = ['columnVisibility'];

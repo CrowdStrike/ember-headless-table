@@ -11,10 +11,11 @@ import type {
   ColumnOptionsFor,
   OptionsFor,
   Plugin,
+  RowMetaFor,
   TableMetaFor,
 } from '#interfaces';
-import type { ColumnReordering } from 'plugins/column-reordering';
-import type { ColumnVisibility } from 'plugins/column-visibility';
+import { ColumnVisibility } from '../column-visibility';
+import { ColumnReordering } from '../column-reordering';
 
 const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
@@ -116,6 +117,12 @@ export abstract class BasePlugin<Signature = unknown> implements Plugin<Signatur
   ): [Constructor<T>, () => ColumnOptionsFor<SignatureFrom<T>>] {
     return [this, configFn];
   }
+
+  declare meta?: {
+    column?: Constructor<ColumnMetaFor<Signature>>;
+    table?: Constructor<TableMetaFor<Signature>>;
+    row?: Constructor<RowMetaFor<Signature>>;
+  };
 
   abstract name: string;
   static features?: string[];
