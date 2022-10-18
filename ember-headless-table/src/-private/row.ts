@@ -19,20 +19,12 @@ export class Row<DataType = Record<string, unknown>> {
     return this.index % 2 !== 0;
   }
 
-  get isSelected() {
-    return this.table.rowSelection.has(this.data);
-  }
-
   get next(): Row<DataType> | undefined {
     return this.table.rows[this.index + 1];
   }
 
   get prev(): Row<DataType> | undefined {
     return this.table.rows[this.index - 1];
-  }
-
-  get isSelectable() {
-    return this.table.isRowSelectable;
   }
 
   constructor(table: Table<DataType>, data: DataType) {
@@ -66,7 +58,5 @@ export class Row<DataType = Record<string, unknown>> {
     if (inputParent) {
       return;
     }
-
-    this.isSelected ? this.table.unselectRow(this) : this.table.selectRow(this);
   }
 }
