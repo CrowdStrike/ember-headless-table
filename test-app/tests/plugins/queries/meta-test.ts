@@ -230,13 +230,23 @@ module('Plugins | Queries | meta', function (hooks) {
   });
 
   module('withFeature', function () {
-    class FeatureProvidingPlugin extends BasePlugin {
+    class FeatureProvidingPlugin extends BasePlugin<{
+      Meta: {
+        Table: TestTableMeta;
+        Column: TestColumnMeta;
+      };
+    }> {
       static features = ['feature-a'];
       name = 'queries-feature-a-test-plugin';
       meta = { column: TestColumnMeta, table: TestTableMeta };
     }
 
-    class FeatureProvidingPlugin2 extends BasePlugin {
+    class FeatureProvidingPlugin2 extends BasePlugin<{
+      Meta: {
+        Table: TestTableMeta;
+        Column: TestColumnMeta;
+      };
+    }> {
       static features = ['feature-b'];
       name = 'queries-feature-b-test-plugin';
       meta = { column: TestColumnMeta, table: TestTableMeta };

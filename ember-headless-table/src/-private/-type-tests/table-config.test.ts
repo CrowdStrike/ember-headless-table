@@ -2,12 +2,13 @@ import { expectTypeOf } from 'expect-type';
 
 import { BasePlugin } from '../../plugins/-private/base';
 import { ColumnReordering } from '../../plugins/column-reordering';
-import { Plugins } from '../../plugins/-private/utils';
-import { DataSorting, SortItem } from '../../plugins/data-sorting';
 import { ColumnResizing } from '../../plugins/column-resizing';
 import { ColumnVisibility } from '../../plugins/column-visibility';
+import { DataSorting } from '../../plugins/data-sorting';
 import { StickyColumns } from '../../plugins/sticky-columns';
 
+import type { Plugins } from '../../plugins/-private/utils';
+import type { SortItem } from '../../plugins/data-sorting';
 import type { Plugin } from '[public-plugin-types]';
 import type { TableConfig } from '[public-types]';
 import type { Constructor } from '#private-types';
@@ -26,8 +27,10 @@ expectTypeOf<
   [Constructor<BasePlugin>, Constructor<BasePlugin>]
 >().toMatchTypeOf<TablePluginConfig>();
 
-class SomeClass { foo = 'bar' }
-class LocalPlugin extends BasePlugin<{ Meta: { Table: SomeClass} }> {
+class SomeClass {
+  foo = 'bar';
+}
+class LocalPlugin extends BasePlugin<{ Meta: { Table: SomeClass } }> {
   name = 'local-plugin';
 }
 
@@ -51,8 +54,10 @@ expectTypeOf([StickyColumns]).toMatchTypeOf<TablePluginConfig>();
 // The various ways to define plugins
 expectTypeOf([DataSorting, ColumnReordering]).toMatchTypeOf<TablePluginConfig>();
 
-const onSort = (_sorts: SortItem<number>[]) => {};
+const onSort = (_sorts: SortItem<number>[]) => {
+  /* intentionally empty */
+};
 const sorts: SortItem<number>[] = [];
-expectTypeOf([DataSorting.with(() => ({ }))]).toMatchTypeOf<TablePluginConfig>();
-expectTypeOf([DataSorting.with(() => ({ onSort, sorts }))]).toMatchTypeOf<TablePluginConfig>();
 
+expectTypeOf([DataSorting.with(() => ({}))]).toMatchTypeOf<TablePluginConfig>();
+expectTypeOf([DataSorting.with(() => ({ onSort, sorts }))]).toMatchTypeOf<TablePluginConfig>();

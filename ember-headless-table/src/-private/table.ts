@@ -178,7 +178,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
   /**
    * Get the active plugin instance for the given plugin class
    */
-  pluginOf<Instance extends BasePlugin>(klass: Class<Instance>): Instance | undefined {
+  pluginOf<Instance extends BasePlugin<any>>(klass: Class<Instance>): Instance | undefined {
     let result = this.plugins.find((plugin) => plugin instanceof klass);
 
     /**
