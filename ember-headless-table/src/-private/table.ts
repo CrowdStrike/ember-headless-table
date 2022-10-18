@@ -15,7 +15,7 @@ import { Row } from './row';
 import { composeFunctionModifiers } from './utils';
 
 import type { BasePlugin, Plugin } from '../plugins';
-import type { Class, Constructor } from '[private-types]';
+import type { Class } from '[private-types]';
 import type { Destructor, TableConfig } from '#interfaces';
 
 const DEFAULT_COLUMN_CONFIG = {

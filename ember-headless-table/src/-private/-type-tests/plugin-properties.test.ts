@@ -1,7 +1,8 @@
 import { expectTypeOf } from 'expect-type';
 
-import type { Table } from '[public-types]';
 import { BasePlugin } from '../../plugins';
+
+import type { Table } from '[public-types]';
 
 class TableMeta {
   a = 'a';

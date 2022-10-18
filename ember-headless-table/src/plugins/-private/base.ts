@@ -4,6 +4,8 @@ import { TABLE_KEY } from '../../-private/table';
 import { normalizePluginsConfig } from './utils';
 
 import type { Table } from '../../-private/table';
+import type { ColumnReordering } from '../column-reordering';
+import type { ColumnVisibility } from '../column-visibility';
 import type { Class, Constructor } from '[private-types]';
 import type { Column } from '[public-types]';
 import type {
@@ -14,8 +16,6 @@ import type {
   RowMetaFor,
   TableMetaFor,
 } from '#interfaces';
-import { ColumnVisibility } from '../column-visibility';
-import { ColumnReordering } from '../column-reordering';
 
 const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
