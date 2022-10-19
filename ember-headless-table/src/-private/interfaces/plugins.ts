@@ -53,7 +53,7 @@ export interface RowApi<T extends Table = Table> {
  * and the source of types need to exist somewhere other than BasePlugin,
  * so that:
  * - inference will work
- *   - we avoid infinite recursive type definitions
+ * - we avoid infinite recursive type definitions
  */
 export type SignatureFrom<Klass extends Plugin<any>> = Klass extends Plugin<infer Signature>
   ? Signature
