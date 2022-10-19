@@ -73,7 +73,7 @@ export type SignatureFrom<Klass extends Plugin<any>> = Klass extends Plugin<infe
  * A plugin can provide components that the consuming Table can opt in to rendering.
  * (though, often these components will be required to be rendered for the plugin to work)
  *
- * a `Plugin` has one type arguments:
+ * a `Plugin` has one type argument:
  * - Signature - which can provide optional information about the Meta/State and Options the plugin can take
  *
  *   Any particular plugin instantiation will have at most 1 instance of their TableMeta
