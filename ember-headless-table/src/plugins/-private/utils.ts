@@ -2,22 +2,18 @@ import { assert } from '@ember/debug';
 
 import type { BasePlugin } from './base';
 import type { Constructor } from '[private-types]';
-import type { Plugin } from '#interfaces';
+import type { Plugin } from '[public-plugin-types]';
 
-export type PluginOption<P = Plugin> = P extends BasePlugin<any, any, infer Options, any>
-  ? readonly [Constructor<P>, () => Options]
-  : readonly [P | Constructor<P>, () => unknown];
+type PluginOption = Constructor<Plugin<any>> | [Constructor<Plugin<any>>, () => any];
 
-type WithTableOptions<P = BasePlugin> = P extends BasePlugin<any, any, infer Options, any>
-  ? [Constructor<P>, () => Options]
-  : never;
+type ExpandedPluginOption = [Constructor<Plugin<any>>, () => any];
 
-export type Plugins = (Plugin | BasePlugin | Constructor<Plugin | BasePlugin> | WithTableOptions)[];
+export type Plugins = PluginOption[];
 
-export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
+export function normalizePluginsConfig(plugins?: Plugins): ExpandedPluginOption[] {
   if (!plugins) return [];
 
-  let result: PluginOption[] = [];
+  let result: ExpandedPluginOption[] = [];
 
   for (let plugin of plugins) {
     if (!Array.isArray(plugin)) {
@@ -46,12 +42,12 @@ export function normalizePluginsConfig(plugins?: Plugins): PluginOption[] {
 /**
  * Creates a map of featureName => [plugins providing said feature name]
  */
-function collectFeatures(plugins: PluginOption[]) {
+function collectFeatures(plugins: ExpandedPluginOption[]) {
   let result: Record<string, { name: string }[]> = {};
 
   for (let [plugin] of plugins) {
     if ('features' in plugin) {
-      for (let feature of plugin.features || []) {
+      for (let feature of (plugin as unknown as typeof BasePlugin).features || []) {
         result[feature] = [...(result[feature] || []), plugin];
       }
     }
@@ -63,12 +59,12 @@ function collectFeatures(plugins: PluginOption[]) {
 /**
  * Creates a map of requirement => [plugins requesting the feature / requirement]
  */
-function collectRequirements(plugins: PluginOption[]) {
+function collectRequirements(plugins: ExpandedPluginOption[]) {
   let result: Record<string, { name: string }[]> = {};
 
   for (let [plugin] of plugins) {
     if ('requires' in plugin) {
-      for (let requirement of plugin.requires || []) {
+      for (let requirement of (plugin as unknown as typeof BasePlugin).requires || []) {
         result[requirement] = [...(result[requirement] || []), plugin];
       }
     }
@@ -77,7 +73,7 @@ function collectRequirements(plugins: PluginOption[]) {
   return result;
 }
 
-export function verifyPlugins(plugins: PluginOption[]) {
+export function verifyPlugins(plugins: ExpandedPluginOption[]) {
   let features = collectFeatures(plugins);
   let requirements = collectRequirements(plugins);
   let allFeatures = Object.keys(features);

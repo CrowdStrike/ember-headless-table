@@ -8,11 +8,8 @@ import { preferences } from '[public-plugin-types]';
 
 import { BasePlugin, meta } from '../-private/base';
 
-import type { Plugin, PluginPreferences } from '[public-plugin-types]';
+import type { PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
-
-export interface ColumnOptions {}
-export interface TableOptions {}
 
 interface ColumnReorderingPreferences extends PluginPreferences {
   table: {
@@ -26,10 +23,14 @@ declare module 'ember-headless-table/plugins' {
   }
 }
 
-export class ColumnReordering
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+export interface Signature {
+  Meta: {
+    Column: ColumnMeta;
+    Table: TableMeta;
+  };
+}
+
+export class ColumnReordering extends BasePlugin<Signature> {
   name = 'column-reordering';
   static features = ['columnOrder'];
   static requires = ['columnVisibility'];
@@ -40,9 +41,9 @@ export class ColumnReordering
   } as const;
 
   reset() {
-    let meta = this.getTableMeta();
+    let tableMeta = meta.forTable(this.table, ColumnReordering);
 
-    meta.reset();
+    tableMeta.reset();
   }
 }
 

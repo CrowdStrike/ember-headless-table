@@ -6,7 +6,7 @@ import { BasePlugin, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
 
-import type { ColumnApi, Plugin } from '[public-plugin-types]';
+import type { ColumnApi } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
 
 export interface ColumnOptions {
@@ -48,14 +48,22 @@ export interface TableOptions {
   handlePosition?: string;
 }
 
+interface Signature {
+  Meta: {
+    Column: ColumnMeta;
+    Table: TableMeta;
+  };
+  Options: {
+    Plugin: TableOptions;
+    Column: ColumnOptions;
+  };
+}
+
 /**
  * One instance of a plugin exists per table
  * but a plugin can have a "Meta" for each column
  */
-export class ColumnResizing
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+export class ColumnResizing extends BasePlugin<Signature> {
   name = 'column-resizing';
   static features = ['columnWidth'];
 
@@ -65,11 +73,11 @@ export class ColumnResizing
   };
 
   headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
-    let meta = this.getColumnMeta(column);
+    let columnMeta = meta.forColumn(column, ColumnResizing);
 
-    element.setAttribute('data-test-is-resizable', `${meta.isResizable}`);
+    element.setAttribute('data-test-is-resizable', `${columnMeta.isResizable}`);
 
-    applyStyles(element, meta.style);
+    applyStyles(element, columnMeta.style);
   };
 
   /**
@@ -83,9 +91,9 @@ export class ColumnResizing
   containerModifier = resizeObserver;
 
   reset() {
-    let meta = this.getTableMeta();
+    let tableMeta = meta.forTable(this.table, ColumnResizing);
 
-    meta.reset();
+    tableMeta.reset();
   }
 }
 

@@ -4,7 +4,7 @@ import { assert } from '@ember/debug';
 import { BasePlugin, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 
-import type { ColumnApi, Plugin } from '[public-plugin-types]';
+import type { ColumnApi } from '[public-plugin-types]';
 import type { Column } from '[public-types]';
 
 interface ColumnOptions {
@@ -17,12 +17,17 @@ interface ColumnOptions {
   sticky?: boolean | string;
 }
 
-interface TableOptions {}
+export interface Signature {
+  Options: {
+    Column: ColumnOptions;
+  };
+  Meta: {
+    Table: TableMeta;
+    Column: ColumnMeta;
+  };
+}
 
-export class StickyColumns
-  extends BasePlugin<ColumnMeta, TableMeta, TableOptions, ColumnOptions>
-  implements Plugin<ColumnMeta, TableMeta>
-{
+export class StickyColumns extends BasePlugin<Signature> {
   name = 'sticky-columns';
 
   /**
@@ -40,10 +45,10 @@ export class StickyColumns
   };
 
   headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
-    let meta = this.getColumnMeta(column);
+    let columnMeta = meta.forColumn(column, StickyColumns);
 
-    if (meta.isSticky) {
-      applyStyles(element, meta.style);
+    if (columnMeta.isSticky) {
+      applyStyles(element, columnMeta.style);
     } else {
       if (element.style.getPropertyValue('position') === 'sticky') {
         element.style.removeProperty('position');

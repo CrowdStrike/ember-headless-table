@@ -6,8 +6,7 @@ import { headlessTable } from 'ember-headless-table';
 import { BasePlugin, meta } from 'ember-headless-table/plugins';
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
 
-import type { ColumnConfig } from 'ember-headless-table';
-import type { Plugin } from 'ember-headless-table/plugins';
+import type { ColumnConfig, TableConfig } from 'ember-headless-table';
 
 module('Plugins | Queries | meta', function (hooks) {
   setupTest(hooks);
@@ -34,7 +33,7 @@ module('Plugins | Queries | meta', function (hooks) {
     name = 'queries-no-meta-test-plugin';
   }
 
-  class TestPlugin extends BasePlugin {
+  class TestPlugin extends BasePlugin<{ Meta: { Column: TestColumnMeta; Table: TestTableMeta } }> {
     name = 'queries-meta-test-plugin';
     meta = {
       column: TestColumnMeta,
@@ -62,7 +61,7 @@ module('Plugins | Queries | meta', function (hooks) {
     }: {
       columns?: ColumnConfig[];
       data?: unknown[];
-      extraPlugins?: Plugin[];
+      extraPlugins?: TableConfig<unknown>['plugins'];
     }
   ) {
     return headlessTable(ctx, {
@@ -231,13 +230,23 @@ module('Plugins | Queries | meta', function (hooks) {
   });
 
   module('withFeature', function () {
-    class FeatureProvidingPlugin extends BasePlugin {
+    class FeatureProvidingPlugin extends BasePlugin<{
+      Meta: {
+        Table: TestTableMeta;
+        Column: TestColumnMeta;
+      };
+    }> {
       static features = ['feature-a'];
       name = 'queries-feature-a-test-plugin';
       meta = { column: TestColumnMeta, table: TestTableMeta };
     }
 
-    class FeatureProvidingPlugin2 extends BasePlugin {
+    class FeatureProvidingPlugin2 extends BasePlugin<{
+      Meta: {
+        Table: TestTableMeta;
+        Column: TestColumnMeta;
+      };
+    }> {
       static features = ['feature-b'];
       name = 'queries-feature-b-test-plugin';
       meta = { column: TestColumnMeta, table: TestTableMeta };

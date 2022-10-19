@@ -3,7 +3,10 @@
   "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
     // Path resolution
-    "baseUrl": "./src",
+    // NOTE: by not specifying a base-url, we opt out of
+    //       TS auto-suggesting/importing too many paths.
+    //       (which end up being invalid anyway)
+    //       This way, we have reduced 'paths' variants
     "moduleResolution": "node",
 
     // This addon does not allow JavaScript
@@ -13,17 +16,17 @@
     "strict": true,
     "paths": {
       // Shorthand for private stuff
-      "#*": ["./-private/*"],
+      "#*": ["./src/-private/*"],
 
-      "ember-headless-table/plugins": ["./plugins/"],
+      "ember-headless-table/plugins": ["./src/plugins/"],
 
       // Shorthand for type-imports only, but to denote public API
       // Type-imports are removed at build-time, so importing values from this
       // import *will* error during build because rollup is not setup to re-write these.
       // (maybe on purpose?)
-      "[public-types]": ["./"],
-      "[public-plugin-types]": ["./plugins/"],
-      "[private-types]": ["./-private/private-types.ts"]
+      "[public-types]": ["./src/"],
+      "[public-plugin-types]": ["./src/plugins/"],
+      "[private-types]": ["./src/-private/private-types.ts"]
     }
   },
   "include": [

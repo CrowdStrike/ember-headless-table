@@ -20,12 +20,15 @@ declare module 'ember-headless-table/plugins' {
   }
 }
 
-/**
- * Utility to disambiguate ColumnMeta and TableMeta
- */
-interface Meta {
-  column: ColumnMeta;
-  table: TableMeta;
+export interface Signature<DataType = unknown> {
+  Meta: {
+    Column: ColumnMeta;
+    Table: TableMeta;
+  };
+  Options: {
+    Plugin: Options<DataType>;
+    Column: ColumnOptions;
+  };
 }
 
 interface Options<DataType = unknown> {
@@ -73,7 +76,7 @@ interface ColumnOptions {
  *
  * This plugin is for *conveying* what the current sorts are, rather than _doing_ the sorting.
  */
-export class Sorting extends BasePlugin<Meta['column'], Meta['table'], Options, ColumnOptions> {
+export class Sorting<DataType = unknown> extends BasePlugin<Signature<DataType>> {
   name = 'data-sorting';
 
   meta = {
@@ -82,10 +85,10 @@ export class Sorting extends BasePlugin<Meta['column'], Meta['table'], Options, 
   };
 
   headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
-    let meta = this.getColumnMeta(column);
+    let columnMeta = meta.forColumn(column, Sorting);
 
-    element.setAttribute('data-test-is-sortable', `${meta.isSortable}`);
-    element.setAttribute('aria-sort', `${meta.sortDirection}`);
+    element.setAttribute('data-test-is-sortable', `${columnMeta.isSortable}`);
+    element.setAttribute('aria-sort', `${columnMeta.sortDirection}`);
   };
 }
 
