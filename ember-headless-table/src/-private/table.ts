@@ -184,6 +184,11 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     /**
      * This is an unsafe cast, because Instance could be unrelated to any of the types
      * that matches Plugin[]
+     *
+     * For example, `table.pluginOf(MyCustomPlugin)`, where MyCustomPlugin isn't in the
+     * `plugins` list. This partially a problem with how Array.prototype.find doesn't
+     * effectively narrow for what we want (combined with TS being clunky around
+     * comparing Instance and Class types).
      */
     return result as unknown as Instance | undefined;
   }
