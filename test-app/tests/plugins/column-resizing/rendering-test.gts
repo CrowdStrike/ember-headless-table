@@ -272,7 +272,7 @@ module('Plugins | resizing', function (hooks) {
       table = headlessTable(this, {
         columns: () => this.columns,
         data: () => [] as unknown[],
-        plugins: [ColumnResizing, ColumnReordering, ColumnVisibility],
+        plugins: [ColumnResizing],
       });
     }
 

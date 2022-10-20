@@ -227,6 +227,197 @@ export const preferences = {
   },
 };
 
+/**
+ * if a `requester` is not provided,
+ * Get the columns for the table, considering any and all plugins that could modify columns.
+ *
+ * If you are an end-consumer of ember-headless-table, this is the function to use.
+ * If you are a plugin-author, you'll want to pass your plugin class as the second parameter.
+ *
+ * For a given plugin, `requester`, determine what columns should be returned.
+ * Since multiple plugins could be used in a table, there is an implicit hierarchy of
+ * column modifications that can occur from each of those plugins.
+ *
+ * If a plugin defines other plugins as either *requirements* or *optional requirements*,
+ * and that upstream plugin defines a `columns` property, then those columns will be returned here.
+ *
+ * This works recursively up the plugin tree up until a plugin has no requirements, and then
+ * all colums from the table are returned.
+ */
+function columnsFor<DataType = any>(
+  table: Table<DataType>,
+  requester?: Plugin<any> | undefined
+): Column<DataType>[] {
+  assert(`First argument passed to columns.for must be an instance of Table`, table[TABLE_KEY]);
+
+  let visibility = findPlugin(table.plugins, 'columnVisibility');
+  let reordering = findPlugin(table.plugins, 'columnOrder');
+
+  // TODO: actually resolve the graph, rather than use the hardcoded feature names
+  //       atm, this only "happens" to work based on expectations of
+  //       of the currently implemented plugins' capabilities and implied hierarchy.
+
+  if (requester) {
+    assert(
+      `[${requester.name}] requested columns from the table, but the plugin, ${requester.name}, ` +
+        `is not used in this table`,
+      table.plugins.some((plugin) => plugin instanceof (requester as Class<Plugin>))
+    );
+
+    if (visibility && visibility.constructor === requester) {
+      return table.columns.values();
+    }
+
+    if (reordering && reordering.constructor === requester) {
+      if (visibility) {
+        assert(
+          `<#${visibility.name}> defined a 'columns' property, but did not return valid data.`,
+          visibility.columns && Array.isArray(visibility.columns)
+        );
+
+        return visibility.columns;
+      }
+
+      return table.columns.values();
+    }
+
+    if (reordering) {
+      assert(
+        `<#${reordering.name}> defined a 'columns' property, but did not return valid data.`,
+        reordering.columns && Array.isArray(reordering.columns)
+      );
+
+      return reordering.columns;
+    }
+
+    if (visibility) {
+      assert(
+        `<#${visibility.name}> defined a 'columns' property, but did not return valid data.`,
+        visibility.columns && Array.isArray(visibility.columns)
+      );
+
+      return visibility.columns;
+    }
+
+    return table.columns.values();
+  }
+
+  /**
+   * This flow is the inverse of when we have a requester
+   */
+
+  if (reordering) {
+    assert(
+      `<#${reordering.name}> defined a 'columns' property, but did not return valid data.`,
+      reordering.columns && Array.isArray(reordering.columns)
+    );
+
+    return reordering.columns;
+  }
+
+  if (visibility) {
+    assert(
+      `<#${visibility.name}> defined a 'columns' property, but did not return valid data.`,
+      visibility.columns && Array.isArray(visibility.columns)
+    );
+
+    return visibility.columns;
+  }
+
+  return table.columns.values();
+}
+
+export const columns = {
+  for: columnsFor,
+
+  /**
+   * for a given current or reference column, return the column that
+   * is immediately next, or to the right of that column.
+   *
+   * If a plugin class is provided, the hierarchy of column list modifiecations
+   * will be respected.
+   */
+  next: <Data = unknown>(
+    current: Column<Data>,
+    requester?: Plugin<any>
+  ): Column<Data> | undefined => {
+    let columns = requester ? columnsFor(current.table, requester) : columnsFor(current.table);
+
+    let referenceIndex = columns.indexOf(current);
+
+    assert(
+      `index of reference column must be >= 0. column likely not a part of the table`,
+      referenceIndex >= 0
+    );
+
+    /**
+     * There can be nothing after the last column
+     */
+    if (referenceIndex >= columns.length - 1) {
+      return undefined;
+    }
+
+    return columns[referenceIndex + 1];
+  },
+
+  /**
+   * for a given current or reference column, return the column that
+   * is immediately previous, or to the left of that column.
+   *
+   * If a plugin class is provided, the hierarchy of column list modifiecations
+   * will be respected.
+   */
+  previous: <Data = unknown>(
+    current: Column<Data>,
+    requester?: Plugin<any>
+  ): Column<Data> | undefined => {
+    let columns = requester ? columnsFor(current.table, requester) : columnsFor(current.table);
+    let referenceIndex = columns.indexOf(current);
+
+    assert(
+      `index of reference column must be >= 0. column likely not a part of the table`,
+      referenceIndex >= 0
+    );
+
+    /**
+     * There can be nothing before the first column
+     */
+    if (referenceIndex === 0) {
+      return undefined;
+    }
+
+    return columns[referenceIndex - 1];
+  },
+  /**
+   * for a given current or reference column, return the columns that
+   * should appear before, or to the left of that column.
+   *
+   * if a plugin class is provided, the hierarchy of column list modifications
+   * will be respected.
+   */
+  before: <Data = unknown>(current: Column<Data>, requester?: Plugin<any>): Column<Data>[] => {
+    let columns = requester ? columnsFor(current.table, requester) : columnsFor(current.table);
+
+    let referenceIndex = columns.indexOf(current);
+
+    return columns.slice(0, referenceIndex);
+  },
+  /**
+   * for a given current or reference column, return the columns that
+   * should appear after, or to the right of that column.
+   *
+   * if a plugin class is provided, the hierarchy of column list modifications
+   * will be respected.
+   */
+  after: <Data = unknown>(current: Column<Data>, requester?: Plugin<any>): Column<Data>[] => {
+    let columns = requester ? columnsFor(current.table, requester) : columnsFor(current.table);
+
+    let referenceIndex = columns.indexOf(current);
+
+    return columns.slice(referenceIndex + 1);
+  },
+};
+
 export const meta = {
   /**
    * @public

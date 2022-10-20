@@ -1,5 +1,4 @@
 import { cached } from '@glimmer/tracking';
-import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
 import { BasePlugin, meta, options, preferences } from '../-private/base';
@@ -64,6 +63,10 @@ export class ColumnVisibility extends BasePlugin<Signature> implements Plugin<Si
         preferences.forColumn(column, ColumnVisibility).delete('isVisible');
       }
     }
+  }
+
+  get columns() {
+    return meta.forTable(this.table, ColumnVisibility).visibleColumns;
   }
 }
 
@@ -149,64 +152,5 @@ export class TableMeta<Data = unknown> {
     let columnMeta = meta.forColumn(column, ColumnVisibility);
 
     columnMeta.toggle();
-
-    // TODO: REMOVE
-    // TODO: remember to reset column widths in toucan-data-table
-  }
-
-  @action
-  previousColumn(referenceColumn: Column<Data>) {
-    let visible = this.visibleColumns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    assert(
-      `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0
-    );
-
-    /**
-     * There can be nothing before the first column
-     */
-    if (referenceIndex === 0) {
-      return null;
-    }
-
-    return visible[referenceIndex - 1];
-  }
-
-  @action
-  nextColumn(referenceColumn: Column<Data>) {
-    let visible = this.visibleColumns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    assert(
-      `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0
-    );
-
-    /**
-     * There can be nothing after the last column
-     */
-    if (referenceIndex > visible.length - 1) {
-      return null;
-    }
-
-    return visible[referenceIndex + 1];
-  }
-
-  @action
-  columnsAfter(referenceColumn: Column<Data>) {
-    let visible = this.visibleColumns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    return visible.slice(referenceIndex + 1);
-  }
-
-  @action
-  columnsBefore(referenceColumn: Column<Data>) {
-    let visible = this.visibleColumns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    return visible.slice(0, referenceIndex);
   }
 }
