@@ -70,6 +70,18 @@ export class RowSelection<DataType, Key = DataType> extends BasePlugin<Signature
     table: TableMeta,
   };
 
+  constructor(table: Table) {
+    super(table);
+
+    let pluginOptions = options.forTable(this.table, RowSelection);
+
+    assert(
+      `selection, onSelect, and onDeselect are all required arguments for the RowSelection plugin. ` +
+        `Specify these options via \`RowSelection.with(() => ({ selection, onSelect, onDeselect }))\``,
+      pluginOptions.selection && pluginOptions.onSelect && pluginOptions.onDeselect
+    );
+  }
+
   rowModifier = (element: HTMLElement, { row }: RowApi<Table<any>>) => {
     let handler = (event: Event) => {
       this.#clickHandler(row, event);
