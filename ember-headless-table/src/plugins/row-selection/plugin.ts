@@ -38,19 +38,19 @@ export interface Signature<DataType = any, Key = DataType> extends PluginSignatu
            * When a row is clicked (and the row is selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onDeselect: (item: DataType, row: Row<DataType>) => void;
+          onDeselect: (item: Key, row: Row<DataType>) => void;
         }
       | {
           /**
            * When a row is clicked (and the row is not selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onSelect: (item: DataType, row: Row<DataType>) => void;
+          onSelect: (item: DataType | any, row: Row<DataType>) => void;
           /**
            * When a row is clicked (and the row is selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onDeselect: (item: DataType, row: Row<DataType>) => void;
+          onDeselect: (item: DataType | any, row: Row<DataType>) => void;
         }
     );
   };
@@ -62,7 +62,9 @@ export interface Signature<DataType = any, Key = DataType> extends PluginSignatu
  * The state of what is actually selected is managed by you, but this plugin
  * will wire up the click listeners as well as let you know which *data* is clicked.
  */
-export class RowSelection<DataType = any, Key = DataType> extends BasePlugin<Signature<DataType, Key>> {
+export class RowSelection<DataType = any, Key = DataType> extends BasePlugin<
+  Signature<DataType, Key>
+> {
   name = 'row-selection';
 
   meta = {
