@@ -1,8 +1,3 @@
-This demonstrates how to use the RowSelection plugin to enable multiple row selection.
-If single-row selection is desired, that can be handled in userspace, by managing the selection data differently (see the "[single-row-selection](/docs/demos/single-row-selection)" demo).
-
-To select a row, click it. To deselect a row, click it again.
-
 ```hbs template
 <div class="h-full overflow-auto" {{this.table.modifiers.container}}>
   <table>
@@ -62,8 +57,11 @@ export default class extends Component {
       RowSelection.with(() => {
         return {
           selection: this.selection,
-          onSelect: (data) => this.selection.add(data),
-          onDeselect: (data) => this.selection.delete(data),
+          onSelect: (data) => {
+            this.selection.clear();
+            this.selection.add(data);
+          },
+          onDeselect: (data) => this.selection.clear(),
         };
       }),
     ],
