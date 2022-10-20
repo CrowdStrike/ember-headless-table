@@ -160,6 +160,59 @@ export class TableMeta {
     return this.columnOrder.orderedColumns;
   }
 
+  previousColumn = (referenceColumn: Column) => {
+    let visible = this.columns;
+    let referenceIndex = visible.indexOf(referenceColumn);
+
+    assert(
+      `index of reference column must be >= 0. column likely not a part of the table`,
+      referenceIndex >= 0
+    );
+
+    /**
+     * There can be nothing before the first column
+     */
+    if (referenceIndex === 0) {
+      return null;
+    }
+
+    return visible[referenceIndex - 1];
+  }
+
+  nextColumn = (referenceColumn: Column) => {
+    let visible = this.columns;
+    let referenceIndex = visible.indexOf(referenceColumn);
+
+    assert(
+      `index of reference column must be >= 0. column likely not a part of the table`,
+      referenceIndex >= 0
+    );
+
+    /**
+     * There can be nothing after the last column
+     */
+    if (referenceIndex > visible.length - 1) {
+      return null;
+    }
+
+    return visible[referenceIndex + 1];
+  }
+
+  columnsAfter = (referenceColumn: Column) => {
+    let visible = this.columns;
+    let referenceIndex = visible.indexOf(referenceColumn);
+
+    return visible.slice(referenceIndex + 1);
+  }
+
+  columnsBefore = (referenceColumn: Column) => {
+    let visible = this.columns;
+    let referenceIndex = visible.indexOf(referenceColumn);
+
+    return visible.slice(0, referenceIndex);
+  }
+
+
   /**
    * @private
    * This isn't our data to expose, but it is useful to alias

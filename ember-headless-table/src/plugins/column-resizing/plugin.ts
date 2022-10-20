@@ -154,7 +154,7 @@ export class ColumnMeta {
   }
 
   get hasResizeHandle() {
-    let visiblility = meta.withFeature.forTable(this.column.table, 'columnVisibility');
+    let visiblility = meta.withFeature.forTable(this.column.table, 'columnOrder');
     let previous = visiblility.previousColumn(this.column);
 
     if (!previous) return false;
@@ -249,14 +249,14 @@ export class TableMeta {
     );
   }
 
-  get visibleColumns() {
-    let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
+  get #availableColumns() {
+    let otherTableMeta = meta.withFeature.forTable(this.table, 'columnOrder');
 
-    return visiblility.visibleColumns;
+    return otherTableMeta.columns;
   }
 
   get visibleColumnMetas() {
-    return this.visibleColumns.map((column) => meta.forColumn(column, ColumnResizing));
+    return this.#availableColumns.map((column) => meta.forColumn(column, ColumnResizing));
   }
 
   get totalInitialColumnWidths() {
@@ -293,7 +293,7 @@ export class TableMeta {
     let totalGap = totalGapOf(entry.target.querySelector('[role="row"]'));
     let diff = this.scrollContainerWidth - this.totalVisibleColumnsWidth - totalGap;
 
-    distributeDelta(diff, this.visibleColumns);
+    distributeDelta(diff, this.#availableColumns);
   }
 
   @action
@@ -320,7 +320,7 @@ export class TableMeta {
     let position = this.options?.handlePosition ?? 'left';
 
     let growingColumn: Column | null | undefined;
-    let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
+    let visiblility = meta.withFeature.forTable(this.table, 'columnOrder');
 
     if (position === 'right') {
       growingColumn = isDraggingRight ? visiblility.nextColumn(column) : column;
