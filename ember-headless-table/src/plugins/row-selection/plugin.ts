@@ -6,7 +6,7 @@ import { BasePlugin, meta, options } from '../-private/base';
 import type { Row, Table } from '[public-types]';
 import type { PluginSignature, RowApi } from '#interfaces';
 
-export interface Signature<DataType, Key = DataType> extends PluginSignature {
+export interface Signature<DataType = any, Key = DataType> extends PluginSignature {
   Meta: {
     Table: TableMeta;
     Row: RowMeta;
@@ -33,24 +33,24 @@ export interface Signature<DataType, Key = DataType> extends PluginSignature {
            * When a row is clicked, this will be invoked,
            * allowing you to update your selection object
            */
-          onSelect: (key: Key, row: Row) => void;
+          onSelect: (item: Key, row: Row<DataType>) => void;
           /**
            * When a row is clicked (and the row is selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onDeselect: (key: DataType, row: Row) => void;
+          onDeselect: (item: DataType, row: Row<DataType>) => void;
         }
       | {
           /**
            * When a row is clicked (and the row is not selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onSelect: (key: DataType, row: Row) => void;
+          onSelect: (item: DataType, row: Row<DataType>) => void;
           /**
            * When a row is clicked (and the row is selected), this will be invoked,
            * allowing you to update your selection object
            */
-          onDeselect: (key: DataType, row: Row) => void;
+          onDeselect: (item: DataType, row: Row<DataType>) => void;
         }
     );
   };
@@ -62,7 +62,7 @@ export interface Signature<DataType, Key = DataType> extends PluginSignature {
  * The state of what is actually selected is managed by you, but this plugin
  * will wire up the click listeners as well as let you know which *data* is clicked.
  */
-export class RowSelection<DataType, Key = DataType> extends BasePlugin<Signature<DataType, Key>> {
+export class RowSelection<DataType = any, Key = DataType> extends BasePlugin<Signature<DataType, Key>> {
   name = 'row-selection';
 
   meta = {
@@ -148,9 +148,9 @@ class TableMeta {
 }
 
 class RowMeta {
-  #row: Row;
+  #row: Row<any>;
 
-  constructor(row: Row) {
+  constructor(row: Row<any>) {
     this.#row = row;
   }
 

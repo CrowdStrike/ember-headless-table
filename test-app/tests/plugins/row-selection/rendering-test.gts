@@ -118,10 +118,12 @@ module('Plugins | RowSelection', function (hooks) {
   });
 
   module('with all required options', function (hooks) {
+    type DataType = typeof DATA[number];
+
     class MultiRowSelection extends TestSetup {
-      @tracked selection = new TrackedSet<typeof DATA[number]>();
-      onSelect = (item: typeof DATA[number]) => this.selection.add(item);
-      onDeselect = (item: typeof DATA[number]) => this.selection.delete(item);
+      @tracked selection = new TrackedSet<DataType>();
+      onSelect = (item: DataType) => this.selection.add(item);
+      onDeselect = (item: DataType) => this.selection.delete(item);
 
       table = headlessTable(this, {
         columns: () => [
@@ -131,15 +133,11 @@ module('Plugins | RowSelection', function (hooks) {
           { name: 'D', key: 'D' },
         ],
         data: () => DATA,
-        plugins: [RowSelection.with(() => {
-          let { selection, onSelect, onDeselect } = this;
-
-          return {
-            selection,
-            onSelect,
-            onDeselect,
-          }
-        })],
+        plugins: [RowSelection.with(() => ({
+          selection: this.selection,
+          onSelect: (item: DataType) => this.selection.add(item),
+          onDeselect: this.onDeselect,
+        }))],
       });
     }
 
@@ -233,8 +231,12 @@ module('Plugins | RowSelection', function (hooks) {
           <TestStyles />
           <TestComponent @ctx={{ctx}} />
 
-          <out id="the-helper-1">{{isSelected first}}</out>
-          <out id="the-helper-2">{{isSelected second}}</out>
+          {{#if first}}
+            <out id="the-helper-1">{{isSelected first}}</out>
+          {{/if}}
+          {{#if second}}
+            <out id="the-helper-2">{{isSelected second}}</out>
+          {{/if}}
         </template>);
 
         let rows = findAll('tbody tr');
