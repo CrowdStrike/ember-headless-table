@@ -177,7 +177,7 @@ export class TableMeta {
     }
 
     return visible[referenceIndex - 1];
-  }
+  };
 
   nextColumn = (referenceColumn: Column) => {
     let visible = this.columns;
@@ -196,22 +196,21 @@ export class TableMeta {
     }
 
     return visible[referenceIndex + 1];
-  }
+  };
 
   columnsAfter = (referenceColumn: Column) => {
     let visible = this.columns;
     let referenceIndex = visible.indexOf(referenceColumn);
 
     return visible.slice(referenceIndex + 1);
-  }
+  };
 
   columnsBefore = (referenceColumn: Column) => {
     let visible = this.columns;
     let referenceIndex = visible.indexOf(referenceColumn);
 
     return visible.slice(0, referenceIndex);
-  }
-
+  };
 
   /**
    * @private
