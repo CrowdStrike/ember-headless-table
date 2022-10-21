@@ -13,14 +13,7 @@ FPS: {{this.fps}}<br>
       </tr>
     </thead>
     <tbody>
-      <VerticalCollection
-        @items={{ (this.table.rows.values) }}
-        @containerSelector="[data-container]"
-        @key="key"
-        @estimateHeight={{37}}
-        @staticHeight={{true}}
-        @bufferSize={{5}}
-      as |row|>
+      {{#each this.table.rows as |row|}}
         <tr class="{{row.countClassName}}">
           {{#each this.table.columns as |column|}}
             <td>
@@ -32,7 +25,7 @@ FPS: {{this.fps}}<br>
             </td>
           {{/each}}
         </tr>
-      </VerticalCollection>
+      {{/each}}
     </tbody>
   </table>
 </div>
@@ -127,12 +120,12 @@ const FPS = {
 }
 
 const DBMonitor = resource(({ on }) => {
-  let value = cell(getData(100));
+  let value = cell(getData(20));
   let frame;
   let generateData = () => {
     // simulate receiving data as fast as possible
     frame = requestAnimationFrame(() => {
-      value.current = getData(100);
+      value.current = getData(20);
       generateData();
     });
   }

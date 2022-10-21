@@ -7,7 +7,7 @@ import type { Table } from '../../-private/table';
 import type { ColumnReordering } from '../column-reordering';
 import type { ColumnVisibility } from '../column-visibility';
 import type { Class, Constructor } from '[private-types]';
-import type { Column } from '[public-types]';
+import type { Column, Row } from '[public-types]';
 import type {
   ColumnMetaFor,
   ColumnOptionsFor,
@@ -19,6 +19,7 @@ import type {
 
 const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
 const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
+const ROW_META = new WeakMap<Row, Map<Class<unknown>, any>>();
 
 type InstanceOf<T> = T extends Class<infer Instance> ? Instance : T;
 
@@ -253,6 +254,29 @@ export const meta = {
   /**
    * @public
    *
+   * For a given row and plugin, return the meta / state bucket for the
+   * plugin<->row instance pair.
+   *
+   * Note that this requires the row instance to exist on the table.
+   */
+  forRow<P extends BasePlugin<any>, Data = unknown>(
+    row: Row<Data>,
+    klass: Class<P>
+  ): RowMetaFor<SignatureFrom<P>> {
+    return getPluginInstance(ROW_META, row, klass, () => {
+      let plugin = row.table.pluginOf(klass);
+
+      assert(`[${klass.name}] cannot get plugin instance of unregistered plugin class`, plugin);
+      assert(`<#${plugin.name}> plugin does not have meta specified`, plugin.meta);
+      assert(`<#${plugin.name}> plugin does not specify row meta`, plugin.meta.row);
+
+      return new plugin.meta.row(row);
+    });
+  },
+
+  /**
+   * @public
+   *
    * For a given table and plugin, return the meta / state bucket for the
    * plugin<->table instance pair.
    */
@@ -413,10 +437,10 @@ export const options = {
 /**
  * @private
  */
-function getPluginInstance<RootKey extends string | Column<any>, Instance>(
+function getPluginInstance<RootKey extends string | Column<any> | Row<any>, Instance>(
   map: RootKey extends string
     ? Map<string, Map<Class<Instance>, Instance>>
-    : WeakMap<Column, Map<Class<Instance>, Instance>>,
+    : WeakMap<Column | Row, Map<Class<Instance>, Instance>>,
   rootKey: RootKey,
   mapKey: Class<Instance>,
   factory: () => Instance

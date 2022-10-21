@@ -29,7 +29,7 @@ The key properties to look at are:
 - modifiers -- for interacting with and providing behavior to specific elements
   - `containerModifier` - for the table's container div
   - `headerCellModifier` - for each `<th>`
-  - `rowModifier` - **coming soon** - for each `<tr>`
+  - `rowModifier` - for each `<tr>`
 - `reset` -- a hook that the table will call on your plugin if you have state to revert to
 
 With these capabilities, features for tables may be built in a way that relieves implementation complexity on the consumer, such as:
@@ -50,11 +50,13 @@ class MyPlugin {
   meta = {
     table: MyTableMeta,
     column: MyColumnMeta,
+    row: MyRowMeta,
   }
 }
 
 class MyTableMeta {}
 class MyColumnMeta {}
+class MyRowMeta {}
 ```
 
 The table itself will create instances of your meta classes for you, only when needed.

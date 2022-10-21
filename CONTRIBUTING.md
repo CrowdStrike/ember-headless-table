@@ -26,3 +26,10 @@
 
 * `cd docs-app`
 * `pnpm start` – starts the test app and tests are available at `/tests`
+
+## Notes, Caveats, and Bugs
+
+Until [this pnpm issue#4965](https://github.com/pnpm/pnpm/issues/4965) is fixed,
+with the peer-dependency requirements of this repo, every time you re-build the addon,
+you'll need to re-run `pnpm install` to re-create the links in the local `node_modules/.pnpm` store.
+Thankfully, this is pretty fast.

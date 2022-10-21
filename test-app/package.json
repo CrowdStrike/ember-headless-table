@@ -30,8 +30,9 @@
     "ember-auto-import": "^2.4.2",
     "ember-cached-decorator-polyfill": "^1.0.1",
     "ember-functions-as-helper-polyfill": "^2.1.1",
-    "ember-headless-table": "workspace:*",
-    "ember-resources": "^5.4.0"
+    "ember-headless-table": "workspace:../ember-headless-table",
+    "ember-resources": "^5.4.0",
+    "tracked-built-ins": "^3.1.0"
   },
   "dependenciesMeta": {
     "ember-headless-table": {
@@ -44,10 +45,10 @@
     "@embroider/test-setup": "^1.7.1",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/core": "^0.9.5",
-    "@glint/environment-ember-loose": "^0.9.5",
-    "@glint/environment-ember-template-imports": "^0.9.5",
-    "@glint/template": "^0.9.5",
+    "@glint/core": "^0.9.6",
+    "@glint/environment-ember-loose": "^0.9.6",
+    "@glint/environment-ember-template-imports": "^0.9.6",
+    "@glint/template": "^0.9.6",
     "@nullvoxpopuli/eslint-configs": "^2.2.57",
     "@tsconfig/ember": "^1.0.1",
     "@types/ember": "^4.0.1",

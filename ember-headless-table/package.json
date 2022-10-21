@@ -23,6 +23,7 @@
     "./plugins/column-resizing": "./dist/plugins/column-resizing/index.js",
     "./plugins/column-visibility": "./dist/plugins/column-visibility/index.js",
     "./plugins/sticky-columns": "./dist/plugins/sticky-columns/index.js",
+    "./plugins/row-selection": "./dist/plugins/row-selection/index.js",
     "./test-support": "./dist/test-support/index.js",
     "./addon-main.js": "./addon-main.js"
   },
@@ -45,6 +46,9 @@
       ],
       "plugins/sticky-columns": [
         "./dist/plugins/sticky-columns/index.d.ts"
+      ],
+      "plugins/row-selection": [
+        "./dist/plugins/row-selection/index.d.ts"
       ],
       "test-support": [
         "./dist/test-support/index.d.ts"

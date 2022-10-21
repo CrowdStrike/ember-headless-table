@@ -139,6 +139,16 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
       },
       { eager: false }
     ),
+
+    row: modifier(
+      (element: HTMLElement, [row]: [Row<DataType>]): Destructor => {
+        let modifiers = this.plugins.map((plugin) => plugin.rowModifier);
+        let composed = composeFunctionModifiers(modifiers);
+
+        return composed(element, { row, table: this });
+      },
+      { eager: false }
+    ),
   };
 
   /**
