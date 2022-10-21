@@ -8,6 +8,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { headlessTable, type ColumnConfig } from 'ember-headless-table';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { StickyColumns, isSticky } from 'ember-headless-table/plugins/sticky-columns';
+import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
 import { createHelpers } from 'ember-headless-table/test-support';
 import { DATA } from 'test-app/data';
@@ -82,7 +83,7 @@ module('Plugins | StickyColumns', function (hooks) {
     table = headlessTable(this, {
       columns: () => this.columns,
       data: () => DATA,
-      plugins: [ColumnVisibility, ColumnResizing, StickyColumns],
+      plugins: [ColumnVisibility, ColumnReordering, ColumnResizing, StickyColumns],
     });
   }
 

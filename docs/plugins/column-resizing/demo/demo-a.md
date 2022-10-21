@@ -40,6 +40,7 @@ import { htmlSafe } from '@ember/template';
 import { headlessTable } from 'ember-headless-table';
 import { meta } from 'ember-headless-table/plugins';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnResizing, resizeHandle, isResizing } from 'ember-headless-table/plugins/column-resizing';
 
 import { DATA } from 'docs-app/sample-data';
@@ -62,6 +63,7 @@ export default class extends Component {
     data: () => DATA,
     plugins: [
       ColumnVisibility,
+      ColumnReordering,
       ColumnResizing,
     ],
   });
