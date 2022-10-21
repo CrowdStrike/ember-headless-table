@@ -16,7 +16,10 @@
 * `cd ember-headless-table`
 * `pnpm build`
 
+:hear_no_evil: **Note**: if you are building the addon for local development, you have to run `pnpm i` once more after `pnpm build`. This will link the `dist` docs.
+
 ## Running tests
+
 
 * `cd test-app`
 * `pnpm start` – starts the test app and tests are available at `/tests`
