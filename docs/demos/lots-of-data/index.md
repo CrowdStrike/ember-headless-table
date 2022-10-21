@@ -6,4 +6,4 @@ Using [@html-next/vertical-collection][gh-vc], we can have many many rows with v
 
 In this demo, 6 columns x 200 rows are updating as quickly as requestAnimationFrame allows.
 
-Note that while the the table rows are virtualized, the data backing them is sill updating.
+Note that while the the table rows are virtualized, the data backing them is still updating.
