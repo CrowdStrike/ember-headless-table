@@ -1,0 +1,66 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "dev": {
+      // A package's `build` script depends on that package's
+      // dependencies and devDependencies
+      // `build` tasks  being completed first
+      // (the `^` symbol signifies `upstream`).
+      "dependsOn": ["^build"],
+      // Ignore all outputs for "dev", because we don't
+      // want to cache anything
+      "outputs": [],
+      "cache": false
+    },
+    // Alias for dev
+    "start": {
+      "dependsOn": ["dev"],
+      "outputs": [],
+      "cache": false
+    },
+    "test": {
+      // Normally, A package's `test` script depends on that package's
+      // own `build` script being completed first.
+      // But for ember apps, they build themselves during
+      // test execution, so we can only get away with only
+      // building our dependencies
+      "dependsOn": ["^build"]
+    },
+    "build": {
+      "outputs": ["dist/**"],
+      // Normally, A package's `test` script depends on that package's
+      // own `build` script being completed first.
+      // But for ember apps, they build themselves during
+      // test execution, so we can only get away with only
+      // building our dependencies
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": [],
+      // "lint" is an alias for all types of linting
+      // This allows the results of eslint and ember-template-lint
+      // to be individually cached, depending on what's changed
+      "dependsOn": ["lint:js", "lint:hbs"]
+    },
+    "lint:js": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    },
+    "lint:hbs": {
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    },
+    "typecheck": {
+      // A package's `typecheck` script depends on the
+      // build of the same package
+      "dependsOn": ["build", "^build"],
+      // A package's `lint` script has no dependencies and
+      // can be run whenever. It also has no filesystem outputs.
+      "outputs": []
+    }
+  }
+}

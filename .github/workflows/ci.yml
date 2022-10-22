@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
 
 
@@ -32,7 +37,13 @@ jobs:
     needs: [install_dependencies]
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
+      - run: pnpm install
       - name: Lint
         run: pnpm lint
 
@@ -45,7 +56,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
+      - run: pnpm install
       - uses: ./.github/actions/assert-build
 
 
@@ -67,20 +84,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
       - name: 'Change TS to ${{ matrix.typescript-scenario }}'
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
         working-directory: ./test-app
+      - run: pnpm install
       - name: 'Type checking'
-
-        run: |
-          pnpm --filter test-app exec tsc -v;
-          pnpm --filter test-app exec glint --version;
-          pnpm --filter test-app exec glint;
-
-
-
+        run: 'pnpm _turbo --filter test-app typecheck;'
 
 
   default_tests:
@@ -90,9 +105,14 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - run: pnpm --filter test-app test:ember
+      - run: pnpm install
+      - run: pnpm _turbo --filter test-app test
 
   floating_tests:
     name: Floating Deps Test
@@ -101,10 +121,15 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
       - name: Install Dependencies (without lockfile)
         run: rm pnpm-lock.yaml && pnpm install
-      - uses: ./.github/actions/download-built-package
+      - run: pnpm install
       - run: pnpm --filter test-app test:ember
 
 
@@ -133,20 +158,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - name: Run Tests
+      - name: "Setup scenario: ${{ matrix.try-scenario }}"
         working-directory: ./test-app
         run: |
           if [[ "${{matrix.try-scenario}}" == "'ember-lts-4.8 + embroider-optimized'" ]]; then
             echo 'Running custom try scenario due to peer deps resolving incorrectly (due to installation issues)'
             pnpm add --save-dev ember-source@~4.8.0
             pnpm add --save-dev @embroider/core @embroider/webpack @embroider/compat
-            pnpm ember test
+            # pnpm ember test
           else
-            node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup
+            node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup --- echo "setup"
           fi
-
+      - name: "Run tests"
+        run: pnpm _turbo --filter="test-app" test
 
 
 
@@ -188,11 +218,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - run: pnpm glint
-        working-directory: docs-app
-
+      - run: pnpm install
+      - run: pnpm _turbo --filter docs-app typecheck
 
 
   PublishDocstoCloudflarePages:
@@ -209,9 +242,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: TurboRepo local server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: foo-123
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - run: pnpm build:docs
+      - run: pnpm install
+      - run: pnpm _turbo --filter docs-api build
       - name: Publish to Cloudflare Pages
         id: publishStep
         uses: cloudflare/pages-action@1
@@ -233,7 +271,6 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |+

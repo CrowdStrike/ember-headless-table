@@ -12,14 +12,14 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:' --prefix-colors cyan,white,yellow",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:' --prefix-colors cyan,white,yellow",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test:ember": "ember test"
+    "test:ember": "ember test",
+    "typecheck": "echo \"TSC: $( pnpm tsc --version )\"; echo \"Glint: $( glint --version )\"; glint --build"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
