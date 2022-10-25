@@ -62,8 +62,6 @@ export default class extends Component {
     ],
     data: () => DATA,
     plugins: [
-      ColumnVisibility,
-      ColumnReordering,
       ColumnResizing,
     ],
   });

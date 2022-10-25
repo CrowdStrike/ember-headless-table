@@ -45,7 +45,7 @@
 import Component from '@glimmer/component';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
+import { meta, columns } from 'ember-headless-table/plugins';
 import { ColumnVisibility, hide, show } from 'ember-headless-table/plugins/column-visibility';
 
 import { DATA } from 'docs-app/sample-data';
@@ -65,7 +65,7 @@ export default class extends Component {
   });
 
   get columns() {
-    return meta.forTable(this.table, ColumnVisibility).visibleColumns;
+    return columns.for(this.table);
   }
 
   /**

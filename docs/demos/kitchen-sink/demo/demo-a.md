@@ -77,7 +77,7 @@ import { tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
+import { meta, columns } from 'ember-headless-table/plugins';
 import {
   ColumnResizing,
   isResizing, resizeHandle
@@ -139,7 +139,7 @@ export default class extends Component {
   @tracked sorts = [];
 
   get columns() {
-    return meta.forTable(this.table, ColumnReordering).columns;
+    return columns.for(this.table);
   }
 
   get data() {
