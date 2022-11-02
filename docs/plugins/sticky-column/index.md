@@ -31,7 +31,7 @@ import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
   })
 ```
 
-Note that the `ColumnResizing` plugin is requried because `StickyColumns` needs a guarantee
+Note that the `ColumnResizing` plugin is required because `StickyColumns` needs a guarantee
 that a `columnWidth` implementation exists so that columns may become sticky beyond just the
 far left and far right columns.
 

@@ -182,7 +182,7 @@ module('Plugins | Queries | columns', function (hooks) {
 
         /**
          * Perform some operations on the columns so that we can know
-         * which set of columsn we're getting
+         * which set of columns we're getting
          */
         let [first, second, third] = table.columns;
 
@@ -322,7 +322,7 @@ module('Plugins | Queries | columns', function (hooks) {
     test('second to last column is returned when the reference column is the last column', function (assert) {
       let [last, secondToLast] = table.columns.values().reverse();
 
-      debugAssert('last and second to last columns are missing', last && secondToLast);
+      debugAssert('last and/or second to last columns are missing', last && secondToLast);
 
       let result = columns.previous(last);
 
@@ -332,7 +332,7 @@ module('Plugins | Queries | columns', function (hooks) {
     test('plugin hierarchy is respected', function (assert) {
       let [, , third, , fifth] = table.columns;
 
-      debugAssert('third and fifth columns are missing', third && fifth);
+      debugAssert('third and/or fifth columns are missing', third && fifth);
 
       let result = columns.previous(fifth);
 
@@ -342,7 +342,7 @@ module('Plugins | Queries | columns', function (hooks) {
     test('second column is returned when the reference column is the third column', function (assert) {
       let [, second, third] = table.columns;
 
-      debugAssert('second and third columns are missing', second && third);
+      debugAssert('second and/or third columns are missing', second && third);
 
       let result = columns.previous(third);
 
@@ -376,7 +376,7 @@ module('Plugins | Queries | columns', function (hooks) {
 
       let result = columns.before(first);
 
-      assert.deepEqual(result.length, 0);
+      assert.strictEqual(result.length, 0);
       assert.deepEqual(result, []);
     });
 
@@ -427,7 +427,7 @@ module('Plugins | Queries | columns', function (hooks) {
 
       let result = columns.after(last);
 
-      assert.deepEqual(result.length, 0);
+      assert.strictEqual(result.length, 0);
       assert.deepEqual(result, []);
     });
 

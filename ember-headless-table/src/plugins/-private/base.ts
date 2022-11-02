@@ -242,7 +242,7 @@ export const preferences = {
  * and that upstream plugin defines a `columns` property, then those columns will be returned here.
  *
  * This works recursively up the plugin tree up until a plugin has no requirements, and then
- * all colums from the table are returned.
+ * all columns from the table are returned.
  */
 function columnsFor<DataType = any>(
   table: Table<DataType>,
@@ -334,7 +334,7 @@ export const columns = {
    * for a given current or reference column, return the column that
    * is immediately next, or to the right of that column.
    *
-   * If a plugin class is provided, the hierarchy of column list modifiecations
+   * If a plugin class is provided, the hierarchy of column list modifications
    * will be respected.
    */
   next: <Data = unknown>(
@@ -364,7 +364,7 @@ export const columns = {
    * for a given current or reference column, return the column that
    * is immediately previous, or to the left of that column.
    *
-   * If a plugin class is provided, the hierarchy of column list modifiecations
+   * If a plugin class is provided, the hierarchy of column list modifications
    * will be respected.
    */
   previous: <Data = unknown>(
