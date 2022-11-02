@@ -31,6 +31,7 @@ The key properties to look at are:
   - `headerCellModifier` - for each `<th>`
   - `rowModifier` - for each `<tr>`
 - `reset` -- a hook that the table will call on your plugin if you have state to revert to
+- `columns` -- for overriding / altering column order / visibility / grouping / etc
 
 With these capabilities, features for tables may be built in a way that relieves implementation complexity on the consumer, such as:
 

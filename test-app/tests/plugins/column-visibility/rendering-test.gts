@@ -8,8 +8,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+import { meta, columns } from 'ember-headless-table/plugins';
+import { ColumnVisibility, hide, show } from 'ember-headless-table/plugins/column-visibility';
 
 import { DATA } from 'test-app/data';
 import type { ColumnConfig, Column } from 'ember-headless-table';
@@ -40,23 +40,6 @@ module('Plugins | columnVisibility', function (hooks) {
       return this.args.ctx.table;
     }
 
-    get columns() {
-      let tableMeta = meta.forTable(this.table, ColumnVisibility)
-      /**
-       * TODO: this cast is a dirty one, and should be removed.
-       *       inference "should" be able to work here.
-       */
-      return tableMeta.visibleColumns as Column<typeof DATA[number]>[];
-    }
-
-    hide = (column: Column) => {
-      return meta.forColumn(column, ColumnVisibility).hide();
-    };
-
-    show = (column: Column) => {
-      return meta.forColumn(column, ColumnVisibility).show();
-    };
-
     <template>
       <style>
         [data-scroll-container] {
@@ -72,10 +55,10 @@ module('Plugins | columnVisibility', function (hooks) {
       <div>
         {{#each this.table.columns as |column|}}
           {{column.name}}:
-          <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+          <button class="hide {{column.key}}" {{on 'click' (fn hide column)}}>
             Hide
           </button>
-          <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+          <button class="show {{column.key}}" {{on 'click' (fn show column)}}>
             Show
           </button>
           <br>
@@ -85,7 +68,7 @@ module('Plugins | columnVisibility', function (hooks) {
         <table>
           <thead>
             <tr>
-              {{#each this.columns as |column|}}
+              {{#each (columns.for this.table) as |column|}}
                 <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
                   {{column.name}}
                 </th>
@@ -99,7 +82,7 @@ module('Plugins | columnVisibility', function (hooks) {
           <tbody>
             {{#each this.table.rows as |row|}}
               <tr>
-                {{#each this.columns as |column|}}
+                {{#each (columns.for this.table) as |column|}}
                   <td>{{column.getValueForRow row}}</td>
                 {{/each}}
               </tr>

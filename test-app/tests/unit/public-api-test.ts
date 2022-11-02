@@ -35,6 +35,7 @@ module('Public API', function () {
       [
         // Utilities
         'BasePlugin',
+        'columns',
         'meta',
         'options',
         'preferences',

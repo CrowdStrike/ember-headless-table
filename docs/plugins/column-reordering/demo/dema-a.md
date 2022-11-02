@@ -34,12 +34,11 @@
 import Component from '@glimmer/component';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
+import { meta, columns } from 'ember-headless-table/plugins';
 import {
   ColumnReordering,
   moveLeft, moveRight
 } from 'ember-headless-table/plugins/column-reordering';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 import { DATA } from 'docs-app/sample-data';
 
@@ -54,12 +53,11 @@ export default class extends Component {
     data: () => DATA,
     plugins: [
       ColumnReordering,
-      ColumnVisibility,
     ],
   });
 
   get columns() {
-    return meta.forTable(this.table, ColumnReordering).columns;
+    return columns.for(this.table);
   }
 
   /**

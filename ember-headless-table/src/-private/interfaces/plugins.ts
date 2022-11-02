@@ -171,6 +171,23 @@ export interface Plugin<Signature = unknown> {
    * If the plugin has state, this should be used to reset that state
    */
   reset?: () => void;
+
+  /**
+   * @public
+   * @kind Table Hook
+   *
+   * A plugin may change the columns order, visibility, etc.
+   * By implementing this getter, this plugin's
+   * `columns` property will be used by other plugins via
+   * the `columns.for(table, RequestingPlugin)` api.
+   *
+   * For the end-consumer, they may choose to do
+   * `columns.for(table)`, which will aggregate all column modifications
+   * from all plugins.
+   *
+   * As always, `table.columns` is the way to get the unmodified list of columns.
+   */
+  columns?: Column<any>[];
 }
 
 /**

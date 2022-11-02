@@ -1,7 +1,7 @@
 import { cached } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 
-import { BasePlugin, meta, options } from '../-private/base';
+import { BasePlugin, columns, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 
 import type { ColumnApi } from '[public-plugin-types]';
@@ -37,7 +37,7 @@ export class StickyColumns extends BasePlugin<Signature> {
    * Other width-management plugins can be used instead of ColumnResizing, but they must declare
    * that they manage the width of the columns.
    */
-  static requires = ['columnWidth', 'columnVisibility'];
+  static requires = ['columnWidth'];
 
   meta = {
     table: TableMeta,
@@ -98,10 +98,8 @@ export class ColumnMeta {
       return;
     }
 
-    let visiblility = meta.withFeature.forTable(this.column.table, 'columnVisibility');
-
     if (this.position === 'left') {
-      let leftColumns = visiblility.columnsBefore(this.column);
+      let leftColumns = columns.before(this.column);
       let left = leftColumns.reduce((acc, column) => {
         let columnMeta = meta.withFeature.forColumn(column, 'columnWidth');
 
@@ -116,7 +114,7 @@ export class ColumnMeta {
     }
 
     if (this.position === 'right') {
-      let rightColumns = visiblility.columnsAfter(this.column);
+      let rightColumns = columns.after(this.column);
       let right = rightColumns.reduce((acc, column) => {
         let columnMeta = meta.withFeature.forColumn(column, 'columnWidth');
 

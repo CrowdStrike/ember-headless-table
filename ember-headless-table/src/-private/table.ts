@@ -205,6 +205,8 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
   /**
    * @private
+   *
+   * used by other private APIs
    */
   get config() {
     return this.args.named;
@@ -233,15 +235,6 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
       return new Column<DataType>(this, { ...this.defaultColumnConfig, ...config });
     },
   });
-
-  /**
-   * @private
-   *
-   * TODO: what's this for?
-   */
-  get value() {
-    return this;
-  }
 
   /**
    * @private

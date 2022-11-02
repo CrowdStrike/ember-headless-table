@@ -3,10 +3,9 @@ import { setupTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
 import { options } from 'ember-headless-table/plugins';
-import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
+import { StickyColumns } from 'ember-headless-table/plugins/sticky-columns';
 
 import type { Sort } from 'ember-headless-table/plugins/data-sorting';
 
@@ -103,12 +102,12 @@ module('Plugins | consumption', function (hooks) {
       let table = headlessTable(this, {
         columns: () => [],
         data: () => [],
-        plugins: [ColumnReordering, ColumnVisibility],
+        plugins: [ColumnResizing, StickyColumns],
       });
 
       assert.ok(
-        table.pluginOf(ColumnReordering) instanceof ColumnReordering,
-        'DataSorting plugin successfully instantiated'
+        table.pluginOf(ColumnResizing) instanceof ColumnResizing,
+        'ColumnResizing plugin successfully instantiated'
       );
     });
 
@@ -116,12 +115,12 @@ module('Plugins | consumption', function (hooks) {
       let table = headlessTable(this, {
         columns: () => [],
         data: () => [],
-        plugins: [ColumnReordering],
+        plugins: [StickyColumns],
       });
 
       assert.throws(() => {
-        table.pluginOf(ColumnReordering);
-      }, 'Configuration is missing requirement: columnVisibility, And is requested by ColumnReordering. Please add a plugin with the columnVisibility feature');
+        table.pluginOf(StickyColumns);
+      }, 'Configuration is missing requirement: columnWidth, And is requested by StickyColumns. Please add a plugin with the columnWidth feature');
     });
   });
 });

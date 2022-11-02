@@ -59,7 +59,6 @@ export default class extends Component {
     plugins: [
       StickyColumns,
       ColumnResizing,
-      ColumnVisibility,
     ],
   });
 

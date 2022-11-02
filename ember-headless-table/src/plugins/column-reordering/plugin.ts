@@ -6,7 +6,7 @@ import { TrackedMap } from 'tracked-built-ins';
 
 import { preferences } from '[public-plugin-types]';
 
-import { BasePlugin, meta } from '../-private/base';
+import { BasePlugin, columns, meta } from '../-private/base';
 
 import type { PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
@@ -33,7 +33,6 @@ export interface Signature {
 export class ColumnReordering extends BasePlugin<Signature> {
   name = 'column-reordering';
   static features = ['columnOrder'];
-  static requires = ['columnVisibility'];
 
   meta = {
     column: ColumnMeta,
@@ -44,6 +43,10 @@ export class ColumnReordering extends BasePlugin<Signature> {
     let tableMeta = meta.forTable(this.table, ColumnReordering);
 
     tableMeta.reset();
+  }
+
+  get columns() {
+    return meta.forTable(this.table, ColumnReordering).columns;
   }
 }
 
@@ -102,7 +105,7 @@ export class TableMeta {
    */
   @tracked
   columnOrder = new ColumnOrder({
-    columns: () => this.visibleColumns,
+    columns: () => this.availableColumns,
     save: this.save,
     existingOrder: this.read(),
   });
@@ -125,7 +128,7 @@ export class TableMeta {
   reset() {
     preferences.forTable(this.table, ColumnReordering).delete('order');
     this.columnOrder = new ColumnOrder({
-      columns: () => this.visibleColumns,
+      columns: () => this.availableColumns,
       save: this.save,
     });
   }
@@ -160,66 +163,12 @@ export class TableMeta {
     return this.columnOrder.orderedColumns;
   }
 
-  previousColumn = (referenceColumn: Column) => {
-    let visible = this.columns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    assert(
-      `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0
-    );
-
-    /**
-     * There can be nothing before the first column
-     */
-    if (referenceIndex === 0) {
-      return null;
-    }
-
-    return visible[referenceIndex - 1];
-  };
-
-  nextColumn = (referenceColumn: Column) => {
-    let visible = this.columns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    assert(
-      `index of reference column must be >= 0. column likely not a part of the table`,
-      referenceIndex >= 0
-    );
-
-    /**
-     * There can be nothing after the last column
-     */
-    if (referenceIndex > visible.length - 1) {
-      return null;
-    }
-
-    return visible[referenceIndex + 1];
-  };
-
-  columnsAfter = (referenceColumn: Column) => {
-    let visible = this.columns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    return visible.slice(referenceIndex + 1);
-  };
-
-  columnsBefore = (referenceColumn: Column) => {
-    let visible = this.columns;
-    let referenceIndex = visible.indexOf(referenceColumn);
-
-    return visible.slice(0, referenceIndex);
-  };
-
   /**
    * @private
    * This isn't our data to expose, but it is useful to alias
    */
-  private get visibleColumns() {
-    let visiblility = meta.withFeature.forTable(this.table, 'columnVisibility');
-
-    return visiblility.visibleColumns;
+  private get availableColumns() {
+    return columns.for(this.table, ColumnReordering);
   }
 }
 

@@ -2,7 +2,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
-import { BasePlugin, meta, options } from '../-private/base';
+import { BasePlugin, columns, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
 
@@ -154,8 +154,7 @@ export class ColumnMeta {
   }
 
   get hasResizeHandle() {
-    let visiblility = meta.withFeature.forTable(this.column.table, 'columnOrder');
-    let previous = visiblility.previousColumn(this.column);
+    let previous = columns.previous(this.column);
 
     if (!previous) return false;
 
@@ -250,9 +249,7 @@ export class TableMeta {
   }
 
   get #availableColumns() {
-    let otherTableMeta = meta.withFeature.forTable(this.table, 'columnOrder');
-
-    return otherTableMeta.columns;
+    return columns.for(this.table, ColumnResizing);
   }
 
   get visibleColumnMetas() {
@@ -320,12 +317,11 @@ export class TableMeta {
     let position = this.options?.handlePosition ?? 'left';
 
     let growingColumn: Column | null | undefined;
-    let visiblility = meta.withFeature.forTable(this.table, 'columnOrder');
 
     if (position === 'right') {
-      growingColumn = isDraggingRight ? visiblility.nextColumn(column) : column;
+      growingColumn = isDraggingRight ? columns.next(column) : column;
     } else {
-      growingColumn = isDraggingRight ? visiblility.previousColumn(column) : column;
+      growingColumn = isDraggingRight ? columns.previous(column) : column;
     }
 
     if (!growingColumn) return;
@@ -335,9 +331,7 @@ export class TableMeta {
     assert('cannot resize a column that does not have a width', growingColumnMeta.width);
 
     let shrinkableColumns =
-      delta > 0
-        ? visiblility.columnsAfter(growingColumn)
-        : visiblility.columnsBefore(growingColumn).reverse();
+      delta > 0 ? columns.after(growingColumn) : columns.before(growingColumn).reverse();
 
     let shrinkableColumnsMetas = shrinkableColumns
       .map((column) => meta.forColumn(column, ColumnResizing))

@@ -6,13 +6,9 @@ API Documentation available [here][api-docs]
 
 ## Usage
 
-Because this plugin operates or visible columns,
-the `ColumnVisibility` plugin is required.
-
 ```js
 import { headlessTable } from 'ember-headless-table';
 import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
 // ...
 // in a class
@@ -20,7 +16,6 @@ import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility
     columns: () => [ /* ... */ ],
     data: () => [ /* ... */ ],
     plugins: [
-      ColumnVisibility,
       ColumnResizing,
     ],
   })
@@ -55,7 +50,6 @@ See the API Documentation [here][api-docs] for the full list of options and desc
 table = headlessTable(this, {
   columns: () => [ /* ... */ ],
   plugins: [
-    ColumnVisibility,
     ColumnResizing.with(() => ({ handlePosition: 'right' })),
   ],
 })

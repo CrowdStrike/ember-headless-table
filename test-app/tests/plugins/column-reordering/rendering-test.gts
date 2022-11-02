@@ -11,9 +11,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta } from 'ember-headless-table/plugins';
-import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+import { meta, columns } from 'ember-headless-table/plugins';
+import { ColumnReordering, moveLeft, moveRight } from 'ember-headless-table/plugins/column-reordering';
+import { ColumnVisibility, hide, show } from 'ember-headless-table/plugins/column-visibility';
 import { DATA } from 'test-app/data';
 
 import type { Column, PreferencesData } from 'ember-headless-table';
@@ -52,31 +52,6 @@ module('Plugins | columnReordering', function (hooks) {
       return this.args.ctx.table;
     }
 
-    get columns() {
-      /**
-        * TODO: this is a dirty cast, and should be removed.
-        *      we should be able to infer the specific Column type since the table
-      *      is specifically typed.
-        */
-      return meta.forTable(this.table, ColumnReordering).columns as Column<typeof DATA[number]>[];
-    }
-
-    moveLeft = (column: Column) => {
-      return meta.forColumn(column, ColumnReordering).moveLeft();
-    };
-
-    moveRight = (column: Column) => {
-      return meta.forColumn(column, ColumnReordering).moveRight();
-    };
-
-    hide = (column: Column) => {
-      return meta.forColumn(column, ColumnVisibility).hide();
-    };
-
-    show = (column: Column) => {
-      return meta.forColumn(column, ColumnVisibility).show();
-    };
-
     <template>
       <style>
         [data-scroll-container] {
@@ -90,12 +65,12 @@ module('Plugins | columnReordering', function (hooks) {
         }
       </style>
       <div>
-        {{#each this.table.columns as |column|}}
+        {{#each (columns.for this.table ColumnVisibility) as |column|}}
           {{column.name}}:
-          <button class="hide {{column.key}}" {{on 'click' (fn this.hide column)}}>
+          <button class="hide {{column.key}}" {{on 'click' (fn hide column)}}>
             Hide
           </button>
-          <button class="show {{column.key}}" {{on 'click' (fn this.show column)}}>
+          <button class="show {{column.key}}" {{on 'click' (fn show column)}}>
             Show
           </button>
           <br>
@@ -105,12 +80,12 @@ module('Plugins | columnReordering', function (hooks) {
         <table>
           <thead>
             <tr>
-              {{#each this.columns as |column|}}
+              {{#each (columns.for this.table) as |column|}}
                 <th class="{{column.key}}" {{this.table.modifiers.columnHeader column}}>
-                  <button class="left" {{on 'click' (fn this.moveLeft column)}}>
+                  <button class="left" {{on 'click' (fn moveLeft column)}}>
                     Move Left
                   </button>
-                  <button class="right" {{on 'click' (fn this.moveRight column)}}>
+                  <button class="right" {{on 'click' (fn moveRight column)}}>
                     Move Right
                   </button>
                   <br>
@@ -127,7 +102,7 @@ module('Plugins | columnReordering', function (hooks) {
           <tbody>
             {{#each this.table.rows as |row|}}
               <tr>
-                {{#each this.columns as |column|}}
+                {{#each (columns.for this.table) as |column|}}
                   <td>
                     {{column.getValueForRow row}}
                   </td>
@@ -140,7 +115,7 @@ module('Plugins | columnReordering', function (hooks) {
     </template>
   }
 
-  module('with unmet requirements', function () {
+  module('as a solo plugin', function (hooks) {
     class DefaultOptions extends Context {
       table = headlessTable(this, {
         columns: () => this.columns,
@@ -149,16 +124,90 @@ module('Plugins | columnReordering', function (hooks) {
       });
     }
 
-    test('cannot create a table', async function (assert) {
-      assert.throws(
-        () => {
-          ctx = new DefaultOptions();
-          // plugins are lazily instantiated
-          ctx.table.plugins;
-        },
-        /Configuration is missing requirement: columnVisibility, And is requested by ColumnReordering. Please add a plugin with the columnVisibility feature/,
-        'Error was thrown about missing a plugin that provides "column visibility features'
+    hooks.beforeEach(async function () {
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+
+      await render(
+        <template>
+          <style>
+            [data-scroll-container] {
+              height: 100%;
+              overflow: auto;
+            }
+
+            th {
+              position: relative;
+              border: 1px solid #999;
+            }
+          </style>
+          <div class="theme-light" data-scroll-container {{ctx.table.modifiers.container}}>
+            <table>
+              <thead>
+                <tr>
+                  {{#each (columns.for ctx.table) as |column|}}
+                    <th class="{{column.key}}" {{ctx.table.modifiers.columnHeader column}}>
+                      <button class="left" {{on 'click' (fn moveLeft column)}}>
+                        Move Left
+                      </button>
+                      <button class="right" {{on 'click' (fn moveRight column)}}>
+                        Move Right
+                      </button>
+                      <br>
+
+                      <span class="name">{{column.name}}</span>
+                    </th>
+                  {{/each}}
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ctx.table.rows as |row|}}
+                  <tr>
+                    {{#each (columns.for ctx.table) as |column|}}
+                      <td>
+                        {{column.getValueForRow row}}
+                      </td>
+                    {{/each}}
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </template>
       );
+    });
+
+    test('everything is visible and in the original order', async function (assert) {
+      assert.dom('th').exists({ count: 4 });
+      assert.dom(`th.A`).exists();
+      assert.dom(`th.B`).exists();
+      assert.dom(`th.C`).exists();
+      assert.dom(`th.D`).exists();
+      assert.dom('thead tr').containsText('A');
+      assert.dom('thead tr').containsText('B');
+      assert.dom('thead tr').containsText('C');
+      assert.dom('thead tr').containsText('D');
+      assert.strictEqual(
+        getColumnOrder(),
+        'A B C D',
+        'Initial order'
+      );
+    });
+
+    test('a column in the middle can be moved to the left', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
+
+      await click('th.B .left');
+
+      assert.strictEqual(getColumnOrder(), 'B A C D');
+    });
+
+    test('a column in the middle can be moved to the right', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D');
+
+      await click('th.B .right');
+
+      assert.strictEqual(getColumnOrder(), 'A C B D');
     });
   });
 

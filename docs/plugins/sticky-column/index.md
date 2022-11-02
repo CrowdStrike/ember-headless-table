@@ -8,7 +8,6 @@ API Documentation available [here][api-docs]
 
 ```js
 import { headlessTable } from 'ember-headless-table';
-import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { StickyColumns } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
 
@@ -26,12 +25,15 @@ import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
     ],
     data: () => [ /* ... */ ],
     plugins: [
-      ColumnReordering,
-      ColumnVisibility,
+      ColumnResizing,
       StickyColumns,
     ],
   })
 ```
+
+Note that the `ColumnResizing` plugin is required because `StickyColumns` needs a guarantee
+that a `columnWidth` implementation exists so that columns may become sticky beyond just the
+far left and far right columns.
 
 ### ColumnOptions
 
