@@ -174,7 +174,7 @@ jobs:
       - uses: ./.github/actions/download-built-package
       - name: Release
         run: ./node_modules/.bin/semantic-release
-        working-directory: ./ember-resources
+        working-directory: ./ember-headless-table
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
