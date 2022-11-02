@@ -263,6 +263,10 @@ module('Plugins | Queries | columns', function (hooks) {
   module('columns.next', function (hooks) {
     let table: Table;
 
+    /**
+     * In the OnePlugin scenario,
+     * D is hidden by default, otherwise everything is visible
+     */
     hooks.beforeEach(function () {
       let context = create(OnePlugin, this.owner);
 
@@ -313,6 +317,10 @@ module('Plugins | Queries | columns', function (hooks) {
   module('columns.previous', function (hooks) {
     let table: Table;
 
+    /**
+     * In the OnePlugin scenario,
+     * D is hidden by default, otherwise everything is visible
+     */
     hooks.beforeEach(function () {
       let context = create(OnePlugin, this.owner);
 
@@ -363,6 +371,10 @@ module('Plugins | Queries | columns', function (hooks) {
   module('columns.before', function (hooks) {
     let table: Table;
 
+    /**
+     * In the OnePlugin scenario,
+     * D is hidden by default, otherwise everything is visible
+     */
     hooks.beforeEach(function () {
       let context = create(OnePlugin, this.owner);
 
@@ -414,6 +426,10 @@ module('Plugins | Queries | columns', function (hooks) {
   module('columns.after', function (hooks) {
     let table: Table;
 
+    /**
+     * In the OnePlugin scenario,
+     * D is hidden by default, otherwise everything is visible
+     */
     hooks.beforeEach(function () {
       let context = create(OnePlugin, this.owner);
 
