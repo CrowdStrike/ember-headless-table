@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.0...v1.0.1) (2022-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency highlightjs-glimmer to v2 ([0881e12](https://github.com/CrowdStrike/ember-headless-table/commit/0881e12bb091daf711e3712151f26b6e6cd9ace5))
+
 # 1.0.0 (2022-11-02)
 
 
