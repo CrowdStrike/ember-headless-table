@@ -118,7 +118,7 @@ importers:
       eslint-plugin-prettier: ^4.2.1
       eslint-plugin-qunit: ^7.3.1
       highlight.js: ^11.6.0
-      highlightjs-glimmer: ^1.4.1
+      highlightjs-glimmer: ^2.0.1
       loader.js: ^4.7.0
       postcss: ^8.4.17
       postcss-import: ^15.0.0
@@ -131,7 +131,7 @@ importers:
       typescript: ^4.8.4
       webpack: ^5.74.0
     dependencies:
-      '@crowdstrike/ember-oss-docs': 1.1.0_flo2swwbam7ryfpk3dc6iqemde
+      '@crowdstrike/ember-oss-docs': 1.1.0_dlxa2f3lafnoo6feoyadaktxga
       '@ember/test-waiters': 3.0.2
       '@embroider/router': 1.9.0_6nap4nrlhytgwxhnrgcj56wvwu
       dompurify: 2.4.0
@@ -141,7 +141,7 @@ importers:
       ember-modifier: 3.2.7_@babel+core@7.19.6
       ember-resources: 5.4.0_p3o2swdpdo6xrwpmv5sutshpdm
       highlight.js: 11.6.0
-      highlightjs-glimmer: 1.4.1_highlight.js@11.6.0
+      highlightjs-glimmer: 2.0.1_highlight.js@11.6.0
       tracked-built-ins: 3.1.0
     devDependencies:
       '@babel/core': 7.19.6
@@ -2033,7 +2033,7 @@ packages:
     dev: true
     optional: true
 
-  /@crowdstrike/ember-oss-docs/1.1.0_flo2swwbam7ryfpk3dc6iqemde:
+  /@crowdstrike/ember-oss-docs/1.1.0_dlxa2f3lafnoo6feoyadaktxga:
     resolution: {integrity: sha512-iHDtrAM4OdJpqcRBxW0AjZZarow7BCrfJYlmP5Mf0hmE+8KFMCGdZToBmYDmWPderquTvXjYH1akk+994y3t0w==}
     peerDependencies:
       '@crowdstrike/tailwind-toucan-base': ^3.3.1
@@ -2059,7 +2059,7 @@ packages:
       ember-modifier: 3.2.7_@babel+core@7.19.6
       ember-url-hash-polyfill: 1.0.8_@babel+core@7.19.6
       highlight.js: 11.6.0
-      highlightjs-glimmer: 1.4.1_highlight.js@11.6.0
+      highlightjs-glimmer: 2.0.1_highlight.js@11.6.0
       lodash.merge: 4.6.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -2500,7 +2500,7 @@ packages:
       '@embroider/macros': 1.8.3
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 4.7.0_@babel+core@7.19.3
+      ember-source: 4.7.0_6zc4kxld457avlfyhj3lzsljlm
     transitivePeerDependencies:
       - supports-color
 
@@ -3440,11 +3440,6 @@ packages:
       - supports-color
     dev: true
 
-  /@types/ember-resolver/5.0.11:
-    resolution: {integrity: sha512-2BL9d8kBdNUO9Je6KBF7Q34BSwbQG6vzCzTeSopt8FAmLDfaDU9xDDdyZobpfy9GR36mCSeG9b9wr4bgYh/MYw==}
-    dependencies:
-      '@types/ember__object': 4.0.4
-
   /@types/ember-resolver/5.0.11_@babel+core@7.19.3:
     resolution: {integrity: sha512-2BL9d8kBdNUO9Je6KBF7Q34BSwbQG6vzCzTeSopt8FAmLDfaDU9xDDdyZobpfy9GR36mCSeG9b9wr4bgYh/MYw==}
     dependencies:
@@ -3608,7 +3603,7 @@ packages:
   /@types/ember__debug/4.0.1_@babel+core@7.19.6:
     resolution: {integrity: sha512-qrKk6Ujh6oev7TSB0eB7AEmQWKCt5t84k/K3hDvJXUiLU3YueN0kyt7aPoIAkVjC111A9FqDugl9n60+N5yeEw==}
     dependencies:
-      '@types/ember-resolver': 5.0.11
+      '@types/ember-resolver': 5.0.11_@babel+core@7.19.6
       '@types/ember__object': 4.0.4_@babel+core@7.19.6
     transitivePeerDependencies:
       - '@babel/core'
@@ -3631,7 +3626,7 @@ packages:
   /@types/ember__engine/4.0.2_@babel+core@7.19.6:
     resolution: {integrity: sha512-x9c8LtRpYwQnyUiUbGpF2+zrZiA0G3e0lPsprghllWEabnIyvN+GMdtnvt4DmpGQVeUz6JKVdoPAmENBUTTcyg==}
     dependencies:
-      '@types/ember-resolver': 5.0.11
+      '@types/ember-resolver': 5.0.11_@babel+core@7.19.6
       '@types/ember__object': 4.0.4_@babel+core@7.19.6
       '@types/ember__owner': 4.0.0
     transitivePeerDependencies:
@@ -10479,9 +10474,9 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /highlightjs-glimmer/1.4.1_highlight.js@11.6.0:
-    resolution: {integrity: sha512-S2LpbYHcjvYMhf0TSFSKcFNbhDJwIVZBeTaFH1wCL9vL5XVX5fyrGG/IwCmIIvT0Vli9tUai8TTzmGJZrOSAtA==}
-    engines: {node: '> 10'}
+  /highlightjs-glimmer/2.0.1_highlight.js@11.6.0:
+    resolution: {integrity: sha512-xExe0gkvvtuP/pvxNeRD0LVO/nrjFjDzVwPC7odHdHq/OAV1zTJSasa4jJkY9OUtBHghrXyfYqwn3pofZfBpiA==}
+    engines: {node: ^14 || ^16 || ^18}
     peerDependencies:
       highlight.js: '>= 11.0.0'
     dependencies:
@@ -16570,7 +16565,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 0.0.0
+    version: 1.0.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -16608,7 +16603,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 0.0.0
+    version: 1.0.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
