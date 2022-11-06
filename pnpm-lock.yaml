@@ -49,7 +49,7 @@ importers:
       '@embroider/webpack': ^1.9.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
-      '@glint/core': ^0.9.6
+      '@glint/core': ^0.9.7
       '@glint/environment-ember-loose': ^0.9.6
       '@glint/environment-ember-template-imports': ^0.9.6
       '@glint/template': ^0.9.6
@@ -156,7 +156,7 @@ importers:
       '@embroider/webpack': 1.9.0_4mpovkaptyark33dbwnkp36cwi
       '@glimmer/component': 1.1.2_@babel+core@7.19.6
       '@glimmer/tracking': 1.1.2
-      '@glint/core': 0.9.6_typescript@4.8.4
+      '@glint/core': 0.9.7_typescript@4.8.4
       '@glint/environment-ember-loose': 0.9.6_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/environment-ember-template-imports': 0.9.6_jyozhrzovqqpcjlfqrhdyw4lxy
       '@glint/template': 0.9.6_@glimmer+component@1.1.2
@@ -2782,6 +2782,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@glint/config/0.9.7:
+    resolution: {integrity: sha512-XkWIZ3fuOlcofUJUaJmRS57mVVNi+Af2HtrZkBXEOCh4+BNz2wclxv2WKvkhmtvLhEUOhHb5eU3gwI58SuwgXQ==}
+    dependencies:
+      escape-string-regexp: 4.0.0
+      minimatch: 3.1.2
+      resolve: 1.22.1
+      silent-error: 1.1.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@glint/core/0.9.6_typescript@4.8.4:
     resolution: {integrity: sha512-2+hoWIYjEx8NXXEQx+zgqVBULHFxQuqpX7S/sn5on8Kcvgf+zNFqUjDUn4LcF1MtB3xbPkI9cdbxzZ/zD0h6YA==}
     hasBin: true
@@ -2790,6 +2801,25 @@ packages:
     dependencies:
       '@glint/config': 0.9.6
       '@glint/transform': 0.9.6
+      resolve: 1.22.1
+      typescript: 4.8.4
+      uuid: 8.3.2
+      vscode-languageserver: 8.0.2
+      vscode-languageserver-textdocument: 1.0.7
+      vscode-uri: 3.0.6
+      yargs: 17.6.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@glint/core/0.9.7_typescript@4.8.4:
+    resolution: {integrity: sha512-1YLHNRnuYI1dDUKWq/ue4JqiBt6TVR8e7VQJWy37CKB0tiBhWw/FPvr7/S7XbUxCt6KHO0Kl0x/eqLunu3WiQw==}
+    hasBin: true
+    peerDependencies:
+      typescript: ^4.7.0
+    dependencies:
+      '@glint/config': 0.9.7
+      '@glint/transform': 0.9.7
       resolve: 1.22.1
       typescript: 4.8.4
       uuid: 8.3.2
@@ -2872,7 +2902,16 @@ packages:
     resolution: {integrity: sha512-G4X9i/pBCeDfTfurA9h3P6QhG8x/fZKChkUoKGValr3eMYNLtGcBUNcACfTA1loeGXfPt4W0ysO8CxU/oKL1QQ==}
     dependencies:
       '@glimmer/syntax': 0.84.2
-      '@glint/config': 0.9.6
+      '@glint/config': 0.9.7
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@glint/transform/0.9.7:
+    resolution: {integrity: sha512-vd0th+Zo4cirYepASpC0fE0ZCqAcI9Y6qHYE0xi4+MY05bFRxBr7Q9ggDoWk+slynTyUrVgzCCeazAYOlZsYcg==}
+    dependencies:
+      '@glimmer/syntax': 0.84.2
+      '@glint/config': 0.9.7
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10866,12 +10905,6 @@ packages:
       rgb-regex: 1.0.1
       rgba-regex: 1.0.0
 
-  /is-core-module/2.10.0:
-    resolution: {integrity: sha512-Erxj2n/LDAZ7H8WNJXd9tw38GYM3dv8rk8Zcs+jJuxYTW7sozH+SS8NtrSjVL1/vpLvWi1hxy96IzjJ3EHTJJg==}
-    dependencies:
-      has: 1.0.3
-    dev: true
-
   /is-core-module/2.11.0:
     resolution: {integrity: sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==}
     dependencies:
@@ -12463,7 +12496,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       hosted-git-info: 4.1.0
-      is-core-module: 2.10.0
+      is-core-module: 2.11.0
       semver: 7.3.8
       validate-npm-package-license: 3.0.4
     dev: true
