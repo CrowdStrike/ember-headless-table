@@ -34,7 +34,7 @@
     "@embroider/webpack": "^1.9.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/core": "^0.9.6",
+    "@glint/core": "^0.9.7",
     "@glint/environment-ember-loose": "^0.9.6",
     "@glint/environment-ember-template-imports": "^0.9.6",
     "@glint/template": "^0.9.6",
