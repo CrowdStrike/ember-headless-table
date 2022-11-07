@@ -19,7 +19,7 @@ If you use embroider + tailwind, and maybe also want CSS Modules, we recommend [
 <hr />
 
 Since ember-headless-table allows you to _bring your own markup_.
-There is one caveat that we require a wrapper div so that the table can install a modifier that observes container resizes, ather container-related events.
+There is one caveat that we require a wrapper div so that the table can install a modifier that observes container resizes and other container-related events.
 
 
 ## Example using Tailwind
