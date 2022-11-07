@@ -82,7 +82,7 @@ importers:
       '@types/ember__utils': ^4.0.1
       '@types/qunit': ^2.19.3
       '@types/rsvp': ^4.0.4
-      autoprefixer: ^10.4.12
+      autoprefixer: ^10.4.13
       babel-eslint: ^10.1.0
       broccoli-asset-rev: ^3.0.0
       concurrently: ^7.4.0
@@ -145,8 +145,8 @@ importers:
       tracked-built-ins: 3.1.0
     devDependencies:
       '@babel/core': 7.19.6
-      '@crowdstrike/ember-toucan-styles': 1.0.5_do2k75ey62s362izemmcwwdmga
-      '@crowdstrike/tailwind-toucan-base': 3.3.1_5zjlt5w4ir2cay3te66iu3k3ji
+      '@crowdstrike/ember-toucan-styles': 1.0.5_z3jcpyoc6ixlhrepxqsc3cpnlq
+      '@crowdstrike/tailwind-toucan-base': 3.3.1_5ffqlph5rw2qbq3r2falk5k7lu
       '@docfy/core': 0.5.0
       '@docfy/ember': 0.5.0
       '@ember/optional-features': 2.0.0
@@ -189,7 +189,7 @@ importers:
       '@types/ember__utils': 4.0.1_@babel+core@7.19.6
       '@types/qunit': 2.19.3
       '@types/rsvp': 4.0.4
-      autoprefixer: 10.4.12_postcss@8.4.17
+      autoprefixer: 10.4.13_postcss@8.4.17
       babel-eslint: 10.1.0_eslint@7.32.0
       broccoli-asset-rev: 3.0.0
       concurrently: 7.4.0
@@ -2047,7 +2047,7 @@ packages:
       highlightjs-glimmer: ^1.4.1
     dependencies:
       '@babel/runtime': 7.19.4
-      '@crowdstrike/tailwind-toucan-base': 3.3.1_5zjlt5w4ir2cay3te66iu3k3ji
+      '@crowdstrike/tailwind-toucan-base': 3.3.1_5ffqlph5rw2qbq3r2falk5k7lu
       '@docfy/core': 0.5.0
       '@docfy/ember': 0.5.0
       '@embroider/addon-shim': 1.8.3
@@ -2066,14 +2066,14 @@ packages:
       - supports-color
     dev: false
 
-  /@crowdstrike/ember-toucan-styles/1.0.5_do2k75ey62s362izemmcwwdmga:
+  /@crowdstrike/ember-toucan-styles/1.0.5_z3jcpyoc6ixlhrepxqsc3cpnlq:
     resolution: {integrity: sha512-eXCBn0u5TyMeNsw57C4MqSZCrlDYL8LZp9olKd7UAVIK1TNeUrEDe0j6kAhJG2t7psHWjANjOy0ClXX0gMRXbg==}
     peerDependencies:
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.24.0 || >= 4.0.0
       tailwindcss: ^2.2.15 || ^3.0.0
     dependencies:
-      '@crowdstrike/tailwind-toucan-base': 3.3.1_5zjlt5w4ir2cay3te66iu3k3ji
+      '@crowdstrike/tailwind-toucan-base': 3.3.1_5ffqlph5rw2qbq3r2falk5k7lu
       '@embroider/addon-shim': 1.8.3
       '@glimmer/tracking': 1.1.2
       ember-browser-services: 4.0.3
@@ -2087,11 +2087,11 @@ packages:
       - ts-node
     dev: true
 
-  /@crowdstrike/tailwind-toucan-base/3.3.1_5zjlt5w4ir2cay3te66iu3k3ji:
+  /@crowdstrike/tailwind-toucan-base/3.3.1_5ffqlph5rw2qbq3r2falk5k7lu:
     resolution: {integrity: sha512-DGjFKPK7Y0UNJaaWBjE6M0PT/0bgJe3craBrbmI46hzRXMqwsWBZVlk98Sj5pl3pM2N8xldC94W9BpdLDoxrOg==}
     engines: {node: '>=14.15.0'}
     dependencies:
-      tailwindcss: 2.2.19_5zjlt5w4ir2cay3te66iu3k3ji
+      tailwindcss: 2.2.19_5ffqlph5rw2qbq3r2falk5k7lu
     transitivePeerDependencies:
       - autoprefixer
       - postcss
@@ -4689,15 +4689,15 @@ packages:
     hasBin: true
     dev: true
 
-  /autoprefixer/10.4.12_postcss@8.4.17:
-    resolution: {integrity: sha512-WrCGV9/b97Pa+jtwf5UGaRjgQIg7OK3D06GnoYoZNcG1Xb8Gt3EfuKjlhh9i/VtT16g6PYjZ69jdJ2g8FxSC4Q==}
+  /autoprefixer/10.4.13_postcss@8.4.17:
+    resolution: {integrity: sha512-49vKpMqcZYsJjwotvt4+h/BCjJVnhGwcLpDt5xkcaOG3eLrG/HUYLagrihYsQ+qrIBgIzX1Rw7a6L8I/ZA1Atg==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.4
-      caniuse-lite: 1.0.30001416
+      caniuse-lite: 1.0.30001430
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -6061,7 +6061,7 @@ packages:
       '@types/semver': 7.3.12
       '@types/ua-parser-js': 0.7.36
       browserslist: 4.20.2
-      caniuse-lite: 1.0.30001420
+      caniuse-lite: 1.0.30001430
       isbot: 3.4.5
       object-path: 0.11.8
       semver: 7.3.8
@@ -6072,7 +6072,7 @@ packages:
     resolution: {integrity: sha512-WHVocJYavUwVgVViC0ORikPHQquXwVh939TaelZ4WDqpWgTX/FsGhl/+P4qBUAGcRvtOgDgC+xftNWWp2RUTAQ==}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001420
+      caniuse-lite: 1.0.30001430
       electron-to-chromium: 1.4.273
     dev: true
 
@@ -6081,7 +6081,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001420
+      caniuse-lite: 1.0.30001430
       electron-to-chromium: 1.4.273
       escalade: 3.1.1
       node-releases: 2.0.6
@@ -6205,16 +6205,16 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.21.4
-      caniuse-lite: 1.0.30001420
+      caniuse-lite: 1.0.30001430
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001416:
-    resolution: {integrity: sha512-06wzzdAkCPZO+Qm4e/eNghZBDfVNDsCgw33T27OwBH9unE9S478OYw//Q2L7Npf/zBzs7rjZOszIFQkwQKAEqA==}
-
   /caniuse-lite/1.0.30001420:
     resolution: {integrity: sha512-OnyeJ9ascFA9roEj72ok2Ikp7PHJTKubtEJIQ/VK3fdsS50q4KWy+Z5X0A1/GswEItKX0ctAp8n4SYDE7wTu6A==}
+
+  /caniuse-lite/1.0.30001430:
+    resolution: {integrity: sha512-IB1BXTZKPDVPM7cnV4iaKaHxckvdr/3xtctB3f7Hmenx3qYBhGtTZ//7EllK66aKXW98Lx0+7Yr0kxBtIt3tzg==}
 
   /capture-exit/2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
@@ -15222,7 +15222,7 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss/2.2.19_5zjlt5w4ir2cay3te66iu3k3ji:
+  /tailwindcss/2.2.19_5ffqlph5rw2qbq3r2falk5k7lu:
     resolution: {integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -15231,7 +15231,7 @@ packages:
       postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
-      autoprefixer: 10.4.12_postcss@8.4.17
+      autoprefixer: 10.4.13_postcss@8.4.17
       bytes: 3.1.2
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -16598,7 +16598,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.0.0
+    version: 1.0.1
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -16636,7 +16636,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.0.0
+    version: 1.0.1
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
