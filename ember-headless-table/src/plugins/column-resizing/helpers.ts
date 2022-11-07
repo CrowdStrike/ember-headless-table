@@ -23,7 +23,7 @@ export const canShrink = (column: Column) => meta.forColumn(column, ColumnResizi
 /**
  * Does the column have a resize handle?
  * The return value of this function can be determined by
- * - if resizing is enable for the column
+ * - if resizing is enabled for the column
  *   - if resizing is enabled for the whole table
  *   - or if we're asking about the first column (resize handles may only be "between" columns)
  */
