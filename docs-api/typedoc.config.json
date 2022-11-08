@@ -2,16 +2,16 @@
   "tsconfig": "../ember-headless-table/tsconfig.json",
   "entryPoints": [
     "../ember-headless-table/src/index.ts",
-    "../ember-headless-table/src/plugins/",
-    "../ember-headless-table/src/test-support/index.ts"
+    "../ember-headless-table/src/test-support/index.ts",
+    "../ember-headless-table/src/plugins/index.ts",
+    "../ember-headless-table/src/plugins/column-reordering/index.ts",
+    "../ember-headless-table/src/plugins/column-resizing/index.ts",
+    "../ember-headless-table/src/plugins/column-visibility/index.ts",
+    "../ember-headless-table/src/plugins/data-sorting/index.ts",
+    "../ember-headless-table/src/plugins/row-selection/index.ts",
+    "../ember-headless-table/src/plugins/sticky-columns/index.ts"
   ],
-  "entryPointStrategy": "expand",
-  "exclude": [
-    "../ember-headless-table/src/plugins/-private/utils.ts",
-    "../ember-headless-table/src/plugins/column-reordering/utils.ts",
-    "../ember-headless-table/src/plugins/column-resizing/resize-observer.ts",
-    "../ember-headless-table/src/plugins/column-resizing/utils.ts"
-  ],
+  "entryPointStrategy": "resolve",
   "json": "./docs.json",
   "out": "dist",
   "pretty": true,
