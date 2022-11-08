@@ -19,3 +19,13 @@ export const isResizing = (column: Column) => meta.forColumn(column, ColumnResiz
  * Does the column have room to shrink?
  */
 export const canShrink = (column: Column) => meta.forColumn(column, ColumnResizing).canShrink;
+
+/**
+ * Does the column have a resize handle?
+ * The return value of this function can be determined by
+ * - if resizing is enabled for the column
+ *   - if resizing is enabled for the whole table
+ *   - or if we're asking about the first column (resize handles may only be "between" columns)
+ */
+export const hasResizeHandle = (column: Column) =>
+  meta.forColumn(column, ColumnResizing).hasResizeHandle;

@@ -13,7 +13,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 
 import { headlessTable, type ColumnConfig } from 'ember-headless-table';
-import { ColumnResizing, resizeHandle } from 'ember-headless-table/plugins/column-resizing';
+import { ColumnResizing, resizeHandle, hasResizeHandle } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { ColumnReordering, moveLeft, moveRight } from 'ember-headless-table/plugins/column-reordering';
 import { createHelpers, requestAnimationFrameSettled } from 'ember-headless-table/test-support';
@@ -141,8 +141,6 @@ module('Plugins | resizing', function (hooks) {
   </template>;
 
   class TestComponentA extends Component<{ ctx: Context }> {
-    resizeHandle = resizeHandle;
-
     get table() {
       return this.args.ctx.table;
     }
@@ -166,7 +164,9 @@ module('Plugins | resizing', function (hooks) {
                   <th {{this.modifiers.columnHeader column}}>
                     <span>{{column.name}}</span>
 
-                    <div data-handle {{this.resizeHandle column}}>|</div>
+                    {{#if (hasResizeHandle column)}}
+                      <div data-handle {{resizeHandle column}}>|</div>
+                    {{/if}}
                   </th>
                 {{/each}}
               </tr>
