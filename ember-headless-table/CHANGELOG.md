@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.1...v1.1.0) (2022-11-08)
+
+
+### Features
+
+* **plugin, resizing:** add helper for knowing if a column has a resize handle ([f525f50](https://github.com/CrowdStrike/ember-headless-table/commit/f525f50b4002766145187e8c19cce84e62605839))
+
 ## [1.0.1](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.0...v1.0.1) (2022-11-06)
 
 
