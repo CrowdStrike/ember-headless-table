@@ -2,7 +2,7 @@ import "@glint/environment-ember-loose";
 import "@glint/environment-ember-template-imports";
 
 // Types from libraries
-import "@crowdstrike/ember-oss-docs/glint";
+import type CrowdStrikeOSSDocsSupport from "@crowdstrike/ember-oss-docs/template-registry";
 
 // Our own types
 import type ThemeSwitcher from 'docs-app/components/theme-switcher';
@@ -19,7 +19,7 @@ declare module '@ember/modifier' {
 }
 
 declare module "@glint/environment-ember-loose/registry" {
-  export default interface Registry {
+  export default interface Registry extends CrowdStrikeOSSDocsSupport {
     ThemeSwitcher: typeof ThemeSwitcher;
     FeatureCard: typeof FeatureCard;
 
