@@ -84,12 +84,16 @@ export class ColumnMeta {
   /**
    * Move the column one spot to the left
    */
-  moveLeft = () => this.position--;
+  moveLeft = () => {
+    this.#tableMeta.columnOrder.moveLeft(this.column.key);
+  };
 
   /**
    * Move the column one spot to the right
    */
-  moveRight = () => this.position++;
+  moveRight = () => {
+    this.#tableMeta.columnOrder.moveRight(this.column.key);
+  };
 }
 
 export class TableMeta {
@@ -117,7 +121,7 @@ export class TableMeta {
 
   @action
   setPosition(column: Column, newPosition: number) {
-    return this.columnOrder.set(column.key, newPosition);
+    return this.columnOrder.swapWith(column.key, newPosition);
   }
 
   /**
@@ -194,8 +198,77 @@ export class ColumnOrder {
     }
   }
 
+  /**
+   * To account for columnVisibilty, we need to:
+   * - get the list of visible columns
+   * - get the column order (which preserves the order of hidden columns)
+   * - skip over non-visible columns when determining the previous "index"
+   * - set the position to whatever that is.
+   */
   @action
-  set(key: string, position: number) {
+  moveLeft(key: string) {
+    let orderedColumns = this.orderedColumns;
+
+    let found = false;
+    let nextColumn: { key: string } | undefined;
+
+    for (let column of orderedColumns.reverse()) {
+      if (found) {
+        nextColumn = column;
+
+        break;
+      }
+
+      if (column.key === key) {
+        found = true;
+      }
+    }
+
+    if (!nextColumn) return;
+
+    let nextPosition = this.get(nextColumn.key);
+
+    this.swapWith(key, nextPosition);
+  }
+
+  /**
+   * To account for columnVisibilty, we need to:
+   * - get the list of visible columns
+   * - get the column order (which preserves the order of hidden columns)
+   * - skip over non-visible columns when determining the next "index"
+   * - set the position to whatever that is.
+   */
+  @action
+  moveRight(key: string) {
+    let orderedColumns = this.orderedColumns;
+
+    let found = false;
+    let nextColumn: { key: string } | undefined;
+
+    for (let column of orderedColumns) {
+      if (found) {
+        nextColumn = column;
+
+        break;
+      }
+
+      if (column.key === key) {
+        found = true;
+      }
+    }
+
+    if (!nextColumn) return;
+
+    let nextPosition = this.get(nextColumn.key);
+
+    this.swapWith(key, nextPosition);
+  }
+
+  /**
+   * Performs a swap of the column's position with the column at position
+   */
+  @action
+  swapWith(key: string, position: number) {
     /**
      * Cannot set a position lower than the min value (before the beginning?)
      */
@@ -206,7 +279,7 @@ export class ColumnOrder {
     /**
      * position is 0-indexed and length includes 0 in its count of items
      */
-    let maxPosition = this.args.columns().length - 1;
+    let maxPosition = this.orderedMap.size - 1;
 
     /**
      * Cannot set a position higher than the max value (after the end?)
@@ -240,42 +313,19 @@ export class ColumnOrder {
       return false;
     }
 
-    /**
-     * For the columns between the gap we took `key` from and the `position`
-     * we want to place that column, which direction do we move those middle columns?
-     */
-    let direction =
-      currentPosition < position
-        ? /**
-           *   moved ------------------> to the right
-           * currentPosition         position
-           *   gap ^
-           * columns left of position now need to shift left to fill that gap
-           */
-          'left'
-        : /**
-           *   moved <------------------ to the left
-           * position         currentPosition
-           *                    gap ^
-           * columns right of position now need to shift right to fill that gap
-           */
-          'right';
-
     let keyByPosition = new Map<number, string>(
       [...this.orderedMap.entries()].map((entry) => entry.reverse() as [number, string])
     );
 
     for (let [existingPosition, key] of keyByPosition.entries()) {
-      if (direction === 'left') {
-        if (existingPosition > currentPosition && existingPosition <= position) {
-          this.map.set(key, existingPosition - 1);
-        }
-      }
+      if (existingPosition === position) {
+        /**
+         * We swap positions because the positions are not incremental
+         * meaning we can have gaps, intentionally, due to hidden columns
+         */
+        this.map.set(key, currentPosition);
 
-      if (direction === 'right') {
-        if (existingPosition >= position && existingPosition <= currentPosition) {
-          this.map.set(key, existingPosition + 1);
-        }
+        break;
       }
     }
 
