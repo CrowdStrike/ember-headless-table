@@ -37,7 +37,7 @@ module('Plugins | columnVisibility', function (hooks) {
     });
   }
 
-  class TestComponentA extends Component<{ ctx: { table: Table } }> {
+  class TestComponentA extends Component<{ ctx: { table: Table<typeof DATA[0]> } }> {
     get table() {
       return this.args.ctx.table;
     }
@@ -285,7 +285,7 @@ module('Plugins | columnVisibility', function (hooks) {
 
         table = headlessTable(this, {
           columns: () => this.columns,
-          data: () => [] as unknown[],
+          data: () => [] as typeof DATA[0][],
           plugins: [ColumnReordering, ColumnVisibility],
         });
       }
