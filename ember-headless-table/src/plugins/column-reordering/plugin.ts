@@ -269,23 +269,13 @@ export class ColumnOrder {
    */
   @action
   swapWith(key: string, position: number) {
-    /**
-     * Cannot set a position lower than the min value (before the beginning?)
-     */
-    if (position < 0) {
-      return false;
-    }
+    let validPositions = [...this.orderedMap.values()];
 
     /**
-     * position is 0-indexed and length includes 0 in its count of items
+     * Position to swap to must exist
      */
-    let maxPosition = this.orderedMap.size - 1;
-
-    /**
-     * Cannot set a position higher than the max value (after the end?)
-     */
-    if (position > maxPosition) {
-      return false;
+    if (!validPositions.includes(position)) {
+      return;
     }
 
     /**
