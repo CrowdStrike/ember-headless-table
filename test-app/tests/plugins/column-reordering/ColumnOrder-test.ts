@@ -55,6 +55,19 @@ module('Plugin | column-reordering | ColumnOrder', function () {
         ['F', 5],
       ]);
     });
+
+    test('a column at the end, cannot move further', function (assert) {
+      order.moveRight('F');
+
+      assert.deepEqual(toEntries(order.orderedMap), [
+        ['A', 0],
+        ['B', 1],
+        ['C', 2],
+        ['D', 3],
+        ['E', 4],
+        ['F', 5],
+      ]);
+    });
   });
 
   module('#moveLeft', function (hooks) {
@@ -94,14 +107,27 @@ module('Plugin | column-reordering | ColumnOrder', function () {
     });
 
     test('a column is shifted', function (assert) {
-      order.swapWith('B', 4);
+      order.moveLeft('B');
+
+      assert.deepEqual(toEntries(order.orderedMap), [
+        ['B', 0],
+        ['A', 1],
+        ['C', 2],
+        ['D', 3],
+        ['E', 4],
+        ['F', 5],
+      ]);
+    });
+
+    test('a column at the end, cannot move further', function (assert) {
+      order.moveLeft('A');
 
       assert.deepEqual(toEntries(order.orderedMap), [
         ['A', 0],
-        ['E', 1],
+        ['B', 1],
         ['C', 2],
         ['D', 3],
-        ['B', 4],
+        ['E', 4],
         ['F', 5],
       ]);
     });

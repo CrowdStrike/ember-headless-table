@@ -275,21 +275,6 @@ module('Plugins | columnVisibility', function (hooks) {
 
   module('interaction with other plugins', function () {
     module('ColumnReordering', function (hooks) {
-      class DefaultOptions {
-        columns = [
-          { name: 'A', key: 'A' },
-          { name: 'B', key: 'B' },
-          { name: 'C', key: 'C' },
-          { name: 'D', key: 'D' },
-        ];
-
-        table = headlessTable(this, {
-          columns: () => this.columns,
-          data: () => [] as typeof DATA[0][],
-          plugins: [ColumnReordering, ColumnVisibility],
-        });
-      }
-
 
       let getColumnOrder = () => findAll('thead tr th').map(x => {
         assert('expected element to exist and have innerText', x instanceof HTMLElement);
@@ -302,36 +287,101 @@ module('Plugins | columnVisibility', function (hooks) {
         *
         * When moving a column over a hidden column, all columns become hidden.
         * This shouldn't happen.
+        *
+        * These two tests are the same, but it matters if moving would swap end-cap columns
+        * or not
         */
-      test('#60, for the left-most column -- move -> hide -> move, works as expected', async function (assert) {
-        let ctx = new DefaultOptions();
-        setOwner(ctx, this.owner);
+      module('#60, move -> hide -> move works as expected', function (hooks) {
+        test('for 4 columns', async function (assert) {
+          class DefaultOptions {
+            columns = [
+              { name: 'A', key: 'A' },
+              { name: 'B', key: 'B' },
+              { name: 'C', key: 'C' },
+              { name: 'D', key: 'D' },
+            ];
 
-        await render(
-          <template>
-            {{#each ctx.table.columns as |column|}}
-              <button id="{{column.key}}-left" {{on 'click' (fn moveLeft column)}}>move {{column.key}} left</button>
-              <button id="{{column.key}}-right" {{on 'click' (fn moveRight column)}}>move {{column.key}} right</button>
-              <br>
-            {{/each}}
+            table = headlessTable(this, {
+              columns: () => this.columns,
+              data: () => [] as typeof DATA[0][],
+              plugins: [ColumnReordering, ColumnVisibility],
+            });
+          }
 
-            <TestComponentA @ctx={{ctx}} />
-          </template>
-        );
+          let ctx = new DefaultOptions();
+          setOwner(ctx, this.owner);
 
-        assert.strictEqual(getColumnOrder(), 'A B C D');
+          await render(
+            <template>
+              {{#each ctx.table.columns as |column|}}
+                <button id="{{column.key}}-left" {{on 'click' (fn moveLeft column)}}>move {{column.key}} left</button>
+                <button id="{{column.key}}-right" {{on 'click' (fn moveRight column)}}>move {{column.key}} right</button>
+                <br>
+              {{/each}}
 
-        await click('#A-right');
+              <TestComponentA @ctx={{ctx}} />
+            </template>
+          );
 
-        assert.strictEqual(getColumnOrder(), 'B A C D');
+          assert.strictEqual(getColumnOrder(), 'A B C D', 'initial state');
 
-        await click('.hide.A');
+          await click('#A-right');
 
-        assert.strictEqual(getColumnOrder(), 'B C D');
+          assert.strictEqual(getColumnOrder(), 'B A C D', 'A and B swapped');
 
-        await click('#B-right');
+          await click('.hide.A');
 
-        assert.strictEqual(getColumnOrder(), 'C B D');
+          assert.strictEqual(getColumnOrder(), 'B C D', 'A is hidden');
+
+          await click('#B-right');
+
+          assert.strictEqual(getColumnOrder(), 'C B D', 'B and C swapped');
+        });
+
+        test('for 3 columns', async function (assert) {
+          class DefaultOptions {
+            columns = [
+              { name: 'A', key: 'A' },
+              { name: 'B', key: 'B' },
+              { name: 'C', key: 'C' },
+            ];
+
+            table = headlessTable(this, {
+              columns: () => this.columns,
+              data: () => [] as typeof DATA[0][],
+              plugins: [ColumnReordering, ColumnVisibility],
+            });
+          }
+
+          let ctx = new DefaultOptions();
+          setOwner(ctx, this.owner);
+
+          await render(
+            <template>
+              {{#each ctx.table.columns as |column|}}
+                <button id="{{column.key}}-left" {{on 'click' (fn moveLeft column)}}>move {{column.key}} left</button>
+                <button id="{{column.key}}-right" {{on 'click' (fn moveRight column)}}>move {{column.key}} right</button>
+                <br>
+              {{/each}}
+
+              <TestComponentA @ctx={{ctx}} />
+            </template>
+          );
+
+          assert.strictEqual(getColumnOrder(), 'A B C', 'initial state');
+
+          await click('#A-right');
+
+          assert.strictEqual(getColumnOrder(), 'B A C', 'A is now in the middle');
+
+          await click('.hide.A');
+
+          assert.strictEqual(getColumnOrder(), 'B C', 'A is hidden');
+
+          await click('#B-right');
+
+          assert.strictEqual(getColumnOrder(), 'C B', 'columns are swapped');
+        });
       });
     });
   });
