@@ -51,6 +51,7 @@
     "@glint/template": "^0.9.7",
     "@nullvoxpopuli/eslint-configs": "^2.2.57",
     "@tsconfig/ember": "^1.0.1",
+    "@types/babel__traverse": "^7.18.2",
     "@types/ember": "^4.0.2",
     "@types/ember-qunit": "^5.0.1",
     "@types/ember-resolver": "^5.0.13",
