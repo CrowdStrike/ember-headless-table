@@ -347,10 +347,7 @@ importers:
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.8.1
       '@ember/test-waiters': ^3.0.0
-      '@embroider/compat': ^1.9.0
-      '@embroider/core': ^1.9.0
       '@embroider/test-setup': ^1.7.1
-      '@embroider/webpack': ^1.9.0
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/core': ^0.9.6
@@ -436,10 +433,7 @@ importers:
     devDependencies:
       '@babel/core': 7.19.3
       '@ember/optional-features': 2.0.0
-      '@embroider/compat': 1.9.0_@embroider+core@1.9.0
-      '@embroider/core': 1.9.0
       '@embroider/test-setup': 1.8.3
-      '@embroider/webpack': 1.9.0_4mpovkaptyark33dbwnkp36cwi
       '@glimmer/component': 1.1.2_@babel+core@7.19.3
       '@glimmer/tracking': 1.1.2
       '@glint/core': 0.9.6_typescript@4.8.4
