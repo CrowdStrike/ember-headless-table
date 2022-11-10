@@ -39,7 +39,7 @@ importers:
   docs-app:
     specifiers:
       '@babel/core': ^7.19.6
-      '@crowdstrike/ember-oss-docs': ^1.1.1
+      '@crowdstrike/ember-oss-docs': ^1.1.2
       '@crowdstrike/ember-toucan-styles': ^1.0.5
       '@crowdstrike/tailwind-toucan-base': ^3.3.1
       '@docfy/core': ^0.5.0
@@ -135,7 +135,7 @@ importers:
       typescript: ^4.8.4
       webpack: ^5.74.0
     dependencies:
-      '@crowdstrike/ember-oss-docs': 1.1.1_dlxa2f3lafnoo6feoyadaktxga
+      '@crowdstrike/ember-oss-docs': 1.1.2_dlxa2f3lafnoo6feoyadaktxga
       '@ember/test-waiters': 3.0.2
       '@embroider/router': 1.9.0_6nap4nrlhytgwxhnrgcj56wvwu
       dompurify: 2.4.0
@@ -2248,8 +2248,8 @@ packages:
     dev: true
     optional: true
 
-  /@crowdstrike/ember-oss-docs/1.1.1_dlxa2f3lafnoo6feoyadaktxga:
-    resolution: {integrity: sha512-0EOsHx8ID+s37OFXJTE88IQEIT1gN+JK4ZNo2Gu/bLBMYtJ/d74cT1OUzXOiUH5bwxOi85hiPFYk8QtMgzEIDg==}
+  /@crowdstrike/ember-oss-docs/1.1.2_dlxa2f3lafnoo6feoyadaktxga:
+    resolution: {integrity: sha512-njFvGlMntqkVeU4vc3wU6WKvKWPNampUkkfggcywruxZ/Xch8M4sNXfdMBCaCA9BPAikNdqvl6O6vgOzOeldgQ==}
     peerDependencies:
       '@crowdstrike/tailwind-toucan-base': ^3.3.1
       '@docfy/core': ^0.5.0
@@ -2259,7 +2259,7 @@ packages:
       '@glint/template': '>= 0.9.0'
       '@tailwindcss/typography': ^0.5.7
       highlight.js: ^11.6.0
-      highlightjs-glimmer: ^1.4.1
+      highlightjs-glimmer: ^1.4.1 || ^2.0.0
     dependencies:
       '@babel/runtime': 7.20.1
       '@crowdstrike/tailwind-toucan-base': 3.3.1_5ffqlph5rw2qbq3r2falk5k7lu
@@ -3450,9 +3450,9 @@ packages:
   /@types/ember-qunit/5.0.2_@babel+core@7.19.6:
     resolution: {integrity: sha512-LXp0Ew4wPhaCMuw49cNDHWs/bROn+Msb4ypMG1t60EMBx0UaEoX0tZlkf5bQJfdD249WZTu5cCtKvl47xbQzxA==}
     dependencies:
-      '@types/ember-resolver': 5.0.11_@babel+core@7.19.6
-      '@types/ember__test': 4.0.0_@babel+core@7.19.6
-      '@types/ember__test-helpers': 2.8.1_@babel+core@7.19.6
+      '@types/ember-resolver': 5.0.13_@babel+core@7.19.6
+      '@types/ember__test': 4.0.1_@babel+core@7.19.6
+      '@types/ember__test-helpers': 2.8.2_@babel+core@7.19.6
       '@types/qunit': 2.19.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -11256,7 +11256,7 @@ packages:
   /is-language-code/3.1.0:
     resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
     dependencies:
-      '@babel/runtime': 7.19.4
+      '@babel/runtime': 7.20.1
     dev: true
 
   /is-negative-zero/2.0.2:
