@@ -6,6 +6,7 @@
   "license": "MIT",
   "author": "",
   "scripts": {
+    "release": "changeset publish",
     "build": "pnpm --filter ember-headless-table build",
     "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
     "build:docs-app": "pnpm --filter docs-app build",
@@ -21,6 +22,8 @@
     "lint:fix": "pnpm --filter '*' lint:fix"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.7",
+    "@changesets/cli": "^2.25.2",
     "concurrently": "^7.2.1",
     "prettier": "^2.5.1"
   },

@@ -33,9 +33,6 @@ support:
    - typescript@4.7
    - typescript@4.8
 
-release:
-  semantic: true
-
 extra:
   - name: 'Typecheck Docs'
     needs: ['build']
