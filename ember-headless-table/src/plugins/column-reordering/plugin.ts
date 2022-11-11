@@ -124,6 +124,10 @@ export class TableMeta {
     return this.columnOrder.swapWith(column.key, newPosition);
   }
 
+  setOrder = (order: ColumnOrder) => {
+    this.columnOrder.setAll(order.map);
+  };
+
   /**
    * Revert to default config, delete preferences,
    * and clear the columnOrder
@@ -189,7 +193,7 @@ export class ColumnOrder {
   constructor(
     private args: {
       columns: () => Column[];
-      save: (order: Map<string, number>) => void;
+      save?: (order: Map<string, number>) => void;
       existingOrder?: Map<string, number>;
     }
   ) {
@@ -230,6 +234,14 @@ export class ColumnOrder {
 
     this.swapWith(key, nextPosition);
   }
+
+  setAll = (map: Map<string, number>) => {
+    this.map.clear();
+
+    for (let [key, value] of map.entries()) {
+      this.map.set(key, value);
+    }
+  };
 
   /**
    * To account for columnVisibilty, we need to:
@@ -334,7 +346,7 @@ export class ColumnOrder {
       this.map.set(key, position);
     }
 
-    this.args.save(this.map);
+    this.args.save?.(this.map);
   }
 
   @action
@@ -356,17 +368,6 @@ export class ColumnOrder {
   @cached
   get orderedMap(): ReadonlyMap<string, number> {
     return orderOf(this.args.columns(), this.map);
-  }
-
-  /**
-   * When columns are removed or hidden, our positions don't change
-   * but when doing the math, we want to adjust things based on 0-indexed counting
-   *
-   * TODO: figure out if we need this??
-   */
-  @cached
-  get adjustedColumns(): Column[] {
-    return [];
   }
 
   @cached
