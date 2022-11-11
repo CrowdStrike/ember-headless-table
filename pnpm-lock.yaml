@@ -54,7 +54,7 @@ importers:
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/core': ^0.9.7
-      '@glint/environment-ember-loose': ^0.9.6
+      '@glint/environment-ember-loose': ^0.9.7
       '@glint/environment-ember-template-imports': ^0.9.6
       '@glint/template': ^0.9.6
       '@html-next/vertical-collection': ^4.0.0
@@ -3270,7 +3270,7 @@ packages:
     resolution: {integrity: sha512-G6kbLaS3ke4QspHkgLlGY0t1v0G22hGavyphezZucj7LLk1N+r11w913CYkBg3cJsJD+TG2Wo4eVbgRcotvuvQ==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.2
-      '@types/ember__object': 4.0.5
+      '@types/ember__object': 4.0.5_@babel+core@7.20.2
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3279,7 +3279,7 @@ packages:
     resolution: {integrity: sha512-iwFf+qYBsGp9SycIb0lxGkdZPYpKxMcBoV5kCJbWyC6azuX2xPDXHx8n2lm8O9GrEFVJXfYC5bSXf33rdpy5Sw==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.2
-      '@types/ember__object': 4.0.5
+      '@types/ember__object': 4.0.5_@babel+core@7.20.2
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -6105,7 +6105,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concurrently/7.5.0:
     resolution: {integrity: sha512-5E3mwiS+i2JYBzr5BpXkFxOnleZTMsG+WnE/dCG4/P+oiVXrbmrBwJ2ozn4SxwB2EZDrKR568X+puVohxz3/Mg==}
