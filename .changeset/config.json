@@ -1,11 +1,18 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.2.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "notes": {
+    "overall config docs": "https://github.com/changesets/changesets/blob/main/docs/config-file-options.md",
+    "changelog customization": "https://github.com/changesets/changesets/blob/main/docs/modifying-changelog-format.md"
+  },
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "CrowdStrike/ember-headless-table" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": ["docs-app", "test-app", "docs-api"]
 }
