@@ -59,7 +59,7 @@ importers:
       '@glint/template': ^0.9.7
       '@html-next/vertical-collection': ^4.0.1
       '@nullvoxpopuli/eslint-configs': ~2.2.59
-      '@tailwindcss/typography': ^0.5.7
+      '@tailwindcss/typography': ^0.5.8
       '@tsconfig/ember': ^1.0.1
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.1
