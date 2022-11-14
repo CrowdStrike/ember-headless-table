@@ -7,12 +7,73 @@ import type { Column } from 'ember-headless-table';
 module('Plugin | column-reordering | ColumnOrder', function () {
   const toEntries = (map: ReadonlyMap<unknown, unknown>) => [...map.entries()];
 
+  module('#setAll', function (hooks) {
+    let order: ColumnOrder;
+
+    hooks.beforeEach(function (assert) {
+      order = new ColumnOrder({
+        columns: () =>
+          [
+            { key: 'A' },
+            { key: 'B' },
+            { key: 'C' },
+            { key: 'D' },
+            { key: 'E' },
+            { key: 'F' },
+            /**
+             * This cast is a lie, but a useful one, as these #set
+             * tests don't actually care about the Column structure
+             * of this data -- only that a key exists
+             */
+          ] as Column[],
+      });
+
+      assert.deepEqual(
+        toEntries(order.orderedMap),
+        [
+          ['A', 0],
+          ['B', 1],
+          ['C', 2],
+          ['D', 3],
+          ['E', 4],
+          ['F', 5],
+        ],
+        'test is set up'
+      );
+    });
+
+    test('can change the order of all columns at once', function (assert) {
+      let newOrder = new Map<string, number>([
+        ['E', 5],
+        ['C', 1],
+        ['F', 0],
+        ['B', 3],
+        ['D', 2],
+        ['A', 4],
+      ]);
+
+      order.setAll(newOrder);
+
+      assert.deepEqual(
+        toEntries(order.orderedMap),
+        [
+          ['F', 0],
+          ['C', 1],
+          ['D', 2],
+          ['B', 3],
+          ['A', 4],
+          ['E', 5],
+        ],
+        'columns are in the correct order'
+      );
+    });
+  });
+
   module('#moveRight', function (hooks) {
     let order: ColumnOrder;
 
     hooks.beforeEach(function (assert) {
       order = new ColumnOrder({
-        save: () => {},
         columns: () =>
           [
             { key: 'A' },

@@ -1,7 +1,8 @@
 import { meta } from '../-private/base';
 import { ColumnReordering } from './plugin';
 
-import type { Column } from '[public-types]';
+import type { ColumnOrder } from './plugin';
+import type { Column, Table } from '[public-types]';
 
 /**
  * Move the column one position to the left.
@@ -14,6 +15,13 @@ export const moveLeft = (column: Column) => meta.forColumn(column, ColumnReorder
  * If the column is last, nothing will happen.
  */
 export const moveRight = (column: Column) => meta.forColumn(column, ColumnReordering).moveRight();
+
+/**
+ * Override all column positions at once.
+ */
+export const setColumnOrder = (table: Table, order: ColumnOrder) => {
+  return meta.forTable(table, ColumnReordering).setOrder(order);
+};
 
 /**
  * Ask if the column cannot move to the left
