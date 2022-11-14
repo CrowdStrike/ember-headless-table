@@ -1,50 +1,187 @@
 # [1.1.0](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.1...v1.1.0) (2022-11-08)
 
+## 1.2.0
+
+### Minor Changes
+
+- [#58](https://github.com/CrowdStrike/ember-headless-table/pull/58) [`f885ebb`](https://github.com/CrowdStrike/ember-headless-table/commit/f885ebb5aa19f9daf1697f0edd907e39e27827d5) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - New _Metadata_ plugin, for allowing arbitrary data to be stored for each column as well as the whole table.
+  This can be useful eliminating prop-drilling in a UI Table implementation consuming the
+  headlessTable.
+
+  For example, setting up the table can be done like:
+
+  ```js
+  import { headlessTable } from 'ember-headless-table';
+
+  class Example {
+    /* ... */
+
+    table = headlessTable(this, {
+      columns: () => [
+        { name: 'A', key: 'A' },
+        {
+          name: 'B',
+          key: 'B',
+          pluginOptions: [
+            Metadata.forColumn(() => ({
+              isBulkSelectable: false,
+            })),
+          ],
+        },
+        {
+          name: 'D',
+          key: 'D',
+          pluginOptions: [Metadata.forColumn(() => ({ isRad: this.dRed }))],
+        },
+      ],
+      data: () => DATA,
+      plugins: [
+        Metadata.with(() => ({
+          onBulkSelectionChange: (...args) => this.doSomething(...args),
+        })),
+      ],
+    });
+  }
+  ```
+
+  To allow "bulk selection" behaviors to be integrated into how the Table is rendered --
+  which for fancier tables, my span multiple components.
+
+  For example: rows may be their own component
+
+  ```gjs
+  // Two helpers are provided for accessing your Metadata
+  import { forColumn /*, forTable */ } from 'ember-headless-table/plugins/metadata';
+
+  const isBulkSelectable = (column) => forColumn(column, 'isBulkSelectable');
+
+  export const Row = <template>
+    <tr>
+      {{#each @table.columns as |column|}}
+        {{#if (isBulkSelectable column)}}
+
+          ... render some checkbox UI ...
+
+        {{else}}
+          <td>
+            {{column.getValueForRow @datum}}
+          </td>
+        {{/if}}
+      {{/each}}
+    </tr>
+  </template>;
+  ```
+
+- [#66](https://github.com/CrowdStrike/ember-headless-table/pull/66) [`3075a5c`](https://github.com/CrowdStrike/ember-headless-table/commit/3075a5ccc04be95e0392e3cc0c8e589439df4a02) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add a new API for the column-reordering plugin that allows for
+  managing column order independently of the table's column order,
+  for example, in a configuration UI / preview, one may want to
+  see how their changes will look before applying them to the table.
+
+  To use this new API, there are two relevant imports:
+
+  ```js
+  import {
+    ColumnOrder,
+    setColumnOrder,
+  } from 'ember-headless-table/plugins/column-reordering';
+  ```
+
+  To manage the "preview column order",
+  you'll want to instantiate the `ColumnOrder` class,
+  and then once your changes are done, call `setColumnOrder` and pass
+  both the table and the `ColumnOrder` instance:
+
+  ```js
+  class Demo {
+    @tracked pendingColumnOrder;
+
+    changeColumnOrder = () => {
+      this.pendingColumnOrder = new ColumnOrder({
+        columns: () => this.columns,
+      });
+    };
+
+    handleReconfigure = () => {
+      setColumnOrder(this.table, this.pendingColumnOrder);
+      this.pendingColumnOrder = null;
+    };
+  }
+  ```
+
+  In this example, when working with `this.pendingColumnOrder`, you may use
+  familiar "moveLeft" and "moveRight" behaviors,
+
+  ```hbs
+  {{#let this.pendingColumnOrder as |order|}}
+
+    {{#each order.orderedColumns as |column|}}
+
+      <button {{on 'click' (fn order.moveLeft column.key)}}> ⇦ </button>
+
+      {{column.name}}
+
+      <button {{on 'click' (fn order.moveRight column.key)}}> ⇨ </button>
+
+    {{/each}}
+
+    <button {{on 'click' this.handleReconfigure}}>Submit changes</button>
+  {{/let}}
+  ```
+
+### Patch Changes
+
+- [#63](https://github.com/CrowdStrike/ember-headless-table/pull/63) [`ecb68ff`](https://github.com/CrowdStrike/ember-headless-table/commit/ecb68ff8d507dd70a48cd0fbf1b5368c03a1544c) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Previously, ember-headless-table's releases were managed by semantic-release.
+  Now, they are managed by changesets, which is a bit more manual, but has far better
+  monorepo support and allows catering to humans when it comes to changelogs.
+
+- [#61](https://github.com/CrowdStrike/ember-headless-table/pull/61) [`0356997`](https://github.com/CrowdStrike/ember-headless-table/commit/035699770afd1a40c16ed251fe4f8cdd7860db3a) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Fixes the issue reported in https://github.com/CrowdStrike/ember-headless-table/issues/60
+  Where the column reordering and visibility plugins were not integrating well together.
+  In short, moving column, then hiding that same column, then moving a column "over the gap"
+  between the columns resulted in all column reordering no longer working.
+  Using both of the plugins together should now work as intuitively expected.
 
 ### Features
 
-* **plugin, resizing:** add helper for knowing if a column has a resize handle ([f525f50](https://github.com/CrowdStrike/ember-headless-table/commit/f525f50b4002766145187e8c19cce84e62605839))
+- **plugin, resizing:** add helper for knowing if a column has a resize handle ([f525f50](https://github.com/CrowdStrike/ember-headless-table/commit/f525f50b4002766145187e8c19cce84e62605839))
 
 ## [1.0.1](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.0...v1.0.1) (2022-11-06)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency highlightjs-glimmer to v2 ([0881e12](https://github.com/CrowdStrike/ember-headless-table/commit/0881e12bb091daf711e3712151f26b6e6cd9ace5))
+- **deps:** update dependency highlightjs-glimmer to v2 ([0881e12](https://github.com/CrowdStrike/ember-headless-table/commit/0881e12bb091daf711e3712151f26b6e6cd9ace5))
 
 # 1.0.0 (2022-11-02)
 
-
 ### Bug Fixes
 
-* **column-reordering:** reordering reactivity restored ([bf8153c](https://github.com/CrowdStrike/ember-headless-table/commit/bf8153c945e7215dd286ad74b9ffb2b77b3a4e47))
-* **columnReordering:** rework how order state is maintained ([39ae71e](https://github.com/CrowdStrike/ember-headless-table/commit/39ae71ebb825d94d939fa5327ee75352734e92fd))
-* **columnResizing:** fix the resize-handle modifier ([e17c232](https://github.com/CrowdStrike/ember-headless-table/commit/e17c23221c92d1507ef9b357311f6c3c978cbd12))
-* **columnResizing:** resizeHandle modifier needs to be an ember-modifier ([90f7577](https://github.com/CrowdStrike/ember-headless-table/commit/90f7577512e82ac44e02e681860634ac7707d8d3))
-* **columnVisibility:** bug where default hidden could not be unhidden ([e6b7239](https://github.com/CrowdStrike/ember-headless-table/commit/e6b72399b9efecc64ee056321bbabfb56eee5302))
-* **columnVisibility:** work around a bug with tracked-built-ins' delete not being reactive ([ce62498](https://github.com/CrowdStrike/ember-headless-table/commit/ce624988ea72f0d471002ba4472eda5886ab9e0c))
-* **columnVisibilty:** bug where default / preferences clearing calculation was incorrect ([e3e8480](https://github.com/CrowdStrike/ember-headless-table/commit/e3e84805e0a42c70d098a45f206a42e7be4b918f))
-* **deps:** update dependency @ember/test-waiters to ^3.0.2 ([dcb45d1](https://github.com/CrowdStrike/ember-headless-table/commit/dcb45d19677c3cbc3ad38066ed2923f9e2974a37))
-* **resizing:** resizing depends on column order, not just visibility ([6ac95ef](https://github.com/CrowdStrike/ember-headless-table/commit/6ac95ef47b02bf191103d8cca9d19b350e2a1342))
-
+- **column-reordering:** reordering reactivity restored ([bf8153c](https://github.com/CrowdStrike/ember-headless-table/commit/bf8153c945e7215dd286ad74b9ffb2b77b3a4e47))
+- **columnReordering:** rework how order state is maintained ([39ae71e](https://github.com/CrowdStrike/ember-headless-table/commit/39ae71ebb825d94d939fa5327ee75352734e92fd))
+- **columnResizing:** fix the resize-handle modifier ([e17c232](https://github.com/CrowdStrike/ember-headless-table/commit/e17c23221c92d1507ef9b357311f6c3c978cbd12))
+- **columnResizing:** resizeHandle modifier needs to be an ember-modifier ([90f7577](https://github.com/CrowdStrike/ember-headless-table/commit/90f7577512e82ac44e02e681860634ac7707d8d3))
+- **columnVisibility:** bug where default hidden could not be unhidden ([e6b7239](https://github.com/CrowdStrike/ember-headless-table/commit/e6b72399b9efecc64ee056321bbabfb56eee5302))
+- **columnVisibility:** work around a bug with tracked-built-ins' delete not being reactive ([ce62498](https://github.com/CrowdStrike/ember-headless-table/commit/ce624988ea72f0d471002ba4472eda5886ab9e0c))
+- **columnVisibilty:** bug where default / preferences clearing calculation was incorrect ([e3e8480](https://github.com/CrowdStrike/ember-headless-table/commit/e3e84805e0a42c70d098a45f206a42e7be4b918f))
+- **deps:** update dependency @ember/test-waiters to ^3.0.2 ([dcb45d1](https://github.com/CrowdStrike/ember-headless-table/commit/dcb45d19677c3cbc3ad38066ed2923f9e2974a37))
+- **resizing:** resizing depends on column order, not just visibility ([6ac95ef](https://github.com/CrowdStrike/ember-headless-table/commit/6ac95ef47b02bf191103d8cca9d19b350e2a1342))
 
 ### Features
 
-* **columnReordering:** preferences are now persisted and read from ([96e13c1](https://github.com/CrowdStrike/ember-headless-table/commit/96e13c10f4a9edf700ee5f7aaa1ecf784568ad33))
-* initial implementation ([0fc2cbc](https://github.com/CrowdStrike/ember-headless-table/commit/0fc2cbcd5e274836ca6ab41fe2b9379a6adda812))
-* **plugin:** implement row selection plugin ([e46ce50](https://github.com/CrowdStrike/ember-headless-table/commit/e46ce50480fcb510b88074fadd92027e6ffa01d9))
-* **plugins:** simplify working with columns among plugins ([48ef0bb](https://github.com/CrowdStrike/ember-headless-table/commit/48ef0bbfba8cf677be09c5c40e8152b46a64e074))
-* **plugin:** sticky columns ([b9b8bfa](https://github.com/CrowdStrike/ember-headless-table/commit/b9b8bfa476490af783d78f2992d9278874e33608))
-* **table:** support [@use](https://github.com/use) ([6561c30](https://github.com/CrowdStrike/ember-headless-table/commit/6561c305f1998c9ce0283b9dfcd79f45fd7aa7d4))
-
+- **columnReordering:** preferences are now persisted and read from ([96e13c1](https://github.com/CrowdStrike/ember-headless-table/commit/96e13c10f4a9edf700ee5f7aaa1ecf784568ad33))
+- initial implementation ([0fc2cbc](https://github.com/CrowdStrike/ember-headless-table/commit/0fc2cbcd5e274836ca6ab41fe2b9379a6adda812))
+- **plugin:** implement row selection plugin ([e46ce50](https://github.com/CrowdStrike/ember-headless-table/commit/e46ce50480fcb510b88074fadd92027e6ffa01d9))
+- **plugins:** simplify working with columns among plugins ([48ef0bb](https://github.com/CrowdStrike/ember-headless-table/commit/48ef0bbfba8cf677be09c5c40e8152b46a64e074))
+- **plugin:** sticky columns ([b9b8bfa](https://github.com/CrowdStrike/ember-headless-table/commit/b9b8bfa476490af783d78f2992d9278874e33608))
+- **table:** support [@use](https://github.com/use) ([6561c30](https://github.com/CrowdStrike/ember-headless-table/commit/6561c305f1998c9ce0283b9dfcd79f45fd7aa7d4))
 
 ### BREAKING CHANGES
 
-* brand new addon
-- copied code from internal project
-- successful build
+- brand new addon
+
+* copied code from internal project
+* successful build
 
 This is an incremental step, as there is some dev work yet to complete
+
 - [ ] finish plugins work
 - [ ] rename `@crowdstrike/ember-headless-table` to `ember-headless-table`
 - [ ] Button up C.I.
