@@ -114,16 +114,25 @@ export class TableMeta {
     existingOrder: this.read(),
   });
 
+  /**
+   * Get the curret order/position of a column
+   */
   @action
   getPosition(column: Column) {
     return this.columnOrder.get(column.key);
   }
 
+  /**
+   * Swap the column with the column at `newPosition`
+   */
   @action
   setPosition(column: Column, newPosition: number) {
     return this.columnOrder.swapWith(column.key, newPosition);
   }
 
+  /**
+   * Using a `ColumnOrder` instance, set the order of all columns
+   */
   setOrder = (order: ColumnOrder) => {
     this.columnOrder.setAll(order.map);
   };
