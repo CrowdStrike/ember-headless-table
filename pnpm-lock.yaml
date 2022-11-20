@@ -57,7 +57,7 @@ importers:
       '@glint/environment-ember-loose': ^0.9.7
       '@glint/environment-ember-template-imports': ^0.9.7
       '@glint/template': ^0.9.7
-      '@html-next/vertical-collection': ^4.0.1
+      '@html-next/vertical-collection': ^4.0.2
       '@nullvoxpopuli/eslint-configs': ~2.2.59
       '@tailwindcss/typography': ^0.5.8
       '@tsconfig/ember': ^1.0.1
@@ -164,7 +164,7 @@ importers:
       '@glint/environment-ember-loose': 0.9.7_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/environment-ember-template-imports': 0.9.7_bcsri5pb4wp67pnaf33w2f4jlm
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
-      '@html-next/vertical-collection': 4.0.1
+      '@html-next/vertical-collection': 4.0.2
       '@nullvoxpopuli/eslint-configs': 2.2.63_typescript@4.8.4
       '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.3
       '@tsconfig/ember': 1.0.1
@@ -2797,8 +2797,8 @@ packages:
     resolution: {integrity: sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==}
     dev: true
 
-  /@html-next/vertical-collection/4.0.1:
-    resolution: {integrity: sha512-rcwqm4LSdozEPpgVdFJEX6FLo9didb8CHJZyM79M6Yg6vhc/lnmDlmchL3k16rddaDhPJHoO3NEG820IFmrewg==}
+  /@html-next/vertical-collection/4.0.2:
+    resolution: {integrity: sha512-S8cgntEDdXrOwdylVGDh1BFe+nX5uuUzzb3teh1FE++/kbqsOfUpXOYRUsEzsqb0fRqcm6eLxvtNb282Zr67rQ==}
     engines: {node: '>= 14.*'}
     dependencies:
       babel6-plugin-strip-class-callcheck: 6.0.0
@@ -15864,7 +15864,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.1.0
+    version: 1.2.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -15902,7 +15902,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.1.0
+    version: 1.2.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
