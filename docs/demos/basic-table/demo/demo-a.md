@@ -4,7 +4,7 @@
     <thead>
       <tr>
         {{#each this.table.columns as |column|}}
-          <th {{this.table.modifiers.columnHeader column}}>
+          <th>
             {{column.name}}
           </th>
         {{/each}}
