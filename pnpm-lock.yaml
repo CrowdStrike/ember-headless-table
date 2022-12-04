@@ -125,7 +125,7 @@ importers:
       highlightjs-glimmer: ^2.0.1
       loader.js: ^4.7.0
       postcss: ^8.4.19
-      postcss-import: ^15.0.0
+      postcss-import: ^15.0.1
       postcss-loader: ^7.0.1
       prettier: ^2.7.1
       qunit: ^2.19.3
@@ -224,7 +224,7 @@ importers:
       eslint-plugin-qunit: 7.3.2_eslint@7.32.0
       loader.js: 4.7.0
       postcss: 8.4.19
-      postcss-import: 15.0.0_postcss@8.4.19
+      postcss-import: 15.0.1_postcss@8.4.19
       postcss-loader: 7.0.1_upg3rk2kpasnbk27hkqapxaxfq
       prettier: 2.7.1
       qunit: 2.19.3
@@ -12566,8 +12566,8 @@ packages:
       read-cache: 1.0.0
       resolve: 1.22.1
 
-  /postcss-import/15.0.0_postcss@8.4.19:
-    resolution: {integrity: sha512-Y20shPQ07RitgBGv2zvkEAu9bqvrD77C9axhj/aA1BQj4czape2MdClCExvB27EwYEJdGgKZBpKanb0t1rK2Kg==}
+  /postcss-import/15.0.1_postcss@8.4.19:
+    resolution: {integrity: sha512-UGlvk8EgT7Gm/Ndf9xZHnzr8xm8P54N8CBWLtcY5alP+YxlEge/Rv78etQyevZs3qWTE9If13+Bo6zATBrPOpA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       postcss: ^8.0.0
