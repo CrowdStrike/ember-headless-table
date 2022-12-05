@@ -126,7 +126,7 @@ importers:
       loader.js: ^4.7.0
       postcss: ^8.4.19
       postcss-import: ^15.0.1
-      postcss-loader: ^7.0.1
+      postcss-loader: ^7.0.2
       prettier: ^2.7.1
       qunit: ^2.19.3
       qunit-dom: ^2.0.0
@@ -225,7 +225,7 @@ importers:
       loader.js: 4.7.0
       postcss: 8.4.19
       postcss-import: 15.0.1_postcss@8.4.19
-      postcss-loader: 7.0.1_upg3rk2kpasnbk27hkqapxaxfq
+      postcss-loader: 7.0.2_upg3rk2kpasnbk27hkqapxaxfq
       prettier: 2.7.1
       qunit: 2.19.3
       qunit-dom: 2.0.0
@@ -12610,8 +12610,8 @@ packages:
       postcss: 8.4.19
       yaml: 1.10.2
 
-  /postcss-loader/7.0.1_upg3rk2kpasnbk27hkqapxaxfq:
-    resolution: {integrity: sha512-VRviFEyYlLjctSM93gAZtcJJ/iSkPZ79zWbN/1fSH+NisBByEiVLqpdVDrPLVSi8DX0oJo12kL/GppTBdKVXiQ==}
+  /postcss-loader/7.0.2_upg3rk2kpasnbk27hkqapxaxfq:
+    resolution: {integrity: sha512-fUJzV/QH7NXUAqV8dWJ9Lg4aTkDCezpTS5HgJ2DvqznexTbSTxgi/dTECvTZ15BwKTtk8G/bqI/QTu2HPd3ZCg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
