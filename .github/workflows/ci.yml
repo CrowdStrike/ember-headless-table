@@ -137,9 +137,11 @@ jobs:
       - uses: ./.github/actions/download-built-package
       - name: Run Tests
         working-directory: ./test-app
-        run: >-
+        run: |
           node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
-          --skip-cleanup
+          --skip-cleanup --- "echo 'deferred"
+          pnpm i
+          pnpm exec ember test
 
 
 
