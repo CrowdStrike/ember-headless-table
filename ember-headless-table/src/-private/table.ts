@@ -4,6 +4,7 @@ import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
 import { Resource } from 'ember-resources/core';
 import { map } from 'ember-resources/util/map';
@@ -234,7 +235,30 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
       if (!configFn) return [];
 
-      return configFn() ?? [];
+      let result = configFn() ?? [];
+
+      if (macroCondition(isDevelopingApp())) {
+        /**
+         * Assertions for a column config to be valid:
+         * - every key must be unique
+         */
+        let keys = new Set();
+        let allKeys = result.map((columnConfig) => columnConfig.key);
+
+        result.forEach((columnConfig) => {
+          if (keys.has(columnConfig.key)) {
+            throw new Error(
+              `Every column key in the table's column config must be unique. ` +
+                `Found duplicate entry: ${columnConfig.key}. ` +
+                `All keys used: ${allKeys}`
+            );
+          }
+
+          keys.add(columnConfig.key);
+        });
+      }
+
+      return result;
     },
     map: (config) => {
       return new Column<DataType>(this, { ...DEFAULT_COLUMN_CONFIG, ...config });

@@ -75,4 +75,25 @@ module('Unit | -private | table', function (hooks) {
       assert.strictEqual(table.columns[position]?.key, key);
     });
   });
+
+  test('columns: each key must be unique', async function (assert) {
+    const table = headlessTable(this, {
+      columns: () =>
+        [
+          { key: 'firstName', name: 'First name' },
+          { key: 'role', name: 'Role' },
+          { key: 'favouritePet', name: 'Favourite Pet' },
+          { key: 'firstName', name: 'Last name (typo)' },
+        ] as ColumnConfig[],
+      data: () => [],
+    });
+
+    assert.throws(
+      () => {
+        table.columns.values();
+      },
+      /Every column key in the table's column config must be unique. Found duplicate entry: firstName/,
+      'expected error received'
+    );
+  });
 });
