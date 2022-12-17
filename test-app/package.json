@@ -21,8 +21,7 @@
     "start": "ember serve",
     "test": "npm-run-all lint \"test:!(watch)\"",
     "test:ember": "ember test",
-    "test:watch": "ember test --server",
-    "embroider:start": "EMBROIDER_TEST_SETUP_FORCE=embroider EMBROIDER_TEST_SETUP_OPTIONS=optimized ember s"
+    "test:watch": "ember test --server"
   },
   "dependencies": {
     "@ember/test-helpers": "^2.8.1",
