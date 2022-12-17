@@ -38,19 +38,6 @@ jobs:
 
 
 
-  commits:
-    name: Commit Messages
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/pnpm
-      - uses: wagoid/commitlint-github-action@v5.2.0
-        with:
-          configFile: 'commitlint.config.cjs'
-
-
   build:
     name: Build Tests
     needs: [install_dependencies]
