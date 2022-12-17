@@ -138,8 +138,7 @@ jobs:
       - name: Run Tests
         working-directory: ./test-app
         run: |
-          node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
-          --skip-cleanup --- "echo 'deferred"
+          node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup --- "echo 'deferred"
           pnpm i
           pnpm exec ember test
 
