@@ -52,23 +52,28 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
   /**
    * @private
+   *
+   * Unused for now, may be used in the future.
+   * This data is collected along with the scrollContainerWidth,
+   * which is used
    */
   @tracked scrollContainerHeight?: number;
 
   /**
    * @private
+   *
+   * Used to help determine how much space we can give to columns.
+   * As we generate widths for columns, the columns' widths must
+   * add up to about this number.
    */
   @tracked scrollContainerWidth?: number;
 
   /**
    * @private
+   *
+   * Lazy way to delay consuming arguments until they are needed.
    */
   @tracked declare args: { named: Signature<DataType>['Named'] };
-
-  /**
-   * @private
-   */
-  defaultColumnConfig = DEFAULT_COLUMN_CONFIG;
 
   /**
    * @private
@@ -232,7 +237,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
       return configFn() ?? [];
     },
     map: (config) => {
-      return new Column<DataType>(this, { ...this.defaultColumnConfig, ...config });
+      return new Column<DataType>(this, { ...DEFAULT_COLUMN_CONFIG, ...config });
     },
   });
 
