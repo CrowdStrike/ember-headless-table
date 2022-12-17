@@ -35,6 +35,14 @@ module.exports = async function () {
         },
       },
       {
+        name: 'ember-lts-4.8',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.8.0',
+          },
+        },
+      },
+      {
         name: 'ember-release',
         npm: {
           devDependencies: {
@@ -99,6 +107,17 @@ module.exports = async function () {
             '@embroider/webpack': embroiderVersion,
             '@embroider/compat': embroiderVersion,
             'ember-source': '~4.4.0',
+          },
+        },
+      }),
+      embroiderOptimized({
+        name: 'ember-lts-4.8 + embroider-optimized',
+        npm: {
+          devDependencies: {
+            '@embroider/core': embroiderVersion,
+            '@embroider/webpack': embroiderVersion,
+            '@embroider/compat': embroiderVersion,
+            'ember-source': '~4.8.0',
           },
         },
       }),

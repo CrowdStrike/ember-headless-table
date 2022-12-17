@@ -63,6 +63,7 @@ jobs:
           - typescript@4.6
           - typescript@4.7
           - typescript@4.8
+          - typescript@4.9
 
     steps:
       - uses: actions/checkout@v3
@@ -120,6 +121,7 @@ jobs:
           - ember-lts-3.28
           - ember-4.0
           - ember-lts-4.4
+          - ember-lts-4.8
           - ember-release
           - ember-beta
           - ember-canary
@@ -127,6 +129,7 @@ jobs:
           - "'ember-release + embroider-optimized'"
           - "'ember-lts-3.28 + embroider-optimized'"
           - "'ember-lts-4.4 + embroider-optimized'"
+          - "'ember-lts-4.8 + embroider-optimized'"
 
     steps:
       - uses: actions/checkout@v3
