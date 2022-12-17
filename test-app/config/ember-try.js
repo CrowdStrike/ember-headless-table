@@ -5,7 +5,7 @@ const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 
 module.exports = async function () {
   let releaseVersion = await getChannelURL('release');
-  let embroiderVersion = '^1.9.0';
+  let embroiderVersion = '^2.0.0';
 
   return {
     usePnpm: true,
