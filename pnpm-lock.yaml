@@ -48,10 +48,10 @@ importers:
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.8.1
       '@ember/test-waiters': ^3.0.2
-      '@embroider/compat': ^2.0.0
-      '@embroider/core': ^2.0.0
+      '@embroider/compat': ^2.0.2
+      '@embroider/core': ^2.0.2
       '@embroider/router': ^2.0.0
-      '@embroider/webpack': ^2.0.0
+      '@embroider/webpack': ^2.0.2
       '@glimmer/component': ^1.1.2
       '@glimmer/tracking': ^1.1.2
       '@glint/core': ^0.9.7
@@ -3143,7 +3143,7 @@ packages:
     resolution: {integrity: sha512-G6kbLaS3ke4QspHkgLlGY0t1v0G22hGavyphezZucj7LLk1N+r11w913CYkBg3cJsJD+TG2Wo4eVbgRcotvuvQ==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.2
-      '@types/ember__object': 4.0.5
+      '@types/ember__object': 4.0.5_@babel+core@7.20.2
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3152,7 +3152,7 @@ packages:
     resolution: {integrity: sha512-iwFf+qYBsGp9SycIb0lxGkdZPYpKxMcBoV5kCJbWyC6azuX2xPDXHx8n2lm8O9GrEFVJXfYC5bSXf33rdpy5Sw==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.2
-      '@types/ember__object': 4.0.5
+      '@types/ember__object': 4.0.5_@babel+core@7.20.2
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
