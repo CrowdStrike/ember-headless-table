@@ -30,6 +30,7 @@
   "pnpm": {
     "overrides": {
       "@types/eslint": "^7.0.0",
+      "@embroider/macros": "1.10.0",
       "ember-auto-import": "^2.4.2"
     },
     "overrides-notes": {
