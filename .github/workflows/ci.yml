@@ -139,6 +139,8 @@ jobs:
         working-directory: ./test-app
         run: |
           if [[ "${{matrix.try-scenario}}" =~ *"embroider"* ]]; then
+            rm ../pnpm-lock.yaml
+            pnpm i
             pnpm add --save-dev @embroider/core @embroider/webpack @embroider/compat
           fi
           node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup --- "echo 'deferred'"
