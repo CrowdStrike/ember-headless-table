@@ -110,7 +110,7 @@ importers:
       ember-load-initializers: ^2.1.2
       ember-modifier: ^3.2.7
       ember-page-title: ^8.0.0-beta.0
-      ember-qunit: ^5.1.5
+      ember-qunit: ^6.1.1
       ember-resolver: ^8.0.3
       ember-resources: ^5.6.0
       ember-source: ~4.7.0
@@ -212,7 +212,7 @@ importers:
       ember-fetch: 8.1.2
       ember-load-initializers: 2.1.2_@babel+core@7.20.2
       ember-page-title: 8.0.0-beta.0
-      ember-qunit: 5.1.5_qhusffjocg4cnbdwj4yxijwhva
+      ember-qunit: 6.1.1_yqjlf2xlio2okvervkgzwcwzyy
       ember-resolver: 8.0.3_@babel+core@7.20.2
       ember-source: 4.7.1_npabyccmuonwo2rku4k53xo3hi
       ember-template-imports: 3.4.0_ember-cli-htmlbars@6.1.1
@@ -3162,7 +3162,7 @@ packages:
   /@types/ember__controller/4.0.3:
     resolution: {integrity: sha512-7+Lpgcsa/gjGZtUN0JfQoLzUStCT68p8o6t1e4LBXyC+a5DHg2NJYFZ0U3f8F8TgQJcgtFoUAuv8p77XY6FxwQ==}
     dependencies:
-      '@types/ember__object': 4.0.5_@babel+core@7.20.2
+      '@types/ember__object': 4.0.5
 
   /@types/ember__controller/4.0.3_@babel+core@7.20.2:
     resolution: {integrity: sha512-7+Lpgcsa/gjGZtUN0JfQoLzUStCT68p8o6t1e4LBXyC+a5DHg2NJYFZ0U3f8F8TgQJcgtFoUAuv8p77XY6FxwQ==}
@@ -7788,29 +7788,6 @@ packages:
       '@embroider/addon-shim': 1.8.3
     dev: true
 
-  /ember-qunit/5.1.5_qhusffjocg4cnbdwj4yxijwhva:
-    resolution: {integrity: sha512-2cFA4oMygh43RtVcMaBrr086Tpdhgbn3fVZ2awLkzF/rnSN0D0PSRpd7hAD7OdBPerC/ZYRwzVyGXLoW/Zes4A==}
-    engines: {node: 10.* || 12.* || >= 14.*}
-    peerDependencies:
-      '@ember/test-helpers': ^2.4.0
-      qunit: ^2.13.0
-    dependencies:
-      '@ember/test-helpers': 2.8.1_7hl63kisthxdecshwjpn6m7q5q
-      broccoli-funnel: 3.0.8
-      broccoli-merge-trees: 3.0.2
-      common-tags: 1.8.2
-      ember-auto-import: 2.4.3_webpack@5.75.0
-      ember-cli-babel: 7.26.11
-      ember-cli-test-loader: 3.0.0
-      qunit: 2.19.3
-      resolve-package-path: 3.1.0
-      silent-error: 1.1.1
-      validate-peer-dependencies: 1.2.0
-    transitivePeerDependencies:
-      - supports-color
-      - webpack
-    dev: true
-
   /ember-qunit/6.0.0_qhusffjocg4cnbdwj4yxijwhva:
     resolution: {integrity: sha512-idNWh9Ap2HN9e3Xozh5Jrciu5tDhn0okM/bgwDjdks3dwuMhEox45iiRTx469FWQ9+ixjZ40AsXsRTDkfCmvmw==}
     engines: {node: 14.* || 16.* || >= 17}
@@ -7825,6 +7802,29 @@ packages:
       ember-auto-import: 2.4.3_webpack@5.75.0
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
+      qunit: 2.19.3
+      resolve-package-path: 4.0.3
+      silent-error: 1.1.1
+      validate-peer-dependencies: 2.1.0
+    transitivePeerDependencies:
+      - supports-color
+      - webpack
+    dev: true
+
+  /ember-qunit/6.1.1_yqjlf2xlio2okvervkgzwcwzyy:
+    resolution: {integrity: sha512-3/jCpoecltFV6vm7GCtSDNRxBzWx96nP+QrbereJAnioSaGeLe+slKL3l80mGzMYDTvn7ESobZ+Ba+OQ1vMMKQ==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: ^3.28 || ^4.0
+      qunit: ^2.13.0
+    dependencies:
+      broccoli-funnel: 3.0.8
+      broccoli-merge-trees: 3.0.2
+      common-tags: 1.8.2
+      ember-auto-import: 2.4.3_webpack@5.75.0
+      ember-cli-babel: 7.26.11
+      ember-cli-test-loader: 3.0.0
+      ember-source: 4.7.1_npabyccmuonwo2rku4k53xo3hi
       qunit: 2.19.3
       resolve-package-path: 4.0.3
       silent-error: 1.1.1
@@ -15831,7 +15831,6 @@ packages:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
       '@glimmer/component': '*'
-      '@glimmer/env': ^0.1.7
       '@glint/template': '>= 0.8.3'
       ember-cached-decorator-polyfill: ^1.0.1
       ember-source: ^3.28.0 || ^4.0.0
@@ -15846,6 +15845,7 @@ packages:
       '@ember/test-helpers': 2.8.1_xp2p5n24vuhmfuch2uld7mekjm
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.4
+      '@embroider/macros': 1.10.0
       '@glimmer/component': 1.1.2_@babel+core@7.20.2
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       ember-cached-decorator-polyfill: 1.0.1_xp2p5n24vuhmfuch2uld7mekjm
@@ -15870,7 +15870,6 @@ packages:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
       '@glimmer/component': '*'
-      '@glimmer/env': ^0.1.7
       '@glint/template': '>= 0.8.3'
       ember-cached-decorator-polyfill: ^1.0.1
       ember-source: ^3.28.0 || ^4.0.0
@@ -15885,6 +15884,7 @@ packages:
       '@ember/test-helpers': 2.8.1_7hl63kisthxdecshwjpn6m7q5q
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.4
+      '@embroider/macros': 1.10.0
       '@glimmer/component': 1.1.2_@babel+core@7.20.2
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       ember-cached-decorator-polyfill: 1.0.1_7hl63kisthxdecshwjpn6m7q5q
