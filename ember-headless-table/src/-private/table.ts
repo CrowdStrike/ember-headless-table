@@ -55,7 +55,7 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
    * @private
    *
    * Unused for now, may be used in the future.
-   * This data is collected along with the scrollContainerWidth,
+   * This data is collected along with the scrollContainerWidth, (which is currently in use)
    * which is used
    */
   @tracked scrollContainerHeight?: number;
