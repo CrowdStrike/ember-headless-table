@@ -4,6 +4,7 @@ import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { isDevelopingApp, macroCondition } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
 import { Resource } from 'ember-resources/core';
 import { map } from 'ember-resources/util/map';
@@ -52,23 +53,27 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
   /**
    * @private
+   *
+   * Unused for now, may be used in the future.
+   * This data is collected along with the scrollContainerWidth, (which is currently in use)
    */
   @tracked scrollContainerHeight?: number;
 
   /**
    * @private
+   *
+   * Used to help determine how much space we can give to columns.
+   * As we generate widths for columns, the columns' widths must
+   * add up to about this number.
    */
   @tracked scrollContainerWidth?: number;
 
   /**
    * @private
+   *
+   * Lazy way to delay consuming arguments until they are needed.
    */
   @tracked declare args: { named: Signature<DataType>['Named'] };
-
-  /**
-   * @private
-   */
-  defaultColumnConfig = DEFAULT_COLUMN_CONFIG;
 
   /**
    * @private
@@ -229,10 +234,33 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
 
       if (!configFn) return [];
 
-      return configFn() ?? [];
+      let result = configFn() ?? [];
+
+      if (macroCondition(isDevelopingApp())) {
+        /**
+         * Assertions for a column config to be valid:
+         * - every key must be unique
+         */
+        let keys = new Set();
+        let allKeys = result.map((columnConfig) => columnConfig.key);
+
+        result.forEach((columnConfig) => {
+          if (keys.has(columnConfig.key)) {
+            throw new Error(
+              `Every column key in the table's column config must be unique. ` +
+                `Found duplicate entry: ${columnConfig.key}. ` +
+                `All keys used: ${allKeys}`
+            );
+          }
+
+          keys.add(columnConfig.key);
+        });
+      }
+
+      return result;
     },
     map: (config) => {
-      return new Column<DataType>(this, { ...this.defaultColumnConfig, ...config });
+      return new Column<DataType>(this, { ...DEFAULT_COLUMN_CONFIG, ...config });
     },
   });
 

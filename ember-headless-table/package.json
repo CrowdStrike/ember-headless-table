@@ -93,6 +93,7 @@
     "@babel/runtime": "^7.17.8",
     "@ember/string": "^3.0.0",
     "@embroider/addon-shim": "^1.0.0",
+    "@embroider/macros": "1.10.0",
     "ember-modifier": "^3.2.7",
     "ember-resources": "^5.4.0",
     "ember-tracked-storage-polyfill": "^1.0.0",
