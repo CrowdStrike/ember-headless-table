@@ -283,7 +283,7 @@ importers:
       eslint-plugin-ember: ^11.0.6
       eslint-plugin-node: ^11.1.0
       eslint-plugin-prettier: ^4.0.0
-      expect-type: ^0.14.2
+      expect-type: ^0.15.0
       prettier: ^2.5.1
       rollup: ^3.2.2
       rollup-plugin-copy: ^3.4.0
@@ -337,7 +337,7 @@ importers:
       eslint-plugin-ember: 11.2.0_eslint@7.32.0
       eslint-plugin-node: 11.1.0_eslint@7.32.0
       eslint-plugin-prettier: 4.2.1_7gsvg5lgwpfdww3i7smtqxamuy
-      expect-type: 0.14.2
+      expect-type: 0.15.0
       prettier: 2.7.1
       rollup: 3.2.5
       rollup-plugin-copy: 3.4.0
@@ -8973,6 +8973,10 @@ packages:
 
   /expect-type/0.14.2:
     resolution: {integrity: sha512-ed3+tr5ujbIYXZ8Pl/VgIphwJQ0q5tBLGGdn7Zvwt1WyPBRX83xjT5pT77P/GkuQbctx0K2ZNSSan7eruJqTCQ==}
+    dev: true
+
+  /expect-type/0.15.0:
+    resolution: {integrity: sha512-yWnriYB4e8G54M5/fAFj7rCIBiKs1HAACaY13kCz6Ku0dezjS9aMcfcdVK2X8Tv2tEV1BPz/wKfQ7WA4S/d8aA==}
     dev: true
 
   /express/4.18.2:
