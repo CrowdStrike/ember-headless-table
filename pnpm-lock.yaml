@@ -26,7 +26,7 @@ importers:
       typedoc-gitlab-wiki-theme: ^1.0.0
       typedoc-plugin-markdown: ^3.14.0
       typedoc-plugin-markdown-pages: ^0.3.0
-      typedoc-plugin-mdn-links: ^2.0.1
+      typedoc-plugin-mdn-links: ^2.0.2
       typescript: ^4.7.3
     devDependencies:
       typedoc: 0.23.23_typescript@4.8.4
@@ -34,7 +34,7 @@ importers:
       typedoc-gitlab-wiki-theme: 1.0.0_e5d6zdlrllhuqvr7rr6w7fp65a
       typedoc-plugin-markdown: 3.14.0_typedoc@0.23.23
       typedoc-plugin-markdown-pages: 0.3.0
-      typedoc-plugin-mdn-links: 2.0.1_typedoc@0.23.23
+      typedoc-plugin-mdn-links: 2.0.2_typedoc@0.23.23
       typescript: 4.8.4
 
   docs-app:
@@ -15036,8 +15036,8 @@ packages:
       typedoc: 0.23.23_typescript@4.8.4
     dev: true
 
-  /typedoc-plugin-mdn-links/2.0.1_typedoc@0.23.23:
-    resolution: {integrity: sha512-NKhlev3wO/YnEOgo7WVG9KhxENaxk6n0zTrLG2zcXrkY1WryEe17n5Jjn+0IfEPAzCC0BxHzEBavWdHngBclVw==}
+  /typedoc-plugin-mdn-links/2.0.2_typedoc@0.23.23:
+    resolution: {integrity: sha512-Fzjvfsj3rxvmZNqWRvq9JTGBkOkrPp0kBtvJCJ4U5Jm14OF1KoRErtmwgVQcPLA5Xs8h5I/W4uZBaL8SDHsgxQ==}
     peerDependencies:
       typedoc: 0.22.x || 0.23.x
     dependencies:
@@ -15826,7 +15826,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.2.0
+    version: 1.3.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -15865,7 +15865,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.2.0
+    version: 1.3.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
