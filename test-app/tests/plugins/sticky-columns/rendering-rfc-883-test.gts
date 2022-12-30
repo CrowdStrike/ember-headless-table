@@ -7,7 +7,7 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable, type ColumnConfig } from 'ember-headless-table';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
-import { StickyColumns, isSticky } from 'ember-headless-table/plugins/sticky-columns';
+import { StickyColumns, isSticky, styleStringFor } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnReordering } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
 import { createHelpers } from 'ember-headless-table/test-support';
@@ -122,7 +122,12 @@ module('Plugins | StickyColumns', function (hooks) {
           <thead>
             <tr class="relative">
               {{#each this.table.columns as |column|}}
-                <th data-sticky="{{isSticky column}}" data-key={{column.key}} {{this.table.modifiers.columnHeader column}}>
+                <th
+                  data-sticky="{{isSticky column}}"
+                  data-key={{column.key}}
+                  style={{styleStringFor column}}
+                  {{this.table.modifiers.columnHeader column}}
+                >
                   <span class="name">{{column.name}}</span><br>
                 </th>
               {{/each}}
@@ -132,7 +137,11 @@ module('Plugins | StickyColumns', function (hooks) {
             {{#each this.table.rows as |row|}}
               <tr class="relative">
                 {{#each this.table.columns as |column|}}
-                  <td data-sticky="{{isSticky column}}" {{this.table.modifiers.columnHeader column}}>
+                  <td
+                    data-sticky="{{isSticky column}}"
+                    style={{styleStringFor column}}
+                    {{this.table.modifiers.columnHeader column}}
+                  >
                     {{column.getValueForRow row}}
                   </td>
                 {{/each}}
