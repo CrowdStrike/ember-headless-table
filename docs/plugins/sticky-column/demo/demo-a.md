@@ -5,6 +5,7 @@
       <tr class="relative">
         {{#each this.table.columns as |column|}}
           <th
+            {{this.table.modifiers.columnHeader column}}
             class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
             style="{{this.styleStringFor column}}"
           >
