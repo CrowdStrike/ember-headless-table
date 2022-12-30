@@ -10,4 +10,4 @@ runs:
       path: ${{ env.dist }}
   - name: 'Install dependencies'
     shell: 'bash'
-    run: pnpm install
+    run: pnpm install --force

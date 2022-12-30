@@ -7,6 +7,8 @@ import { applyStyles } from '../-private/utils';
 import type { ColumnApi } from '[public-plugin-types]';
 import type { Column } from '[public-types]';
 
+const DEFAULT_Z_INDEX = '8';
+
 interface ColumnOptions {
   /**
    * Whether or not to enable stickiness on the column
@@ -20,6 +22,15 @@ interface ColumnOptions {
 export interface Signature {
   Options: {
     Column: ColumnOptions;
+    Plugin: {
+      /**
+       * Opts this plugin out of engaging in the modifier system
+       * and instead requires setting a `style` attribute on
+       * th / td tags for getting the "position: sticky" behovior
+       * on columns.
+       */
+      workaroundForModifierTimingUpdateRFC883?: boolean;
+    };
   };
   Meta: {
     Table: TableMeta;
@@ -44,27 +55,54 @@ export class StickyColumns extends BasePlugin<Signature> {
     column: ColumnMeta,
   };
 
-  headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
+  conditionallyRemoveStyles = (element: HTMLElement) => {
+    if (element.style.getPropertyValue('position') === 'sticky') {
+      element.style.removeProperty('position');
+    }
+
+    if (element.style.getPropertyValue('left')) {
+      element.style.left = '';
+    }
+
+    if (element.style.getPropertyValue('right')) {
+      element.style.right = '';
+    }
+
+    if (element.style.zIndex === DEFAULT_Z_INDEX) {
+      element.style.zIndex = '';
+    }
+  };
+
+  headerCellModifier = (element: HTMLElement, { column, table }: ColumnApi) => {
+    if (options.forTable(table, StickyColumns).workaroundForModifierTimingUpdateRFC883) {
+      return;
+    }
+
     let columnMeta = meta.forColumn(column, StickyColumns);
 
     if (columnMeta.isSticky) {
       applyStyles(element, columnMeta.style);
     } else {
-      if (element.style.getPropertyValue('position') === 'sticky') {
-        element.style.removeProperty('position');
-      }
+      this.conditionallyRemoveStyles(element);
+    }
+  };
 
-      if (element.style.getPropertyValue('left')) {
-        element.style.left = '';
-      }
+  /**
+   * Not yet supported. Pending Ember RFC #883
+   *
+   * TODO: switch ColumnApi to "RowApi", add the row's data
+   */
+  cellModifier = (element: HTMLElement, { column, table }: ColumnApi) => {
+    if (options.forTable(table, StickyColumns).workaroundForModifierTimingUpdateRFC883) {
+      return;
+    }
 
-      if (element.style.getPropertyValue('right')) {
-        element.style.right = '';
-      }
+    let columnMeta = meta.forColumn(column, StickyColumns);
 
-      if (element.style.zIndex === '8') {
-        element.style.zIndex = '';
-      }
+    if (columnMeta.isSticky) {
+      applyStyles(element, columnMeta.style);
+    } else {
+      this.conditionallyRemoveStyles(element);
     }
   };
 }
@@ -136,7 +174,7 @@ export class ColumnMeta {
       return {
         position: 'sticky',
         [this.position]: this.offset,
-        zIndex: '8',
+        zIndex: DEFAULT_Z_INDEX,
       };
     }
 
