@@ -17,7 +17,7 @@ const minWidth = () => ColumnResizing.forColumn(() => ({ minWidth: 200 }));
 const leftSticky = () => StickyColumns.forColumn(() => ({ sticky: 'left' }));
 const rightSticky = () => StickyColumns.forColumn(() => ({ sticky: 'right' }));
 
-module('Plugins | StickyColumns', function (hooks) {
+module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
   setupRenderingTest(hooks);
 
   let ctx: TestSetup;
