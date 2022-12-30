@@ -61,7 +61,7 @@ importers:
       '@html-next/vertical-collection': ^4.0.2
       '@nullvoxpopuli/eslint-configs': ~2.2.59
       '@tailwindcss/typography': ^0.5.8
-      '@tsconfig/ember': ^1.0.1
+      '@tsconfig/ember': ^2.0.0
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.1
       '@types/ember-qunit': ^5.0.2
@@ -168,7 +168,7 @@ importers:
       '@html-next/vertical-collection': 4.0.2
       '@nullvoxpopuli/eslint-configs': 2.2.63_typescript@4.8.4
       '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.3
-      '@tsconfig/ember': 1.0.1
+      '@tsconfig/ember': 2.0.0
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.20.2
       '@types/ember-qunit': 5.0.2_@babel+core@7.20.2
@@ -259,7 +259,7 @@ importers:
       '@glint/template': ^0.9.4
       '@nullvoxpopuli/eslint-configs': ~2.2.57
       '@rollup/plugin-babel': ^6.0.0
-      '@tsconfig/ember': ^1.0.1
+      '@tsconfig/ember': ^2.0.0
       '@types/ember__application': ^4.0.1
       '@types/ember__debug': ^4.0.1
       '@types/ember__destroyable': ^4.0.0
@@ -316,7 +316,7 @@ importers:
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       '@nullvoxpopuli/eslint-configs': 2.2.63_yphvbspzlyr226osrheaqrwkvi
       '@rollup/plugin-babel': 6.0.2_zucauindkcyhxxjiyrjjpnsffm
-      '@tsconfig/ember': 1.0.1
+      '@tsconfig/ember': 2.0.0
       '@types/ember__application': 4.0.4_@babel+core@7.20.2
       '@types/ember__debug': 4.0.3_@babel+core@7.20.2
       '@types/ember__destroyable': 4.0.1
@@ -3017,6 +3017,10 @@ packages:
 
   /@tsconfig/ember/1.0.1:
     resolution: {integrity: sha512-aPzLw5BfQxsFPrh5fNDOK4SbSkp2q5fMlrKVeniVjMz1lAcyOh2eH5THkKKcBi1YN1/fbMdAWN/dKGW6lg2+8g==}
+    dev: true
+
+  /@tsconfig/ember/2.0.0:
+    resolution: {integrity: sha512-RzbDYYcjxVdG8Ki0xe99HN3+nHTZe6EBgw6N7B3yup7QogVFQQxA9nY7X80j1XzF15xqetwWiYfAjv5lkkp0/A==}
     dev: true
 
   /@types/acorn/4.0.6:
