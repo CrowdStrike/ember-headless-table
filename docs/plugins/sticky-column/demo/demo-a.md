@@ -57,7 +57,11 @@ export default class extends Component {
     ],
     data: () => DATA,
     plugins: [
-      StickyColumns,
+      StickyColumns.with(() => ({
+        // See:
+        //  https://github.com/emberjs/rfcs/pull/883
+        workaroundForModifierTimingUpdateRFC883: true
+      })),
       ColumnResizing,
     ],
   });

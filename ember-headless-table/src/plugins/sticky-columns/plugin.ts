@@ -22,6 +22,15 @@ interface ColumnOptions {
 export interface Signature {
   Options: {
     Column: ColumnOptions;
+    Plugin: {
+      /**
+       * Opts this plugin out of engaging in the modifier system
+       * and instead requires setting a `style` attribute on
+       * th / td tags for getting the "position: sticky" behovior
+       * on columns.
+       */
+      workaroundForModifierTimingUpdateRFC883?: boolean;
+    };
   };
   Meta: {
     Table: TableMeta;
@@ -64,7 +73,11 @@ export class StickyColumns extends BasePlugin<Signature> {
     }
   };
 
-  headerCellModifier = (element: HTMLElement, { column }: ColumnApi) => {
+  headerCellModifier = (element: HTMLElement, { column, table }: ColumnApi) => {
+    if (options.forTable(table, StickyColumns).workaroundForModifierTimingUpdateRFC883) {
+      return;
+    }
+
     let columnMeta = meta.forColumn(column, StickyColumns);
 
     if (columnMeta.isSticky) {
@@ -76,8 +89,14 @@ export class StickyColumns extends BasePlugin<Signature> {
 
   /**
    * Not yet supported. Pending Ember RFC #883
+   *
+   * TODO: switch ColumnApi to "RowApi", add the row's data
    */
-  cellModifier = (element: HTMLElement, { column }: ColumnApi) => {
+  cellModifier = (element: HTMLElement, { column, table }: ColumnApi) => {
+    if (options.forTable(table, StickyColumns).workaroundForModifierTimingUpdateRFC883) {
+      return;
+    }
+
     let columnMeta = meta.forColumn(column, StickyColumns);
 
     if (columnMeta.isSticky) {
