@@ -5,8 +5,8 @@
       <tr class="relative">
         {{#each this.table.columns as |column|}}
           <th
-            {{this.table.modifiers.columnHeader column}}
             class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
+            style="{{this.styleStringFor column}}"
           >
             <span class="name">{{column.name}}</span><br>
           </th>
@@ -18,8 +18,8 @@
         <tr class="relative">
           {{#each this.table.columns as |column|}}
             <td
-              {{this.table.modifiers.columnHeader column}}
               class="{{if (this.isSticky column) 'bg-basement' 'bg-ground-floor'}}"
+              style="{{this.styleStringFor column}}"
             >
               {{column.getValueForRow row}}
             </td>
@@ -34,7 +34,7 @@
 import Component from '@glimmer/component';
 
 import { headlessTable } from 'ember-headless-table';
-import { StickyColumns, isSticky } from 'ember-headless-table/plugins/sticky-columns';
+import { StickyColumns, isSticky, styleStringFor } from 'ember-headless-table/plugins/sticky-columns';
 import { ColumnResizing } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 
@@ -69,6 +69,7 @@ export default class extends Component {
    *   [property on this component] = [variable in scope]
    */
   isSticky = isSticky;
+  styleStringFor = styleStringFor;
 }
 ```
 
