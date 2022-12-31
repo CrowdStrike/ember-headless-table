@@ -90,7 +90,7 @@ importers:
       autoprefixer: ^10.4.13
       babel-eslint: ^10.1.0
       broccoli-asset-rev: ^3.0.0
-      concurrently: ^7.4.0
+      concurrently: ^7.6.0
       cssnano: ^5.1.14
       dompurify: ^2.4.1
       ember-auto-import: ^2.4.2
@@ -197,7 +197,7 @@ importers:
       autoprefixer: 10.4.13_postcss@8.4.20
       babel-eslint: 10.1.0_eslint@7.32.0
       broccoli-asset-rev: 3.0.0
-      concurrently: 7.5.0
+      concurrently: 7.6.0
       cssnano: 5.1.14_postcss@8.4.20
       ember-auto-import: 2.4.3_webpack@5.75.0
       ember-cli: 4.8.0
@@ -5993,6 +5993,22 @@ packages:
 
   /concurrently/7.5.0:
     resolution: {integrity: sha512-5E3mwiS+i2JYBzr5BpXkFxOnleZTMsG+WnE/dCG4/P+oiVXrbmrBwJ2ozn4SxwB2EZDrKR568X+puVohxz3/Mg==}
+    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      date-fns: 2.29.3
+      lodash: 4.17.21
+      rxjs: 7.5.7
+      shell-quote: 1.7.4
+      spawn-command: 0.0.2-1
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.6.2
+    dev: true
+
+  /concurrently/7.6.0:
+    resolution: {integrity: sha512-BKtRgvcJGeZ4XttiDiNcFiRlxoAeZOseqUvyYRUp/Vtd+9p1ULmeoSqGsDA+2ivdeDFpqrJvGvmI+StKfKl5hw==}
     engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
     hasBin: true
     dependencies:
