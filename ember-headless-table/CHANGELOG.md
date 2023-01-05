@@ -1,5 +1,3 @@
-# [1.1.0](https://github.com/CrowdStrike/ember-headless-table/compare/v1.0.1...v1.1.0) (2022-11-08)
-
 ## 1.3.0
 
 ### Minor Changes
