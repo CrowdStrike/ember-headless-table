@@ -1,3 +1,5 @@
+# ember-headless-table
+
 ## 1.4.0
 
 ### Minor Changes
