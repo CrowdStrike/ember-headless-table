@@ -6,6 +6,10 @@ import type { Sort } from 'ember-headless-table/plugins/data-sorting';
 
 module('Unit | Utils | sort utils', function () {
   module('deserializeSorts', function () {
+    test('empty value returns empty array (no sorts)', function (assert) {
+      assert.deepEqual(deserializeSorts(''), []);
+    });
+
     test('deserializing nested property paths sort params', function (assert) {
       let output = [
         {

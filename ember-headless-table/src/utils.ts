@@ -21,7 +21,11 @@ export const deserializeSorts = (
   sortString: string,
   options: SortsOptions = { separator: '.', transform: 'camelize' }
 ): Sort[] => {
-  const { transform, separator } = options;
+  if (!sortString) {
+    return [];
+  }
+
+  let { transform, separator } = options;
   let [key, direction] = sortString.split(separator);
 
   assert(`No key found for input: \`${sortString}\` using \`${separator}\` as a separator`, key);
