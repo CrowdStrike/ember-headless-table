@@ -16,7 +16,7 @@ module('Plugins | Queries | hasPlugin', function (hooks) {
       plugins: [DataSorting],
     });
 
-    assert.strictEqual(hasPlugin(table, DataSorting), 'has DataSorting');
-    assert.strictEqual(hasPlugin(table, ColumnResizing), 'does not have ColumnResizing');
+    assert.true(hasPlugin(table, DataSorting), 'has DataSorting');
+    assert.false(hasPlugin(table, ColumnResizing), 'does not have ColumnResizing');
   });
 });
