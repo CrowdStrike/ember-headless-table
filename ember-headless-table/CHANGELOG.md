@@ -1,5 +1,3 @@
-## 1.3.0
-
 ## 1.4.0
 
 ### Minor Changes
@@ -46,6 +44,8 @@
 
   When using the data-sorting plugin with this util, it is perfectly safe to "deserialize sorts" to an empty array
   and have that empty array be equivelant to no sorting being applied at all.
+  
+## 1.3.0  
 
 ### Minor Changes
 
