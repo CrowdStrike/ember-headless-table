@@ -1,5 +1,52 @@
 ## 1.3.0
 
+## 1.4.0
+
+### Minor Changes
+
+- [#110](https://github.com/CrowdStrike/ember-headless-table/pull/110) [`a9c19c7`](https://github.com/CrowdStrike/ember-headless-table/commit/a9c19c7db7475bd133deded2e7afb84eb0354082) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add new "query" util: `hasPlugin`, allowing consumers of the headlessTable to
+  ask if a plugin is active and get a boolean response.
+
+  Example:
+
+  ```js
+  import { headlessTable } from 'ember-headless-table';
+  import { hasPlugin } from 'ember-headless-table/plugins';
+  import { DataSorting } from 'ember-headless-table/plugins/data-sorting';
+
+  // ... ✂️ ...
+  let table = headlessTable(this, {
+    columns: () => [],
+    data: () => [],
+    plugins: [DataSorting],
+  });
+
+  hasPlugin(table, DataSorting); // => true
+  ```
+
+### Patch Changes
+
+- [#108](https://github.com/CrowdStrike/ember-headless-table/pull/108) [`40649c9`](https://github.com/CrowdStrike/ember-headless-table/commit/40649c90d7145e2b83e10e9dffd050900fc4cc52) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - `deserializeSorts` now will gracefully return an empty array upon receiving empty input.
+
+  Example:
+
+  ```js
+  import { deserializeSorts } from 'ember-headless-table';
+
+  deserializeSorts(''); // => []
+  ```
+
+  Previously, an error would be reported:
+
+  ```
+  No key found for input: `` using `.` as a separator
+  ```
+
+  which wasn't all that helpful.
+
+  When using the data-sorting plugin with this util, it is perfectly safe to "deserialize sorts" to an empty array
+  and have that empty array be equivelant to no sorting being applied at all.
+
 ### Minor Changes
 
 - [#94](https://github.com/CrowdStrike/ember-headless-table/pull/94) [`310a6e0`](https://github.com/CrowdStrike/ember-headless-table/commit/310a6e037ba307f9587a0264ed73bfaa4e6bed63) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - An alternative, yet more verbose, option is now available for the sticky / pinnable columns plugin.
