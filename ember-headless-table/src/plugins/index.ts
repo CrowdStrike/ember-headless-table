@@ -1,5 +1,5 @@
 // Public API
-export { BasePlugin, columns, meta, options, preferences } from './-private/base';
+export { BasePlugin, columns, hasPlugin, meta, options, preferences } from './-private/base';
 export { applyStyles, removeStyles } from './-private/utils';
 
 // Public Types

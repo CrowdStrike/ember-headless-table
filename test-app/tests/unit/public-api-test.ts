@@ -38,6 +38,7 @@ module('Public API', function () {
         'columns',
         'meta',
         'options',
+        'hasPlugin',
         'preferences',
         'applyStyles',
         'removeStyles',
