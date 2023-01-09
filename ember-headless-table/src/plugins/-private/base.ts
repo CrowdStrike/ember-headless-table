@@ -130,6 +130,20 @@ export abstract class BasePlugin<Signature = unknown> implements Plugin<Signatur
   static requires?: string[];
 }
 
+/**
+ * @public
+ *
+ * returns boolean if the passed table has an instance of the configured passed plugin class.
+ * This can be used to help guard against accessing public-specific APIs if those plugins
+ * are not configured for a particular table instance
+ */
+export function hasPlugin<P extends BasePlugin<any>, Data = unknown>(
+  table: Table<Data>,
+  klass: Class<P>
+) {
+  return Boolean(table.pluginOf(klass));
+}
+
 export const preferences = {
   /**
    * @public
