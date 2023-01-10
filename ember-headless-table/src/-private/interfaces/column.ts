@@ -14,7 +14,12 @@ type ColumnPluginOption<P = Plugin> = P extends BasePlugin
   ? [Constructor<P>, () => ColumnOptionsFor<SignatureFrom<P>>]
   : [P | Constructor<P>, () => unknown];
 
-export type CellOptions = Record<string, unknown>;
+export type CellOptions = {
+  /**
+   * when no value is present for a given set of data for the given column config
+   */
+  defaultValue?: string;
+} & Record<string, unknown>;
 
 export interface ColumnConfig<T = unknown> {
   /**
