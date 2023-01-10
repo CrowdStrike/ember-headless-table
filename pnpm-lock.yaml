@@ -423,7 +423,6 @@ importers:
       qunit-dom: ^2.0.0
       tracked-built-ins: ^3.1.0
       typescript: ^4.8.3
-      util: ^0.12.4
       webpack: ^5.74.0
     dependencies:
       '@ember/test-helpers': 2.8.1_xp2p5n24vuhmfuch2uld7mekjm
@@ -504,7 +503,6 @@ importers:
       qunit: 2.19.3
       qunit-dom: 2.0.0
       typescript: 4.8.4
-      util: 0.12.5
       webpack: 5.75.0
     dependenciesMeta:
       ember-headless-table:
@@ -1936,7 +1934,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
-    dev: true
 
   /@babel/template/7.18.10:
     resolution: {integrity: sha512-TI+rCtooWHr3QJ27kJxfjutghu44DLnasDMwpDqCXVTal9RLp3RSYNh4NdBrRP2cQAoG9A8juOQl6P6oZG4JxA==}
@@ -11278,13 +11275,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /is-generator-function/1.0.10:
-    resolution: {integrity: sha512-jsEjy9l3yiXEQ+PsXdmBwEPcOxaXWLspKdplFUVI9vq1iZgIekeC0L167qeu86czQaxed3q/Uzuw0swL0irL8A==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      has-tostringtag: 1.0.0
-    dev: true
-
   /is-git-url/1.0.0:
     resolution: {integrity: sha512-UCFta9F9rWFSavp9H3zHEHrARUfZbdJvmHKeEpds4BK3v7W2LdXoNypMtXXi5w5YBDEBCTYmbI+vsSwI8LYJaQ==}
     engines: {node: '>=0.8'}
@@ -14063,7 +14053,6 @@ packages:
 
   /regenerator-runtime/0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
-    dev: true
 
   /regenerator-transform/0.10.1:
     resolution: {integrity: sha512-PJepbvDbuK1xgIgnau7Y90cwaAmO/LCLMI2mPvaXq2heGMR3aWW5/BQvYrhJ8jgmQjXewXvBjzfqKcVOmhjZ6Q==}
@@ -14076,7 +14065,7 @@ packages:
   /regenerator-transform/0.15.0:
     resolution: {integrity: sha512-LsrGtPmbYg19bcPHwdtmXwbW+TqNvtY4riE3P83foeHRroMbH6/2ddFBfab3t7kbzc7v7p4wbkIecHImqt0QNg==}
     dependencies:
-      '@babel/runtime': 7.20.1
+      '@babel/runtime': 7.20.7
 
   /regex-not/1.0.2:
     resolution: {integrity: sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==}
@@ -16164,16 +16153,6 @@ packages:
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  /util/0.12.5:
-    resolution: {integrity: sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==}
-    dependencies:
-      inherits: 2.0.4
-      is-arguments: 1.1.1
-      is-generator-function: 1.0.10
-      is-typed-array: 1.1.10
-      which-typed-array: 1.1.9
-    dev: true
-
   /utils-merge/1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
@@ -16711,7 +16690,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.3.0
+    version: 1.4.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -16725,7 +16704,7 @@ packages:
       ember-cached-decorator-polyfill:
         optional: true
     dependencies:
-      '@babel/runtime': 7.20.1
+      '@babel/runtime': 7.20.7
       '@ember/string': 3.0.0
       '@ember/test-helpers': 2.8.1_xp2p5n24vuhmfuch2uld7mekjm
       '@ember/test-waiters': 3.0.2
@@ -16750,7 +16729,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.3.0
+    version: 1.4.0
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -16764,7 +16743,7 @@ packages:
       ember-cached-decorator-polyfill:
         optional: true
     dependencies:
-      '@babel/runtime': 7.20.1
+      '@babel/runtime': 7.20.7
       '@ember/string': 3.0.0
       '@ember/test-helpers': 2.8.1_wac6mb43gwopsgc7yvlsdnrice
       '@ember/test-waiters': 3.0.2
