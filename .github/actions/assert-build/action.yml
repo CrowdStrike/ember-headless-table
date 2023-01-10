@@ -10,7 +10,7 @@ runs:
         target: ${{ env.dist }}
         setup:
           run: pnpm build
-          cwd: ./ember-headless-table
+          cwd: ./
         expect: |
           index.js
           index.js.map
@@ -22,7 +22,7 @@ runs:
           plugins/column-visibility/index.js
           plugins/sticky-columns/index.js
           test-support/index.js
-          
+
       ' >> assert-contents.config.yml
       npx assert-folder-contents
 

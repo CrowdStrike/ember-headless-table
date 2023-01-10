@@ -24,9 +24,9 @@
     "./plugins/column-visibility": "./dist/plugins/column-visibility/index.js",
     "./plugins/sticky-columns": "./dist/plugins/sticky-columns/index.js",
     "./plugins/row-selection": "./dist/plugins/row-selection/index.js",
-    "./plugins/metadata": "./dist/plugins/metadata/index.js",
     "./test-support": "./dist/test-support/index.js",
-    "./addon-main.js": "./addon-main.js"
+    "./addon-main.js": "./addon-main.js",
+    "./plugins/metadata": "./dist/plugins/metadata/index.js"
   },
   "typesVersions": {
     "*": {
@@ -51,20 +51,19 @@
       "plugins/row-selection": [
         "./dist/plugins/row-selection/index.d.ts"
       ],
-      "plugins/metadata": [
-        "./dist/plugins/metadata/index.d.ts"
-      ],
       "test-support": [
         "./dist/test-support/index.d.ts"
       ],
       "*": [
         "./dist/*"
+      ],
+      "plugins/metadata": [
+        "./dist/plugins/metadata/index.d.ts"
       ]
     }
   },
   "scripts": {
     "build": "rollup --config ./rollup.config.mjs",
-    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
@@ -93,11 +92,11 @@
     "@babel/runtime": "^7.17.8",
     "@ember/string": "^3.0.0",
     "@embroider/addon-shim": "^1.0.0",
-    "@embroider/macros": "1.10.0",
     "ember-modifier": "^3.2.7",
     "ember-resources": "^5.4.0",
     "ember-tracked-storage-polyfill": "^1.0.0",
-    "tracked-built-ins": "^3.1.0"
+    "tracked-built-ins": "^3.1.0",
+    "@embroider/macros": "1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
