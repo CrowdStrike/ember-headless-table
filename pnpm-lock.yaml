@@ -46,7 +46,7 @@ importers:
       '@docfy/core': ^0.5.0
       '@docfy/ember': ^0.5.0
       '@ember/optional-features': ^2.0.0
-      '@ember/test-helpers': ^2.8.1
+      '@ember/test-helpers': ^2.9.3
       '@ember/test-waiters': ^3.0.2
       '@embroider/compat': ^2.0.2
       '@embroider/core': ^2.0.2
@@ -142,7 +142,7 @@ importers:
       dompurify: 2.4.1
       ember-browser-services: 4.0.3
       ember-cached-decorator-polyfill: 1.0.1_wac6mb43gwopsgc7yvlsdnrice
-      ember-headless-table: file:ember-headless-table_sfsfqyspphrdazww3b6vb5dd2u
+      ember-headless-table: file:ember-headless-table_hf44dtwcu2fzretjfvhkqos4t4
       ember-modifier: 3.2.7_@babel+core@7.20.12
       ember-resources: 5.6.0_ecrxu6wbsoesawq666mlfeieou
       highlight.js: 11.6.0
@@ -155,7 +155,7 @@ importers:
       '@docfy/core': 0.5.0
       '@docfy/ember': 0.5.0
       '@ember/optional-features': 2.0.0
-      '@ember/test-helpers': 2.8.1_wac6mb43gwopsgc7yvlsdnrice
+      '@ember/test-helpers': 2.9.3_wac6mb43gwopsgc7yvlsdnrice
       '@embroider/compat': 2.0.2_@embroider+core@2.0.2
       '@embroider/core': 2.0.2
       '@embroider/webpack': 2.0.2_byxkwhtlh63xhimn5rdsj74uiq
@@ -1805,7 +1805,7 @@ packages:
     deprecated: 🚨 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more information.
     dependencies:
       core-js: 2.6.12
-      regenerator-runtime: 0.13.10
+      regenerator-runtime: 0.13.11
 
   /@babel/preset-env/7.20.2_@babel+core@7.20.12:
     resolution: {integrity: sha512-1G0efQEWR1EHkKvKHqbG+IN/QdgwfByUpM5V5QroDzGV2t3S/WXNQd693cHiHTlCFMpr9B6FkPFXDA2lQcKoDg==}
@@ -1921,7 +1921,7 @@ packages:
   /@babel/runtime/7.12.18:
     resolution: {integrity: sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==}
     dependencies:
-      regenerator-runtime: 0.13.10
+      regenerator-runtime: 0.13.11
 
   /@babel/runtime/7.20.1:
     resolution: {integrity: sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==}
@@ -2403,25 +2403,6 @@ packages:
       - supports-color
     dev: true
 
-  /@ember/test-helpers/2.8.1_wac6mb43gwopsgc7yvlsdnrice:
-    resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
-    engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
-    peerDependencies:
-      ember-source: '>=3.8.0'
-    dependencies:
-      '@ember/test-waiters': 3.0.2
-      '@embroider/macros': 1.10.0
-      '@embroider/util': 1.9.0_ember-source@4.9.3
-      broccoli-debug: 0.6.5
-      broccoli-funnel: 3.0.8
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
-      ember-destroyable-polyfill: 2.0.3_@babel+core@7.20.12
-      ember-source: 4.9.3_ipwtokbwlukr3yko7oz5lbj6xy
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-
   /@ember/test-helpers/2.8.1_xp2p5n24vuhmfuch2uld7mekjm:
     resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
     engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
@@ -2437,6 +2418,25 @@ packages:
       ember-cli-htmlbars: 5.7.2
       ember-destroyable-polyfill: 2.0.3_@babel+core@7.20.2
       ember-source: 3.28.11_@babel+core@7.20.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  /@ember/test-helpers/2.9.3_wac6mb43gwopsgc7yvlsdnrice:
+    resolution: {integrity: sha512-ejVg4Dj+G/6zyLvQsYOvmGiOLU6AS94tY4ClaO1E2oVvjjtVJIRmVLFN61I+DuyBg9hS3cFoPjQRTZB9MRIbxQ==}
+    engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
+    peerDependencies:
+      ember-source: '>=3.8.0'
+    dependencies:
+      '@ember/test-waiters': 3.0.2
+      '@embroider/macros': 1.10.0
+      '@embroider/util': 1.9.0_ember-source@4.9.3
+      broccoli-debug: 0.6.5
+      broccoli-funnel: 3.0.8
+      ember-cli-babel: 7.26.11
+      ember-cli-htmlbars: 6.1.1
+      ember-destroyable-polyfill: 2.0.3_@babel+core@7.20.12
+      ember-source: 4.9.3_ipwtokbwlukr3yko7oz5lbj6xy
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -11297,7 +11297,7 @@ packages:
   /is-language-code/3.1.0:
     resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
     dependencies:
-      '@babel/runtime': 7.20.1
+      '@babel/runtime': 7.20.7
     dev: true
 
   /is-map/2.0.2:
@@ -16725,7 +16725,7 @@ packages:
       - supports-color
     dev: false
 
-  file:ember-headless-table_sfsfqyspphrdazww3b6vb5dd2u:
+  file:ember-headless-table_hf44dtwcu2fzretjfvhkqos4t4:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
@@ -16745,7 +16745,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.7
       '@ember/string': 3.0.0
-      '@ember/test-helpers': 2.8.1_wac6mb43gwopsgc7yvlsdnrice
+      '@ember/test-helpers': 2.9.3_wac6mb43gwopsgc7yvlsdnrice
       '@ember/test-waiters': 3.0.2
       '@embroider/addon-shim': 1.8.4
       '@embroider/macros': 1.10.0
