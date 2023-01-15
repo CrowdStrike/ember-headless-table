@@ -60,7 +60,7 @@ importers:
       '@glint/template': ^0.9.7
       '@html-next/vertical-collection': ^4.0.2
       '@nullvoxpopuli/eslint-configs': ~2.2.59
-      '@tailwindcss/typography': ^0.5.8
+      '@tailwindcss/typography': ^0.5.9
       '@tsconfig/ember': ^2.0.0
       '@types/dompurify': ^2.3.4
       '@types/ember': ^4.0.1
@@ -136,7 +136,7 @@ importers:
       typescript: ^4.9.4
       webpack: ^5.74.0
     dependencies:
-      '@crowdstrike/ember-oss-docs': 1.1.2_ry7u7hwlthtjwwq5jppv6vewje
+      '@crowdstrike/ember-oss-docs': 1.1.2_q6zxwgaqrom2ssg2xwob2vibgy
       '@ember/test-waiters': 3.0.2
       '@embroider/router': 2.0.0_7jjqwtirlvic2bg2g2mkufm4da
       dompurify: 2.4.1
@@ -167,7 +167,7 @@ importers:
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       '@html-next/vertical-collection': 4.0.2
       '@nullvoxpopuli/eslint-configs': 2.2.63_typescript@4.9.4
-      '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
+      '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
       '@tsconfig/ember': 2.0.0
       '@types/dompurify': 2.3.4
       '@types/ember': 4.0.2_@babel+core@7.20.12
@@ -1805,7 +1805,7 @@ packages:
     deprecated: 🚨 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more information.
     dependencies:
       core-js: 2.6.12
-      regenerator-runtime: 0.13.10
+      regenerator-runtime: 0.13.11
 
   /@babel/preset-env/7.20.2_@babel+core@7.20.12:
     resolution: {integrity: sha512-1G0efQEWR1EHkKvKHqbG+IN/QdgwfByUpM5V5QroDzGV2t3S/WXNQd693cHiHTlCFMpr9B6FkPFXDA2lQcKoDg==}
@@ -1921,7 +1921,7 @@ packages:
   /@babel/runtime/7.12.18:
     resolution: {integrity: sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==}
     dependencies:
-      regenerator-runtime: 0.13.10
+      regenerator-runtime: 0.13.11
 
   /@babel/runtime/7.20.1:
     resolution: {integrity: sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==}
@@ -2237,7 +2237,7 @@ packages:
     dev: true
     optional: true
 
-  /@crowdstrike/ember-oss-docs/1.1.2_ry7u7hwlthtjwwq5jppv6vewje:
+  /@crowdstrike/ember-oss-docs/1.1.2_q6zxwgaqrom2ssg2xwob2vibgy:
     resolution: {integrity: sha512-njFvGlMntqkVeU4vc3wU6WKvKWPNampUkkfggcywruxZ/Xch8M4sNXfdMBCaCA9BPAikNdqvl6O6vgOzOeldgQ==}
     peerDependencies:
       '@crowdstrike/tailwind-toucan-base': ^3.3.1
@@ -2258,7 +2258,7 @@ packages:
       '@glimmer/component': 1.1.2_@babel+core@7.20.12
       '@glint/environment-ember-loose': 0.9.7_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
-      '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
+      '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
       dompurify: 2.4.1
       ember-modifier: 3.2.7_@babel+core@7.20.12
       ember-url-hash-polyfill: 1.0.8_@babel+core@7.20.12
@@ -3317,8 +3317,8 @@ packages:
       defer-to-connect: 1.1.3
     dev: true
 
-  /@tailwindcss/typography/0.5.8_tailwindcss@3.2.4:
-    resolution: {integrity: sha512-xGQEp8KXN8Sd8m6R4xYmwxghmswrd0cPnNI2Lc6fmrC3OojysTBJJGSIVwPV56q4t6THFUK3HJ0EaWwpglSxWw==}
+  /@tailwindcss/typography/0.5.9_tailwindcss@3.2.4:
+    resolution: {integrity: sha512-t8Sg3DyynFysV9f4JDOVISGsjazNb48AeIYQwcL+Bsq5uf4RYL75C1giZ43KISjeDGBaTN3Kxh7Xj/vRSMJUUg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
@@ -11297,7 +11297,7 @@ packages:
   /is-language-code/3.1.0:
     resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
     dependencies:
-      '@babel/runtime': 7.20.1
+      '@babel/runtime': 7.20.7
     dev: true
 
   /is-map/2.0.2:
