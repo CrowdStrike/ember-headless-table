@@ -92,7 +92,7 @@ importers:
       broccoli-asset-rev: ^3.0.0
       concurrently: ^7.6.0
       cssnano: ^5.1.14
-      dompurify: ^2.4.1
+      dompurify: ^2.4.3
       ember-auto-import: ^2.4.2
       ember-browser-services: ^4.0.3
       ember-cached-decorator-polyfill: ^1.0.1
@@ -139,7 +139,7 @@ importers:
       '@crowdstrike/ember-oss-docs': 1.1.2_q6zxwgaqrom2ssg2xwob2vibgy
       '@ember/test-waiters': 3.0.2
       '@embroider/router': 2.0.0_7jjqwtirlvic2bg2g2mkufm4da
-      dompurify: 2.4.1
+      dompurify: 2.4.3
       ember-browser-services: 4.0.3
       ember-cached-decorator-polyfill: 1.0.1_wac6mb43gwopsgc7yvlsdnrice
       ember-headless-table: file:ember-headless-table_sfsfqyspphrdazww3b6vb5dd2u
@@ -2259,7 +2259,7 @@ packages:
       '@glint/environment-ember-loose': 0.9.7_q3dyqagzoarn5fdnpc2fuow56q
       '@glint/template': 0.9.7_@glimmer+component@1.1.2
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
-      dompurify: 2.4.1
+      dompurify: 2.4.3
       ember-modifier: 3.2.7_@babel+core@7.20.12
       ember-url-hash-polyfill: 1.0.8_@babel+core@7.20.12
       highlight.js: 11.6.0
@@ -7462,8 +7462,8 @@ packages:
       domelementtype: 2.3.0
     dev: true
 
-  /dompurify/2.4.1:
-    resolution: {integrity: sha512-ewwFzHzrrneRjxzmK6oVz/rZn9VWspGFRDb4/rRtIsM1n36t9AKma/ye8syCpcw+XJ25kOK/hOG7t1j2I2yBqA==}
+  /dompurify/2.4.3:
+    resolution: {integrity: sha512-q6QaLcakcRjebxjg8/+NP+h0rPfatOgOzc46Fst9VAA3jF2ApfKBNKMzdP4DYTqtUMXSCd5pRS/8Po/OmoCHZQ==}
     dev: false
 
   /domutils/2.8.0:
