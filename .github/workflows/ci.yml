@@ -77,7 +77,7 @@ jobs:
         run: |
           pnpm --filter test-app exec tsc -v;
           pnpm --filter test-app exec glint --version;
-          pnpm --filter test-app exec glint --build;
+          pnpm --filter test-app exec glint;
 
 
 
@@ -190,7 +190,7 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/pnpm
       - uses: ./.github/actions/download-built-package
-      - run: pnpm glint --build
+      - run: pnpm glint
         working-directory: docs-app
 
 
