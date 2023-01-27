@@ -2,7 +2,9 @@
 'ember-headless-table': patch
 ---
 
-Add new util for the resizing plugin to help styles cells in non-header rows in non-tables (such as grids).
+Add new util for the resizing plugin to help styles cells in non-header rows in non-tables (such as [grids][grid]).
+
+[grid]: https://www.w3.org/WAI/ARIA/apg/example-index/grid/LayoutGrids#htmlsourcecode
 
 To use it,
 
