@@ -1,3 +1,5 @@
+import { htmlSafe } from '@ember/template';
+
 import { meta } from '../-private/base';
 import { ColumnResizing } from './plugin';
 
@@ -29,3 +31,32 @@ export const canShrink = (column: Column) => meta.forColumn(column, ColumnResizi
  */
 export const hasResizeHandle = (column: Column) =>
   meta.forColumn(column, ColumnResizing).hasResizeHandle;
+
+/**
+ * In this plugin (by default), styles are only applied to the headers automatically.
+ * in <Table> UIs, the header cells control the widths of all cells in that column.
+ * There are other kinds of tabular-like markup that may want to grab the widths of columns,
+ * because The Platform does not manage that automatically (like if divs and roles were used manually)
+ *
+ * This utility is meant to be applied to the `style` attribute of a particular td-like element.
+ */
+export const styleStringFor = <DataType = unknown>(
+  column: Column<DataType>
+): ReturnType<typeof htmlSafe> => {
+  let columnMeta = meta.forColumn(column, ColumnResizing);
+
+  let result = '';
+
+  /**
+   * Styles are applied regardless of the "table" being resizable or not
+   * because in non-<table> UIs, we need to ensure that all cells in a column
+   * have the same width
+   */
+  for (let [key, value] of Object.entries(columnMeta.style)) {
+    result += `${key}:${value};`;
+  }
+
+  result = ';' + result;
+
+  return htmlSafe(result);
+};

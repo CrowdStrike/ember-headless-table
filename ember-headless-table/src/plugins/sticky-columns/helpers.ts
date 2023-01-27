@@ -13,7 +13,7 @@ export const styleFor = <DataType = unknown>(
 ): Partial<CSSStyleDeclaration> => meta.forColumn(column, StickyColumns).style;
 
 /**
- * In this plugin, buth header and cells have the same styles,
+ * In this plugin, both header and cells have the same styles,
  * if applicable.
  *
  * Until this RFC https://github.com/emberjs/rfcs/pull/883
