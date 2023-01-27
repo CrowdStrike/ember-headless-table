@@ -120,7 +120,7 @@ export class ColumnMeta {
   get options() {
     let columnOptions = options.forColumn(this.column, ColumnResizing);
     let filteredOptions = Object.entries(columnOptions || {}).reduce((result, [k, v]) => {
-      if (v) {
+      if (v !== undefined && v !== null) {
         result[k] = v;
       }
 
