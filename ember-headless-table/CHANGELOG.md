@@ -1,5 +1,32 @@
 # ember-headless-table
 
+## 1.4.1
+
+### Patch Changes
+
+- [#121](https://github.com/CrowdStrike/ember-headless-table/pull/121) [`2175782`](https://github.com/CrowdStrike/ember-headless-table/commit/2175782e275359ed75a2835c035aedc44cb1ddd3) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Add new util for the resizing plugin to help styles cells in non-header rows in non-tables (such as [grids][grid]).
+
+  [grid]: https://www.w3.org/WAI/ARIA/apg/example-index/grid/LayoutGrids#htmlsourcecode
+
+  To use it,
+
+  ```gjs
+  import { styleStringFor } from 'ember-headless-table/plugins/column-resizing';
+
+  // ...
+
+  // rows.gjs
+  <template>
+    {{#each @table.rows as |row|}}
+      <div role="row">
+        {{#each @table.columns as |column|}}
+          <div role="cell" style={{styleStringFor column}}>{{column.getValueForRow row}}</div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </template>
+  ```
+
 ## 1.4.0
 
 ### Minor Changes
@@ -46,8 +73,8 @@
 
   When using the data-sorting plugin with this util, it is perfectly safe to "deserialize sorts" to an empty array
   and have that empty array be equivelant to no sorting being applied at all.
-  
-## 1.3.0  
+
+## 1.3.0
 
 ### Minor Changes
 
