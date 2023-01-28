@@ -101,6 +101,8 @@ const DEFAULT_COLUMN_OPTIONS = {
   minWidth: 128,
 };
 
+const ALLOWED_COLUMN_OPTIONS = ['minWidth', 'width', 'isResizable'];
+
 /**
  * @private
  *
@@ -120,7 +122,7 @@ export class ColumnMeta {
   get options() {
     let columnOptions = options.forColumn(this.column, ColumnResizing);
     let filteredOptions = Object.entries(columnOptions || {}).reduce((result, [k, v]) => {
-      if (v) {
+      if (ALLOWED_COLUMN_OPTIONS.includes(k)) {
         result[k] = v;
       }
 

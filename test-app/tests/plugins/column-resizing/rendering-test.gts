@@ -189,20 +189,20 @@ module('Plugins | resizing', function (hooks) {
   });
 
   module('with options that affect resize behavior', function (hooks) {
-    class DefaultOptions extends Context {
-      table = headlessTable(this, {
-        columns: () => this.columns,
-        data: () => [] as unknown[],
-        plugins: [ColumnResizing],
+    module('handlePosition (default)', function (hooks) {
+      class DefaultOptions extends Context {
+        table = headlessTable(this, {
+          columns: () => this.columns,
+          data: () => [] as unknown[],
+          plugins: [ColumnResizing],
+        });
+      }
+
+      hooks.beforeEach(function () {
+        ctx = new DefaultOptions();
+        setOwner(ctx, this.owner);
       });
-    }
 
-    hooks.beforeEach(function () {
-      ctx = new DefaultOptions();
-      setOwner(ctx, this.owner);
-    });
-
-    module('handlePosition (default)', function () {
       test('it works', async function () {
         ctx.setContainerWidth(1000);
         await render(
