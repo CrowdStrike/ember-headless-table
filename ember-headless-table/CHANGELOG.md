@@ -1,5 +1,11 @@
 # ember-headless-table
 
+## 1.4.2
+
+### Patch Changes
+
+- [#123](https://github.com/CrowdStrike/ember-headless-table/pull/123) [`972749b`](https://github.com/CrowdStrike/ember-headless-table/commit/972749b4d8f4743da354e0120a07489d973ad2b4) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Fix an issue where columns using the ColumnResize plugin with the option isResizing set to false, the plugin could not recognize the column as having resizing turned off"
+
 ## 1.4.1
 
 ### Patch Changes
