@@ -129,7 +129,7 @@ importers:
       postcss-import: ^15.1.0
       postcss-loader: ^7.0.2
       prettier: ^2.7.1
-      qunit: ^2.19.3
+      qunit: ^2.19.4
       qunit-dom: ^2.0.0
       tailwindcss: ^3.2.4
       tracked-built-ins: ^3.1.0
@@ -212,7 +212,7 @@ importers:
       ember-fetch: 8.1.2
       ember-load-initializers: 2.1.2_@babel+core@7.20.12
       ember-page-title: 8.0.0-beta.0
-      ember-qunit: 6.1.1_2ks346rn3j52osmuy4nha7lz24
+      ember-qunit: 6.1.1_khpttehaheeunc7peqs3cjloqi
       ember-resolver: 8.1.0_@babel+core@7.20.12
       ember-source: 4.9.3_ipwtokbwlukr3yko7oz5lbj6xy
       ember-template-imports: 3.4.0_ember-cli-htmlbars@6.1.1
@@ -228,7 +228,7 @@ importers:
       postcss-import: 15.1.0_postcss@8.4.21
       postcss-loader: 7.0.2_6jdsrmfenkuhhw3gx4zvjlznce
       prettier: 2.7.1
-      qunit: 2.19.3
+      qunit: 2.19.4
       qunit-dom: 2.0.0
       tailwindcss: 3.2.4_postcss@8.4.21
       typescript: 4.9.4
@@ -8552,7 +8552,7 @@ packages:
       - webpack
     dev: true
 
-  /ember-qunit/6.1.1_2ks346rn3j52osmuy4nha7lz24:
+  /ember-qunit/6.1.1_khpttehaheeunc7peqs3cjloqi:
     resolution: {integrity: sha512-3/jCpoecltFV6vm7GCtSDNRxBzWx96nP+QrbereJAnioSaGeLe+slKL3l80mGzMYDTvn7ESobZ+Ba+OQ1vMMKQ==}
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
@@ -8566,7 +8566,7 @@ packages:
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
       ember-source: 4.9.3_ipwtokbwlukr3yko7oz5lbj6xy
-      qunit: 2.19.3
+      qunit: 2.19.4
       resolve-package-path: 4.0.3
       silent-error: 1.1.1
       validate-peer-dependencies: 2.1.0
@@ -13940,6 +13940,16 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
+  /qunit/2.19.4:
+    resolution: {integrity: sha512-aqUzzUeCqlleWYKlpgfdHHw9C6KxkB9H3wNfiBg5yHqQMzy0xw/pbCRHYFkjl8MsP/t8qkTQE+JTYL71azgiew==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      commander: 7.2.0
+      node-watch: 0.7.3
+      tiny-glob: 0.2.9
+    dev: true
+
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
@@ -16719,7 +16729,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.4.0
+    version: 1.4.2
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
@@ -16758,7 +16768,7 @@ packages:
     resolution: {directory: ember-headless-table, type: directory}
     id: file:ember-headless-table
     name: ember-headless-table
-    version: 1.4.0
+    version: 1.4.2
     peerDependencies:
       '@ember/test-helpers': ^2.6.0
       '@ember/test-waiters': ^2.4.5 || ^3.0.0
