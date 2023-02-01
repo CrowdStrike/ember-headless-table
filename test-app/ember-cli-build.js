@@ -10,6 +10,9 @@ module.exports = function (defaults) {
     'ember-cli-babel': {
       enableTypeScriptTransform: true,
     },
+    'ember-cli-memory-leak-detector': {
+      enabled: process.env.DETECT_MEMORY_LEAKS || false,
+    },
   });
 
   const { maybeEmbroider } = require('@embroider/test-setup');

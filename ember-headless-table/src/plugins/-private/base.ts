@@ -1,6 +1,6 @@
 import { assert } from '@ember/debug';
 
-import { TABLE_KEY } from '../../-private/table';
+import { COLUMN_META_KEY, ROW_META_KEY, TABLE_KEY, TABLE_META_KEY } from '../../-private/table';
 import { normalizePluginsConfig } from './utils';
 
 import type { Table } from '../../-private/table';
@@ -16,10 +16,6 @@ import type {
   RowMetaFor,
   TableMetaFor,
 } from '#interfaces';
-
-const TABLE_META = new Map<string, Map<Class<unknown>, any>>();
-const COLUMN_META = new WeakMap<Column, Map<Class<unknown>, any>>();
-const ROW_META = new WeakMap<Row, Map<Class<unknown>, any>>();
 
 type InstanceOf<T> = T extends Class<infer Instance> ? Instance : T;
 
@@ -445,7 +441,9 @@ export const meta = {
     column: Column<Data>,
     klass: Class<P>
   ): ColumnMetaFor<SignatureFrom<P>> {
-    return getPluginInstance(COLUMN_META, column, klass, () => {
+    let columnMeta = column.table[COLUMN_META_KEY];
+
+    return getPluginInstance(columnMeta, column, klass, () => {
       let plugin = column.table.pluginOf(klass);
 
       assert(`[${klass.name}] cannot get plugin instance of unregistered plugin class`, plugin);
@@ -468,7 +466,9 @@ export const meta = {
     row: Row<Data>,
     klass: Class<P>
   ): RowMetaFor<SignatureFrom<P>> {
-    return getPluginInstance(ROW_META, row, klass, () => {
+    let rowMeta = row.table[ROW_META_KEY];
+
+    return getPluginInstance(rowMeta, row, klass, () => {
       let plugin = row.table.pluginOf(klass);
 
       assert(`[${klass.name}] cannot get plugin instance of unregistered plugin class`, plugin);
@@ -489,7 +489,9 @@ export const meta = {
     table: Table<Data>,
     klass: Class<P>
   ): TableMetaFor<SignatureFrom<P>> {
-    return getPluginInstance(TABLE_META, table[TABLE_KEY], klass, () => {
+    let tableMeta = table[TABLE_META_KEY];
+
+    return getPluginInstance(tableMeta, klass, () => {
       let plugin = table.pluginOf(klass);
 
       assert(`[${klass.name}] cannot get plugin instance of unregistered plugin class`, plugin);
@@ -498,7 +500,7 @@ export const meta = {
       assert(
         `<#${plugin.name}> plugin already exists for the table. ` +
           `A plugin may only be instantiated once per table.`,
-        ![...(TABLE_META.get(table[TABLE_KEY])?.keys() ?? [])].includes(klass)
+        ![...tableMeta.keys()].includes(klass)
       );
 
       return new plugin.meta.table(table);
@@ -639,21 +641,55 @@ export const options = {
   },
 };
 
+type FactoryMap<Instance> = Map<Class<Instance>, Instance>;
+
 /**
  * @private
  */
-function getPluginInstance<RootKey extends string | Column<any> | Row<any>, Instance>(
-  map: RootKey extends string
-    ? Map<string, Map<Class<Instance>, Instance>>
-    : WeakMap<Column | Row, Map<Class<Instance>, Instance>>,
+function getPluginInstance<Instance>(
+  map: Map<Class<Instance>, Instance>,
+  mapKey: Class<Instance>,
+  factory: () => Instance
+): Instance;
+function getPluginInstance<RootKey extends Column<any> | Row<any>, Instance>(
+  map: WeakMap<Column | Row, Map<Class<Instance>, Instance>>,
   rootKey: RootKey,
   mapKey: Class<Instance>,
   factory: () => Instance
+): Instance;
+function getPluginInstance<RootKey extends Column<any> | Row<any>, Instance>(
+  ...args:
+    | [FactoryMap<Instance>, Class<Instance>, () => Instance]
+    | [WeakMap<Column | Row, FactoryMap<Instance>>, RootKey, Class<Instance>, () => Instance]
 ): Instance {
-  let bucket: Map<Class<Instance>, Instance> | undefined;
+  let map: WeakMap<Column | Row, FactoryMap<Instance>> | FactoryMap<Instance>;
+  let mapKey: Class<Instance>;
+  let rootKey: RootKey | undefined;
+  let factory: () => Instance;
+
+  if (args.length === 3) {
+    map = args[0];
+    mapKey = args[1];
+    factory = args[2];
+  } else if (args.length === 4) {
+    map = args[0];
+    rootKey = args[1];
+    mapKey = args[2];
+    factory = args[3];
+  } else {
+    throw new Error(
+      // TS says args is of type "never", but TS can't protect against general misuse
+      // (esp without TS)
+      `Incorrect arity passed to getPluginInstance. Expected 3 or 4, received ${
+        (args as any).length
+      }`
+    );
+  }
+
+  let bucket: FactoryMap<Instance> | undefined;
 
   if (map instanceof WeakMap) {
-    assert(`Cannot use string key with WeakMap`, typeof rootKey !== 'string');
+    assert(`rootKey is missing`, rootKey);
 
     bucket = map.get(rootKey);
 
@@ -663,14 +699,7 @@ function getPluginInstance<RootKey extends string | Column<any> | Row<any>, Inst
       map.set(rootKey, bucket);
     }
   } else {
-    assert(`Cannot use object key with Map`, typeof rootKey === 'string');
-    bucket = map.get(rootKey);
-
-    if (!bucket) {
-      bucket = new Map();
-
-      map.set(rootKey, bucket);
-    }
+    bucket = map;
   }
 
   let instance = bucket.get(mapKey);
