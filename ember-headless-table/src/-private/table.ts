@@ -38,6 +38,9 @@ interface Signature<DataType> {
  * ember-resources.
  */
 export const TABLE_KEY = Symbol('__TABLE_KEY__');
+export const TABLE_META_KEY = Symbol('__TABLE_META__');
+export const COLUMN_META_KEY = Symbol('__COLUMN_META__');
+export const ROW_META_KEY = Symbol('__ROW_META__');
 
 const attachContainer = (element: Element, table: Table) => {
   assert('Must be installed on an HTMLElement', element instanceof HTMLElement);
@@ -50,6 +53,18 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
    * @private
    */
   [TABLE_KEY] = guidFor(this);
+  /**
+   * @private
+   */
+  [TABLE_META_KEY] = new Map<Class<unknown>, any>();
+  /**
+   * @private
+   */
+  [COLUMN_META_KEY] = new WeakMap<Column, Map<Class<unknown>, any>>();
+  /**
+   * @private
+   */
+  [ROW_META_KEY] = new WeakMap<Row, Map<Class<unknown>, any>>();
 
   /**
    * @private

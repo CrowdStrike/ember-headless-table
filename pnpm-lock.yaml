@@ -486,7 +486,7 @@ importers:
       ember-fetch: 8.1.2
       ember-load-initializers: 2.1.2_@babel+core@7.20.2
       ember-page-title: 8.0.0-beta.0
-      ember-qunit: 6.0.0_qhusffjocg4cnbdwj4yxijwhva
+      ember-qunit: 6.1.1_6mqbvfmbzfx5zy6kvwpyc7ke3u
       ember-resolver: 8.0.3_@babel+core@7.20.2
       ember-source: 3.28.11_@babel+core@7.20.2
       ember-source-channel-url: 3.0.0
@@ -2442,6 +2442,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   /@ember/test-waiters/3.0.2:
     resolution: {integrity: sha512-H8Q3Xy9rlqhDKnQpwt2pzAYDouww4TZIGSI1pZJhM7mQIGufQKuB0ijzn/yugA6Z+bNdjYp1HioP8Y4hn2zazQ==}
@@ -2692,6 +2693,7 @@ packages:
       ember-source: 3.28.11_@babel+core@7.20.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@embroider/util/1.9.0_ember-source@4.8.2:
     resolution: {integrity: sha512-9I63iJK6N01OHJafmS/BX0msUkTlmhFMIEmDl/SRNACVi0nS6QfNyTgTTeji1P/DALf6eobg/9t/N4VhS9G9QA==}
@@ -8593,20 +8595,20 @@ packages:
       '@embroider/addon-shim': 1.8.3
     dev: true
 
-  /ember-qunit/6.0.0_qhusffjocg4cnbdwj4yxijwhva:
-    resolution: {integrity: sha512-idNWh9Ap2HN9e3Xozh5Jrciu5tDhn0okM/bgwDjdks3dwuMhEox45iiRTx469FWQ9+ixjZ40AsXsRTDkfCmvmw==}
-    engines: {node: 14.* || 16.* || >= 17}
+  /ember-qunit/6.1.1_6mqbvfmbzfx5zy6kvwpyc7ke3u:
+    resolution: {integrity: sha512-3/jCpoecltFV6vm7GCtSDNRxBzWx96nP+QrbereJAnioSaGeLe+slKL3l80mGzMYDTvn7ESobZ+Ba+OQ1vMMKQ==}
+    engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
-      '@ember/test-helpers': ^2.4.0
+      ember-source: ^3.28 || ^4.0
       qunit: ^2.13.0
     dependencies:
-      '@ember/test-helpers': 2.8.1_xp2p5n24vuhmfuch2uld7mekjm
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 3.0.2
       common-tags: 1.8.2
       ember-auto-import: 2.4.3_webpack@5.75.0
       ember-cli-babel: 7.26.11
       ember-cli-test-loader: 3.0.0
+      ember-source: 3.28.11_@babel+core@7.20.2
       qunit: 2.19.3
       resolve-package-path: 4.0.3
       silent-error: 1.1.1
