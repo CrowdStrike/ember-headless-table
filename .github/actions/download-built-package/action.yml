@@ -8,6 +8,7 @@ runs:
     with:
       name: dist
       path: ${{ env.dist }}
-  - name: 'Install dependencies'
-    shell: 'bash'
-    run: pnpm install --force
+  # required when dependenciesMeta.*.injected: true is present
+  # - name: 'Install dependencies'
+  #   shell: 'bash'
+  #   run: pnpm install --force

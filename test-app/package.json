@@ -33,11 +33,6 @@
     "ember-resources": "^5.4.0",
     "tracked-built-ins": "^3.1.0"
   },
-  "dependenciesMeta": {
-    "ember-headless-table": {
-      "injected": true
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@ember/optional-features": "^2.0.0",
