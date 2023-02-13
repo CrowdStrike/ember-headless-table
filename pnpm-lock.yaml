@@ -142,7 +142,7 @@ importers:
       dompurify: 2.4.3
       ember-browser-services: 4.0.3
       ember-cached-decorator-polyfill: 1.0.1_2lbu44dmrdozuoe4jwbycbgazy
-      ember-headless-table: file:ember-headless-table_vkzgp5tmgcwlelhiduhnqhrvwm
+      ember-headless-table: link:../ember-headless-table
       ember-modifier: 3.2.7_@babel+core@7.20.12
       ember-resources: 5.6.2_mr5h6rvwjg2i4vt72ztypze7ry
       highlight.js: 11.6.0
@@ -233,9 +233,6 @@ importers:
       tailwindcss: 3.2.4_postcss@8.4.21
       typescript: 4.9.5
       webpack: 5.75.0
-    dependenciesMeta:
-      ember-headless-table:
-        injected: true
 
   ember-headless-table:
     specifiers:
@@ -430,7 +427,7 @@ importers:
       ember-auto-import: 2.4.3_webpack@5.75.0
       ember-cached-decorator-polyfill: 1.0.1_q3pjj2zg7mqpq35mmmhw2wkixu
       ember-functions-as-helper-polyfill: 2.1.1_ember-source@3.28.11
-      ember-headless-table: file:ember-headless-table_46ec73nnggenjienttx6vuyesi
+      ember-headless-table: link:../ember-headless-table
       ember-resources: 5.6.2_izahbxwzt6gnvbhpucvbta7bbq
       tracked-built-ins: 3.1.0
     devDependencies:
@@ -504,9 +501,6 @@ importers:
       qunit-dom: 2.0.0
       typescript: 4.9.4
       webpack: 5.75.0
-    dependenciesMeta:
-      ember-headless-table:
-        injected: true
 
 packages:
 
@@ -576,6 +570,7 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@babel/eslint-parser/7.19.1_go3kp2l7mdrkdyt3xfyeu7ppfa:
     resolution: {integrity: sha512-AqNf2QWt1rtu2/1rLswy6CDP7H9Oh3mMhk177Y67Rg8d7RD9WfOLLv8CGn6tisFvS2htm86yIe1yLF6I1UDaGQ==}
@@ -731,6 +726,7 @@ packages:
       '@babel/types': 7.20.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@babel/helper-optimise-call-expression/7.18.6:
     resolution: {integrity: sha512-HP59oD9/fEHQkdcbgFCnbmgH5vIQTJbxh2yf+CdM89/glUNnuzr87Q8GIjGEnOktTROemO0Pe0iPAYbqZuOUiA==}
@@ -828,6 +824,7 @@ packages:
       '@babel/types': 7.20.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@babel/highlight/7.18.6:
     resolution: {integrity: sha512-u7stbOuYjaPezCuLj29hNW1v64M2Md2qupEKP1fHc7WdOA3DgLh37suiSrZYY7haUB7iBeQZ9P1uiRF359do3g==}
@@ -1761,6 +1758,7 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@babel/types/7.20.7:
     resolution: {integrity: sha512-69OnhBxSSgK0OzTJai4kyPDiKTIe3j+ctaHdIGVbRahTLAT7L3R9oeXHC2aVSuGYt3cVnoAMDmOCgJ2yaiLMvg==}
@@ -2153,6 +2151,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: true
 
   /@ember/test-helpers/2.8.1_q3pjj2zg7mqpq35mmmhw2wkixu:
     resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
@@ -2449,6 +2448,7 @@ packages:
       ember-source: 4.10.0_ipwtokbwlukr3yko7oz5lbj6xy
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@embroider/util/1.9.0_ember-source@4.9.3:
     resolution: {integrity: sha512-9I63iJK6N01OHJafmS/BX0msUkTlmhFMIEmDl/SRNACVi0nS6QfNyTgTTeji1P/DALf6eobg/9t/N4VhS9G9QA==}
@@ -3201,7 +3201,7 @@ packages:
     resolution: {integrity: sha512-G6kbLaS3ke4QspHkgLlGY0t1v0G22hGavyphezZucj7LLk1N+r11w913CYkBg3cJsJD+TG2Wo4eVbgRcotvuvQ==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.12
-      '@types/ember__object': 4.0.5_@babel+core@7.20.12
+      '@types/ember__object': 4.0.5
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -3210,7 +3210,7 @@ packages:
     resolution: {integrity: sha512-iwFf+qYBsGp9SycIb0lxGkdZPYpKxMcBoV5kCJbWyC6azuX2xPDXHx8n2lm8O9GrEFVJXfYC5bSXf33rdpy5Sw==}
     dependencies:
       '@types/ember': 4.0.2_@babel+core@7.20.12
-      '@types/ember__object': 4.0.5_@babel+core@7.20.12
+      '@types/ember__object': 4.0.5
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -4483,7 +4483,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      '@babel/core': 7.20.12_supports-color@8.1.1
+      '@babel/core': 7.20.12
       find-cache-dir: 3.3.2
       loader-utils: 2.0.3
       make-dir: 3.1.0
@@ -6759,6 +6759,7 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 8.1.1
+    dev: true
 
   /decamelize-keys/1.1.1:
     resolution: {integrity: sha512-WiPxgEirIV0/eIOMcnFBA3/IJZAZqKnwAwWyvvdi4lsr1WCN22nhdf/3db3DoZcUjTV2SqfzIwNyp6y2xs3nmg==}
@@ -8625,7 +8626,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.41.0_jofidmxrjzhj7l6vknpw5ecvfe
+      '@typescript-eslint/parser': 5.41.0_yfqovispp7u7jaktymfaqwl2py
       debug: 3.2.7
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.6
@@ -8734,7 +8735,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.41.0_jofidmxrjzhj7l6vknpw5ecvfe
+      '@typescript-eslint/parser': 5.41.0_yfqovispp7u7jaktymfaqwl2py
       array-includes: 3.1.6
       array.prototype.flat: 1.3.1
       debug: 2.6.9
@@ -15982,81 +15983,3 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
-
-  file:ember-headless-table_46ec73nnggenjienttx6vuyesi:
-    resolution: {directory: ember-headless-table, type: directory}
-    id: file:ember-headless-table
-    name: ember-headless-table
-    version: 1.4.3
-    peerDependencies:
-      '@ember/test-helpers': ^2.6.0
-      '@ember/test-waiters': ^2.4.5 || ^3.0.0
-      '@glimmer/component': '*'
-      '@glint/template': '>= 0.8.3'
-      ember-cached-decorator-polyfill: ^1.0.1
-      ember-source: ^3.28.0 || ^4.0.0
-    peerDependenciesMeta:
-      '@glimmer/component':
-        optional: true
-      ember-cached-decorator-polyfill:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.20.7
-      '@ember/string': 3.0.0
-      '@ember/test-helpers': 2.8.1_q3pjj2zg7mqpq35mmmhw2wkixu
-      '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.8.4
-      '@embroider/macros': 1.10.0
-      '@glimmer/component': 1.1.2_@babel+core@7.20.12
-      '@glint/template': 0.9.7_@glimmer+component@1.1.2
-      ember-cached-decorator-polyfill: 1.0.1_q3pjj2zg7mqpq35mmmhw2wkixu
-      ember-modifier: 3.2.7_@babel+core@7.20.12
-      ember-resources: 5.6.2_izahbxwzt6gnvbhpucvbta7bbq
-      ember-source: 3.28.11_@babel+core@7.20.12
-      ember-tracked-storage-polyfill: 1.0.0
-      tracked-built-ins: 3.1.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@glimmer/tracking'
-      - ember-concurrency
-      - supports-color
-    dev: false
-
-  file:ember-headless-table_vkzgp5tmgcwlelhiduhnqhrvwm:
-    resolution: {directory: ember-headless-table, type: directory}
-    id: file:ember-headless-table
-    name: ember-headless-table
-    version: 1.4.3
-    peerDependencies:
-      '@ember/test-helpers': ^2.6.0
-      '@ember/test-waiters': ^2.4.5 || ^3.0.0
-      '@glimmer/component': '*'
-      '@glint/template': '>= 0.8.3'
-      ember-cached-decorator-polyfill: ^1.0.1
-      ember-source: ^3.28.0 || ^4.0.0
-    peerDependenciesMeta:
-      '@glimmer/component':
-        optional: true
-      ember-cached-decorator-polyfill:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.20.7
-      '@ember/string': 3.0.0
-      '@ember/test-helpers': 2.8.1_2lbu44dmrdozuoe4jwbycbgazy
-      '@ember/test-waiters': 3.0.2
-      '@embroider/addon-shim': 1.8.4
-      '@embroider/macros': 1.10.0
-      '@glimmer/component': 1.1.2_@babel+core@7.20.12
-      '@glint/template': 0.9.7_@glimmer+component@1.1.2
-      ember-cached-decorator-polyfill: 1.0.1_2lbu44dmrdozuoe4jwbycbgazy
-      ember-modifier: 3.2.7_@babel+core@7.20.12
-      ember-resources: 5.6.2_mr5h6rvwjg2i4vt72ztypze7ry
-      ember-source: 4.10.0_ipwtokbwlukr3yko7oz5lbj6xy
-      ember-tracked-storage-polyfill: 1.0.0
-      tracked-built-ins: 3.1.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@glimmer/tracking'
-      - ember-concurrency
-      - supports-color
-    dev: false
