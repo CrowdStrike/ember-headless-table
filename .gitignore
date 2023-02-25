@@ -8,6 +8,7 @@ dist/
 node_modules/
 
 # misc
+.turbo/
 /.env*
 /.pnp*
 /.sass-cache
