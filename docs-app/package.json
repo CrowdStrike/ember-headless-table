@@ -22,7 +22,7 @@
     "start": "ember serve -p 0",
     "typecheck": "pnpm tsc -v; pnpm glint --version; pnpm lint:types",
     "test:ember": "ember test",
-    "_syncPnpm": "pnpm i"
+    "_syncPnpm": "pnpm sync"
   },
   "devDependencies": {
     "docs-api": "workspace:*",

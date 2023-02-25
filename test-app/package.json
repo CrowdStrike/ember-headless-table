@@ -24,7 +24,7 @@
     "test:ember": "ember test",
     "test:watch": "ember test --server",
     "typecheck": "pnpm tsc -v; pnpm glint --version; pnpm lint:types",
-    "_syncPnpm": "pnpm i"
+    "_syncPnpm": "pnpm sync"
   },
   "dependencies": {
     "@ember/test-helpers": "^2.8.1",
