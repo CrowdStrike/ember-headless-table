@@ -3,6 +3,7 @@
 # compiled output
 /dist/
 /tmp/
+public/api/*
 
 # dependencies
 /bower_components/

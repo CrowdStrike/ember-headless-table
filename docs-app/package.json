@@ -11,17 +11,21 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "cp ../docs-api/dist/ ./public/api -r && ember build --environment=production",
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:' --prefix-colors cyan,white,yellow",
     "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:' --prefix-colors cyan,white,yellow",
     "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
     "lint:js": "eslint . --cache",
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",
-    "start": "ember serve",
-    "test:ember": "ember test"
+    "lint:types": "glint",
+    "start": "ember serve -p 0",
+    "typecheck": "pnpm tsc -v; pnpm glint --version; pnpm lint:types",
+    "test:ember": "ember test",
+    "_syncPnpm": "pnpm i"
   },
   "devDependencies": {
+    "docs-api": "workspace:*",
     "@babel/core": "^7.20.12",
     "@crowdstrike/ember-toucan-styles": "^1.0.5",
     "@crowdstrike/tailwind-toucan-base": "^3.3.1",
