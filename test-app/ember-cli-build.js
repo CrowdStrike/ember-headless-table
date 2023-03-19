@@ -11,7 +11,7 @@ module.exports = function (defaults) {
       enableTypeScriptTransform: true,
     },
     'ember-cli-memory-leak-detector': {
-      enabled: process.env.DETECT_MEMORY_LEAKS || false,
+      enabled: true, // process.env.DETECT_MEMORY_LEAKS || false,
     },
   });
 

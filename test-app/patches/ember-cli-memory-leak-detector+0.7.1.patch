@@ -1,0 +1,33 @@
+diff --git a/node_modules/ember-cli-memory-leak-detector/lib/inventory-classes.js b/node_modules/ember-cli-memory-leak-detector/lib/inventory-classes.js
+index 278f82e..bbb41f1 100644
+--- a/node_modules/ember-cli-memory-leak-detector/lib/inventory-classes.js
++++ b/node_modules/ember-cli-memory-leak-detector/lib/inventory-classes.js
+@@ -1,5 +1,6 @@
+ const glob = require("glob");
+ const fs = require("fs");
++const path = require("path");
+ 
+ const { parse } = require("@babel/parser");
+ const { visit } = require("ast-types");
+@@ -15,7 +16,20 @@ module.exports = function inventoryClasses(addon) {
+     })
+     .reduce((acc, val) => acc.concat(val), []); // flatten
+ 
+-  return classNames;
++  /**
++    * We could probably scan all direct dependencies of the project-under-test, and evaluate their "exports"
++    * or fallback to the "old ember lookup logic" for v1 addons. (addon folder, etc)
++    */
++  const customFiles = glob.sync(`${path.join(__dirname, '../../../../ember-headless-table/dist')}/**/*.{js,ts}`);
++  const customClassNames = jsFiles
++    .map((file) => {
++      const content = fs.readFileSync(file, { encoding: "utf-8" });
++      return getClassNamesFromFile(content);
++    })
++    .reduce((acc, val) => acc.concat(val), []); // flatten
++
++
++  return classNames.concat(customClassNames);
+ };
+ 
+ function getPathForJsFiles(addon) {
