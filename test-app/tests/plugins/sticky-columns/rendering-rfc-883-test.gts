@@ -32,6 +32,14 @@ module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
     return (testNumber <= num + slop) &&  (testNumber >= num - slop);
   }
 
+  let columnOf = (key: string) => {
+    let column = find(`[data-key=${key}]`);
+
+    assert(`[data-key=${key}] not found`, column instanceof HTMLElement);
+
+    return column;
+  }
+
   let leftPositionOf = (key: string) => {
     let container = find('[data-container]');
 
@@ -171,6 +179,12 @@ module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
         */
       let left = leftPositionOf('A');
       assert.ok(isAbout(left, 1), `A's left edge (@ ${left}) matches the left edge of the container`);
+
+      const col = columnOf('A');
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
+      // minWidth gets camelcased but this test is still valid for minWidth on the style attribute
+      assert.dom(col).hasStyle({minWidth: '200px'}, 'min-width renders correctly as style');
 
       await helpers.scrollRight(200);
 
