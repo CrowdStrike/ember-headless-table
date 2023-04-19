@@ -182,9 +182,7 @@ module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
 
       const col = columnOf('A');
 
-      // https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration
-      // minWidth gets camelcased but this test is still valid for minWidth on the style attribute
-      assert.dom(col).hasStyle({minWidth: '200px'}, 'min-width renders correctly as style');
+      assert.dom(col).hasAttribute('style','width: 200px; min-width: 200px;', 'min-width renders correctly as style');
 
       await helpers.scrollRight(200);
 
