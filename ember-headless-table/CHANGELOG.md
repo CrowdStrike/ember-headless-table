@@ -1,5 +1,13 @@
 # ember-headless-table
 
+## 1.4.4
+
+### Patch Changes
+
+- [#148](https://github.com/CrowdStrike/ember-headless-table/pull/148) [`9b9fbe1`](https://github.com/CrowdStrike/ember-headless-table/commit/9b9fbe14a16407a2edaa056e8ff5e3faf8b5aa39) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Support ember-source@4.12. Test ember-source@v5 to the allowed peer versions for headless-table
+
+- [#149](https://github.com/CrowdStrike/ember-headless-table/pull/149) [`8b8f170`](https://github.com/CrowdStrike/ember-headless-table/commit/8b8f1703f44df971506184b639719a34ee993060) Thanks [@nicolechung](https://github.com/nicolechung)! - Bugfix, change minWidth to min-width for the Sticky columns plugin
+
 ## 1.4.3
 
 ### Patch Changes
