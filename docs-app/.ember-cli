@@ -6,6 +6,7 @@
     Setting `disableAnalytics` to true will prevent any data from being sent.
   */
   "disableAnalytics": false,
+  "port": 4201,
 
   /**
   Setting `isTypeScriptProject` to true will force the blueprint generators to generate TypeScript
