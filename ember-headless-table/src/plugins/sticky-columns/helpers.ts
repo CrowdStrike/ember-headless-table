@@ -51,6 +51,8 @@ const toStyle = (key: string): string => {
   switch (key) {
     case 'zIndex':
       return 'z-index';
+    case 'minWidth':
+      return 'min-width';
     default:
       return key;
   }

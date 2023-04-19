@@ -32,6 +32,14 @@ module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
     return (testNumber <= num + slop) &&  (testNumber >= num - slop);
   }
 
+  let columnOf = (key: string) => {
+    let column = find(`[data-key=${key}]`);
+
+    assert(`[data-key=${key}] not found`, column instanceof HTMLElement);
+
+    return column;
+  }
+
   let leftPositionOf = (key: string) => {
     let container = find('[data-container]');
 
@@ -171,6 +179,10 @@ module('Plugins | StickyColumns | RFC#883 work-around', function (hooks) {
         */
       let left = leftPositionOf('A');
       assert.ok(isAbout(left, 1), `A's left edge (@ ${left}) matches the left edge of the container`);
+
+      const col = columnOf('A');
+
+      assert.dom(col).hasAttribute('style','width: 200px; min-width: 200px;', 'min-width renders correctly as style');
 
       await helpers.scrollRight(200);
 
