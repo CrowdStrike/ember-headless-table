@@ -123,7 +123,7 @@
     "ember-headless-table": "workspace:../ember-headless-table",
     "ember-modifier": "^3.2.7",
     "ember-resources": "^5.6.2",
-    "highlight.js": "^11.6.0",
+    "highlight.js": "^11.7.0",
     "highlightjs-glimmer": "^2.0.1",
     "tracked-built-ins": "^3.1.1"
   },
