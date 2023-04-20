@@ -125,7 +125,7 @@
     "ember-resources": "^5.6.2",
     "highlight.js": "^11.6.0",
     "highlightjs-glimmer": "^2.0.1",
-    "tracked-built-ins": "^3.1.0"
+    "tracked-built-ins": "^3.1.1"
   },
   "dependenciesMeta": {
     "ember-headless-table": {
