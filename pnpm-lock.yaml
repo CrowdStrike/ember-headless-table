@@ -335,7 +335,7 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       webpack:
-        specifier: ^5.74.0
+        specifier: ^5.80.0
         version: 5.80.0
     dependenciesMeta:
       ember-headless-table:
