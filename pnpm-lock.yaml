@@ -221,7 +221,7 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       autoprefixer:
-        specifier: ^10.4.13
+        specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.22)
       babel-eslint:
         specifier: ^10.1.0
