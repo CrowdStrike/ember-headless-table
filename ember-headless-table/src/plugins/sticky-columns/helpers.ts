@@ -13,6 +13,23 @@ export const styleFor = <DataType = unknown>(
 ): Partial<CSSStyleDeclaration> => meta.forColumn(column, StickyColumns).style;
 
 /**
+ * the JS API for styles is camel case,
+ * but CSS is kebab-case. To save on complexity and
+ * amount of code, we have a super small conversion function
+ * for only the properties relevant to the sticky plugin.
+ */
+export const toStyle = (key: string): string => {
+  switch (key) {
+    case 'zIndex':
+      return 'z-index';
+    case 'minWidth':
+      return 'min-width';
+    default:
+      return key;
+  }
+};
+
+/**
  * In this plugin, both header and cells have the same styles,
  * if applicable.
  *
@@ -41,19 +58,3 @@ export const styleStringFor = <DataType = unknown>(
   return htmlSafe(result);
 };
 
-/**
- * the JS API for styles is camel case,
- * but CSS is kebab-case. To save on complexity and
- * amount of code, we have a super small conversion function
- * for only the properties relevant to the sticky plugin.
- */
-const toStyle = (key: string): string => {
-  switch (key) {
-    case 'zIndex':
-      return 'z-index';
-    case 'minWidth':
-      return 'min-width';
-    default:
-      return key;
-  }
-};
