@@ -233,7 +233,7 @@ importers:
         specifier: ^7.6.0
         version: 7.6.0
       cssnano:
-        specifier: ^5.1.14
+        specifier: ^5.1.15
         version: 5.1.15(postcss@8.4.22)
       ember-auto-import:
         specifier: ^2.6.2
