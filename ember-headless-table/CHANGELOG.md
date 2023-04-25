@@ -1,5 +1,11 @@
 # ember-headless-table
 
+## 1.4.5
+
+### Patch Changes
+
+- [#157](https://github.com/CrowdStrike/ember-headless-table/pull/157) [`57091d0`](https://github.com/CrowdStrike/ember-headless-table/commit/57091d042cdb96a67b933fbac3c0aa6ed941f2cc) Thanks [@nicolechung](https://github.com/nicolechung)! - Added toStyle helper in column-resizing plugin > helper. This should fix when a `minWidth` is passed in the column config and not getting converted to `min-width` for the style attribute string.
+
 ## 1.4.4
 
 ### Patch Changes
