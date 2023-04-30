@@ -284,7 +284,7 @@ importers:
         specifier: ~4.10.0
         version: 4.10.0(@babel/core@7.21.4)(@glimmer/component@1.1.2)(webpack@5.80.0)
       ember-template-imports:
-        specifier: ^3.4.1
+        specifier: ^3.4.2
         version: 3.4.2
       ember-template-lint:
         specifier: ^4.14.0
