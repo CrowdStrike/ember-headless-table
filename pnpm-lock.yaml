@@ -58,7 +58,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@embroider/core@2.1.1)(@types/ember__routing@4.0.12)
       dompurify:
-        specifier: ^2.4.3
+        specifier: ^2.4.5
         version: 2.4.5
       ember-browser-services:
         specifier: ^4.0.4
