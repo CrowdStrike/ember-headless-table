@@ -1,5 +1,6 @@
 packages:
   - 'ember-headless-table'
+  - 'internal/*'
   - 'test-app'
   - 'docs-app'
   - 'docs-api'
