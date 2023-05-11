@@ -1,10 +1,10 @@
 {
-  "name": "ember-headless-table-monorepo",
+  "name": "ember-headless-table",
   "version": "0.0.0",
   "private": true,
-  "repository": "",
+  "repository": "https://github.com/CrowdStrike/ember-headless-table.git",
   "license": "MIT",
-  "author": "",
+  "author": "CrowdStrike UX Team",
   "scripts": {
     "release": "changeset publish",
     "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
