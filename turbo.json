@@ -1,0 +1,35 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "start": {
+      "outputs": [],
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      // Normally, A package's `test` script depends on that package's
+      // own `build` script being completed first.
+      // But for ember apps, they build themselves during
+      // test execution, so we can only get away with only
+      // building our dependencies
+      "env": ["EMBER_TRY_CURRENT_SCENARIO", "EMBROIDER_TEST_SETUP_OPTIONS"]
+    },
+    "build": {
+      "outputs": ["dist/**"],
+    },
+    "docs:build" : {
+      "outputs": ["dist/**"],
+      "dependsOn": ["_syncPnpm"]
+  },
+    "_syncPnpm": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": [],
+    },
+    // Used for typescript-support-matrix
+    "typecheck": {
+      "outputs": [],
+    }
+  }
+}

@@ -7,25 +7,26 @@
   "author": "",
   "scripts": {
     "release": "changeset publish",
-    "build": "pnpm --filter ember-headless-table build",
     "build:docs": "pnpm build:docs-app && pnpm build:docs-api && cp ./docs-api/dist ./docs-app/dist/api -r",
-    "build:docs-app": "pnpm --filter docs-app build",
-    "build:docs-api": "pnpm --filter docs-api docs:build",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:tests": "pnpm --filter test-app start",
+    "start:docs": "pnpm turbo --filter docs-app start",
+    "start:tests": "pnpm turbo --filter test-app start",
     "start:addon": "pnpm --filter ember-headless-table start --no-watch.clearScreen",
     "start:docs-api": "pnpm --filter 'docs-api' docs:watch --preserveWatchOutput",
-    "start:docs-app": "pnpm --filter 'docs-app' start -p 4201",
+    "build": "pnpm turbo build",
+    "build:docs-app": "pnpm turbo --filter docs-app build",
+    "build:docs-api": "pnpm turbo --filter docs-api docs:build",
     "ci:update": "npx ember-ci-update",
-    "test": "pnpm --filter test-app test",
-    "lint": "pnpm --filter '*' lint",
+    "test": "pnpm turbo --filter test-app test",
+    "lint": "pnpm turbo lint",
     "lint:fix": "pnpm --filter '*' lint:fix"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.0",
     "concurrently": "^7.6.0",
-    "prettier": "^2.8.2"
+    "prettier": "^2.8.2",
+    "turbo": "^1.7.4"
   },
   "pnpm": {
     "overrides": {
