@@ -90,10 +90,10 @@ importers:
         version: 7.21.8(supports-color@8.1.1)
       '@crowdstrike/ember-toucan-styles':
         specifier: ^1.0.5
-        version: 1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.10.0)(tailwindcss@3.3.1)(ts-node@10.9.1)
+        version: 1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.10.0)(tailwindcss@3.3.1)
       '@crowdstrike/tailwind-toucan-base':
         specifier: ^3.5.0
-        version: 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1)
+        version: 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)
       '@docfy/core':
         specifier: ^0.6.0
         version: 0.6.0
@@ -317,8 +317,8 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0(postcss@8.4.23)
       postcss-loader:
-        specifier: ^7.0.2
-        version: 7.2.4(@types/node@18.15.11)(postcss@8.4.23)(ts-node@10.9.1)(typescript@4.9.5)(webpack@5.80.0)
+        specifier: ^7.3.0
+        version: 7.3.0(postcss@8.4.23)(webpack@5.80.0)
       prettier:
         specifier: ^2.7.1
         version: 2.8.7
@@ -330,7 +330,7 @@ importers:
         version: 2.0.0
       tailwindcss:
         specifier: ^3.2.4
-        version: 3.3.1(postcss@8.4.23)(ts-node@10.9.1)
+        version: 3.3.1(postcss@8.4.23)
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
@@ -2412,7 +2412,7 @@ packages:
       highlightjs-glimmer: ^1.4.1 || ^2.0.0
     dependencies:
       '@babel/runtime': 7.21.0
-      '@crowdstrike/tailwind-toucan-base': 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1)
+      '@crowdstrike/tailwind-toucan-base': 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)
       '@docfy/core': 0.6.0
       '@docfy/ember': 0.6.0
       '@embroider/addon-shim': 1.8.4
@@ -2433,21 +2433,21 @@ packages:
       - supports-color
     dev: false
 
-  /@crowdstrike/ember-toucan-styles@1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.10.0)(tailwindcss@3.3.1)(ts-node@10.9.1):
+  /@crowdstrike/ember-toucan-styles@1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.10.0)(tailwindcss@3.3.1):
     resolution: {integrity: sha512-eXCBn0u5TyMeNsw57C4MqSZCrlDYL8LZp9olKd7UAVIK1TNeUrEDe0j6kAhJG2t7psHWjANjOy0ClXX0gMRXbg==}
     peerDependencies:
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.24.0 || >= 4.0.0
       tailwindcss: ^2.2.15 || ^3.0.0
     dependencies:
-      '@crowdstrike/tailwind-toucan-base': 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1)
+      '@crowdstrike/tailwind-toucan-base': 3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)
       '@embroider/addon-shim': 1.8.4
       '@glimmer/tracking': 1.1.2
       ember-browser-services: 4.0.4
       ember-source: 4.10.0(@babel/core@7.21.8)(@glimmer/component@1.1.2)(webpack@5.80.0)
       postcss: 8.4.23
       postcss-import: 14.1.0(postcss@8.4.23)
-      tailwindcss: 3.3.1(postcss@8.4.23)(ts-node@10.9.1)
+      tailwindcss: 3.3.1(postcss@8.4.23)
     transitivePeerDependencies:
       - autoprefixer
       - encoding
@@ -2455,24 +2455,18 @@ packages:
       - ts-node
     dev: true
 
-  /@crowdstrike/tailwind-toucan-base@3.5.0(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1):
+  /@crowdstrike/tailwind-toucan-base@3.5.0(autoprefixer@10.4.14)(postcss@8.4.23):
     resolution: {integrity: sha512-Z1ShDe66sRgggW1GDd5mg44WYI7q3H8B1yB1l1cCAprvSyI6U61WtBiPEHs2kRz4d0PH78XUnNGQlopbLjZUew==}
     engines: {node: '>=14.15.0'}
     dependencies:
       '@changesets/changelog-github': 0.4.8
       '@changesets/cli': 2.26.1
-      tailwindcss: 2.2.19(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1)
+      tailwindcss: 2.2.19(autoprefixer@10.4.14)(postcss@8.4.23)
     transitivePeerDependencies:
       - autoprefixer
       - encoding
       - postcss
       - ts-node
-
-  /@cspotcode/source-map-support@0.8.1:
-    resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.9
 
   /@docfy/core@0.6.0:
     resolution: {integrity: sha512-2L5UiE720h6tmkTxvB43Q+nZybKV/8UC6jYVBqiyP9YriVjWxxVpTkR80Egg4rrMnGfYKedOI4ZgxekgdoHDMQ==}
@@ -3193,12 +3187,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@jridgewell/trace-mapping@0.3.9:
-    resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-    dependencies:
-      '@jridgewell/resolve-uri': 3.1.0
-      '@jridgewell/sourcemap-codec': 1.4.15
-
   /@lint-todo/utils@13.1.0:
     resolution: {integrity: sha512-uzcZPIPH7hcs+hKMiHfp58MosJpI9sTTgl1pGYau4zq34q1ppswJ6nLeohv/cDhqEBrHjtvldt8zDnVJXRvBlA==}
     engines: {node: 12.* || >= 14}
@@ -3355,7 +3343,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.3.1(postcss@8.4.23)(ts-node@10.9.1)
+      tailwindcss: 3.3.1(postcss@8.4.23)
 
   /@tootallnate/once@1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -3373,18 +3361,6 @@ packages:
   /@tsconfig/ember@2.0.0:
     resolution: {integrity: sha512-RzbDYYcjxVdG8Ki0xe99HN3+nHTZe6EBgw6N7B3yup7QogVFQQxA9nY7X80j1XzF15xqetwWiYfAjv5lkkp0/A==}
     dev: true
-
-  /@tsconfig/node10@1.0.9:
-    resolution: {integrity: sha512-jNsYVVxU8v5g43Erja32laIDHXeoNvFEpX33OK4d6hljo3jDhCBDhx5dhCCTMWUojscpAagGiRkBKxpdl9fxqA==}
-
-  /@tsconfig/node12@1.0.11:
-    resolution: {integrity: sha512-cqefuRsh12pWyGsIoBKJA9luFu3mRxCA+ORZvA4ktLSzIuCUtWVxGIuXigEwO5/ywWFMZ2QEGKWvkZG1zDMTag==}
-
-  /@tsconfig/node14@1.0.3:
-    resolution: {integrity: sha512-ysT8mhdixWK6Hw3i1V2AeRqZ5WfXg1G43mqoYlM2nc6388Fq5jcXyr5mRsqViLx/GJYdoL0bfXD8nmF+Zn/Iow==}
-
-  /@tsconfig/node16@1.0.3:
-    resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
 
   /@types/acorn@4.0.6:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -4309,10 +4285,6 @@ packages:
     resolution: {integrity: sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==}
     engines: {node: '>=0.4.0'}
 
-  /acorn-walk@8.2.0:
-    resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
-    engines: {node: '>=0.4.0'}
-
   /acorn@5.7.4:
     resolution: {integrity: sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==}
     engines: {node: '>=0.4.0'}
@@ -4500,9 +4472,6 @@ packages:
       delegates: 1.0.0
       readable-stream: 3.6.2
     dev: true
-
-  /arg@4.1.3:
-    resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
 
   /arg@5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
@@ -6797,21 +6766,6 @@ packages:
       vary: 1.1.2
     dev: true
 
-  /cosmiconfig-typescript-loader@4.3.0(@types/node@18.15.11)(cosmiconfig@8.1.3)(ts-node@10.9.1)(typescript@4.9.5):
-    resolution: {integrity: sha512-NTxV1MFfZDLPiBMjxbHRwSh5LaLcPMwNdCutmnHJCKoVnlvldPWlllonKwrsRJ5pYZBIBGRWWU2tfvzxgeSW5Q==}
-    engines: {node: '>=12', npm: '>=6'}
-    peerDependencies:
-      '@types/node': '*'
-      cosmiconfig: '>=7'
-      ts-node: '>=10'
-      typescript: '>=3'
-    dependencies:
-      '@types/node': 18.15.11
-      cosmiconfig: 8.1.3
-      ts-node: 10.9.1(@types/node@18.15.11)(typescript@4.9.5)
-      typescript: 4.9.5
-    dev: true
-
   /cosmiconfig@7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
     engines: {node: '>=10'}
@@ -6831,9 +6785,6 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
     dev: true
-
-  /create-require@1.1.1:
-    resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
   /cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
@@ -7261,10 +7212,6 @@ packages:
 
   /didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
-
-  /diff@4.0.2:
-    resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
-    engines: {node: '>=0.3.1'}
 
   /diff@5.1.0:
     resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
@@ -11753,9 +11700,6 @@ packages:
     dependencies:
       semver: 6.3.0
 
-  /make-error@1.3.6:
-    resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
-
   /makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
     dependencies:
@@ -13004,7 +12948,7 @@ packages:
       camelcase-css: 2.0.1
       postcss: 8.4.23
 
-  /postcss-load-config@3.1.4(postcss@8.4.23)(ts-node@10.9.1):
+  /postcss-load-config@3.1.4(postcss@8.4.23):
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -13018,35 +12962,24 @@ packages:
     dependencies:
       lilconfig: 2.1.0
       postcss: 8.4.23
-      ts-node: 10.9.1(@types/node@18.15.11)(typescript@4.9.5)
       yaml: 1.10.2
 
-  /postcss-loader@7.2.4(@types/node@18.15.11)(postcss@8.4.23)(ts-node@10.9.1)(typescript@4.9.5)(webpack@5.80.0):
-    resolution: {integrity: sha512-F88rpxxNspo5hatIc+orYwZDtHFaVFOSIVAx+fBfJC1GmhWbVmPWtmg2gXKE1OxJbneOSGn8PWdIwsZFcruS+w==}
+  /postcss-loader@7.3.0(postcss@8.4.23)(webpack@5.80.0):
+    resolution: {integrity: sha512-qLAFjvR2BFNz1H930P7mj1iuWJFjGey/nVhimfOAAQ1ZyPpcClAxP8+A55Sl8mBvM+K2a9Pjgdj10KpANWrNfw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
-      ts-node: '>=10'
-      typescript: '>=4'
       webpack: ^5.0.0
     peerDependenciesMeta:
-      ts-node:
-        optional: true
-      typescript:
-        optional: true
       webpack:
         optional: true
     dependencies:
       cosmiconfig: 8.1.3
-      cosmiconfig-typescript-loader: 4.3.0(@types/node@18.15.11)(cosmiconfig@8.1.3)(ts-node@10.9.1)(typescript@4.9.5)
+      jiti: 1.18.2
       klona: 2.0.6
       postcss: 8.4.23
       semver: 7.5.0
-      ts-node: 10.9.1(@types/node@18.15.11)(typescript@4.9.5)
-      typescript: 4.9.5
       webpack: 5.80.0
-    transitivePeerDependencies:
-      - '@types/node'
     dev: true
 
   /postcss-merge-longhand@5.1.7(postcss@8.4.23):
@@ -14917,7 +14850,7 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss@2.2.19(autoprefixer@10.4.14)(postcss@8.4.23)(ts-node@10.9.1):
+  /tailwindcss@2.2.19(autoprefixer@10.4.14)(postcss@8.4.23):
     resolution: {integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -14949,7 +14882,7 @@ packages:
       object-hash: 2.2.0
       postcss: 8.4.23
       postcss-js: 3.0.3
-      postcss-load-config: 3.1.4(postcss@8.4.23)(ts-node@10.9.1)
+      postcss-load-config: 3.1.4(postcss@8.4.23)
       postcss-nested: 5.0.6(postcss@8.4.23)
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
@@ -14962,7 +14895,7 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /tailwindcss@3.3.1(postcss@8.4.23)(ts-node@10.9.1):
+  /tailwindcss@3.3.1(postcss@8.4.23):
     resolution: {integrity: sha512-Vkiouc41d4CEq0ujXl6oiGFQ7bA3WEhUZdTgXAhtKxSy49OmKs8rEfQmupsfF0IGW8fv2iQkp1EVUuapCFrZ9g==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -14986,7 +14919,7 @@ packages:
       postcss: 8.4.23
       postcss-import: 14.1.0(postcss@8.4.23)
       postcss-js: 4.0.1(postcss@8.4.23)
-      postcss-load-config: 3.1.4(postcss@8.4.23)(ts-node@10.9.1)
+      postcss-load-config: 3.1.4(postcss@8.4.23)
       postcss-nested: 6.0.0(postcss@8.4.23)
       postcss-selector-parser: 6.0.11
       postcss-value-parser: 4.2.0
@@ -15384,36 +15317,6 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.1(@types/node@18.15.11)(typescript@4.9.5):
-    resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
-    hasBin: true
-    peerDependencies:
-      '@swc/core': '>=1.2.50'
-      '@swc/wasm': '>=1.2.50'
-      '@types/node': '*'
-      typescript: '>=2.7'
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      '@swc/wasm':
-        optional: true
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.9
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.3
-      '@types/node': 18.15.11
-      acorn: 8.8.2
-      acorn-walk: 8.2.0
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 4.9.5
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -15577,6 +15480,7 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /ua-parser-js@1.0.35:
     resolution: {integrity: sha512-fKnGuqmTBnIE+/KXSzCn4db8RTigUzw1AN0DmdU6hJovUTbYJKyqj+8Mt1c4VfRDnOVJnENmfYkIPZ946UrSAA==}
@@ -15797,9 +15701,6 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
-
-  /v8-compile-cache-lib@3.0.1:
-    resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
 
   /v8-compile-cache@2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
@@ -16295,10 +16196,6 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
-
-  /yn@3.1.1:
-    resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
-    engines: {node: '>=6'}
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
