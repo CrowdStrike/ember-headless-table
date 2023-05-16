@@ -27,7 +27,7 @@ ember install ember-headless-table
 * ember-auto-import >= v2
 * ember-source >= 3.28
 * embroider safe + optimized
-* typescript >= 4.5
+* typescript >= 4.8, [rolling window policy](https://www.semver-ts.org/#decouple-typescript-support-from-lts-cycles), range: TS@current-2 to TS@current (3 version window).
   Note that types changes will be considered bugfixes until Glint support is added to ember-headless-table
 * Glint -- not yet
   All Glint changes will be considered bugfixes until Glint 1.0 is released.
