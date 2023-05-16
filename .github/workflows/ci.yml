@@ -20,19 +20,14 @@ jobs:
     name: Install
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
-
-
-
+      - uses: wyvox/action@v1
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
     needs: [install_dependencies]
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - name: Lint
         run: pnpm lint
 
@@ -44,8 +39,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/assert-build
 
 
@@ -66,8 +60,7 @@ jobs:
           - typescript@4.9
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - name: 'Change TS to ${{ matrix.typescript-scenario }}'
         run: 'pnpm add --save-dev ${{ matrix.typescript-scenario}}'
@@ -100,10 +93,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
-      - name: Install Dependencies (without lockfile)
-        run: rm pnpm-lock.yaml && pnpm install
+      - uses: wyvox/action@v1
+        with: { pnpm-args: '--no-lockfile' }
       - uses: ./.github/actions/download-built-package
       - run: pnpm --filter test-app test:ember
 
@@ -133,8 +124,7 @@ jobs:
           - "'ember-lts-4.8 + embroider-optimized'"
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - name: Run Tests
         working-directory: ./test-app
@@ -164,10 +154,7 @@ jobs:
       - try_scenarios
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - name: Create Release Pull Request or Publish to npm
         id: changesets
@@ -186,10 +173,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - run: pnpm glint
         working-directory: docs-app
@@ -207,10 +191,7 @@ jobs:
       url: ${{ steps.publishStep.outputs.url }}
       env: ${{ steps.publishStep.outputs.environment }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - run: pnpm build:docs
       - name: Publish to Cloudflare Pages
@@ -230,10 +211,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: PublishDocstoCloudflarePages
     steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
+      - uses: wyvox/action@v1
       - uses: ./.github/actions/download-built-package
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
