@@ -72,9 +72,8 @@ class Demo {
 
 ## In Templates
 
-[Glint][docs-glint] is still young, and pre-release, but it's proved it's worth -- and for new projects,
-it can be a great choice to help ensure that your code is as bug-free as possible.
-Glint was the missing for TypeScript to truely shine in Ember, and this library strives to make sure that
+[Glint][docs-glint] can be a great choice to help ensure that your code is as bug-free as possible.
+Glint was the missing piece for TypeScript to truly shine in Ember, and this library strives to make sure that
 inference of all public APIs (properties, plugin-configs, etc) _works by default_.
 
 Here are a couple screenshots from our own tests showing that Glint provides intellisense and JSDoc documentation in VSCode:
