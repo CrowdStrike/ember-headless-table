@@ -113,7 +113,7 @@
     "@embroider/addon-dev": "^3.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@glint/template": "^0.9.4",
+    "@glint/template": "^1.0.2",
     "@nullvoxpopuli/eslint-configs": "~2.2.57",
     "@rollup/plugin-babel": "^6.0.0",
     "@tsconfig/ember": "^2.0.0",
