@@ -107,6 +107,9 @@ export default class extends Component {
       { name: 'column C', key: 'C',
         pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
       },
+      { name: 'column D', key: 'D',
+        pluginOptions: [ColumnResizing.forColumn(() => ({ minWidth: 200 }))]
+      },
     ],
     data: () => this.data,
     plugins: [
