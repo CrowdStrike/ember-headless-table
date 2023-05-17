@@ -364,6 +364,28 @@ module('Plugins | columnReordering', function (hooks) {
       await click('.D.show');
       assert.strictEqual(getColumnOrder(), 'B A C D', 'all columns are visible in the correct order');
     });
+
+    test('moving past hidden columns works as expected', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'initially, columns exist as defined');
+
+      await click('.B.hide')
+      assert.strictEqual(getColumnOrder(), 'A C D', 'column B is no longer shown, and the order of the remaining columns is retained');
+
+      await click('th.A .right');
+      assert.strictEqual(getColumnOrder(), 'C A D', 'column A was moved to the right');
+
+      await click('.B.show');
+      assert.strictEqual(getColumnOrder(), 'B C A D', 'column B is now shown');
+
+      await click('.A.hide');
+      assert.strictEqual(getColumnOrder(), 'B C D', 'column A is hidden');
+
+      await click('th.D .left');
+      assert.strictEqual(getColumnOrder(), 'B D C', 'column D was moved to the left');
+
+      await click('.A.show');
+      assert.strictEqual(getColumnOrder(), 'B D C A', 'column A has returned, and it is in the right place');
+    });
   });
 
   module('with a preferences adapter', function (hooks) {
