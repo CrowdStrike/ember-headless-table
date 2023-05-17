@@ -297,7 +297,7 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'A B C D');
     });
 
-    test('without setting the order of anything, we cannot retain the order of the columns when they are added or removed', async function (assert) {
+    test('without setting the order of anything, we retain the order of the columns when they are added or removed', async function (assert) {
       assert.strictEqual(getColumnOrder(), 'A B C D', 'test scenario is set up');
 
       let columnC = ctx.columns.find(column => column.key === 'C');
@@ -310,7 +310,7 @@ module('Plugins | columnReordering', function (hooks) {
       ctx.columns = [...ctx.columns, columnC];
       await settled();
 
-      assert.strictEqual(getColumnOrder(), 'A B D C', 'column C is restored, but at the end');
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'column C is restored in the correct place');
     });
 
     test('we can remove and add a column, and a previously set order is retained', async function (assert) {
