@@ -509,13 +509,19 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
 
       let order = new ColumnOrder({
-        columns: () =>
+        allColumns: () =>
           [
             { key: 'D' },
             { key: 'C' },
             { key: 'B' },
             { key: 'A' },
           ] as Column[],
+        availableColumns: () => ({
+          A: true,
+          B: true,
+          C: true,
+          D: true,
+        }),
         existingOrder: new Map([
           ['A', 3],
           ['B', 2],
