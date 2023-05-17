@@ -3,12 +3,10 @@ import "@glint/environment-ember-template-imports";
 
 // Types from libraries
 import type CrowdStrikeOSSDocsSupport from "@crowdstrike/ember-oss-docs/template-registry";
-
-// Our own types
-import type ThemeSwitcher from 'docs-app/components/theme-switcher';
-import type FeatureCard from 'docs-app/components/feature-card';
-
 import type { HelperLike, ModifierLike } from "@glint/template";
+// Our own types
+import type FeatureCard from 'docs-app/components/feature-card';
+import type ThemeSwitcher from 'docs-app/components/theme-switcher';
 
 declare module '@ember/modifier' {
   export const on: ModifierLike<{
