@@ -2,7 +2,7 @@
   "name": "docs-app",
   "version": "0.0.0",
   "private": true,
-  "description": "Small description for docs-app goes here",
+  "description": "Documentation for the ember-headless-table addon",
   "repository": "",
   "license": "MIT",
   "author": "",
@@ -19,7 +19,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test:ember": "ember test"
+    "test:ember": "ember test",
+    "_syncPnpm": "pnpm sync-pnpm"
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
@@ -103,7 +104,8 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
-    "tailwindcss": "^3.3.2",
+    "sync-pnpm": "workspace:*",
+    "tailwindcss": "^3.2.4",
     "typescript": "^4.9.5",
     "webpack": "^5.83.1"
   },
@@ -120,7 +122,7 @@
     "dompurify": "^2.4.5",
     "ember-browser-services": "^4.0.4",
     "ember-cached-decorator-polyfill": "^1.0.1",
-    "ember-headless-table": "workspace:../ember-headless-table",
+    "ember-headless-table": "workspace:*",
     "ember-modifier": "^4.1.0",
     "ember-resources": "^6.0.0",
     "highlight.js": "^11.7.0",

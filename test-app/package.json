@@ -2,7 +2,7 @@
   "name": "test-app",
   "version": "0.0.0",
   "private": true,
-  "description": "Small description for test-app goes here",
+  "description": "Test app for the ember-headless-table addon",
   "repository": "",
   "license": "MIT",
   "author": "",
@@ -21,7 +21,8 @@
     "start": "ember serve",
     "test": "npm-run-all lint \"test:!(watch)\"",
     "test:ember": "ember test",
-    "test:watch": "ember test --server"
+    "test:watch": "ember test --server",
+    "_syncPnpm": "pnpm sync-pnpm"
   },
   "dependencies": {
     "@ember/test-helpers": "^2.9.3",
@@ -29,7 +30,7 @@
     "ember-auto-import": "^2.6.2",
     "ember-cached-decorator-polyfill": "^1.0.1",
     "ember-functions-as-helper-polyfill": "^2.1.1",
-    "ember-headless-table": "workspace:../ember-headless-table",
+    "ember-headless-table": "workspace:*",
     "ember-resources": "^5.4.0",
     "tracked-built-ins": "^3.1.0"
   },
@@ -107,6 +108,7 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
+    "sync-pnpm": "workspace:*",
     "typescript": "^4.8.3",
     "webpack": "^5.74.0"
   },

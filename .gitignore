@@ -17,6 +17,7 @@ node_modules/
 /libpeerconnection.log
 /npm-debug.log*
 /testem.log
+/.turbo
 /yarn-error.log
 
 # ember-try
