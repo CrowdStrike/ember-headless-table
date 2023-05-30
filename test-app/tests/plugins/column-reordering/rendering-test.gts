@@ -560,4 +560,61 @@ module('Plugins | columnReordering', function (hooks) {
     });
   });
 
+  module('with a preferences adapter where saved preferences are missing some columns', function (hooks) {
+    let preferences: null | PreferencesData = {};
+
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => DATA,
+        plugins: [ColumnReordering, ColumnVisibility],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => {
+              return {
+                "plugins": {
+                  "ColumnReordering": {
+                    "columns": {},
+                    "table": {
+                      "order": {
+                        "A": 1,
+                        "B": 0,
+                      }
+                    }
+                  },
+                }
+              };
+            }
+          }
+        }
+      });
+    }
+
+    hooks.beforeEach(async function () {
+      preferences = null;
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+
+      await render(
+        // @ts-ignore
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+    });
+
+    test('column order is restored from preferences', async function (assert) {
+      assert.strictEqual(
+        getColumnOrder(),
+        'B A C D',
+        'order declared in preferences is displayed'
+      );
+    });
+
+  });
+
 });

@@ -217,8 +217,10 @@ export class ColumnOrder {
     }
   ) {
     if (args.existingOrder) {
-      this.map = new TrackedMap(args.existingOrder);
-      // TODO: Add anything from `allColumns` that wasn't in `existingOrder` to the end
+      let newOrder = new Map(args.existingOrder.entries());
+
+      addMissingColumnsToMap(args.allColumns(), newOrder);
+      this.map = new TrackedMap(newOrder);
     } else {
       this.map = new TrackedMap(args.allColumns().map((column, i) => [column.key, i]));
     }
@@ -274,8 +276,9 @@ export class ColumnOrder {
       this.map.set(key, value);
     }
 
+    addMissingColumnsToMap(this.args.allColumns(), this.map);
+
     this.args.save?.(map);
-    // TODO: Add anything from `allColumns` that wasn't in the passed `map` to the end
   };
 
   /**
@@ -499,4 +502,26 @@ export function orderOf(
   }
 
   return result;
+}
+
+/**
+ * @private
+ *
+ * Utility to add any missing columns to the position map. By calling this whenever
+ * data is passed in to the system we can simplify the code within the system because
+ * we know we are dealing with a full set of positions.
+ *
+ * @param allColumns - A list of all columns available to the table
+ * @param map - A Map of `key` to position (as a zero based integer)
+ */
+function addMissingColumnsToMap(allColumns: Column[], map: Map<string, number>): void {
+  if (map.size < allColumns.length) {
+    let maxAssignedColumn = Math.max(...map.values());
+
+    for (let column of allColumns) {
+      if (map.get(column.key) === undefined) {
+        map.set(column.key, ++maxAssignedColumn);
+      }
+    }
+  }
 }
