@@ -216,13 +216,16 @@ export class ColumnOrder {
       existingOrder?: Map<string, number>;
     }
   ) {
+    let allColumns = this.args.allColumns();
+
     if (args.existingOrder) {
       let newOrder = new Map(args.existingOrder.entries());
 
-      addMissingColumnsToMap(args.allColumns(), newOrder);
+      addMissingColumnsToMap(allColumns, newOrder);
+      removeExtraColumnsFromMap(allColumns, newOrder);
       this.map = new TrackedMap(newOrder);
     } else {
-      this.map = new TrackedMap(args.allColumns().map((column, i) => [column.key, i]));
+      this.map = new TrackedMap(allColumns.map((column, i) => [column.key, i]));
     }
   }
 
@@ -269,14 +272,16 @@ export class ColumnOrder {
   }
 
   setAll = (map: Map<string, number>) => {
-    // TODO: Verify that the passed `map` has consectuive values set?
     this.map.clear();
+
+    let allColumns = this.args.allColumns();
+
+    addMissingColumnsToMap(allColumns, map);
+    removeExtraColumnsFromMap(allColumns, map);
 
     for (let [key, value] of map.entries()) {
       this.map.set(key, value);
     }
-
-    addMissingColumnsToMap(this.args.allColumns(), this.map);
 
     this.args.save?.(map);
   };
@@ -522,6 +527,30 @@ function addMissingColumnsToMap(allColumns: Column[], map: Map<string, number>):
       if (map.get(column.key) === undefined) {
         map.set(column.key, ++maxAssignedColumn);
       }
+    }
+  }
+}
+
+/**
+ * @private
+ *
+ * Utility to remove any extra columns from the position map. By calling this whenever
+ * data is passed in to the system we can simplify the code within the system because
+ * we know we are dealing with a full set of positions.
+ *
+ * @param allColumns - A list of all columns available to the table
+ * @param map - A Map of `key` to position (as a zero based integer)
+ */
+function removeExtraColumnsFromMap(allColumns: Column[], map: Map<string, number>): void {
+  let columnsLookup = allColumns.reduce(function (acc, { key }) {
+    acc[key] = true;
+
+    return acc;
+  }, {} as Record<string, boolean>);
+
+  for (let key of map.keys()) {
+    if (!columnsLookup[key]) {
+      map.delete(key);
     }
   }
 }
