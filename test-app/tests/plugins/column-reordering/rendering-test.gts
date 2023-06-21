@@ -11,8 +11,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
-import { meta, columns } from 'ember-headless-table/plugins';
-import { ColumnReordering, moveLeft, moveRight } from 'ember-headless-table/plugins/column-reordering';
+import { columns } from 'ember-headless-table/plugins';
+import { ColumnOrder, ColumnReordering, moveLeft, moveRight, setColumnOrder } from 'ember-headless-table/plugins/column-reordering';
 import { ColumnVisibility, hide, show } from 'ember-headless-table/plugins/column-visibility';
 import { DATA } from 'test-app/data';
 
@@ -449,13 +449,13 @@ module('Plugins | columnReordering', function (hooks) {
       });
     });
 
-    test('changing column order updates preferences', async function (assert) {
+    test('changing column order with `move left` updates preferences', async function (assert) {
       assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
 
       await click('th.C .left');
       await click('th.A .left');
 
-      assert.strictEqual(getColumnOrder(), 'C A B D', 'pre-test setup');
+      assert.strictEqual(getColumnOrder(), 'C A B D', 'reordered');
 
       assert.deepEqual(preferences, {
         "plugins": {
@@ -467,6 +467,54 @@ module('Plugins | columnReordering', function (hooks) {
                 "B": 2,
                 "C": 0,
                 "D": 3
+              }
+            }
+          },
+          "ColumnVisibility": {
+            "columns": {
+              "A": {},
+              "B": {},
+              "C": {},
+              "D": {}
+            },
+            "table": {}
+          }
+        }
+      });
+    });
+
+    test('changing column order with `set all` updates preferences', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'B C A D', 'pre-test setup');
+
+      let order = new ColumnOrder({
+        columns: () =>
+          [
+            { key: 'D' },
+            { key: 'C' },
+            { key: 'B' },
+            { key: 'A' },
+          ] as Column[],
+        existingOrder: new Map([
+          ['A', 3],
+          ['B', 2],
+          ['C', 1],
+          ['D', 0],
+        ]),
+      });
+
+      // @ts-expect-error
+      setColumnOrder(ctx.table, order);
+
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "ColumnReordering": {
+            "columns": {},
+            "table": {
+              "order": {
+                "A": 3,
+                "B": 2,
+                "C": 1,
+                "D": 0
               }
             }
           },
