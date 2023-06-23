@@ -33,6 +33,20 @@ None
 
 The order of columns will be represented in the preferences.
 
+```js
+"ColumnReordering": {
+  "columns": {},
+  "table": {
+    "order": {
+      "A": 1,
+      "B": 2,
+      "C": 3,
+      "D": 4
+    }
+  }
+}
+```
+
 ### Accessibility
 
 It's recommended to use `<button>`s for changing the order of columns.
