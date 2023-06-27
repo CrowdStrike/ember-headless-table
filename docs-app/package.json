@@ -25,7 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.8",
     "@crowdstrike/ember-toucan-styles": "^1.0.5",
-    "@crowdstrike/tailwind-toucan-base": "^3.5.0",
+    "@crowdstrike/tailwind-toucan-base": "^3.5.1",
     "@docfy/core": "^0.6.0",
     "@docfy/ember": "^0.6.0",
     "@ember/optional-features": "^2.0.0",
