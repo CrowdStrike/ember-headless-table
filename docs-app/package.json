@@ -100,7 +100,7 @@
     "loader.js": "^4.7.0",
     "postcss": "^8.4.24",
     "postcss-import": "^15.1.0",
-    "postcss-loader": "^7.3.0",
+    "postcss-loader": "^7.3.3",
     "prettier": "^2.7.1",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
