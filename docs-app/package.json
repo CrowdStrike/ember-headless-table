@@ -23,7 +23,7 @@
     "_syncPnpm": "pnpm sync-pnpm"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
+    "@babel/core": "^7.22.5",
     "@crowdstrike/ember-toucan-styles": "^1.0.5",
     "@crowdstrike/tailwind-toucan-base": "^3.5.1",
     "@docfy/core": "^0.6.0",
