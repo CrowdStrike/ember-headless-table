@@ -250,6 +250,8 @@ export class ColumnOrder {
     for (let [key, value] of map.entries()) {
       this.map.set(key, value);
     }
+
+    this.args.save?.(map);
   };
 
   /**
