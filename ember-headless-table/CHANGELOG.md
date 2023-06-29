@@ -1,5 +1,22 @@
 # ember-headless-table
 
+## 2.0.0
+
+### Major Changes
+
+- [#176](https://github.com/CrowdStrike/ember-headless-table/pull/176) [`f3435c3`](https://github.com/CrowdStrike/ember-headless-table/commit/f3435c37d5aa95b9d6593c5f06142d85cb9fc6a4) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - In prepr for supporting Glint 1.0,
+  ember-headless-table no longer will support TypeScript < 4.8.
+
+  Additionally, the support policy is changing from a minimum version, to a [rolling window](https://www.semver-ts.org/#decouple-typescript-support-from-lts-cycles) policy, as described in https://semver-ts.org.
+
+  The current and prior two TypeScript versions will be supported, giving a rolling window of 3 TypeScript versions.
+
+### Patch Changes
+
+- [#175](https://github.com/CrowdStrike/ember-headless-table/pull/175) [`4681eca`](https://github.com/CrowdStrike/ember-headless-table/commit/4681eca01726868d8c5b9abd483bdaac59fdb24f) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Officially support Glint 1.0+
+
+- [#200](https://github.com/CrowdStrike/ember-headless-table/pull/200) [`ced9ca3`](https://github.com/CrowdStrike/ember-headless-table/commit/ced9ca399b7050149cdca78cfa0001a42b963509) Thanks [@joelamb](https://github.com/joelamb)! - fix: save table column order on setAll
+
 ## 1.4.5
 
 ### Patch Changes
