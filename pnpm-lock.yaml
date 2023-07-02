@@ -339,7 +339,7 @@ importers:
         specifier: workspace:*
         version: link:../internal/sync-pnpm
       tailwindcss:
-        specifier: ^3.2.4
+        specifier: ^3.3.2
         version: 3.3.2
       typescript:
         specifier: ^4.9.5
