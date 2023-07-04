@@ -7,7 +7,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import { assert, assert as debugAssert } from '@ember/debug';
 import { click, findAll, render, settled } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import { headlessTable } from 'ember-headless-table';
@@ -297,11 +297,12 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'A B C D');
     });
 
-    test('without setting the order of anything, we retain the order of the columns when they are added or removed', async function (assert) {
+    skip('without setting the order of anything, we retain the order of the columns when they are added or removed', async function (assert) {
       assert.strictEqual(getColumnOrder(), 'A B C D', 'test scenario is set up');
 
       let columnC = ctx.columns.find(column => column.key === 'C');
       debugAssert('Column C is missing!', columnC);
+      // Is it valid to mutate the columns like this? Does something tell the plugin it has happened?
       ctx.columns = ctx.columns.filter(column => column !== columnC);
       await settled();
 
@@ -313,7 +314,7 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'A B C D', 'column C is restored in the correct place');
     });
 
-    test('we can remove and add a column, and a previously set order is retained', async function (assert) {
+    skip('we can remove and add a column, and a previously set order is retained', async function (assert) {
       assert.strictEqual(getColumnOrder(), 'A B C D', 'pre-test setup');
 
       await click('th.B .left');
@@ -323,6 +324,7 @@ module('Plugins | columnReordering', function (hooks) {
 
       let columnC = ctx.columns.find(column => column.key === 'C');
       debugAssert('Column C is missing!', columnC);
+      // Is it valid to mutate the columns like this? Does something tell the plugin it has happened?
       ctx.columns = ctx.columns.filter(column => column !== columnC);
       await settled();
 

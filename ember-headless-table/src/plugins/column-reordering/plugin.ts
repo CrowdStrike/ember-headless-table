@@ -272,12 +272,12 @@ export class ColumnOrder {
   }
 
   setAll = (map: Map<string, number>) => {
-    this.map.clear();
-
     let allColumns = this.args.allColumns();
 
     addMissingColumnsToMap(allColumns, map);
     removeExtraColumnsFromMap(allColumns, map);
+
+    this.map.clear();
 
     for (let [key, value] of map.entries()) {
       this.map.set(key, value);
@@ -459,54 +459,28 @@ export class ColumnOrder {
  * given the original (default) ordering, and then user-configurations
  */
 export function orderOf(
-  columns: { key: string }[],
+  allColumns: { key: string }[],
   currentOrder: Map<string, number>
 ): Map<string, number> {
-  let result = new Map<string, number>();
-  let availableColumns = columns.map((column) => column.key);
-  let availableSet = new Set(availableColumns);
-  let current = new Map<number, string>(
-    [...currentOrder.entries()].map(([key, position]) => [position, key])
+  assert(
+    'orderOf must be called with order of all columns specified',
+    allColumns.length === currentOrder.size && allColumns.every(({ key }) => currentOrder.has(key))
   );
 
-  /**
-   * O(n * log(n)) ?
-   */
-  for (let i = 0; i < Math.max(columns.length, current.size); i++) {
-    let orderedKey = current.get(i);
+  // Ensure positions are consecutive and zero based
+  let inOrder = Array.from(currentOrder.entries()).sort(
+    ([_keyA, positionA], [_keyB, positionB]) => positionA - positionB
+  );
 
-    if (orderedKey) {
-      /**
-       * If the currentOrder specifies columns not presently available,
-       * ignore them
-       */
-      if (availableSet.has(orderedKey)) {
-        result.set(orderedKey, i);
-        continue;
-      }
-    }
+  let orderedColumns = new Map<string, number>();
 
-    let availableKey: string | undefined;
+  let position = 0;
 
-    while ((availableKey = availableColumns.shift())) {
-      if (result.has(availableKey) || currentOrder.has(availableKey)) {
-        continue;
-      }
-
-      break;
-    }
-
-    if (!availableKey) {
-      /**
-       * The rest of our columns likely have their order set
-       */
-      continue;
-    }
-
-    result.set(availableKey, i);
+  for (let [key] of inOrder) {
+    orderedColumns.set(key, position++);
   }
 
-  return result;
+  return orderedColumns;
 }
 
 /**
