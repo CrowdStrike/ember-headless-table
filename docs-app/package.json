@@ -69,7 +69,7 @@
     "@types/qunit": "^2.19.3",
     "@types/rsvp": "^4.0.4",
     "autoprefixer": "^10.4.14",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.11.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^7.6.0",
     "cssnano": "^5.1.15",
