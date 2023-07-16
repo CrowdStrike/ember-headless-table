@@ -99,8 +99,8 @@ importers:
         specifier: ^7.11.0
         version: 7.21.3(@babel/core@7.22.5)(eslint@7.32.0)
       '@crowdstrike/ember-toucan-styles':
-        specifier: ^1.0.5
-        version: 1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(tailwindcss@3.3.2)
+        specifier: ^2.0.0
+        version: 2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(postcss@8.4.24)(tailwindcss@3.3.2)
       '@crowdstrike/tailwind-toucan-base':
         specifier: ^3.5.1
         version: 3.5.1(autoprefixer@10.4.14)(postcss@8.4.24)
@@ -2545,8 +2545,8 @@ packages:
       - supports-color
     dev: false
 
-  /@crowdstrike/ember-toucan-styles@1.0.5(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(tailwindcss@3.3.2):
-    resolution: {integrity: sha512-eXCBn0u5TyMeNsw57C4MqSZCrlDYL8LZp9olKd7UAVIK1TNeUrEDe0j6kAhJG2t7psHWjANjOy0ClXX0gMRXbg==}
+  /@crowdstrike/ember-toucan-styles@2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(postcss@8.4.24)(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-mOHsNEW63FhCR2+c1Fdp4vOqv6HYRtfU85aZlLc82NhkTguz6NSS5DwYelhfDIxLERm5iktxBmBOyiXGHkk0Mg==}
     peerDependencies:
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.24.0 || >= 4.0.0
@@ -2557,11 +2557,10 @@ packages:
       '@glimmer/tracking': 1.1.2
       ember-browser-services: 4.0.4
       ember-source: 4.12.0(@babel/core@7.22.5)(@glimmer/component@1.1.2)(webpack@5.83.1)
-      postcss: 8.4.24
-      postcss-import: 14.1.0(postcss@8.4.24)
       tailwindcss: 3.3.2
     transitivePeerDependencies:
       - autoprefixer
+      - postcss
       - supports-color
       - ts-node
     dev: true
@@ -13805,18 +13804,6 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.4.24
-    dev: true
-
-  /postcss-import@14.1.0(postcss@8.4.24):
-    resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      postcss: ^8.0.0
-    dependencies:
-      postcss: 8.4.24
-      postcss-value-parser: 4.2.0
-      read-cache: 1.0.0
-      resolve: 1.22.2
     dev: true
 
   /postcss-import@15.1.0(postcss@8.4.24):
