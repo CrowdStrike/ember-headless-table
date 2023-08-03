@@ -133,5 +133,8 @@
     "ember-headless-table": {
       "injected": true
     }
+  },
+  "volta": {
+    "extends": "../package.json"
   }
 }
