@@ -28,6 +28,9 @@ export function createHelpers(selectors: Selectors) {
 
     triggerEvent(element, 'mousedown', { clientX: startX, button: 0 });
     triggerEvent(element, 'mousemove', { clientX: targetX, button: 0 });
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
     triggerEvent(element, 'mouseup', { clientX: targetX, button: 0 });
 
     await settled();

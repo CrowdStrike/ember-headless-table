@@ -59,7 +59,7 @@ See the API Documentation [here][api-docs] for the full list of options and desc
 
 ### Preferences
 
-Nothing is present in the preferences object at this time.
+The width will be stored in preferences, per column.
 
 ### Accessibility
 
