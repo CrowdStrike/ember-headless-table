@@ -193,6 +193,33 @@ export const preferences = {
   /**
    * @public
    *
+   * returns an object for bulk updating preferences data
+   * for all columns (scoped to key and table)
+   */
+  forAllColumns<P extends BasePlugin<any>, Data = unknown>(table: Table<Data>, klass: Class<P>) {
+    return {
+      /**
+       * delete an entry on every column in the underlying column `Map` for this table-plugin pair
+       */
+      delete(key: string) {
+        let tablePrefs = table.preferences;
+
+        for (let column of table.columns) {
+          let prefs = column.table.preferences;
+          let existing = prefs.storage.forPlugin(klass.name);
+          let columnPrefs = existing.forColumn(column.key);
+
+          columnPrefs.delete(key);
+        }
+
+        return tablePrefs.persist();
+      },
+    };
+  },
+
+  /**
+   * @public
+   *
    * returns an object for getting and setting preferences data
    * based on the table (scoped to the key: "table")
    *
