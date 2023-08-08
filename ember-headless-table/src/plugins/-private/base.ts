@@ -203,7 +203,7 @@ export const preferences = {
   forTable<P extends BasePlugin<any>, Data = unknown>(table: Table<Data>, klass: Class<P>) {
     return {
       /**
-       * delete an entry on the underlying `Map` used for this column-plugin pair
+       * delete an entry on the underlying `Map` used for this table-plugin pair
        */
       delete(key: string) {
         let prefs = table.preferences;
@@ -214,7 +214,7 @@ export const preferences = {
         return prefs.persist();
       },
       /**
-       * get an entry on the underlying `Map` used for this column-plugin pair
+       * get an entry on the underlying `Map` used for this table-plugin pair
        */
       get(key: string) {
         let prefs = table.preferences;
@@ -223,7 +223,7 @@ export const preferences = {
         return existing.table.get(key);
       },
       /**
-       * set an entry on the underlying `Map` used for this column-plugin pair
+       * set an entry on the underlying `Map` used for this table-plugin pair
        */
       set(key: string, value: unknown) {
         let prefs = table.preferences;
