@@ -52,17 +52,7 @@ export class ColumnVisibility extends BasePlugin<Signature> implements Plugin<Si
   };
 
   reset() {
-    /**
-     * Global preference, not scoped to plugin
-     */
-    for (let column of this.table.columns) {
-      let defaultValue = options.forColumn(column, ColumnVisibility)?.isVisible;
-      let current = meta.forColumn(column, ColumnVisibility).isVisible;
-
-      if (defaultValue !== current) {
-        preferences.forColumn(column, ColumnVisibility).delete('isVisible');
-      }
-    }
+    preferences.forAllColumns(this.table, ColumnVisibility).delete('isVisible');
   }
 
   get columns() {

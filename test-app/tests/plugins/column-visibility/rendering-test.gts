@@ -4,7 +4,7 @@ import { on } from '@ember/modifier';
 // @ts-ignore
 import { fn } from '@ember/helper';
 import { assert } from '@ember/debug';
-import { click, render, findAll } from '@ember/test-helpers';
+import { click, render, findAll, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -14,7 +14,7 @@ import { ColumnVisibility, hide, show } from 'ember-headless-table/plugins/colum
 import { ColumnReordering, moveLeft, moveRight } from 'ember-headless-table/plugins/column-reordering';
 
 import { DATA } from 'test-app/data';
-import type { Table } from 'ember-headless-table';
+import type { Table, PreferencesData } from 'ember-headless-table';
 import { setOwner } from '@ember/application';
 
 module('Plugins | columnVisibility', function (hooks) {
@@ -384,5 +384,85 @@ module('Plugins | columnVisibility', function (hooks) {
         });
       });
     });
+  });
+
+  module('with a preferences adapter', function (hooks) {
+    let preferences: null | PreferencesData = {};
+
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => DATA,
+        plugins: [ColumnVisibility],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => {
+              return {
+                "plugins": {
+                  "ColumnVisibility": {
+                    "columns": {
+                      "A": {},
+                      "B":{ "isVisible": false },
+                      "C": { "isVisible": false },
+                      "D": {},
+                    },
+                    "table": {},
+                  },
+                }
+              };
+            }
+          }
+        }
+      });
+    }
+
+  hooks.beforeEach(async function () {
+    preferences = null;
+    ctx = new DefaultOptions();
+    setOwner(ctx, this.owner);
+
+    await render(
+      // @ts-ignore
+      <template>
+        <TestComponentA @ctx={{ctx}} />
+      </template>
+    );
+  });
+
+  test('column visibility is set from preferences', async function (assert) {
+    assert.dom('th').exists({ count: 2 });
+    assert.dom(`th.A`).exists();
+    assert.dom(`th.B`).doesNotExist();
+    assert.dom(`th.C`).doesNotExist();
+    assert.dom(`th.D`).exists();
+  });
+
+  test('resetting clears preferences, and restores the original column order', async function (assert) {
+    assert.dom(`th.B`).doesNotExist('column B initially hidden');
+    assert.dom(`th.C`).doesNotExist('column C initially hidden');
+
+    ctx.table.resetToDefaults();
+    await settled();
+
+    assert.dom(`th.B`).exists('column B visible after preferences reset');
+    assert.dom(`th.C`).exists('column C visible after preferences reset');
+    assert.deepEqual(preferences, {
+      "plugins": {
+        "ColumnVisibility": {
+          "columns": {
+            "A": {},
+            "B": {},
+            "C": {},
+            "D": {}
+          },
+          "table": {}
+        }
+      }
+    }, 'All column preferences reset');
+  });
   });
 });
