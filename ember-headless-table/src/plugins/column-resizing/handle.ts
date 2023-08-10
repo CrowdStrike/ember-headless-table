@@ -128,6 +128,8 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
       this.token = undefined;
     }
 
+    this.meta.save();
+
     /**
      * No need to listen if we aren't dragging
      */

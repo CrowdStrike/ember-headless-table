@@ -2,12 +2,28 @@ import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
 import { action } from '@ember/object';
 
+import { preferences } from '[public-plugin-types]';
+
 import { BasePlugin, columns, meta, options } from '../-private/base';
 import { applyStyles } from '../-private/utils';
 import { getAccurateClientHeight, getAccurateClientWidth, totalGapOf } from './utils';
 
-import type { ColumnApi } from '[public-plugin-types]';
+import type { ColumnApi, PluginPreferences } from '[public-plugin-types]';
 import type { Column, Table } from '[public-types]';
+
+interface ColumnResizePreferences extends PluginPreferences {
+  columns: {
+    [columnKey: string]: {
+      width?: number;
+    };
+  };
+}
+
+declare module 'ember-headless-table/plugins' {
+  interface Registry {
+    ColumnResize?: ColumnResizePreferences;
+  }
+}
 
 export interface ColumnOptions {
   /**
@@ -94,6 +110,15 @@ export class ColumnResizing extends BasePlugin<Signature> {
     let tableMeta = meta.forTable(this.table, ColumnResizing);
 
     tableMeta.reset();
+
+    for (let column of this.table.columns) {
+      let defaultValue = options.forColumn(column, ColumnResizing)?.width;
+      let current = meta.forColumn(column, ColumnResizing).width;
+
+      if (defaultValue !== current) {
+        preferences.forTable(this.table, ColumnResizing).delete('width');
+      }
+    }
   }
 }
 
@@ -135,12 +160,24 @@ export class ColumnMeta {
     };
   }
 
+  get key() {
+    return this.column.key;
+  }
+
   get minWidth() {
     return this.options.minWidth;
   }
 
   get initialWidth() {
-    return this.options.width;
+    let savedWidth = preferences.forColumn(this.column, ColumnResizing).get('width');
+
+    if (!savedWidth) {
+      return this.options.width;
+    }
+
+    assert('saved width must be a string', typeof savedWidth === 'string');
+
+    return parseInt(savedWidth, 10);
   }
 
   get canShrink() {
@@ -191,6 +228,11 @@ export class ColumnMeta {
   @action
   resize(delta: number) {
     this.tableMeta.resizeColumn(this.column, delta);
+  }
+
+  @action
+  save() {
+    this.tableMeta.saveColWidths(this.tableMeta.visibleColumnMetas);
   }
 }
 
@@ -268,6 +310,23 @@ export class TableMeta {
 
   get totalVisibleColumnsWidth() {
     return this.visibleColumnMetas.reduce((acc, column) => (acc += column.width ?? 0), 0);
+  }
+
+  @action
+  saveColWidths(visibleColumnMetas: ColumnMeta[]) {
+    let availableColumns = columns.for(this.table, ColumnResizing);
+
+    for (let column of visibleColumnMetas) {
+      let columnToUpdate = availableColumns.find((c) => {
+        return c.key === column.key;
+      });
+
+      assert('column must exist', columnToUpdate);
+
+      let colPreferences = preferences.forColumn(columnToUpdate, ColumnResizing);
+
+      colPreferences.set('width', column.width.toString());
+    }
   }
 
   @action

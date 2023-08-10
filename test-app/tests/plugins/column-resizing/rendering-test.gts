@@ -12,7 +12,7 @@ import { on } from '@ember/modifier';
 // @ts-ignore
 import { fn } from '@ember/helper';
 
-import { headlessTable, type ColumnConfig } from 'ember-headless-table';
+import { headlessTable, type ColumnConfig, type PreferencesData } from 'ember-headless-table';
 import { ColumnResizing, resizeHandle, hasResizeHandle } from 'ember-headless-table/plugins/column-resizing';
 import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
 import { ColumnReordering, moveLeft, moveRight } from 'ember-headless-table/plugins/column-reordering';
@@ -185,6 +185,127 @@ module('Plugins | resizing', function (hooks) {
           { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
         ]
       );
+    });
+  });
+
+  module('with a preferences adapter', function (hooks) {
+      let preferences: null | PreferencesData = {};
+
+      class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => [] as unknown[],
+        plugins: [ColumnResizing],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => {
+              return {
+                "plugins": {
+                  "ColumnResizing": {
+                  "columns": {
+                      "A": {
+                        "width": "300"
+                      },
+                      "B": {
+                        "width": "250"
+                      },
+                      "C": {
+                        "width": "250"
+                      },
+                      "D": {
+                        "width": "200"
+                      },
+                    },
+                    "table": {}
+                  },
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    hooks.beforeEach(function () {
+      preferences = null;
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+    });
+
+    test('it restores column widths from preferences', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      )
+
+      const [columnA, columnB, columnC, columnD] = getColumns();
+
+      debugAssert(`columnA doesn't exist`, columnA);
+      debugAssert(`columnB doesn't exist`, columnB);
+      debugAssert(`columnC doesn't exist`, columnC);
+      debugAssert(`columnD doesn't exist`, columnD);
+
+      assert.equal(width(columnA), 300, 'col A has expected width');
+      assert.equal(width(columnB), 250, 'col B has expected width');
+      assert.equal(width(columnC), 250, 'col C has expected width');
+      assert.equal(width(columnD), 200, 'col D has expected width');
+    });
+
+    test('it resizes each column', async function (assert) {
+      // Columns are set to equal widths so each of the four columns
+      // will initially be 250px wide in the 1000px wide container
+      ctx.setContainerWidth(1000);
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      )
+
+      const [columnA, columnB, columnC, columnD] = getColumns();
+
+      debugAssert(`columnA doesn't exist`, columnA);
+      debugAssert(`columnB doesn't exist`, columnB);
+      debugAssert(`columnC doesn't exist`, columnC);
+      debugAssert(`columnD doesn't exist`, columnD);
+
+      await requestAnimationFrameSettled();
+
+      await assertChanges(
+        () => dragRight(columnB, 50),
+        [
+          { value: () => width(columnA), by: 50, msg: 'width of A increased by 50' },
+          { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
+          { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
+          { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
+        ]
+      );
+
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "ColumnResizing": {
+            "columns": {
+              "A": {
+                "width": "350"
+              },
+              "B": {
+                "width": "200"
+              },
+              "C": {
+                "width": "250"
+              },
+              "D": {
+                "width": "200"
+              },
+            },
+            "table": {}
+          }
+        }
+      });
     });
   });
 
