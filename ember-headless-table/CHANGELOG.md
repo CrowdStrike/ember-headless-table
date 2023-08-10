@@ -1,5 +1,20 @@
 # ember-headless-table
 
+## 2.1.0
+
+### Minor Changes
+
+- [#211](https://github.com/CrowdStrike/ember-headless-table/pull/211) [`0a9415c`](https://github.com/CrowdStrike/ember-headless-table/commit/0a9415c3c859ad0000c5e37503f7786825baed91) Thanks [@joelamb](https://github.com/joelamb)! - Persists resized column widths to preferences.
+  Width values are saved as strings after resizing.
+  If present in preferences, width value will be
+  restored to the table, overriding any initial options
+  passed in.
+
+### Patch Changes
+
+- [#214](https://github.com/CrowdStrike/ember-headless-table/pull/214) [`58b2866`](https://github.com/CrowdStrike/ember-headless-table/commit/58b28666270fd47e96525fbe6547449f1eeb32da) Thanks [@joelamb](https://github.com/joelamb)! - Refactor to bulk reset column visibility preferences in a single call to
+  the preferences service
+
 ## 2.0.0
 
 ### Major Changes

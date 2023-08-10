@@ -1,6 +1,6 @@
 {
   "name": "ember-headless-table",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An implementation of table behaviors for driving any table or table-like UI -- all without a UI (headless)",
   "keywords": [
     "ember-addon",
