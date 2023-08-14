@@ -156,8 +156,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@types/dompurify':
-        specifier: ^2.3.4
-        version: 2.4.0
+        specifier: ^3.0.0
+        version: 3.0.0
       '@types/ember':
         specifier: ^4.0.1
         version: 4.0.3(@babel/core@7.22.5)
@@ -3783,8 +3783,8 @@ packages:
       '@types/node': 18.15.11
     dev: true
 
-  /@types/dompurify@2.4.0:
-    resolution: {integrity: sha512-IDBwO5IZhrKvHFUl+clZxgf3hn2b/lU6H1KaBShPkQyGJUQ0xwebezIPSuiyGwfz1UzJWQl4M7BDxtHtCCPlTg==}
+  /@types/dompurify@3.0.0:
+    resolution: {integrity: sha512-EcSqmgm/xJwH8CcJPy9AHNypp/j58CYga3nWdl93/wLxX6OH+rSD3aAj75NQazcZd1YKHJ/pjNZ9qmgVajggwQ==}
     dependencies:
       '@types/trusted-types': 2.0.3
     dev: true
