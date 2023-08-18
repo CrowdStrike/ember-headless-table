@@ -107,18 +107,7 @@ export class ColumnResizing extends BasePlugin<Signature> {
   containerModifier = resizeObserver;
 
   reset() {
-    let tableMeta = meta.forTable(this.table, ColumnResizing);
-
-    tableMeta.reset();
-
-    for (let column of this.table.columns) {
-      let defaultValue = options.forColumn(column, ColumnResizing)?.width;
-      let current = meta.forColumn(column, ColumnResizing).width;
-
-      if (defaultValue !== current) {
-        preferences.forTable(this.table, ColumnResizing).delete('width');
-      }
-    }
+    preferences.forAllColumns(this.table, ColumnResizing).delete('width');
   }
 }
 
