@@ -303,19 +303,16 @@ export class TableMeta {
 
   @action
   saveColWidths(visibleColumnMetas: ColumnMeta[]) {
-    let availableColumns = columns.for(this.table, ColumnResizing);
+    let tablePrefs = this.table.preferences;
 
     for (let column of visibleColumnMetas) {
-      let columnToUpdate = availableColumns.find((c) => {
-        return c.key === column.key;
-      });
+      let existing = tablePrefs.storage.forPlugin('ColumnResizing');
+      let columnPrefs = existing.forColumn(column.key);
 
-      assert('column must exist', columnToUpdate);
-
-      let colPreferences = preferences.forColumn(columnToUpdate, ColumnResizing);
-
-      colPreferences.set('width', column.width.toString());
+      columnPrefs.set('width', column.width.toString());
     }
+
+    tablePrefs.persist();
   }
 
   @action
