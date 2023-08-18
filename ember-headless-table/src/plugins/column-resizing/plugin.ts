@@ -97,7 +97,7 @@ export class ColumnResizing extends BasePlugin<Signature> {
   };
 
   /**
-   * This is what ends up calling resize when the browesr changes
+   * This is what ends up calling resize when the browser changes
    * (assuming that the containing element's styles stretch to fill the space)
    *
    * Later, when container queries are more broadly supported, we'll want to watch
