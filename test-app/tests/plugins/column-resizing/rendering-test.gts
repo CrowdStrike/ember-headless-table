@@ -305,7 +305,7 @@ module('Plugins | resizing', function (hooks) {
             "table": {}
           }
         }
-      });
+      }, 'column widths saved in preferences');
     });
   });
 
