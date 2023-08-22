@@ -256,6 +256,47 @@ module('Plugins | resizing', function (hooks) {
       assert.equal(width(columnD), 200, 'col D has expected width');
     });
 
+    test('resetting clears preferences, and restores the original column width', async function (assert) {
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      )
+      const [columnA, columnB, columnC, columnD] = getColumns();
+
+      debugAssert(`columnA doesn't exist`, columnA);
+      debugAssert(`columnB doesn't exist`, columnB);
+      debugAssert(`columnC doesn't exist`, columnC);
+      debugAssert(`columnD doesn't exist`, columnD);
+
+      assert.equal(width(columnA), 300, 'col A has expected initial width');
+      assert.equal(width(columnB), 250, 'col B has expected initial width');
+      assert.equal(width(columnC), 250, 'col C has expected initial width');
+      assert.equal(width(columnD), 200, 'col D has expected initial width');
+
+      ctx.table.resetToDefaults();
+      await settled();
+
+      // Columns are set to equal widths, so column will be 250px wide by default
+      assert.equal(width(columnA), 250, 'col A has expected width after reset');
+      assert.equal(width(columnB), 250, 'col B has expected width after reset');
+      assert.equal(width(columnC), 250, 'col C has expected width after reset');
+      assert.equal(width(columnD), 250, 'col D has expected width after reset');
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "ColumnResizing": {
+            "columns": {
+              "A": {},
+              "B": {},
+              "C": {},
+              "D": {}
+            },
+            "table": {}
+          }
+        }
+      }, 'All column preferences reset');
+    });
+
     test('it resizes each column', async function (assert) {
       // Columns are set to equal widths so each of the four columns
       // will initially be 250px wide in the 1000px wide container
@@ -305,7 +346,7 @@ module('Plugins | resizing', function (hooks) {
             "table": {}
           }
         }
-      });
+      }, 'column widths saved in preferences');
     });
   });
 

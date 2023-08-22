@@ -97,7 +97,7 @@ export class ColumnResizing extends BasePlugin<Signature> {
   };
 
   /**
-   * This is what ends up calling resize when the browesr changes
+   * This is what ends up calling resize when the browser changes
    * (assuming that the containing element's styles stretch to fill the space)
    *
    * Later, when container queries are more broadly supported, we'll want to watch
@@ -107,18 +107,7 @@ export class ColumnResizing extends BasePlugin<Signature> {
   containerModifier = resizeObserver;
 
   reset() {
-    let tableMeta = meta.forTable(this.table, ColumnResizing);
-
-    tableMeta.reset();
-
-    for (let column of this.table.columns) {
-      let defaultValue = options.forColumn(column, ColumnResizing)?.width;
-      let current = meta.forColumn(column, ColumnResizing).width;
-
-      if (defaultValue !== current) {
-        preferences.forTable(this.table, ColumnResizing).delete('width');
-      }
-    }
+    preferences.forAllColumns(this.table, ColumnResizing).delete('width');
   }
 }
 
@@ -314,19 +303,16 @@ export class TableMeta {
 
   @action
   saveColWidths(visibleColumnMetas: ColumnMeta[]) {
-    let availableColumns = columns.for(this.table, ColumnResizing);
+    let tablePrefs = this.table.preferences;
 
     for (let column of visibleColumnMetas) {
-      let columnToUpdate = availableColumns.find((c) => {
-        return c.key === column.key;
-      });
+      let existing = tablePrefs.storage.forPlugin('ColumnResizing');
+      let columnPrefs = existing.forColumn(column.key);
 
-      assert('column must exist', columnToUpdate);
-
-      let colPreferences = preferences.forColumn(columnToUpdate, ColumnResizing);
-
-      colPreferences.set('width', column.width.toString());
+      columnPrefs.set('width', column.width.toString());
     }
+
+    tablePrefs.persist();
   }
 
   @action
