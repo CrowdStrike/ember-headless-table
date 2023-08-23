@@ -275,7 +275,7 @@ module('Plugins | resizing', function (hooks) {
       assert.equal(width(columnD), 200, 'col D has expected initial width');
 
       ctx.table.resetToDefaults();
-      await settled();
+      await requestAnimationFrameSettled();
 
       // Columns are set to equal widths, so column will be 250px wide by default
       assert.equal(width(columnA), 250, 'col A has expected width after reset');
@@ -391,6 +391,8 @@ module('Plugins | resizing', function (hooks) {
             { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
           ]
         );
+
+        await requestAnimationFrameSettled();
 
         await assertChanges(
           () => dragLeft(columnB, 10),

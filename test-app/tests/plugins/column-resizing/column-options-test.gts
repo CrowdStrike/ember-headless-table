@@ -201,6 +201,8 @@ module('Plugins | resizing | column options', function (hooks) {
           ]
         );
 
+        await requestAnimationFrameSettled();
+
         await assertChanges(
           () => dragLeft(columnC, 10),
           [
