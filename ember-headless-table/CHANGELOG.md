@@ -1,5 +1,12 @@
 # ember-headless-table
 
+## 2.1.1
+
+### Patch Changes
+
+- [#219](https://github.com/CrowdStrike/ember-headless-table/pull/219) [`4172870`](https://github.com/CrowdStrike/ember-headless-table/commit/4172870114ec87b0df8473a1caa3b92f027b4a3e) Thanks [@joelamb](https://github.com/joelamb)! - Column widths are saved and reset in a single call to the preferences service,
+  rather than on a per column basis, for improved UI performance
+
 ## 2.1.0
 
 ### Minor Changes
