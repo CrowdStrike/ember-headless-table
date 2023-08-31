@@ -22,7 +22,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/pnpm
-
+      - run:  echo ${{ github.event.number }} > ./pr-number.txt
+      - run: pnpm turbo build
+      # Used for faster deploy so we don't need to checkout the repo
+      - uses: actions/upload-artifact@v3
+        with:
+          name: deploy-prep-dist
+          if-no-files-found: error
+          path: |
+            ./apps/**/dist/**/*
+            !node_modules/
+            !./**/node_modules/
 
 
 
@@ -191,55 +201,4 @@ jobs:
       - uses: ./.github/actions/download-built-package
       - run: pnpm glint
         working-directory: docs-app
-
-
-
-  PublishDocstoCloudflarePages:
-    name: Publish Docs to Cloudflare Pages
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      contents: read
-      deployments: write
-    outputs:
-      url: ${{ steps.publishStep.outputs.url }}
-      env: ${{ steps.publishStep.outputs.environment }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - run: pnpm build:docs
-      - name: Publish to Cloudflare Pages
-        id: publishStep
-        uses: cloudflare/pages-action@1
-        with:
-          apiToken: ${{ secrets.UX_OSS_CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.UX_OSS_CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ember-headless-table
-          directory: ./docs-app/dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
-
-
-  PostPreviewURLascommenttoPR:
-    name: Post Preview URL as comment to PR
-    runs-on: ubuntu-latest
-    needs: PublishDocstoCloudflarePages
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/pnpm
-      - uses: ./.github/actions/download-built-package
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: |+
-            ## Preview URLs
-            GH Env: ${{ needs.PublishDocstoCloudflarePages.outputs.env }}
-            docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}
-            api docs: ${{ needs.PublishDocstoCloudflarePages.outputs.url }}/api/modules.html
-
-
 
