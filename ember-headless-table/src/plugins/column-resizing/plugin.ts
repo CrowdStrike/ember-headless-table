@@ -1,5 +1,6 @@
 import { cached, tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
+import { isDestroyed, isDestroying } from '@ember/destroyable';
 import { action } from '@ember/object';
 
 import { preferences } from '[public-plugin-types]';
@@ -435,6 +436,10 @@ function getObserver(element: HTMLElement, table: Table): ResizeObserver {
   if (existing) return existing;
 
   existing = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+    if (isDestroyed(table) || isDestroying(table)) {
+      return;
+    }
+
     for (let entry of entries) {
       meta.forTable(table, ColumnResizing).onTableResize(entry);
     }
