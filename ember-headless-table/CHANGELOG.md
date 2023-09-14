@@ -1,5 +1,13 @@
 # ember-headless-table
 
+## 2.1.2
+
+### Patch Changes
+
+- [#226](https://github.com/CrowdStrike/ember-headless-table/pull/226) [`6c58dfd`](https://github.com/CrowdStrike/ember-headless-table/commit/6c58dfdcdfca02fb087f99813e484afdc04a2b51) Thanks [@nicolechung](https://github.com/nicolechung)! - Bugfix: the plugin for resize was not checking if the table was destroyed first.
+
+  This fixes that so the observer is not listening for a removed table, which was causing an error in the preferences (since it was trying to set preferences for a table which is not on screen)
+
 ## 2.1.1
 
 ### Patch Changes
