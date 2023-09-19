@@ -111,24 +111,41 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
     }
   };
 
-  queueUpdate = () => {
-    cancelAnimationFrame(this.dragFrame);
+  /**
+   * queueUpdate takes an optional function argument that is called
+   * in the requestAnimationFrame callback _after_ the resize function.
+   *
+   * We can use this to ensure that preferences are only ever saved after
+   * we have completed column resizing.
+   *
+   * Because the requestAnimationFrame 'hides' these function calls from the
+   * the ember test waiter, we also ensure that we track them by also cancelling
+   * the waiter in the requestAnimationFrame callback.
+   */
+  queueUpdate = (callback?: () => void) => {
+    if (this.dragFrame) {
+      cancelAnimationFrame(this.dragFrame);
+    }
+
     this.dragFrame = requestAnimationFrame(() => {
       this.meta.resize(this.pointerX - this.pointerStartX);
       this.pointerStartX = this.pointerX;
+
+      if (callback) {
+        callback();
+      }
+
+      if (this.token) {
+        waiter.endAsync(this.token);
+        this.token = undefined;
+      }
     });
   };
 
   dragEndHandler = () => {
     this.meta.isResizing = false;
-    this.queueUpdate();
 
-    if (this.token) {
-      waiter.endAsync(this.token);
-      this.token = undefined;
-    }
-
-    this.meta.save();
+    this.queueUpdate(this.meta.save);
 
     /**
      * No need to listen if we aren't dragging
