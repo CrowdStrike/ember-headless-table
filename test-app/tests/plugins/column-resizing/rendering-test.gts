@@ -297,9 +297,7 @@ module('Plugins | resizing', function (hooks) {
       }, 'All column preferences reset');
     });
 
-    test('it resizes each column', async function (assert) {
-      // Columns are set to equal widths so each of the four columns
-      // will initially be 250px wide in the 1000px wide container
+    test('it resizes each column and persists the new widths in the preferences', async function (assert) {
       ctx.setContainerWidth(1000);
       await render(
         <template>
@@ -314,30 +312,35 @@ module('Plugins | resizing', function (hooks) {
       debugAssert(`columnC doesn't exist`, columnC);
       debugAssert(`columnD doesn't exist`, columnD);
 
+      assert.equal(width(columnA), 300, 'col A has expected width before resize');
+      assert.equal(width(columnB), 250, 'col B has expected width before resize');
+      assert.equal(width(columnC), 250, 'col C has expected width before resize');
+      assert.equal(width(columnD), 200, 'col D has expected width before resize');
+
       await requestAnimationFrameSettled();
 
-      await assertChanges(
-        () => dragRight(columnB, 50),
-        [
-          { value: () => width(columnA), by: 50, msg: 'width of A increased by 50' },
-          { value: () => width(columnB), by: -50, msg: 'width of B decreased by 50' },
-          { value: () => width(columnC), by: 0, msg: 'width of C unchanged' },
-          { value: () => width(columnD), by: 0, msg: 'width of D unchanged' },
-        ]
-      );
+      // move the the resize handler between columns A & B 200px to the right
+      // increasing the width of column A and decreasing the width of columns
+      // to the right , while respecting the min width (128px)
+      await dragRight(columnB, 200);
+
+      assert.equal(width(columnA), 500, 'col A has expected width after resize');
+      assert.equal(width(columnB), 128, 'col B has expected width after resize');
+      assert.equal(width(columnC), 172, 'col C has expected width after resize');
+      assert.equal(width(columnD), 200, 'col D has expected width after resize');
 
       assert.deepEqual(preferences, {
         "plugins": {
           "ColumnResizing": {
             "columns": {
               "A": {
-                "width": "350"
+                "width": "500"
               },
               "B": {
-                "width": "200"
+                "width": "128"
               },
               "C": {
-                "width": "250"
+                "width": "172"
               },
               "D": {
                 "width": "200"
