@@ -1,5 +1,12 @@
 # ember-headless-table
 
+## 2.1.3
+
+### Patch Changes
+
+- [#233](https://github.com/CrowdStrike/ember-headless-table/pull/233) [`4dbf668`](https://github.com/CrowdStrike/ember-headless-table/commit/4dbf6682b4b85d27e57821c68a82b376256121e1) Thanks [@joelamb](https://github.com/joelamb)! - Fixes column resize and preference save sequencing
+  to ensure that the functions always run in the correct order.
+
 ## 2.1.2
 
 ### Patch Changes
