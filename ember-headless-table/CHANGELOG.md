@@ -1,5 +1,11 @@
 # ember-headless-table
 
+## 2.1.4
+
+### Patch Changes
+
+- [#236](https://github.com/CrowdStrike/ember-headless-table/pull/236) [`3a737e9`](https://github.com/CrowdStrike/ember-headless-table/commit/3a737e93e647074119c613a4b444d51c38f12e4c) Thanks [@NullVoxPopuli](https://github.com/NullVoxPopuli)! - Use more permissive peer ranges for `@ember/test-helpers`, `@ember/test-waiters`, and `ember-source`.
+
 ## 2.1.3
 
 ### Patch Changes
