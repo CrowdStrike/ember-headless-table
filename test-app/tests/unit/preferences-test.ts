@@ -5,12 +5,33 @@ import { module, test } from 'qunit';
 import { setupRenderingTest, setupTest } from 'ember-qunit';
 
 import { TablePreferences } from 'ember-headless-table';
-
 // import sinon from 'sinon';
+import { BasePlugin } from 'ember-headless-table/plugins';
+import { ColumnVisibility } from 'ember-headless-table/plugins/column-visibility';
+
 import type { PreferencesData } from 'ember-headless-table';
 
 module('Unit | -private | table-preferences', function (hooks) {
   setupTest(hooks);
+
+  class TestColumnMeta {}
+  class TestTableMeta {}
+
+  class TestPlugin extends BasePlugin<{ Meta: { Column: TestColumnMeta; Table: TestTableMeta } }> {
+    name = 'test-plugin';
+    meta = {
+      column: TestColumnMeta,
+      table: TestTableMeta,
+    };
+  }
+
+  class OldPlugin extends BasePlugin<{ Meta: { Column: TestColumnMeta; Table: TestTableMeta } }> {
+    name = 'old-plugin';
+    meta = {
+      column: TestColumnMeta,
+      table: TestTableMeta,
+    };
+  }
 
   module('#restore', function () {
     test('@adapter#restore(): returns initial data for table preferences', async function (assert) {
@@ -123,17 +144,17 @@ module('Unit | -private | table-preferences', function (hooks) {
         },
       });
 
-      let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+      let foo = preferences.storage.forPlugin(ColumnVisibility).table.get('foo');
+      let woop = preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').get('woop');
 
       assert.strictEqual(foo, 2);
       assert.false(woop);
 
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
-      preferences.storage.forPlugin('column-visibility').table.set('foo', 3);
+      preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').set('woop', true);
+      preferences.storage.forPlugin(ColumnVisibility).table.set('foo', 3);
 
-      foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+      foo = preferences.storage.forPlugin(ColumnVisibility).table.get('foo');
+      woop = preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').get('woop');
 
       assert.strictEqual(foo, 3);
       assert.true(woop);
@@ -173,11 +194,11 @@ module('Unit | -private | table-preferences', function (hooks) {
         },
       });
 
-      preferences.storage.forPlugin('column-visibility').table.delete('foo');
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').delete('woop');
+      preferences.storage.forPlugin(ColumnVisibility).table.delete('foo');
+      preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').delete('woop');
 
-      let foo = preferences.storage.forPlugin('column-visibility').table.get('foo');
-      let woop = preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+      let foo = preferences.storage.forPlugin(ColumnVisibility).table.get('foo');
+      let woop = preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').get('woop');
 
       assert.strictEqual(foo, undefined);
       assert.strictEqual(woop, undefined);
@@ -234,9 +255,9 @@ module('Unit | -private | table-preferences', function (hooks) {
         },
       });
 
-      preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
-      preferences.storage.forPlugin('test-plugin').forColumn('foo').set('woop', '1');
-      preferences.storage.forPlugin('old-plugin').forColumn('foo').set('woop', 2);
+      preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').set('woop', true);
+      preferences.storage.forPlugin(TestPlugin).forColumn('foo').set('woop', '1');
+      preferences.storage.forPlugin(OldPlugin).forColumn('foo').set('woop', 2);
       preferences.persist();
     });
   });
@@ -266,11 +287,11 @@ module('Preferences | rendering', function (hooks) {
 
     class Context {
       get tableInfo() {
-        return preferences.storage.forPlugin('column-visibility').table.get('foo');
+        return preferences.storage.forPlugin(ColumnVisibility).table.get('foo');
       }
 
       get columnInfo() {
-        return preferences.storage.forPlugin('column-visibility').forColumn('foo').get('woop');
+        return preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').get('woop');
       }
     }
 
@@ -292,8 +313,8 @@ module('Preferences | rendering', function (hooks) {
     assert.dom('#table').hasText('2');
     assert.dom('#column').hasText('false');
 
-    preferences.storage.forPlugin('column-visibility').forColumn('foo').set('woop', true);
-    preferences.storage.forPlugin('column-visibility').table.set('foo', 3);
+    preferences.storage.forPlugin(ColumnVisibility).forColumn('foo').set('woop', true);
+    preferences.storage.forPlugin(ColumnVisibility).table.set('foo', 3);
 
     await settled();
 

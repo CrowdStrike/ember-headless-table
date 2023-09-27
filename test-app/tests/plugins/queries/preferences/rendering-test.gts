@@ -59,7 +59,7 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
           restoreFrom: (key) => {
             return {
               plugins: {
-                Sorting: {
+                'data-sorting': {
                   columns: {},
                   table: {
                     'some-key': 2,
@@ -124,7 +124,7 @@ module('Rendering | Plugins | Queries | preferences', function (hooks) {
         restoreFrom: (key) => {
           return {
             plugins: {
-              Sorting: {
+              'data-sorting': {
                 columns: {
                   'the-column-key': {
                     'some-preference': 2,

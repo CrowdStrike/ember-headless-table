@@ -383,7 +383,7 @@ module('Plugins | columnReordering', function (hooks) {
             restore: (key: string) => {
               return {
                 "plugins": {
-                  "ColumnReordering": {
+                  "column-reordering": {
                     "columns": {},
                     "table": {
                       "order": {
@@ -432,11 +432,11 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'A B C D');
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             columns: {},
             table: {},
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
@@ -459,7 +459,7 @@ module('Plugins | columnReordering', function (hooks) {
 
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             "columns": {},
             "table": {
               "order": {
@@ -470,7 +470,7 @@ module('Plugins | columnReordering', function (hooks) {
               }
             }
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
@@ -507,7 +507,7 @@ module('Plugins | columnReordering', function (hooks) {
 
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             "columns": {},
             "table": {
               "order": {
@@ -518,7 +518,7 @@ module('Plugins | columnReordering', function (hooks) {
               }
             }
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
