@@ -158,7 +158,7 @@ export const preferences = {
        */
       delete(key: string) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         columnPrefs.delete(key);
@@ -170,7 +170,7 @@ export const preferences = {
        */
       get(key: string) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         return columnPrefs.get(key);
@@ -180,7 +180,7 @@ export const preferences = {
        */
       set(key: string, value: unknown) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         columnPrefs.set(key, value);
@@ -206,7 +206,7 @@ export const preferences = {
 
         for (let column of table.columns) {
           let prefs = column.table.preferences;
-          let existing = prefs.storage.forPlugin(klass.name);
+          let existing = prefs.storage.forPlugin(klass);
           let columnPrefs = existing.forColumn(column.key);
 
           columnPrefs.delete(key);
@@ -234,7 +234,7 @@ export const preferences = {
        */
       delete(key: string) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         existing.table.delete(key);
 
@@ -245,7 +245,7 @@ export const preferences = {
        */
       get(key: string) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         return existing.table.get(key);
       },
@@ -254,7 +254,7 @@ export const preferences = {
        */
       set(key: string, value: unknown) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         existing.table.set(key, value);
 

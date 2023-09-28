@@ -1,6 +1,7 @@
 import { TrackedMap } from 'tracked-built-ins';
 
 import type {
+  PluginClass,
   PluginPreferenceFor,
   PluginPreferences,
   PreferencesAdapter as Adapter,
@@ -63,12 +64,13 @@ class TrackedPreferences {
     return [...this.plugins.values()].every((pluginPrefs) => pluginPrefs.isAtDefault);
   }
 
-  forPlugin(name: string) {
-    let existing = this.plugins.get(name);
+  forPlugin(klass: PluginClass<any>) {
+    let instance = Reflect.construct(klass, []) as PluginClass<any>;
+    let existing = this.plugins.get(instance.name);
 
     if (!existing) {
       existing = new TrackedPluginPrefs();
-      this.plugins.set(name, existing);
+      this.plugins.set(instance.name, existing);
     }
 
     return existing;
