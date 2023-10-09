@@ -32,6 +32,7 @@
     "ember-functions-as-helper-polyfill": "^2.1.1",
     "ember-headless-table": "workspace:*",
     "ember-resources": "^5.4.0",
+    "rsvp": "^4.8.5",
     "tracked-built-ins": "^3.1.0"
   },
   "dependenciesMeta": {
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
+    "@babel/eslint-parser": "^7.11.0",
     "@ember/optional-features": "^2.0.0",
     "@embroider/test-setup": "^2.0.2",
     "@glimmer/component": "^1.1.2",
@@ -75,7 +77,6 @@
     "@types/ember__utils": "^4.0.2",
     "@types/qunit": "^2.19.2",
     "@types/rsvp": "^4.0.4",
-    "@babel/eslint-parser": "^7.11.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.0.0",
     "ember-cli": "~4.7.0",
