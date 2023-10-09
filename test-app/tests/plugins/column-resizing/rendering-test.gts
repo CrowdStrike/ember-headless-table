@@ -188,7 +188,7 @@ module('Plugins | resizing', function (hooks) {
     });
   });
 
-  module('with a preferences adapter', function (hooks) {
+  module('with a preferences adapter and previously saved preferences', function (hooks) {
       let preferences: null | PreferencesData = {};
 
       class DefaultOptions extends Context {
@@ -205,7 +205,7 @@ module('Plugins | resizing', function (hooks) {
             restore: (key: string) => {
               return {
                 "plugins": {
-                  "ColumnResizing": {
+                  "column-resizing": {
                   "columns": {
                       "A": {
                         "width": "300"
@@ -284,7 +284,7 @@ module('Plugins | resizing', function (hooks) {
       assert.equal(width(columnD), 250, 'col D has expected width after reset');
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnResizing": {
+          "column-resizing": {
             "columns": {
               "A": {},
               "B": {},
@@ -312,12 +312,12 @@ module('Plugins | resizing', function (hooks) {
       debugAssert(`columnC doesn't exist`, columnC);
       debugAssert(`columnD doesn't exist`, columnD);
 
+      await requestAnimationFrameSettled();
+
       assert.equal(width(columnA), 300, 'col A has expected width before resize');
       assert.equal(width(columnB), 250, 'col B has expected width before resize');
       assert.equal(width(columnC), 250, 'col C has expected width before resize');
       assert.equal(width(columnD), 200, 'col D has expected width before resize');
-
-      await requestAnimationFrameSettled();
 
       // move the the resize handler between columns A & B 200px to the right
       // increasing the width of column A and decreasing the width of columns
@@ -331,7 +331,7 @@ module('Plugins | resizing', function (hooks) {
 
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnResizing": {
+          "column-resizing": {
             "columns": {
               "A": {
                 "width": "500"
@@ -344,6 +344,89 @@ module('Plugins | resizing', function (hooks) {
               },
               "D": {
                 "width": "200"
+              },
+            },
+            "table": {}
+          }
+        }
+      }, 'column widths saved in preferences');
+    });
+  });
+
+  module('with a preferences adapter and no previously saved preferences', function (hooks) {
+    let preferences: null | PreferencesData = {};
+
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => [] as unknown[],
+        plugins: [ColumnResizing],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => ({})
+          }
+        }
+      });
+    }
+
+    hooks.beforeEach(function () {
+      preferences = null;
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+    });
+
+    test('it resizes each column and persists the new widths in the preferences', async function (assert) {
+      ctx.setContainerWidth(1000);
+      await render(
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      )
+
+      const [columnA, columnB, columnC, columnD] = getColumns();
+
+      debugAssert(`columnA doesn't exist`, columnA);
+      debugAssert(`columnB doesn't exist`, columnB);
+      debugAssert(`columnC doesn't exist`, columnC);
+      debugAssert(`columnD doesn't exist`, columnD);
+
+      await requestAnimationFrameSettled();
+
+      // Columns all have the same default width since there are no previusly saved preferences to restore
+      assert.equal(width(columnA), 250, 'col A has expected width before resize');
+      assert.equal(width(columnB), 250, 'col B has expected width before resize');
+      assert.equal(width(columnC), 250, 'col C has expected width before resize');
+      assert.equal(width(columnD), 250, 'col D has expected width before resize');
+
+      // move the the resize handler between columns A & B 200px to the right
+      // increasing the width of column A and decreasing the width of columns
+      // to the right , while respecting the min width (128px)
+      await dragRight(columnB, 200);
+
+      assert.equal(width(columnA), 450, 'col A has expected width after resize');
+      assert.equal(width(columnB), 128, 'col B has expected width after resize');
+      assert.equal(width(columnC), 172, 'col C has expected width after resize');
+      assert.equal(width(columnD), 250, 'col D has expected width after resize');
+
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "column-resizing": {
+            "columns": {
+              "A": {
+                "width": "450"
+              },
+              "B": {
+                "width": "128"
+              },
+              "C": {
+                "width": "172"
+              },
+              "D": {
+                "width": "250"
               },
             },
             "table": {}

@@ -403,7 +403,7 @@ module('Plugins | columnVisibility', function (hooks) {
             restore: (key: string) => {
               return {
                 "plugins": {
-                  "ColumnVisibility": {
+                  "column-visibility": {
                     "columns": {
                       "A": {},
                       "B":{ "isVisible": false },
@@ -452,7 +452,7 @@ module('Plugins | columnVisibility', function (hooks) {
     assert.dom(`th.C`).exists('column C visible after preferences reset');
     assert.deepEqual(preferences, {
       "plugins": {
-        "ColumnVisibility": {
+        "column-visibility": {
           "columns": {
             "A": {},
             "B": {},

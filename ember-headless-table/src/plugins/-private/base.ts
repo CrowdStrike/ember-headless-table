@@ -158,7 +158,7 @@ export const preferences = {
        */
       delete(key: string) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         columnPrefs.delete(key);
@@ -170,7 +170,7 @@ export const preferences = {
        */
       get(key: string) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         return columnPrefs.get(key);
@@ -180,7 +180,7 @@ export const preferences = {
        */
       set(key: string, value: unknown) {
         let prefs = column.table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
         let columnPrefs = existing.forColumn(column.key);
 
         columnPrefs.set(key, value);
@@ -206,7 +206,7 @@ export const preferences = {
 
         for (let column of table.columns) {
           let prefs = column.table.preferences;
-          let existing = prefs.storage.forPlugin(klass.name);
+          let existing = prefs.storage.forPlugin(klass);
           let columnPrefs = existing.forColumn(column.key);
 
           columnPrefs.delete(key);
@@ -234,7 +234,7 @@ export const preferences = {
        */
       delete(key: string) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         existing.table.delete(key);
 
@@ -245,7 +245,7 @@ export const preferences = {
        */
       get(key: string) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         return existing.table.get(key);
       },
@@ -254,7 +254,7 @@ export const preferences = {
        */
       set(key: string, value: unknown) {
         let prefs = table.preferences;
-        let existing = prefs.storage.forPlugin(klass.name);
+        let existing = prefs.storage.forPlugin(klass);
 
         existing.table.set(key, value);
 
@@ -289,7 +289,6 @@ function columnsFor<DataType = any>(
 
   let visibility = findPlugin(table.plugins, 'columnVisibility');
   let reordering = findPlugin(table.plugins, 'columnOrder');
-  let sizing = findPlugin(table.plugins, 'columnResizing');
 
   // TODO: actually resolve the graph, rather than use the hardcoded feature names
   //       atm, this only "happens" to work based on expectations of
@@ -301,10 +300,6 @@ function columnsFor<DataType = any>(
         `is not used in this table`,
       table.plugins.some((plugin) => plugin instanceof (requester as Class<Plugin>))
     );
-
-    if (sizing && sizing.constructor === requester) {
-      return table.columns.values();
-    }
 
     if (visibility && visibility.constructor === requester) {
       return table.columns.values();
@@ -341,15 +336,6 @@ function columnsFor<DataType = any>(
       return visibility.columns;
     }
 
-    if (sizing) {
-      assert(
-        `<#${sizing.name}> defined a 'columns' property, but did not return valid data.`,
-        sizing.columns && Array.isArray(sizing.columns)
-      );
-
-      return sizing.columns;
-    }
-
     return table.columns.values();
   }
 
@@ -373,15 +359,6 @@ function columnsFor<DataType = any>(
     );
 
     return visibility.columns;
-  }
-
-  if (sizing) {
-    assert(
-      `<#${sizing.name}> defined a 'columns' property, but did not return valid data.`,
-      sizing.columns && Array.isArray(sizing.columns)
-    );
-
-    return sizing.columns;
   }
 
   return table.columns.values();

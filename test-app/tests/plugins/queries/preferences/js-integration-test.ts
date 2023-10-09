@@ -62,7 +62,7 @@ module('Plugins | Queries | preferences', function (hooks) {
 
             return {
               plugins: {
-                Sorting: {
+                'data-sorting': {
                   columns: {},
                   table: {
                     'some-key': 2,
@@ -130,7 +130,7 @@ module('Plugins | Queries | preferences', function (hooks) {
 
             return {
               plugins: {
-                Sorting: {
+                'data-sorting': {
                   columns: {
                     'the-column-key': {
                       'some-preference': 2,
@@ -147,7 +147,7 @@ module('Plugins | Queries | preferences', function (hooks) {
           table.preferences.storage.serialize(),
           {
             plugins: {
-              Sorting: {
+              'data-sorting': {
                 columns: {
                   'the-column-key': {
                     'some-preference': 2,
@@ -176,7 +176,7 @@ module('Plugins | Queries | preferences', function (hooks) {
           preferencesData,
           {
             plugins: {
-              Sorting: {
+              'data-sorting': {
                 columns: {
                   'the-column-key': {
                     'some-preference': 4,
@@ -202,7 +202,7 @@ module('Plugins | Queries | preferences', function (hooks) {
           preferencesData,
           {
             plugins: {
-              Sorting: {
+              'data-sorting': {
                 columns: {
                   'the-column-key': {
                     'some-key': 3,
@@ -257,7 +257,7 @@ module('Plugins | Queries | preferences', function (hooks) {
           preferencesData,
           {
             plugins: {
-              Sorting: {
+              'data-sorting': {
                 columns: {
                   'the-column-key': {
                     'some-preference': 4,

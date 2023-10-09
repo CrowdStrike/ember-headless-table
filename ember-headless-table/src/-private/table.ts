@@ -131,15 +131,12 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
    * These are all no-use, no-cost utilities
    */
   modifiers = {
-    container: modifier(
-      (element: HTMLElement): Destructor => {
-        let modifiers = this.plugins.map((plugin) => plugin.containerModifier);
-        let composed = composeFunctionModifiers([attachContainer, ...modifiers]);
+    container: modifier((element: HTMLElement): Destructor => {
+      let modifiers = this.plugins.map((plugin) => plugin.containerModifier);
+      let composed = composeFunctionModifiers([attachContainer, ...modifiers]);
 
-        return composed(element, this);
-      },
-      { eager: false }
-    ),
+      return composed(element, this);
+    }),
 
     // resize: ResizeModifier,
     // TODO: switch to composing real modifiers once "curry" and "compose"
@@ -150,25 +147,19 @@ export class Table<DataType = unknown> extends Resource<Signature<DataType>> {
     //
     //       With curried+composed modifiers, only the plugin's headerModifier
     //       that has tracked changes would run, leaving the other modifiers alone
-    columnHeader: modifier(
-      (element: HTMLElement, [column]: [Column<DataType>]): Destructor => {
-        let modifiers = this.plugins.map((plugin) => plugin.headerCellModifier);
-        let composed = composeFunctionModifiers(modifiers);
+    columnHeader: modifier((element: HTMLElement, [column]: [Column<DataType>]): Destructor => {
+      let modifiers = this.plugins.map((plugin) => plugin.headerCellModifier);
+      let composed = composeFunctionModifiers(modifiers);
 
-        return composed(element, { column, table: this });
-      },
-      { eager: false }
-    ),
+      return composed(element, { column, table: this });
+    }),
 
-    row: modifier(
-      (element: HTMLElement, [row]: [Row<DataType>]): Destructor => {
-        let modifiers = this.plugins.map((plugin) => plugin.rowModifier);
-        let composed = composeFunctionModifiers(modifiers);
+    row: modifier((element: HTMLElement, [row]: [Row<DataType>]): Destructor => {
+      let modifiers = this.plugins.map((plugin) => plugin.rowModifier);
+      let composed = composeFunctionModifiers(modifiers);
 
-        return composed(element, { row, table: this });
-      },
-      { eager: false }
-    ),
+      return composed(element, { row, table: this });
+    }),
   };
 
   /**

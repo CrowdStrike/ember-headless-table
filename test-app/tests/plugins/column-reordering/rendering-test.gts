@@ -366,7 +366,7 @@ module('Plugins | columnReordering', function (hooks) {
     });
   });
 
-  module('with a preferences adapter', function (hooks) {
+  module('with a preferences adapter and previously saved preferences', function (hooks) {
     let preferences: null | PreferencesData = {};
 
     class DefaultOptions extends Context {
@@ -383,7 +383,7 @@ module('Plugins | columnReordering', function (hooks) {
             restore: (key: string) => {
               return {
                 "plugins": {
-                  "ColumnReordering": {
+                  "column-reordering": {
                     "columns": {},
                     "table": {
                       "order": {
@@ -432,11 +432,11 @@ module('Plugins | columnReordering', function (hooks) {
       assert.strictEqual(getColumnOrder(), 'A B C D');
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             columns: {},
             table: {},
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
@@ -459,7 +459,7 @@ module('Plugins | columnReordering', function (hooks) {
 
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             "columns": {},
             "table": {
               "order": {
@@ -470,7 +470,7 @@ module('Plugins | columnReordering', function (hooks) {
               }
             }
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
@@ -507,7 +507,7 @@ module('Plugins | columnReordering', function (hooks) {
 
       assert.deepEqual(preferences, {
         "plugins": {
-          "ColumnReordering": {
+          "column-reordering": {
             "columns": {},
             "table": {
               "order": {
@@ -518,7 +518,7 @@ module('Plugins | columnReordering', function (hooks) {
               }
             }
           },
-          "ColumnVisibility": {
+          "column-visibility": {
             "columns": {
               "A": {},
               "B": {},
@@ -532,4 +532,85 @@ module('Plugins | columnReordering', function (hooks) {
     });
   });
 
+  module('with a preferences adapter and no previously saved preferences', function (hooks) {
+    let preferences: null | PreferencesData = {};
+
+    class DefaultOptions extends Context {
+      table = headlessTable(this, {
+        columns: () => this.columns,
+        data: () => DATA,
+        plugins: [ColumnReordering, ColumnVisibility],
+        preferences: {
+          key: 'test-preferences',
+          adapter: {
+            persist: (_key: string, data: PreferencesData) => {
+              preferences = data;
+            },
+            restore: (key: string) => ({})
+          }
+        }
+      });
+    }
+
+    hooks.beforeEach(async function () {
+      preferences = null;
+      ctx = new DefaultOptions();
+      setOwner(ctx, this.owner);
+
+      await render(
+        // @ts-ignore
+        <template>
+          <TestComponentA @ctx={{ctx}} />
+        </template>
+      );
+    });
+
+    test('changing column order with `set all` updates preferences', async function (assert) {
+      assert.strictEqual(getColumnOrder(), 'A B C D', 'pre-test setup');
+
+      let order = new ColumnOrder({
+        columns: () =>
+          [
+            { key: 'D' },
+            { key: 'C' },
+            { key: 'B' },
+            { key: 'A' },
+          ] as Column[],
+        existingOrder: new Map([
+          ['A', 3],
+          ['B', 2],
+          ['C', 1],
+          ['D', 0],
+        ]),
+      });
+
+      // @ts-expect-error
+      setColumnOrder(ctx.table, order);
+
+      assert.deepEqual(preferences, {
+        "plugins": {
+          "column-reordering": {
+            "columns": {},
+            "table": {
+              "order": {
+                "A": 3,
+                "B": 2,
+                "C": 1,
+                "D": 0
+              }
+            }
+          },
+          "column-visibility": {
+            "columns": {
+              "A": {},
+              "B": {},
+              "C": {},
+              "D": {}
+            },
+            "table": {}
+          }
+        }
+      });
+    });
+  });
 });
