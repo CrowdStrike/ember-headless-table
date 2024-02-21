@@ -15,12 +15,14 @@ import type { Column } from '[public-types]';
  * be marked as isResizing, because this is a user-scoped question:
  *   "Is the user directly resizing this column?"
  */
-export const isResizing = <DataType = unknown>(column: Column<DataType>) => meta.forColumn(column, ColumnResizing).isResizing;
+export const isResizing = <DataType = unknown>(column: Column<DataType>) => 
+  meta.forColumn(column, ColumnResizing).isResizing;
 
 /**
  * Does the column have room to shrink?
  */
-export const canShrink = <DataType = unknown>(column: Column<DataType>) => meta.forColumn(column, ColumnResizing).canShrink;
+export const canShrink = <DataType = unknown>(column: Column<DataType>) => 
+  meta.forColumn(column, ColumnResizing).canShrink;
 
 /**
  * Does the column have a resize handle?
