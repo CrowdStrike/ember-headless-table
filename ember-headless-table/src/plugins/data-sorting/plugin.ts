@@ -22,8 +22,8 @@ declare module 'ember-headless-table/plugins' {
 
 export interface Signature<DataType = unknown> {
   Meta: {
-    Column: ColumnMeta;
-    Table: TableMeta;
+    Column: ColumnMeta<DataType>;
+    Table: TableMeta<DataType>;
   };
   Options: {
     Plugin: Options<DataType>;
@@ -92,8 +92,8 @@ export class Sorting<DataType = unknown> extends BasePlugin<Signature<DataType>>
   };
 }
 
-export class ColumnMeta {
-  constructor(private column: Column) {}
+export class ColumnMeta<DataType = unknown> {
+  constructor(private column: Column<DataType>) {}
 
   @cached
   get options() {
