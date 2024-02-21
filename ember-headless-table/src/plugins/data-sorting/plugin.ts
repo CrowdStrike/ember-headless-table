@@ -131,7 +131,7 @@ export class ColumnMeta {
   }
 }
 
-export class TTableMeta<DataType = unknown> {
+export class TableMeta<DataType = unknown> {
   constructor(private table: Table<DataType>) {}
 
   @cached
