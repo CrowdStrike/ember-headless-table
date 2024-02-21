@@ -24,9 +24,9 @@ let waiter = buildWaiter('ColumnResizing#ResizeHandle');
  *
  */
 
-class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
+class ResizeHandle<T> extends Modifier<{ Args: { Positional: [Column<T>] } }> {
   declare dragHandle: HTMLElement;
-  declare column: Column;
+  declare column: Column<T>;
   declare meta: ColumnMeta;
 
   // Pointer
@@ -45,7 +45,7 @@ class ResizeHandle extends Modifier<{ Args: { Positional: [Column] } }> {
   token?: unknown;
 
   isSetup = false;
-  modify(element: Element, [column]: [Column]) {
+  modify(element: Element, [column]: [Column<T>]) {
     this.column = column;
     this.meta = meta.forColumn(column, ColumnResizing);
     this.dragHandle = element as HTMLElement;
