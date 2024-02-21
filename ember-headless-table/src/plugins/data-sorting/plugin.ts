@@ -131,8 +131,8 @@ export class ColumnMeta {
   }
 }
 
-export class TableMeta {
-  constructor(private table: Table) {}
+export class TTableMeta<DataType = unknown> {
+  constructor(private table: Table<DataType>) {}
 
   @cached
   get options() {
@@ -152,7 +152,7 @@ export class TableMeta {
   }
 
   @action
-  handleSort(column: Column) {
+  handleSort(column: Column<DataType>) {
     let columnMeta = meta.forColumn(column, Sorting);
 
     if (!columnMeta.sortProperty) {
@@ -169,7 +169,7 @@ export class TableMeta {
   }
 
   @action
-  toggleAscending(column: Column) {
+  toggleAscending(column: Column<DataType>) {
     let columnMeta = meta.forColumn(column, Sorting);
 
     if (!columnMeta.sortProperty) {
