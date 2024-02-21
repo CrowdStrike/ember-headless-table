@@ -40,11 +40,11 @@ export const sort = (column: Column) => meta.forTable(column.table, Sorting).han
 /**
  * Toggle a column between descending and not unsorted states
  */
-export const sortDescending = <DataType = unknown>(column: Column<DataType>) =>
+export const sortDescending = (column: Column) =>
   meta.forTable(column.table, Sorting).toggleDescending(column);
 
 /**
  * Toggle a column between ascending and not unsorted states
  */
-export const sortAscending = <DataType = unknown>(column: Column<DataType>) =>
+export const sortAscending = (column: Column) =>
   meta.forTable(column.table, Sorting).toggleAscending(column);
