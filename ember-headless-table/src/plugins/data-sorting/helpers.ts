@@ -6,31 +6,31 @@ import type { Column } from '[public-types]';
 /**
  * Query a specific column's current sort direction
  */
-export const sortDirection = <DataType = unknown>(column: Column<DataType>) => 
+export const sortDirection = <DataType = unknown>(column: Column<DataType>) =>
   meta.forColumn(column, Sorting).sortDirection;
 
 /**
  * Ask if a column is sortable
  */
-export const isSortable = <DataType = unknown>(column: Column<DataType>) => 
+export const isSortable = <DataType = unknown>(column: Column<DataType>) =>
   meta.forColumn(column, Sorting).isSortable;
 
 /**
  * Ask if a column is ascending
  */
-export const isAscending = <DataType = unknown>(column: Column<DataType>) => 
+export const isAscending = <DataType = unknown>(column: Column<DataType>) =>
   meta.forColumn(column, Sorting).isAscending;
 
 /**
  * Ask if a column is sorted descending
  */
-export const isDescending = <DataType = unknown>(column: Column<DataType>) => 
+export const isDescending = <DataType = unknown>(column: Column<DataType>) =>
   meta.forColumn(column, Sorting).isDescending;
 
 /**
  * Ask if a column is not sorted
  */
-export const isUnsorted = <DataType = unknown>(column: Column<DataType>) => 
+export const isUnsorted = <DataType = unknown>(column: Column<DataType>) =>
   meta.forColumn(column, Sorting).isUnsorted;
 
 /**
