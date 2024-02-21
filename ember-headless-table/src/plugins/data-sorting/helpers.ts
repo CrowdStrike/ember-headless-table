@@ -35,7 +35,7 @@ export const isUnsorted = <DataType = unknown>(column: Column<DataType>) => meta
  *   Ascending => None => Descending
  *    ⬑ ---------- <= ---------- ↲
  */
-export const sort = <DataType = unknown>(column: Column<DataType>) => meta.forTable(column.table, Sorting).handleSort(column);
+export const sort = (column: Column) => meta.forTable(column.table, Sorting).handleSort(column);
 
 /**
  * Toggle a column between descending and not unsorted states
