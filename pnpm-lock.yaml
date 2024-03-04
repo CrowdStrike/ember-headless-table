@@ -100,10 +100,10 @@ importers:
         version: 7.21.3(@babel/core@7.22.5)(eslint@7.32.0)
       '@crowdstrike/ember-toucan-styles':
         specifier: ^2.0.0
-        version: 2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(postcss@8.4.31)(tailwindcss@3.3.2)
+        version: 2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.18)(ember-source@4.12.0)(postcss@8.4.31)(tailwindcss@3.3.2)
       '@crowdstrike/tailwind-toucan-base':
         specifier: ^4.0.0
-        version: 4.0.0(autoprefixer@10.4.14)(postcss@8.4.31)
+        version: 4.0.0(autoprefixer@10.4.18)(postcss@8.4.31)
       '@docfy/core':
         specifier: ^0.8.0
         version: 0.8.0
@@ -232,7 +232,7 @@ importers:
         version: 4.0.4
       autoprefixer:
         specifier: ^10.4.14
-        version: 10.4.14(postcss@8.4.31)
+        version: 10.4.18(postcss@8.4.31)
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3446,7 +3446,7 @@ packages:
       highlightjs-glimmer: ^1.4.1 || ^2.0.0
     dependencies:
       '@babel/runtime': 7.21.0
-      '@crowdstrike/tailwind-toucan-base': 4.0.0(autoprefixer@10.4.14)(postcss@8.4.31)
+      '@crowdstrike/tailwind-toucan-base': 4.0.0(autoprefixer@10.4.18)(postcss@8.4.31)
       '@docfy/core': 0.8.0
       '@docfy/ember': 0.8.5(@babel/core@7.22.5)
       '@embroider/addon-shim': 1.8.4
@@ -3467,14 +3467,14 @@ packages:
       - supports-color
     dev: false
 
-  /@crowdstrike/ember-toucan-styles@2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.14)(ember-source@4.12.0)(postcss@8.4.31)(tailwindcss@3.3.2):
+  /@crowdstrike/ember-toucan-styles@2.0.0(@glimmer/tracking@1.1.2)(autoprefixer@10.4.18)(ember-source@4.12.0)(postcss@8.4.31)(tailwindcss@3.3.2):
     resolution: {integrity: sha512-mOHsNEW63FhCR2+c1Fdp4vOqv6HYRtfU85aZlLc82NhkTguz6NSS5DwYelhfDIxLERm5iktxBmBOyiXGHkk0Mg==}
     peerDependencies:
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.24.0 || >= 4.0.0
       tailwindcss: ^2.2.15 || ^3.0.0
     dependencies:
-      '@crowdstrike/tailwind-toucan-base': 3.5.1(autoprefixer@10.4.14)(postcss@8.4.31)
+      '@crowdstrike/tailwind-toucan-base': 3.5.1(autoprefixer@10.4.18)(postcss@8.4.31)
       '@embroider/addon-shim': 1.8.4
       '@glimmer/tracking': 1.1.2
       ember-browser-services: 4.0.4
@@ -3487,22 +3487,22 @@ packages:
       - ts-node
     dev: true
 
-  /@crowdstrike/tailwind-toucan-base@3.5.1(autoprefixer@10.4.14)(postcss@8.4.31):
+  /@crowdstrike/tailwind-toucan-base@3.5.1(autoprefixer@10.4.18)(postcss@8.4.31):
     resolution: {integrity: sha512-6NiYi5TKxxhVdiX/Jj8X8OguJuNlVEswNgclqZejN5vxvUGjDw+OLIq5GffDxVOxl3pV0yKFMhx+SoQ8xGg0sQ==}
     engines: {node: '>=14.15.0'}
     dependencies:
-      tailwindcss: 2.2.19(autoprefixer@10.4.14)(postcss@8.4.31)
+      tailwindcss: 2.2.19(autoprefixer@10.4.18)(postcss@8.4.31)
     transitivePeerDependencies:
       - autoprefixer
       - postcss
       - ts-node
     dev: true
 
-  /@crowdstrike/tailwind-toucan-base@4.0.0(autoprefixer@10.4.14)(postcss@8.4.31):
+  /@crowdstrike/tailwind-toucan-base@4.0.0(autoprefixer@10.4.18)(postcss@8.4.31):
     resolution: {integrity: sha512-0JfJohOwLz9BapX9B7ivJ3F5E7XSnOXxc7royjvIAyziffLMrlcoRvx84ncXz/y/DBihzZG8jxHdQWL+kVxnyw==}
     engines: {node: '>=14.15.0'}
     dependencies:
-      tailwindcss: 2.2.19(autoprefixer@10.4.14)(postcss@8.4.31)
+      tailwindcss: 2.2.19(autoprefixer@10.4.18)(postcss@8.4.31)
     transitivePeerDependencies:
       - autoprefixer
       - postcss
@@ -5964,16 +5964,16 @@ packages:
     hasBin: true
     dev: true
 
-  /autoprefixer@10.4.14(postcss@8.4.31):
-    resolution: {integrity: sha512-FQzyfOsTlwVzjHxKEqRIAdJx9niO6VCBCoEwax/VLSoQF29ggECcPuBqUMZ+u8jCZOPSy8b8/8KnuFbp0SaFZQ==}
+  /autoprefixer@10.4.18(postcss@8.4.31):
+    resolution: {integrity: sha512-1DKbDfsr6KUElM6wg+0zRNkB/Q7WcKYAaK+pzXn+Xqmszm/5Xa9coeNdtP88Vi+dPzZnMjhge8GIV49ZQkDa+g==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      browserslist: 4.21.5
-      caniuse-lite: 1.0.30001480
-      fraction.js: 4.2.0
+      browserslist: 4.23.0
+      caniuse-lite: 1.0.30001593
+      fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss: 8.4.31
@@ -7427,8 +7427,8 @@ packages:
     resolution: {integrity: sha512-WHVocJYavUwVgVViC0ORikPHQquXwVh939TaelZ4WDqpWgTX/FsGhl/+P4qBUAGcRvtOgDgC+xftNWWp2RUTAQ==}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001589
-      electron-to-chromium: 1.4.681
+      caniuse-lite: 1.0.30001593
+      electron-to-chromium: 1.4.690
     dev: true
 
   /browserslist@4.21.5:
@@ -7446,8 +7446,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001589
-      electron-to-chromium: 1.4.681
+      caniuse-lite: 1.0.30001593
+      electron-to-chromium: 1.4.690
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
@@ -7574,8 +7574,8 @@ packages:
   /caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
-      browserslist: 4.21.5
-      caniuse-lite: 1.0.30001480
+      browserslist: 4.23.0
+      caniuse-lite: 1.0.30001593
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
@@ -7583,8 +7583,8 @@ packages:
   /caniuse-lite@1.0.30001480:
     resolution: {integrity: sha512-q7cpoPPvZYgtyC4VaBSN0Bt+PJ4c4EYRf0DrduInOz2SkFpHD5p3LnvEpqBp7UnJn+8x1Ogl1s38saUxe+ihQQ==}
 
-  /caniuse-lite@1.0.30001589:
-    resolution: {integrity: sha512-vNQWS6kI+q6sBlHbh71IIeC+sRwK2N3EDySc/updIGhIee2x5z00J4c1242/5/d6EpEMdOnk/m+6tuk4/tcsqg==}
+  /caniuse-lite@1.0.30001593:
+    resolution: {integrity: sha512-UWM1zlo3cZfkpBysd7AS+z+v007q9G1+fLTUU42rQnY6t2axoogPW/xol6T7juU5EUoOhML4WgBIdG+9yYqAjQ==}
 
   /capture-exit@2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
@@ -8198,7 +8198,7 @@ packages:
   /core-js-compat@3.30.1:
     resolution: {integrity: sha512-d690npR7MC6P0gq4npTl5n2VQeNAmUrJ90n+MHiKS7W2+xno4o3F5GDEuylSdi6EJ3VssibSGXOa1r3YXD3Mhw==}
     dependencies:
-      browserslist: 4.23.0
+      browserslist: 4.21.5
 
   /core-js-compat@3.36.0:
     resolution: {integrity: sha512-iV9Pd/PsgjNWBXeq8XRtWVSgz2tKAfhfvBs7qxYty+RlRd+OCksaWmOnc4JKrTc1cToXL1N0s3l/vwlxPtdElw==}
@@ -8872,8 +8872,8 @@ packages:
   /electron-to-chromium@1.4.368:
     resolution: {integrity: sha512-e2aeCAixCj9M7nJxdB/wDjO6mbYX+lJJxSJCXDzlr5YPGYVofuJwGN9nKg2o6wWInjX6XmxRinn3AeJMK81ltw==}
 
-  /electron-to-chromium@1.4.681:
-    resolution: {integrity: sha512-1PpuqJUFWoXZ1E54m8bsLPVYwIVCRzvaL+n5cjigGga4z854abDnFRc+cTa2th4S79kyGqya/1xoR7h+Y5G5lg==}
+  /electron-to-chromium@1.4.690:
+    resolution: {integrity: sha512-+2OAGjUx68xElQhydpcbqH50hE8Vs2K6TkAeLhICYfndb67CVH0UsZaijmRUE3rHlIxU1u0jxwhgVe6fK3YANA==}
 
   /ember-auto-import@2.6.3(webpack@5.80.0):
     resolution: {integrity: sha512-uLhrRDJYWCRvQ4JQ1e64XlSrqAKSd6PXaJ9ZsZI6Tlms9T4DtQFxNXasqji2ZRJBVrxEoLCRYX3RTldsQ0vNGQ==}
@@ -11804,8 +11804,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /fraction.js@4.2.0:
-    resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
+  /fraction.js@4.3.7:
+    resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
   /fragment-cache@0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
@@ -17121,7 +17121,7 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss@2.2.19(autoprefixer@10.4.14)(postcss@8.4.31):
+  /tailwindcss@2.2.19(autoprefixer@10.4.18)(postcss@8.4.31):
     resolution: {integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -17130,7 +17130,7 @@ packages:
       postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
-      autoprefixer: 10.4.14(postcss@8.4.31)
+      autoprefixer: 10.4.18(postcss@8.4.31)
       bytes: 3.1.2
       chalk: 4.1.2
       chokidar: 3.5.3
