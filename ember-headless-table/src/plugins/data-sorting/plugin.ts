@@ -22,8 +22,8 @@ declare module 'ember-headless-table/plugins' {
 
 export interface Signature<DataType = unknown> {
   Meta: {
-    Column: ColumnMeta;
-    Table: TableMeta;
+    Column: ColumnMeta<DataType>;
+    Table: TableMeta<DataType>;
   };
   Options: {
     Plugin: Options<DataType>;
@@ -92,8 +92,8 @@ export class Sorting<DataType = unknown> extends BasePlugin<Signature<DataType>>
   };
 }
 
-export class ColumnMeta {
-  constructor(private column: Column) {}
+export class ColumnMeta<DataType = unknown> {
+  constructor(private column: Column<DataType>) {}
 
   @cached
   get options() {
@@ -131,8 +131,8 @@ export class ColumnMeta {
   }
 }
 
-export class TableMeta {
-  constructor(private table: Table) {}
+export class TableMeta<DataType = unknown> {
+  constructor(private table: Table<DataType>) {}
 
   @cached
   get options() {
@@ -152,7 +152,7 @@ export class TableMeta {
   }
 
   @action
-  handleSort(column: Column) {
+  handleSort(column: Column<DataType>) {
     let columnMeta = meta.forColumn(column, Sorting);
 
     if (!columnMeta.sortProperty) {
@@ -169,7 +169,7 @@ export class TableMeta {
   }
 
   @action
-  toggleAscending(column: Column) {
+  toggleAscending(column: Column<DataType>) {
     let columnMeta = meta.forColumn(column, Sorting);
 
     if (!columnMeta.sortProperty) {

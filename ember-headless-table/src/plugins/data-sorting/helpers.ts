@@ -6,27 +6,32 @@ import type { Column } from '[public-types]';
 /**
  * Query a specific column's current sort direction
  */
-export const sortDirection = (column: Column) => meta.forColumn(column, Sorting).sortDirection;
+export const sortDirection = <DataType = unknown>(column: Column<DataType>) =>
+  meta.forColumn(column, Sorting).sortDirection;
 
 /**
  * Ask if a column is sortable
  */
-export const isSortable = (column: Column) => meta.forColumn(column, Sorting).isSortable;
+export const isSortable = <DataType = unknown>(column: Column<DataType>) =>
+  meta.forColumn(column, Sorting).isSortable;
 
 /**
  * Ask if a column is ascending
  */
-export const isAscending = (column: Column) => meta.forColumn(column, Sorting).isAscending;
+export const isAscending = <DataType = unknown>(column: Column<DataType>) =>
+  meta.forColumn(column, Sorting).isAscending;
 
 /**
  * Ask if a column is sorted descending
  */
-export const isDescending = (column: Column) => meta.forColumn(column, Sorting).isDescending;
+export const isDescending = <DataType = unknown>(column: Column<DataType>) =>
+  meta.forColumn(column, Sorting).isDescending;
 
 /**
  * Ask if a column is not sorted
  */
-export const isUnsorted = (column: Column) => meta.forColumn(column, Sorting).isUnsorted;
+export const isUnsorted = <DataType = unknown>(column: Column<DataType>) =>
+  meta.forColumn(column, Sorting).isUnsorted;
 
 /**
  * Sort the specified column's data using a tri-toggle.
