@@ -461,7 +461,7 @@ importers:
         version: 4.21.5
       caniuse-lite:
         specifier: ^1.0.30001420
-        version: 1.0.30001599
+        version: 1.0.30001600
       concurrently:
         specifier: ^8.0.0
         version: 8.0.0
@@ -7416,7 +7416,7 @@ packages:
       '@types/semver': 7.3.13
       '@types/ua-parser-js': 0.7.36
       browserslist: 4.21.5
-      caniuse-lite: 1.0.30001599
+      caniuse-lite: 1.0.30001600
       isbot: 3.6.8
       object-path: 0.11.8
       semver: 7.5.1
@@ -7436,7 +7436,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001599
+      caniuse-lite: 1.0.30001600
       electron-to-chromium: 1.4.368
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
@@ -7579,9 +7579,6 @@ packages:
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
-
-  /caniuse-lite@1.0.30001599:
-    resolution: {integrity: sha512-LRAQHZ4yT1+f9LemSMeqdMpMxZcc4RMWdj4tiFe3G8tNkWK+E58g+/tzotb5cU6TbcVJLr4fySiAW7XmxQvZQA==}
 
   /caniuse-lite@1.0.30001600:
     resolution: {integrity: sha512-+2S9/2JFhYmYaDpZvo0lKkfvuKIglrx68MwOBqMGHhQsNkLjB5xtc/TGoEPs+MxjSyN/72qer2g97nzR641mOQ==}
