@@ -11,21 +11,28 @@ module('Plugin | column-reordering | ColumnOrder', function () {
     let order: ColumnOrder;
 
     hooks.beforeEach(function (assert) {
+      const COLUMNS = [
+        { key: 'A' },
+        { key: 'B' },
+        { key: 'C' },
+        { key: 'D' },
+        { key: 'E' },
+        { key: 'F' },
+        /**
+         * This cast is a lie, but a useful one, as these #set
+         * tests don't actually care about the Column structure
+         * of this data -- only that a key exists
+         */
+      ] as Column[];
+
       order = new ColumnOrder({
-        columns: () =>
-          [
-            { key: 'A' },
-            { key: 'B' },
-            { key: 'C' },
-            { key: 'D' },
-            { key: 'E' },
-            { key: 'F' },
-            /**
-             * This cast is a lie, but a useful one, as these #set
-             * tests don't actually care about the Column structure
-             * of this data -- only that a key exists
-             */
-          ] as Column[],
+        allColumns: () => COLUMNS,
+        availableColumns: () =>
+          COLUMNS.reduce<Record<string, boolean>>((acc, c) => {
+            acc[c.key] = true;
+
+            return acc;
+          }, {}),
       });
 
       assert.deepEqual(
@@ -73,21 +80,28 @@ module('Plugin | column-reordering | ColumnOrder', function () {
     let order: ColumnOrder;
 
     hooks.beforeEach(function (assert) {
+      const COLUMNS = [
+        { key: 'A' },
+        { key: 'B' },
+        { key: 'C' },
+        { key: 'D' },
+        { key: 'E' },
+        { key: 'F' },
+        /**
+         * This cast is a lie, but a useful one, as these #set
+         * tests don't actually care about the Column structure
+         * of this data -- only that a key exists
+         */
+      ] as Column[];
+
       order = new ColumnOrder({
-        columns: () =>
-          [
-            { key: 'A' },
-            { key: 'B' },
-            { key: 'C' },
-            { key: 'D' },
-            { key: 'E' },
-            { key: 'F' },
-            /**
-             * This cast is a lie, but a useful one, as these #set
-             * tests don't actually care about the Column structure
-             * of this data -- only that a key exists
-             */
-          ] as Column[],
+        allColumns: () => COLUMNS,
+        availableColumns: () =>
+          COLUMNS.reduce<Record<string, boolean>>((acc, c) => {
+            acc[c.key] = true;
+
+            return acc;
+          }, {}),
       });
 
       assert.deepEqual(
@@ -135,22 +149,29 @@ module('Plugin | column-reordering | ColumnOrder', function () {
     let order: ColumnOrder;
 
     hooks.beforeEach(function (assert) {
+      const COLUMNS = [
+        { key: 'A' },
+        { key: 'B' },
+        { key: 'C' },
+        { key: 'D' },
+        { key: 'E' },
+        { key: 'F' },
+        /**
+         * This cast is a lie, but a useful one, as these #set
+         * tests don't actually care about the Column structure
+         * of this data -- only that a key exists
+         */
+      ] as Column[];
+
       order = new ColumnOrder({
+        allColumns: () => COLUMNS,
+        availableColumns: () =>
+          COLUMNS.reduce<Record<string, boolean>>((acc, c) => {
+            acc[c.key] = true;
+
+            return acc;
+          }, {}),
         save: () => {},
-        columns: () =>
-          [
-            { key: 'A' },
-            { key: 'B' },
-            { key: 'C' },
-            { key: 'D' },
-            { key: 'E' },
-            { key: 'F' },
-            /**
-             * This cast is a lie, but a useful one, as these #set
-             * tests don't actually care about the Column structure
-             * of this data -- only that a key exists
-             */
-          ] as Column[],
       });
 
       assert.deepEqual(
@@ -198,22 +219,29 @@ module('Plugin | column-reordering | ColumnOrder', function () {
     let order: ColumnOrder;
 
     hooks.beforeEach(function (assert) {
+      const COLUMNS = [
+        { key: 'A' },
+        { key: 'B' },
+        { key: 'C' },
+        { key: 'D' },
+        { key: 'E' },
+        { key: 'F' },
+        /**
+         * This cast is a lie, but a useful one, as these #set
+         * tests don't actually care about the Column structure
+         * of this data -- only that a key exists
+         */
+      ] as Column[];
+
       order = new ColumnOrder({
+        allColumns: () => COLUMNS,
+        availableColumns: () =>
+          COLUMNS.reduce<Record<string, boolean>>((acc, c) => {
+            acc[c.key] = true;
+
+            return acc;
+          }, {}),
         save: () => {},
-        columns: () =>
-          [
-            { key: 'A' },
-            { key: 'B' },
-            { key: 'C' },
-            { key: 'D' },
-            { key: 'E' },
-            { key: 'F' },
-            /**
-             * This cast is a lie, but a useful one, as these #set
-             * tests don't actually care about the Column structure
-             * of this data -- only that a key exists
-             */
-          ] as Column[],
       });
 
       assert.deepEqual(
