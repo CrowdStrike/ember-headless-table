@@ -153,8 +153,8 @@ importers:
         specifier: ^0.5.9
         version: 0.5.13(tailwindcss@3.3.2)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.8
       '@types/dompurify':
         specifier: ^3.0.0
         version: 3.0.0
@@ -427,8 +427,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.4(@babel/core@7.21.4)(rollup@3.20.6)
       '@tsconfig/ember':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^3.0.0
+        version: 3.0.8
       '@types/ember__application':
         specifier: ^4.0.1
         version: 4.0.5(@babel/core@7.21.4)
@@ -593,8 +593,8 @@ importers:
         specifier: ~2.3.0
         version: 2.3.0(@babel/eslint-parser@7.21.3)(typescript@4.9.5)
       '@tsconfig/ember':
-        specifier: ^1.0.1
-        version: 1.1.0
+        specifier: ^3.0.0
+        version: 3.0.8
       '@types/babel__traverse':
         specifier: ^7.18.2
         version: 7.18.3
@@ -4935,12 +4935,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /@tsconfig/ember@1.1.0:
-    resolution: {integrity: sha512-VzIrPO7ZpnIEmU+dJe3ubEPhxUIyavwIh2vxg8rXrwSnB99hdVcq0ZFPQ4KRP0LrSNzaPI1QA2sATIPwnBYPQg==}
-    dev: true
-
-  /@tsconfig/ember@2.0.0:
-    resolution: {integrity: sha512-RzbDYYcjxVdG8Ki0xe99HN3+nHTZe6EBgw6N7B3yup7QogVFQQxA9nY7X80j1XzF15xqetwWiYfAjv5lkkp0/A==}
+  /@tsconfig/ember@3.0.8:
+    resolution: {integrity: sha512-OVnIsZIt/8q0VEtcdz3rRryNrm6gdJTxXlxefkGIrkZnME0wqslmwHlUEZ7mvh377df9FqBhNKrYNarhCW8zJA==}
     dev: true
 
   /@types/acorn@4.0.6:
