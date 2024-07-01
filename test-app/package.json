@@ -109,7 +109,7 @@
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
     "sync-pnpm": "workspace:*",
-    "typescript": "^4.8.3",
+    "typescript": "^5.0.0",
     "webpack": "^5.74.0"
   },
   "engines": {
