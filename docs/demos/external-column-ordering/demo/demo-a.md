@@ -54,7 +54,11 @@ export default class extends Component {
 
   changeColumnOrder = () => {
     this.pendingColumnOrder = new ColumnOrder({
-      columns: () => this.columns,
+      allColumns: () => this.columns,
+      availableColumns: () => this.columns.reduce(function(acc, col) {
+        acc[col.key] = true;
+        return acc;
+      }, {}),
     });
   }
 
