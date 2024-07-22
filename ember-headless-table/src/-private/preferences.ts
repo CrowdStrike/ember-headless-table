@@ -63,6 +63,9 @@ class TrackedPreferences {
     return [...this.plugins.values()].every((pluginPrefs) => pluginPrefs.isAtDefault);
   }
 
+  /**
+   * @param {string} name - this needs to be provided as klass.name, eg ColumnResizing.name
+   */
   forPlugin(name: string) {
     let existing = this.plugins.get(name);
 
