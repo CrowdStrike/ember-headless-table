@@ -6,8 +6,8 @@ import { guidFor } from '@ember/object/internals';
 
 import { isDevelopingApp, macroCondition } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
-import { Resource } from 'ember-resources/core';
-import { map } from 'ember-resources/util/map';
+import { Resource } from 'ember-modify-based-class-resource';
+import { map } from 'reactiveweb/map';
 
 import { normalizePluginsConfig, verifyPlugins } from '../plugins/-private/utils';
 import { Column } from './column';
