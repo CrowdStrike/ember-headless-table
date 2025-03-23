@@ -1,3 +1,14 @@
+# ⚠️ Deprecated
+
+The code for ember-headless-table has been copied to `@universal-ember/table` and improved there:
+
+GitHub: https://github.com/universal-ember/table/
+Docs: https://ue-table.pages.dev/
+
+---------------------------------------
+
+
+
 [![npm version](https://badge.fury.io/js/ember-headless-table.svg)](https://badge.fury.io/js/ember-headless-table)
 [![CI](https://github.com/CrowdStrike/ember-headless-table/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/CrowdStrike/ember-headless-table/actions/workflows/ci.yml)
 
